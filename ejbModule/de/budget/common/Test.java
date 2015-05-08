@@ -8,5 +8,5 @@ package de.budget.common;
  *
  */
 public class Test {
-
+	private int test = 0;
 }
