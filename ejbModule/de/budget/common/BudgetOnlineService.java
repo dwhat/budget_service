@@ -5,6 +5,7 @@ package de.budget.common;
  * Interface BudgetOnlineService
  * @author Marco
  * @date 08.05.2015
+ * @version Beta 1
  */
 public interface BudgetOnlineService {
 
