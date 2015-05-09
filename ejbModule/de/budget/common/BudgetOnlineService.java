@@ -1,6 +1,10 @@
 package de.budget.common;
 
 
+import java.util.Map;
+
+
+
 /*
  * Interface BudgetOnlineService
  * @author Marco
@@ -10,6 +14,8 @@ package de.budget.common;
 public interface BudgetOnlineService {
 
 		
+	/* Session - SECTION */
+	
 	/**
 	* Method to login with Username and Password
 	* @param username
@@ -28,6 +34,116 @@ public interface BudgetOnlineService {
 	* @date 08.05.2015
 	*/
 	public void logout();
+	
+	//Kommentare der Funktionen erstmal auﬂen vorgelassen da sonst nur doppelte Arbeit. Unbedingte absprache der Update/Create Methoden notwendig
+	
+	
+	/*########################################################*/
+	
+	/* Customer - SECTION */
+	
+	public Customer getCustomer(int customerID);
+	
+
+	public int createCustomer(Customer customer);
+	
+	//F‰llt evtl weg da gleich wie create 
+	public int updateCustomer(Customer customer);
+	
+	public int deleteCustomer(int customerID);
+	
+	/*########################################################*/
 		
+	/* Vendor - SECTION */
+	
+	
+	public Customer getVendor(int vendorID);
+	
+	
+	public int createVendor(Customer vendor);
+	
+	//F‰llt evtl weg da gleich wie create 
+	public int updateVendor(Customer vendor);
+	
+	
+	public int deleteVendor(int vendorID);
+	
+	/*########################################################*/
+	
+	/* Payment - SECTION */
+	
+	
+	public Customer getPayment(int paymentID);
+	
+	
+	public int createPayment(Customer payment);
+	
+	//F‰llt evtl weg da gleich wie create 
+	public int updatePayment(Customer payment);
+	
+	
+	public int deletePayment(int paymentID);
+	
+	/*########################################################*/
+	
+	/* Category - SECTION */
+	
+	
+	public Customer getCategory(int categoryID);
+	
+	public int createCategory(Customer category);
+	
+	//F‰llt evtl weg da gleich wie create 
+	public int updateCategory(Customer category);
+	
+	
+	public int deleteCategory(int categoryID);
+	
+	/*########################################################*/
+	
+	/* Basket - SECTION */
+	
+	
+	public Customer getBasket(int basketID);
+	
+	
+	public int createBasket(Customer basket);
+	
+	//F‰llt evtl weg da gleich wie create 
+	public int updateBasket(Customer basket);
+	
+	
+	public int deleteBasket(int basketID);
+	
+	/*########################################################*/
+	
+	/* Charts/Balance - SECTION */
+	
+	public Map<Integer,Integer> getChart(int customerID);
+	
+	public int getBalance(int customerID);
+	
+	/*########################################################*/
+	
+	/* Incomes - SECTION */
+	
+	public int createIncome(Map<Integer,Customer> incomes);
+	
+	public int updateIncome(Customer income,int incomeID);
+	
+	public int deleteIncome(int incomeID);
+	
+	/*########################################################*/
+	
+	/* Losses - SECTION */
+	
+	public int createLoss(Map<Integer,Customer> losses);
+	
+	public int updateLoss(Customer loss,int lossID);
+	
+	public int deleteLoss(int lossID);
+	
+	
+	
 
 }
