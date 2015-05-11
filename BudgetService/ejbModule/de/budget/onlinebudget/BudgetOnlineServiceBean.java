@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
+import de.budget.Exception.BudgetOnlineException;
 import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.dto.UserLoginResponse;
@@ -29,10 +30,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public UserLoginResponse login(String username, String password) {
 		UserLoginResponse response = new UserLoginResponse();
 		
-		try {
+		try 
+		{
 			User user = this.dao.findUserByName(username);		
 			if (user != null && user.getPassword().equals(password)) {
-				//int sessionId = dao.createSession(user);
+				int sessionId = dao.createSession(user);
 				//logger.info("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
 			}
@@ -42,7 +44,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				//throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+user.getUserName());
 			}
 		}
-		catch (XbankException e) {
+		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}

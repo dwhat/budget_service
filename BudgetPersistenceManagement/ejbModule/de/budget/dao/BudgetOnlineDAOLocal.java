@@ -12,5 +12,7 @@ import de.budget.entities.User;
 public interface BudgetOnlineDAOLocal {
 	
 	public User findUserByName(String userName);
+	
+	public int createSession(User userObject);
 
 }
