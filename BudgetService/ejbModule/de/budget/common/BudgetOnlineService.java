@@ -3,6 +3,8 @@ package de.budget.common;
 
 import java.util.Map;
 
+//Response-Imports
+import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.UserLoginResponse;
 
 
@@ -35,7 +37,7 @@ public interface BudgetOnlineService {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public void logout();
+	public ReturnCodeResponse logout(int sessionID);
 	
 	//Kommentare der Funktionen erstmal auﬂen vorgelassen da sonst nur doppelte Arbeit. Unbedingte absprache der Update/Create Methoden notwendig
 	

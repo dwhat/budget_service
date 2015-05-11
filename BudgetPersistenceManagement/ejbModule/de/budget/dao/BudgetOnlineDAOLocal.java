@@ -15,4 +15,6 @@ public interface BudgetOnlineDAOLocal {
 	
 	public int createSession(User userObject);
 
+	public void closeSession(int sessionId);
+
 }

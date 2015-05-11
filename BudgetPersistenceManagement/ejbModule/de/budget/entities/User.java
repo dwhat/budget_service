@@ -196,6 +196,7 @@ public class User implements Serializable {
 	public void addNewPayment(Payment newPayment) {
 		this.payments.add(newPayment);
 	}
+	
 	/**
 	 * @author Marco
 	 */

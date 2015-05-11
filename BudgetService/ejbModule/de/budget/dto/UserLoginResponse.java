@@ -1,5 +1,10 @@
 package de.budget.dto;
 
+/**
+ * UserReturnCode Klasse die die ReturnCodeResponse erweitert um die SessionID
+ * @author Moritz
+ *
+ */
 public class UserLoginResponse extends ReturnCodeResponse {
 	
 	private static final long serialVersionUID = -3173158310918408228L;

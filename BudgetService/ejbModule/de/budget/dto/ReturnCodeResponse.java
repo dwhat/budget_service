@@ -2,6 +2,11 @@ package de.budget.dto;
 
 import java.io.Serializable;
 
+/**
+ * ReturnCode Klasse die verschiedene Stati(ReturnCodes,Messages) an den Aufrufer zurückgeben kann 
+ * @author Moritz
+ *
+ */
 public class ReturnCodeResponse implements Serializable {
 	
 	private static final long serialVersionUID = 3397348747136795401L;
