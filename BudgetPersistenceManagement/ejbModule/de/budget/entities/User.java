@@ -1,15 +1,16 @@
-package de.budget.common;
+package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 
+import javax.persistence.*;
+
+@Entity
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String userName;
 	private String password;
 
@@ -35,6 +36,24 @@ public class User implements Serializable {
 	*/
 	public String getPassword() {
 		return password;
+	}
+	
+	/**
+	* Method to set the username
+	* @author Marco
+	* @date 08.05.2015
+	*/
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/**
+	* Method to set the password
+	* @author Marco
+	* @date 08.05.2015
+	*/
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 
