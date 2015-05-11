@@ -1,12 +1,22 @@
 package de.budget.entities;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 
-import java.sql.Date;
-
-import javax.persistence.*;
-
+/**
+ * User class
+ * @author Marco
+ * @date 11.05.2015
+ */
 @Entity
 public class User implements Serializable {
 	
@@ -14,10 +24,24 @@ public class User implements Serializable {
 	
 	@Id
 	private String userName;
+	
 	private String password;
+	
 	private String email;
+	
 	private Date createDate;
+	
+	/**
+	 * Bidirectional one to many relationship
+	 * @author Marco
+	 * @date 11.05.2015
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	@JoinColumn(name="User_FK")
+	private Set<Category> categories;
 
+	
+	
 	/**
 	* Default Constructor
 	* @author Marco
@@ -38,6 +62,8 @@ public class User implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.setCreateDate((Date) java.util.Calendar.getInstance().getTime());
+		this.createDate = new Date();
+		this.categories = new HashSet<Category>();
 	}
 	
 	/**
@@ -110,5 +136,38 @@ public class User implements Serializable {
 	*/
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	/**
+	 * @author Marco
+	 * @return a Set with all Categories of this User
+	 */
+	public Set<Category> getCategories(){
+		return this.categories;
+	}
+	
+	/**
+	 * @author Marco
+	 * @param categories
+	 */
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+	
+	/**
+	 * Method to add one category to this User
+	 * @author Marco
+	 * @param newCategory
+	 */
+	public void addNewCategory(Category newCategory) {
+		this.categories.add(newCategory);
+	}
+	
+	/**
+	 * @author Marco
+	 */
+	@Override
+	public String toString() {
+		return this.userName;
 	}
 }

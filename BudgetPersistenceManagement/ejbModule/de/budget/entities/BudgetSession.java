@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/*
+/**
  * BudgetSession for the Sessionhandling
  * @author Marco
  * @date 08.05.2015
