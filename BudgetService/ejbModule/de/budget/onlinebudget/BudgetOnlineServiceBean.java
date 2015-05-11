@@ -6,7 +6,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 import de.budget.common.BudgetOnlineService;
-import de.budget.common.Customer;
+import de.budget.entities.User;
 
 @Stateless
 @Remote(BudgetOnlineService.class)
