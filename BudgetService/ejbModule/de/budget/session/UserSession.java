@@ -1,15 +1,15 @@
 package de.budget.session;
 
-import de.budget.common.Customer;
+import de.budget.common.User;
 
 public class UserSession {
 
 private static int lastID = 0;
 	
 	private final String sessionID;
-	private final Customer user;
+	private final User user;
 	
-	public UserSession(Customer user) {
+	public UserSession(User user) {
 		lastID++;
 		this.sessionID = "" + lastID;
 		this.user = user;
@@ -20,7 +20,7 @@ private static int lastID = 0;
 		return sessionID;
 	}
 
-	public Customer getUser() {
+	public User getUser() {
 		return user;
 	}
 	
