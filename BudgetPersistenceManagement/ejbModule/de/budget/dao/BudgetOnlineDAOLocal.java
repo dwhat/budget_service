@@ -5,7 +5,9 @@ package de.budget.dao;
 
 import javax.ejb.Local;
 
+import de.budget.entities.BudgetSession;
 import de.budget.entities.User;
+
 
 
 @Local
@@ -14,6 +16,8 @@ public interface BudgetOnlineDAOLocal {
 	public User findUserByName(String userName);
 	
 	public int createSession(User userObject);
+	
+	public BudgetSession findSessionById(int sessionId);
 
 	public void closeSession(int sessionId);
 
