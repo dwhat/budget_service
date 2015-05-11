@@ -18,13 +18,21 @@ public class Payment implements Serializable {
 
 	@Id
 	private int id;
+	
 	private String name;
+	
 	private String number;
+	
 	private String bic;
+	
 	private boolean active;
+	
 	private Date creationDate;
+	
 	@ManyToOne
 	private User user;
+	
+	
 	
 	/**
 	 * Default Constructor

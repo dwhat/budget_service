@@ -39,6 +39,7 @@ public class User implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	@JoinColumn(name="User_FK")
 	private Set<Category> categories;
+	
 	/**
 	 * Bidirectional one to many relationship
 	 * @author Marco
@@ -47,6 +48,15 @@ public class User implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	@JoinColumn(name="User_FK")
 	private Set<Payment> payments;
+	
+	/**
+	 * Bidirectional one to many relationship
+	 * @author Marco
+	 * @date 11.05.2015
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	@JoinColumn(name="User_FK")
+	private Set<Vendor> vendors;
 
 	
 	
@@ -73,6 +83,7 @@ public class User implements Serializable {
 		this.createDate = new Date();
 		this.categories = new HashSet<Category>();
 		this.payments = new HashSet<Payment>();
+		this.vendors = new HashSet<Vendor>();
 	}
 	
 	/**
@@ -174,7 +185,7 @@ public class User implements Serializable {
 	
 	/**
 	 * @author Marco
-	 * @return a Set with all Categories of this User
+	 * @return a Set with all Payments of this User
 	 */
 	public Set<Payment> getPayments(){
 		return this.payments;
@@ -195,6 +206,31 @@ public class User implements Serializable {
 	 */
 	public void addNewPayment(Payment newPayment) {
 		this.payments.add(newPayment);
+	}
+	
+	/**
+	 * @author Marco
+	 * @return a Set with all Vendors of this User
+	 */
+	public Set<Vendor> getVendors(){
+		return this.vendors;
+	}
+	
+	/**
+	 * @author Marco
+	 * @param vendors
+	 */
+	public void setVendor(Set<Vendor> vendors) {
+		this.vendors = vendors;
+	}
+	
+	/**
+	 * Method to add one Payment to this User
+	 * @author Marco
+	 * @param newVendor
+	 */
+	public void addNewVendor(Vendor newVendor) {
+		this.vendors.add(newVendor);
 	}
 	
 	/**
