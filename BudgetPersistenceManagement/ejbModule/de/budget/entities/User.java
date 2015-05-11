@@ -39,6 +39,14 @@ public class User implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	@JoinColumn(name="User_FK")
 	private Set<Category> categories;
+	/**
+	 * Bidirectional one to many relationship
+	 * @author Marco
+	 * @date 11.05.2015
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	@JoinColumn(name="User_FK")
+	private Set<Payment> payments;
 
 	
 	
@@ -64,6 +72,7 @@ public class User implements Serializable {
 		this.setCreateDate((Date) java.util.Calendar.getInstance().getTime());
 		this.createDate = new Date();
 		this.categories = new HashSet<Category>();
+		this.payments = new HashSet<Payment>();
 	}
 	
 	/**
@@ -163,6 +172,30 @@ public class User implements Serializable {
 		this.categories.add(newCategory);
 	}
 	
+	/**
+	 * @author Marco
+	 * @return a Set with all Categories of this User
+	 */
+	public Set<Payment> getPayments(){
+		return this.payments;
+	}
+	
+	/**
+	 * @author Marco
+	 * @param payment
+	 */
+	public void setPayment(Set<Payment> payments) {
+		this.payments = payments;
+	}
+	
+	/**
+	 * Method to add one Payment to this User
+	 * @author Marco
+	 * @param newPayment
+	 */
+	public void addNewPayment(Payment newPayment) {
+		this.payments.add(newPayment);
+	}
 	/**
 	 * @author Marco
 	 */
