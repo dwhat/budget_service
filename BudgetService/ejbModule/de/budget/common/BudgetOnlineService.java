@@ -3,6 +3,8 @@ package de.budget.common;
 
 import java.util.Map;
 
+import de.budget.dto.UserLoginResponse;
+
 
 
 /*
@@ -24,7 +26,7 @@ public interface BudgetOnlineService {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public boolean login(String username, String password);
+	public UserLoginResponse login(String username, String password);
 		
 	
 	/**
