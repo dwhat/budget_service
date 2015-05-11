@@ -3,11 +3,14 @@ package de.budget.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+//Import Persistence
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+//Import Base64 // libsOrdner 
+//import org.apache.commons.codec.binary.Base64;
 
 /**
  * Vendor class
@@ -28,7 +31,9 @@ public class Vendor implements Serializable {
 	
 	@ManyToOne
 	private User user;
-	//private LOGO????
+	
+	//wir verwenden einen base64 string
+	private String logo;
 	
 	
 	
@@ -62,6 +67,15 @@ public class Vendor implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getLogo() {
+		return logo;
+	}
+	
+	public void setLogo(String logoBase64) {
+		logo = logoBase64;
+	}
+	
 	/**
 	 * @author Marco
 	 * @return the creationDate
