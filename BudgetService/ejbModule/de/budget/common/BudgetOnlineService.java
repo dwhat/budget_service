@@ -41,38 +41,33 @@ public interface BudgetOnlineService {
 	/*########################################################*/
 	
 	/* Customer - SECTION */
-	
-	public Customer getCustomer(int customerID);
+
+	//public User getUser(String username);
 	
 
-	public int createCustomer(Customer customer);
+	//public int createOrUpdateUser(User user);
 	
-	//Fällt evtl weg da gleich wie create 
-	public int updateCustomer(Customer customer);
-	
-	public int deleteCustomer(int customerID);
+	//public int deleteUser(String username);
 	
 	/*########################################################*/
 		
 	/* Vendor - SECTION */
 	
 	
-	public Customer getVendor(int vendorID);
+	//public Vendor getVendorByName(String name);
 	
 	
-	public int createVendor(Customer vendor);
-	
-	//Fällt evtl weg da gleich wie create 
-	public int updateVendor(Customer vendor);
+	//public int createOrUpdateVendor(Customer vendor);
 	
 	
-	public int deleteVendor(int vendorID);
+	
+	//public int deleteVendor(int vendorID);
 	
 	/*########################################################*/
 	
 	/* Payment - SECTION */
 	
-	
+/*	
 	public Customer getPayment(int paymentID);
 	
 	
@@ -83,12 +78,12 @@ public interface BudgetOnlineService {
 	
 	
 	public int deletePayment(int paymentID);
-	
+*/	
 	/*########################################################*/
 	
 	/* Category - SECTION */
 	
-	
+/*	
 	public Customer getCategory(int categoryID);
 	
 	public int createCategory(Customer category);
@@ -103,7 +98,7 @@ public interface BudgetOnlineService {
 	
 	/* Basket - SECTION */
 	
-	
+/*	
 	public Customer getBasket(int basketID);
 	
 	
@@ -118,7 +113,7 @@ public interface BudgetOnlineService {
 	/*########################################################*/
 	
 	/* Charts/Balance - SECTION */
-	
+/*	
 	public Map<Integer,Integer> getChart(int customerID);
 	
 	public int getBalance(int customerID);
@@ -126,7 +121,7 @@ public interface BudgetOnlineService {
 	/*########################################################*/
 	
 	/* Incomes - SECTION */
-	
+/*	
 	public int createIncome(Map<Integer,Customer> incomes);
 	
 	public int updateIncome(Customer income,int incomeID);
@@ -136,14 +131,14 @@ public interface BudgetOnlineService {
 	/*########################################################*/
 	
 	/* Losses - SECTION */
-	
+/*	
 	public int createLoss(Map<Integer,Customer> losses);
 	
 	public int updateLoss(Customer loss,int lossID);
 	
 	public int deleteLoss(int lossID);
 	
-	
+*/	
 	
 
 }
