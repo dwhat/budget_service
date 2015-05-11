@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 import javax.persistence.*;
 
@@ -20,7 +19,7 @@ public class User implements Serializable {
 	private Date createDate;
 
 	/**
-	* Dafault Cunstructor
+	* Default Constructor
 	* @author Marco
 	* @date 08.05.2015
 	*/
@@ -42,7 +41,7 @@ public class User implements Serializable {
 	}
 	
 	/**
-	* Method to get the Username
+	* Method to get the username
 	* @author Marco
 	* @date 08.05.2015
 	*/
