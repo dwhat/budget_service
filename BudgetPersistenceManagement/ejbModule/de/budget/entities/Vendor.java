@@ -68,6 +68,7 @@ public class Vendor implements Serializable {
 		this.name = name;
 	}
 	
+	
 	public String getLogo() {
 		return logo;
 	}
