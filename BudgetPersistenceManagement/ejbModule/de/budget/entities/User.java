@@ -37,7 +37,6 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	@JoinColumn(name="User_FK")
 	private Set<Category> categories;
 	
 	/**
@@ -46,7 +45,6 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	@JoinColumn(name="User_FK")
 	private Set<Payment> payments;
 	
 	/**
@@ -55,8 +53,15 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	@JoinColumn(name="User_FK")
 	private Set<Vendor> vendors;
+	
+	/**
+	 * Bidirectional one to many relationship
+	 * @author Marco
+	 * @date 12.05.2015
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	private Set<Basket> baskets;
 
 	
 	
@@ -84,6 +89,7 @@ public class User implements Serializable {
 		this.categories = new HashSet<Category>();
 		this.payments = new HashSet<Payment>();
 		this.vendors = new HashSet<Vendor>();
+		this.baskets = new HashSet<Basket>();
 	}
 	
 	/**
@@ -195,7 +201,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param payment
 	 */
-	public void setPayment(Set<Payment> payments) {
+	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
 	}
 	
@@ -220,7 +226,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param vendors
 	 */
-	public void setVendor(Set<Vendor> vendors) {
+	public void setVendors(Set<Vendor> vendors) {
 		this.vendors = vendors;
 	}
 	
@@ -231,6 +237,31 @@ public class User implements Serializable {
 	 */
 	public void addNewVendor(Vendor newVendor) {
 		this.vendors.add(newVendor);
+	}
+	
+	/**
+	 * @author Marco
+	 * @return a Set with all Baskets of this User
+	 */
+	public Set<Basket> getBaskets(){
+		return this.baskets;
+	}
+	
+	/**
+	 * @author Marco
+	 * @param baskets
+	 */
+	public void setBaskets(Set<Basket> baskets) {
+		this.baskets = baskets;
+	}
+	
+	/**
+	 * Method to add one basket to this User
+	 * @author Marco
+	 * @param newBasket
+	 */
+	public void addNewBasket(Basket newBasket) {
+		this.baskets.add(newBasket);
 	}
 	
 	/**
