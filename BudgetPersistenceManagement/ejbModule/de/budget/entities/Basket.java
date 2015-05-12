@@ -2,11 +2,14 @@ package de.budget.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  * Basket Class
@@ -41,7 +44,13 @@ public class Basket implements Serializable {
 	@ManyToOne
 	private Vendor vendor;
 
-
+	/**
+	 * Bidirectional one to many relationship
+	 * @author Marco
+	 * @date 12.05.2015
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="basket")
+	private Set<Item> items;
 	
 	
 	/**
@@ -188,5 +197,29 @@ public class Basket implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
+	/**
+	 * @author Marco
+	 * @return a set with all Items of a basket
+	 */
+	public Set<Item> getItems(){
+		return this.items;
+	}
+	
+	/**
+	 * @author Marco
+	 * @param items
+	 */
+	public void setItems(Set<Item> items) {
+		this.items = items;
+	}
+	
+	/**
+	 * Method to add one item to this basket
+	 * @author Marco
+	 * @param newBasket
+	 */
+	public void addNewItem(Item newItem) {
+		this.items.add(newItem);
+	}
 }
