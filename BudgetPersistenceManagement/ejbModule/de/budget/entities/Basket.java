@@ -49,7 +49,7 @@ public class Basket implements Serializable {
 	 * @author Marco
 	 * @date 12.05.2015
 	 */
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="basket")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="asket")
 	private Set<Item> items;
 	
 	

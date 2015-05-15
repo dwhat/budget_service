@@ -10,6 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BudgetPersistenceManagement"/>
 	<classpathentry kind="lib" path="libs/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="/opt/wildfly/bin/client/jboss-client.jar"/>
+	<classpathentry kind="lib" path="C:/Daten/Programme/wildfly-8.2.0.Final/wildfly-8.2.0.Final/bin/client/jboss-client.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
