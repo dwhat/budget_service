@@ -1,7 +1,5 @@
 package de.budget.onlinebudget;
 
-import java.util.Map;
-
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
