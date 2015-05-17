@@ -2,6 +2,7 @@ package de.budget.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -221,5 +222,37 @@ public class Basket implements Serializable {
 	 */
 	public void addNewItem(Item newItem) {
 		this.items.add(newItem);
+	}
+	
+	/**
+	 * Sums the prices of the items of this basket and sets the sum into the amount Variable
+	 * @author Marco
+	 * @date 17.05.2015
+	 * @return amount of the basket
+	 */
+	public double sumAmount() {
+		double amount = 0.0;
+		Iterator<Item> it = items.iterator();
+		while (it.hasNext()) {
+			Item item = it.next();
+			amount = amount + item.getPrice();
+		}
+		this.amount = amount;
+		return amount;
+	}
+	
+	/**
+	 * Gives the quantity of items of the basket
+	 * @author Marco
+	 * @date 17.05.2015
+	 * @return quantity of Items
+	 */
+	public int countItems() {
+		int quantity = 0;
+		Iterator<Item> it = items.iterator();
+		while (it.hasNext()) {
+			quantity = quantity + 1;
+		}
+		return quantity;
 	}
 }
