@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * Item Class
@@ -39,10 +39,10 @@ public class Item implements Serializable {
 	
 	private Date finishDate;
 	
-	@OneToMany
+	@ManyToOne
 	private Basket basket;
 	
-	@OneToMany
+	@ManyToOne
 	private Category category;
 	
 	
