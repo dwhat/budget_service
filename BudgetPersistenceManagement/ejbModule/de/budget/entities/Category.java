@@ -1,7 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +28,7 @@ public class Category implements Serializable{
 	private String notice;
 	private boolean active;
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
-	private Date createDate;
+	private Timestamp createDate;
 	@ManyToOne
 	private User user;
 	
@@ -49,7 +49,7 @@ public class Category implements Serializable{
 	public Category(User user) {
 		this.user = user;
 		this.user.addNewCategory(this);
-		this.createDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 	
 	/**
@@ -121,7 +121,7 @@ public class Category implements Serializable{
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
@@ -129,7 +129,7 @@ public class Category implements Serializable{
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreateDate(Date creationDate) {
+	public void setCreateDate(Timestamp creationDate) {
 		this.createDate = creationDate;
 	}
 

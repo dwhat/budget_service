@@ -1,7 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,11 +33,11 @@ public class Item implements Serializable {
 	
 	private int period;
 	
-	private Date createDate;
+	private Timestamp createDate;
 	
-	private Date launchDate;
+	private Timestamp launchDate;
 	
-	private Date finishDate;
+	private Timestamp finishDate;
 	
 	@ManyToOne
 	private Basket basket;
@@ -65,7 +65,7 @@ public class Item implements Serializable {
 		this.basket = basket;
 		this.basket.addNewItem(this);
 		this.basket.getUser().addNewCategory(category);
-		this.createDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 
 	
@@ -170,7 +170,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 	
@@ -178,7 +178,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreateDate(Date creationDate) {
+	public void setCreateDate(Timestamp creationDate) {
 		this.createDate = creationDate;
 	}
 	
@@ -186,7 +186,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @return the launchDate
 	 */
-	public Date getLaunchDate() {
+	public Timestamp getLaunchDate() {
 		return launchDate;
 	}
 	
@@ -194,7 +194,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @param launchDate the launchDate to set
 	 */
-	public void setLaunchDate(Date launchDate) {
+	public void setLaunchDate(Timestamp launchDate) {
 		this.launchDate = launchDate;
 	}
 	
@@ -202,7 +202,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @return the finishDate
 	 */
-	public Date getFinishDate() {
+	public Timestamp getFinishDate() {
 		return finishDate;
 	}
 	
@@ -210,7 +210,7 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @param finishDate the finishDate to set
 	 */
-	public void setFinishDate(Date finishDate) {
+	public void setFinishDate(Timestamp finishDate) {
 		this.finishDate = finishDate;
 	}
 

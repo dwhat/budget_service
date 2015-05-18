@@ -1,7 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,7 +36,7 @@ public class User implements Serializable {
 	@Size(min=1,max=250)
 	private String email;
 	
-	private Date createDate;
+	private Timestamp createDate;
 	
 	/**
 	 * Bidirectional one to many relationship
@@ -92,8 +92,7 @@ public class User implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		this.setCreateDate((Date) java.util.Calendar.getInstance().getTime());
-		this.createDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 		this.categories = new HashSet<Category>();
 		this.payments = new HashSet<Payment>();
 		this.vendors = new HashSet<Vendor>();
@@ -159,7 +158,7 @@ public class User implements Serializable {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
@@ -168,7 +167,7 @@ public class User implements Serializable {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 

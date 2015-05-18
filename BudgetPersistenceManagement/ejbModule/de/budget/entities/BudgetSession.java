@@ -1,6 +1,6 @@
 package de.budget.entities;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +18,7 @@ public class BudgetSession {
 	@Id @GeneratedValue
 	private int id;
 	private String username;
-	private Date creationDate;
+	private Timestamp createDate;
 	
 	/**
 	* Constructor
@@ -28,7 +28,7 @@ public class BudgetSession {
 	*/
 	public BudgetSession(User user) {
 		this.username = user.getUserName();
-		this.creationDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class BudgetSession {
 	* @date 08.05.2015
 	*/
 	public BudgetSession() {
-		this.creationDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class BudgetSession {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public Date getCreationDate() {
-		return creationDate;
+	public Timestamp getCreateDate() {
+		return createDate;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class BudgetSession {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public void setCreationDate(Date creationTime) {
-		this.creationDate = creationTime;
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
 	}
 }

@@ -1,7 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -31,10 +31,10 @@ public class Basket implements Serializable {
 	
 	private double amount;
 	
-	private Date createDate;
+	private Timestamp createDate;
 	
 	@NotNull
-	private Date pruchaseDate;
+	private Timestamp purchaseDate;
 	
 	//private document oid;
 	
@@ -79,7 +79,7 @@ public class Basket implements Serializable {
 		 this.user.addNewBasket(this);
 		 this.user.addNewPayment(payment);
 		 this.user.addNewVendor(vendor);
-		 this.createDate = new Date();
+		 this.createDate = new Timestamp(System.currentTimeMillis());
 	 }
 
 	/**
@@ -123,7 +123,7 @@ public class Basket implements Serializable {
 	 * @date 12.05.2015
 	 * @return the creationDate
 	 */
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
@@ -132,26 +132,26 @@ public class Basket implements Serializable {
 	 * @date 12.05.2015
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreateDate(Date creationDate) {
+	public void setCreateDate(Timestamp creationDate) {
 		this.createDate = creationDate;
 	}
 
 	/**
 	 * @author Marco
 	 * @date 12.05.2015
-	 * @return the pruchaseDate
+	 * @return the purchaseDate
 	 */
-	public Date getPruchaseDate() {
-		return pruchaseDate;
+	public Timestamp getPurchaseDate() {
+		return purchaseDate;
 	}
 
 	/**
 	 * @author Marco
 	 * @date 12.05.2015
-	 * @param pruchaseDate the pruchaseDate to set
+	 * @param purchaseDate the purchaseDate to set
 	 */
-	public void setPruchaseDate(Date pruchaseDate) {
-		this.pruchaseDate = pruchaseDate;
+	public void setPurchaseDate(Timestamp purchaseDate) {
+		this.purchaseDate = purchaseDate;
 	}
 	
 	/**

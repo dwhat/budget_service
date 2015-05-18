@@ -1,8 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.sql.Timestamp;
 
 //Import Persistence
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class Vendor implements Serializable {
 	@NotNull
 	private String name;
 	
-	private Date createDate;
+	private Timestamp createDate;
 	
 	@ManyToOne
 	private User user;
@@ -55,7 +54,7 @@ public class Vendor implements Serializable {
 	public Vendor (User user){
 		this.user = user;
 		this.user.addNewVendor(this);
-		this.createDate = new Date();
+		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 	/**
 	 * @author Marco
@@ -85,14 +84,14 @@ public class Vendor implements Serializable {
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 	/**
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreateDate(Date creationDate) {
+	public void setCreateDate(Timestamp creationDate) {
 		this.createDate = creationDate;
 	}
 	/**
