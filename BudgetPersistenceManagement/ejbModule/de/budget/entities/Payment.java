@@ -31,7 +31,7 @@ public class Payment implements Serializable {
 	
 	private boolean active;
 	
-	private Date creationDate;
+	private Date createDate;
 	
 	@ManyToOne
 	private User user;
@@ -55,7 +55,7 @@ public class Payment implements Serializable {
 	public Payment(User user) {
 		this.user = user;
 		this.user.addNewPayment(this);
-		this.creationDate = new Date();
+		this.createDate = new Date();
 	}
 	
 	/**
@@ -127,8 +127,8 @@ public class Payment implements Serializable {
 	 * @date 11.05.2015
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
 	/**
 	 * @author Marco
@@ -136,7 +136,7 @@ public class Payment implements Serializable {
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+		this.createDate = creationDate;
 	}
 	/**
 	 * @author Marco

@@ -28,7 +28,7 @@ public class Category implements Serializable{
 	private String notice;
 	private boolean active;
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
-	private Date creationDate;
+	private Date createDate;
 	@ManyToOne
 	private User user;
 	
@@ -49,7 +49,7 @@ public class Category implements Serializable{
 	public Category(User user) {
 		this.user = user;
 		this.user.addNewCategory(this);
-		this.creationDate = new Date();
+		this.createDate = new Date();
 	}
 	
 	/**
@@ -121,16 +121,16 @@ public class Category implements Serializable{
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	/**
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setCreateDate(Date creationDate) {
+		this.createDate = creationDate;
 	}
 
 	/**

@@ -55,7 +55,7 @@ public class Vendor implements Serializable {
 	public Vendor (User user){
 		this.user = user;
 		this.user.addNewVendor(this);
-		this.creationDate = new Date();
+		this.createDate = new Date();
 	}
 	/**
 	 * @author Marco
@@ -92,7 +92,7 @@ public class Vendor implements Serializable {
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
+	public void setCreateDate(Date creationDate) {
 		this.createDate = creationDate;
 	}
 	/**

@@ -33,7 +33,7 @@ public class Item implements Serializable {
 	
 	private int period;
 	
-	private Date creationDate;
+	private Date createDate;
 	
 	private Date launchDate;
 	
@@ -65,7 +65,7 @@ public class Item implements Serializable {
 		this.basket = basket;
 		this.basket.addNewItem(this);
 		this.basket.getUser().addNewCategory(category);
-		this.creationDate = new Date();
+		this.createDate = new Date();
 	}
 
 	
@@ -170,16 +170,16 @@ public class Item implements Serializable {
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
 	
 	/**
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setCreateDate(Date creationDate) {
+		this.createDate = creationDate;
 	}
 	
 	/**
