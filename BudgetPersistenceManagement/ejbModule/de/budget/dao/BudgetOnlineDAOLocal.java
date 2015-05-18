@@ -24,34 +24,32 @@ import de.budget.entities.Item;
 @Local
 public interface BudgetOnlineDAOLocal {
 	
+	public User createUser(String username, String password, String email);	
 	public User findUserByName(String userName);
+	public void deleteUser(String username);
 	
-	public int createSession(User userObject);
-	
+	public int createSession(User userObject);	
 	public BudgetSession findSessionById(int sessionId);
-
 	public void closeSession(int sessionId);
 	
+	public Vendor createVendor(User user);	
 	public Vendor findVendorById(int vendorId);
-	
-	public Basket findBasketById(int basketId);
-	
-	public Category findCategoryById(int categoryId);
-	
-	public Item findItemById(int itemId);
-	
-	public Payment findPaymentById(int paymentId);
-	
-	public User createUser(String username, String password, String email);
-	
-	public Category createCategory(User user);
-	
-	public Vendor createVendor(User user);
+	public void deleteVendor(int vendorId);
 	
 	public Basket createBasket(User user, Payment payment, Vendor vendor);
+	public Basket findBasketById(int basketId);
+	public void deleteBasket(int basketId);
 	
-	public Payment createPayment(User user);
+	public Category createCategory(User user);
+	public Category findCategoryById(int categoryId);
+	public void deleteCategory(int categoryId);
 	
 	public Item createItem(Basket basket, Category category);
+	public Item findItemById(int itemId);
+	public void deleteItem(int itemId);
 
+	public Payment createPayment(User user);
+	public Payment findPaymentById(int paymentId);
+	public void deletePayment(int paymentId);
+	
 }
