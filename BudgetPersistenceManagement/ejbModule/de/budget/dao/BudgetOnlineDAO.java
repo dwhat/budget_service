@@ -152,7 +152,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 			return user;
 		}
 		else {
-			throw new UsernameAlreadyExistsException("Username has already bean taken. Please try an other name.");
+			return null;
 		}
 	}
 

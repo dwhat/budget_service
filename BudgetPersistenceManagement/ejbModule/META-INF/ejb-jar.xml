@@ -24,6 +24,16 @@
 		         <env-entry-type>java.lang.String</env-entry-type>
 		         <env-entry-value>emma1</env-entry-value>
 		      </env-entry>
+		      <env-entry>
+		         <env-entry-name>de.budget.dao.DataBuilder/email1</env-entry-name>
+		         <env-entry-type>java.lang.String</env-entry-type>
+		         <env-entry-value>hallo@gmx.de</env-entry-value>
+		      </env-entry>
+		      <env-entry>
+		         <env-entry-name>de.budget.dao.DataBuilder/email2</env-entry-name>
+		         <env-entry-type>java.lang.String</env-entry-type>
+		         <env-entry-value>test@gmx.de</env-entry-value>
+		      </env-entry>
       </session>
    </enterprise-beans>      
 </ejb-jar>

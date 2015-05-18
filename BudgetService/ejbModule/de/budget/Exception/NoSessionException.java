@@ -8,5 +8,9 @@ public class NoSessionException extends BudgetOnlineException{
 	public NoSessionException(String message) {
 		super(CODE, message);
 	}
+	
+	public int getErrorCode() {
+		return this.CODE;
+	}
 
 }

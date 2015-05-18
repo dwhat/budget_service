@@ -1,7 +1,6 @@
 package de.budget.common;
 
 
-import java.util.Map;
 
 //Response-Imports
 import de.budget.dto.ReturnCodeResponse;
@@ -21,10 +20,22 @@ public interface BudgetOnlineService {
 	/* Session - SECTION */
 	
 	/**
+	 * Method to Register a new User
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @return UserLoginResponse
+	 * @date 18.05.2015
+	 * @author Marco
+	 */
+	public UserLoginResponse registerNewUser(String username, String password, String email);
+	
+	
+	/**
 	* Method to login with Username and Password
 	* @param username
 	* @param password
-	* @return
+	* @return UserLoginResponse
 	* @author Marco
 	* @date 08.05.2015
 	*/

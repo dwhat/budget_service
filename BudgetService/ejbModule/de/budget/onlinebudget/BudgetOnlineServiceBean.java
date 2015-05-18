@@ -4,6 +4,8 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -19,6 +21,7 @@ import de.budget.Exception.BudgetOnlineException;
 import de.budget.Exception.InvalidLoginException;
 
 
+import de.budget.Exception.UsernameAlreadyExistsException;
 //Entities-Import 
 import de.budget.entities.User;
 /**************************************************/
@@ -75,6 +78,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		//logger.info("Logout erfolgreich. Session=" + sessionId);
 		return response;
 		
+	}
+
+	@Override
+	public UserLoginResponse registerNewUser(String username, String password, String email) {
+		UserLoginResponse response = new UserLoginResponse();
+		try {
+			User user = dao.createUser(username, password, email);
+			if (user != null) {
+				int sessionId = dao.createSession(user);
+				response.setSessionId(sessionId);
+			}
+			else {
+				throw new UsernameAlreadyExistsException("Username has already been taken. Please try again.");
+			}
+		}
+		catch(BudgetOnlineException be) {
+			response.setReturnCode(be.getErrorCode());
+			response.setMessage(be.getMessage());
+		}
+		return response;
 	}
 
 }

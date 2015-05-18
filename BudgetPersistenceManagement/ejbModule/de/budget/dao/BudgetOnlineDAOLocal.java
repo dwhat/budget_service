@@ -18,7 +18,7 @@ import de.budget.entities.Vendor;
 /**
  * Interface for DAO
  * @author Marco
- * @author Marco
+ * @author Moritz
  * 
  */
 @Local
