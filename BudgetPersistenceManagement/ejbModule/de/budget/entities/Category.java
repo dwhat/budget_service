@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  * Category Class
@@ -21,6 +22,8 @@ public class Category implements Serializable{
 	
 	@Id @GeneratedValue
 	private int id;
+	
+	@NotNull
 	private String name;
 	private String notice;
 	private boolean active;

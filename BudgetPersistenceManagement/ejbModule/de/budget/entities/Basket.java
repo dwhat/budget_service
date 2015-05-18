@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  * Basket Class
@@ -30,8 +31,9 @@ public class Basket implements Serializable {
 	
 	private double amount;
 	
-	private Date creationDate;
+	private Date createDate;
 	
+	@NotNull
 	private Date pruchaseDate;
 	
 	//private document oid;
@@ -120,8 +122,8 @@ public class Basket implements Serializable {
 	 * @date 12.05.2015
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
 	/**
@@ -129,8 +131,8 @@ public class Basket implements Serializable {
 	 * @date 12.05.2015
 	 * @param creationDate the creationDate to set
 	 */
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setCreateDate(Date creationDate) {
+		this.createDate = creationDate;
 	}
 
 	/**
