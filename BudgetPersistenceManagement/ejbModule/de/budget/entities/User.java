@@ -80,9 +80,10 @@ public class User implements Serializable {
 	* @param password
 	* @date 08.05.2015
 	*/
-	public User(String userName, String password) {
+	public User(String userName, String password, String email) {
 		this.userName = userName;
 		this.password = password;
+		this.email = email;
 		this.setCreateDate((Date) java.util.Calendar.getInstance().getTime());
 		this.createDate = new Date();
 		this.categories = new HashSet<Category>();
