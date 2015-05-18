@@ -11,8 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 
-import com.sun.mail.imap.protocol.Item;
-
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 
@@ -23,6 +21,7 @@ import de.budget.entities.Payment;
 import de.budget.entities.User;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Vendor;
+import de.budget.entities.Item;
 
 /**********************************************/
 
@@ -223,6 +222,18 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 			if (basket != null){
 				em.persist(basket);
 				return basket;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public Item createItem(Basket basket, Category category) {
+		if(basket != null && category != null) {
+			Item item = new Item(basket, category);
+			if (item != null) {
+				em.persist(item);
+				return item;
 			}
 		}
 		return null;
