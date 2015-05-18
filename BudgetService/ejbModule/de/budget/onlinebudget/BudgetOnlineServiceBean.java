@@ -30,6 +30,7 @@ import de.budget.entities.User;
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
  * @author Moritz
+ * @author Marco
  *
  */
 @Stateless
