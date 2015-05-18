@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -24,12 +25,15 @@ public class User implements Serializable {
 	
 	@Id
 	@NotNull
+	@Size(min=1,max=150)
 	private String userName;
 	
 	@NotNull
+	@Size(min=8,max=150)
 	private String password;
 	
 	@NotNull
+	@Size(min=1,max=250)
 	private String email;
 	
 	private Date createDate;
