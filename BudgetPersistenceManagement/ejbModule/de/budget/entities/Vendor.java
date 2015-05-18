@@ -52,6 +52,7 @@ public class Vendor implements Serializable {
 	public Vendor (User user){
 		this.user = user;
 		this.user.addNewVendor(this);
+		this.creationDate = new Date();
 	}
 	/**
 	 * @author Marco

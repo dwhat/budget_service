@@ -143,7 +143,14 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public Payment findPaymentById(int paymentId) {
 		return em.find(Payment.class, paymentId);
 	}
-	
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @return created userobject or null if there was a failure
+	 */
 	@Override
 	public User createUser(String username, String password, String email) {
 		if(findUserByName(username) == null) {
@@ -156,4 +163,68 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		}
 	}
 
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param User Object
+	 * @return Category Object
+	 */
+	@Override
+	public Category createCategory(User user) {
+		Category category = new Category(user);
+		if (category != null) {
+			em.persist(category);
+		}
+		return category;
+	}
+	
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param User Object
+	 * @return Vendor Object
+	 */
+	@Override
+	public Vendor createVendor(User user) {
+		Vendor vendor = new Vendor(user);
+		if (vendor != null) {
+			em.persist(vendor);
+		}
+		return vendor;
+	}
+
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param User Object
+	 * @return Payment Object
+	 */
+	@Override
+	public Payment createPayment(User user) {
+		Payment payment = new Payment(user);
+		if (payment != null) {
+			em.persist(payment);
+		}
+		return payment;
+	}
+	
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param User Object
+	 * @param Payment Object
+	 * @param Vendor Object
+	 * @return Basket Object
+	 */
+	@Override
+	public Basket createBasket(User user, Payment payment, Vendor vendor) {
+		if(user != null && payment != null && vendor != null) {
+			Basket basket = new Basket(user, payment, vendor);
+			if (basket != null){
+				em.persist(basket);
+				return basket;
+			}
+		}
+		return null;
+	}
 }

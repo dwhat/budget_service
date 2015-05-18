@@ -46,6 +46,7 @@ public class Category implements Serializable{
 	public Category(User user) {
 		this.user = user;
 		this.user.addNewCategory(this);
+		this.creationDate = new Date();
 	}
 	
 	/**

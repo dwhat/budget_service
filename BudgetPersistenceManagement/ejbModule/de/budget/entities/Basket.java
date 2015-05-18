@@ -77,6 +77,7 @@ public class Basket implements Serializable {
 		 this.user.addNewBasket(this);
 		 this.user.addNewPayment(payment);
 		 this.user.addNewVendor(vendor);
+		 this.creationDate = new Date();
 	 }
 
 	/**

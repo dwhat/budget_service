@@ -43,5 +43,13 @@ public interface BudgetOnlineDAOLocal {
 	public Payment findPaymentById(int paymentId);
 	
 	public User createUser(String username, String password, String email);
+	
+	public Category createCategory(User user);
+	
+	public Vendor createVendor(User user);
+	
+	public Basket createBasket(User user, Payment payment, Vendor vendor);
+	
+	public Payment createPayment(User user);
 
 }

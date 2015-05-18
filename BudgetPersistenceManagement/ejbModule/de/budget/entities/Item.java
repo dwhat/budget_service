@@ -65,6 +65,7 @@ public class Item implements Serializable {
 		this.basket = basket;
 		this.basket.addNewItem(this);
 		this.basket.getUser().addNewCategory(category);
+		this.creationDate = new Date();
 	}
 
 	

@@ -18,7 +18,7 @@ public class BudgetSession {
 	@Id @GeneratedValue
 	private int id;
 	private String username;
-	private Date creationTime;
+	private Date creationDate;
 	
 	/**
 	* Constructor
@@ -28,7 +28,7 @@ public class BudgetSession {
 	*/
 	public BudgetSession(User user) {
 		this.username = user.getUserName();
-		this.creationTime = new Date();
+		this.creationDate = new Date();
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class BudgetSession {
 	* @date 08.05.2015
 	*/
 	public BudgetSession() {
-		this.creationTime = new Date();
+		this.creationDate = new Date();
 	}
 
 	/**
@@ -83,8 +83,8 @@ public class BudgetSession {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public Date getCreationTime() {
-		return creationTime;
+	public Date getCreationDate() {
+		return creationDate;
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class BudgetSession {
 	* @author Marco
 	* @date 08.05.2015
 	*/
-	public void setCreationTime(Date creationTime) {
-		this.creationTime = creationTime;
+	public void setCreationDate(Date creationTime) {
+		this.creationDate = creationTime;
 	}
 }

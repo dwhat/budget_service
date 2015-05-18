@@ -51,6 +51,7 @@ public class Payment implements Serializable {
 	public Payment(User user) {
 		this.user = user;
 		this.user.addNewPayment(this);
+		this.creationDate = new Date();
 	}
 	
 	/**
