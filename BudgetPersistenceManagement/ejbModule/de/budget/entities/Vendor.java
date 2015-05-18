@@ -3,11 +3,13 @@ package de.budget.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+
 //Import Persistence
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 //Import Base64 // libsOrdner 
 //import org.apache.commons.codec.binary.Base64;
@@ -25,9 +27,10 @@ public class Vendor implements Serializable {
 	@Id @GeneratedValue
 	private int id; 
 	
+	@NotNull
 	private String name;
 	
-	private Date creationDate;
+	private Date createDate;
 	
 	@ManyToOne
 	private User user;
@@ -82,15 +85,15 @@ public class Vendor implements Serializable {
 	 * @author Marco
 	 * @return the creationDate
 	 */
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
 	/**
 	 * @author Marco
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+		this.createDate = creationDate;
 	}
 	/**
 	 * @author Marco

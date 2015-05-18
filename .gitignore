@@ -1,4 +1,4 @@
 /build/
-.classpath
+*.classpath
 .metadata
 .project

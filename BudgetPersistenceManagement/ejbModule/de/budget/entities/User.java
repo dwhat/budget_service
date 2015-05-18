@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -22,10 +23,13 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@NotNull
 	private String userName;
 	
+	@NotNull
 	private String password;
 	
+	@NotNull
 	private String email;
 	
 	private Date createDate;

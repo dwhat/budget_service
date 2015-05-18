@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 /**
  * Payment Class
  * @author Marco
@@ -19,10 +20,13 @@ public class Payment implements Serializable {
 	@Id
 	private int id;
 	
+	@NotNull
 	private String name;
 	
+	@NotNull
 	private String number;
 	
+	@NotNull
 	private String bic;
 	
 	private boolean active;
