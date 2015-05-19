@@ -52,6 +52,10 @@ import de.budget.entities.Item;
  * Remove:
  *
  * em.remove
+ * 
+ * 
+ * TODO
+ * Überlegen ob TryCatch Blöcke für einzelnen EntityManagerAufrufe notwendig ?!
  *
  */
 @Stateless

@@ -2,6 +2,9 @@ package de.budget.onlinebudget;
 
 import java.util.List;
 
+//Logger-Import
+import org.jboss.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -45,7 +48,7 @@ import de.budget.util.DtoAssembler;
 @Remote(BudgetOnlineService.class)
 public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
-	//private static final Logger logger = Logger.getLogger(BudgetOnlineServiceBean.class);
+	private static final Logger logger = Logger.getLogger(BudgetOnlineServiceBean.class);
 	
 	/**
 	 * EJB zur Abfrage von Datensätzen
@@ -83,12 +86,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (user != null && user.getPassword().equals(password)) 
 			{
 				int sessionId = dao.createSession(user);
-				//logger.info("Login erfolgreich. Session=" + sessionId);
+				logger.info("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
 			}
 			else 
 			{
-				//logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
+				logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
 				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+user.getUserName());
 			}
 		}
@@ -103,7 +106,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public ReturnCodeResponse logout(int sessionId) {
 		dao.closeSession(sessionId);
 		ReturnCodeResponse response = new ReturnCodeResponse();
-		//logger.info("Logout erfolgreich. Session=" + sessionId);
+		logger.info("Logout erfolgreich. Session=" + sessionId);
 		return response;
 		
 	}
@@ -117,10 +120,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public UserLoginResponse registerNewUser(String username, String password, String email) {
 		UserLoginResponse response = new UserLoginResponse();
 		try {
+			logger.info("Versuche neuen User anzulegen. Name=" + username);
 			User user = dao.createUser(username, password, email);
 			if (user != null) {
 				int sessionId = dao.createSession(user);
 				response.setSessionId(sessionId);
+				logger.info("User angelegt. Session=" + sessionId);
 			}
 			else {
 				throw new UsernameAlreadyExistsException("Username has already been taken. Please try again.");
