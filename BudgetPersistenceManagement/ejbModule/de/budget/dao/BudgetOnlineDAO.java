@@ -298,6 +298,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public void deleteBasket(int basketId) {
 		Basket basket = em.find(Basket.class,  basketId);
+		//Hier prüfen ob dann auch autoatisch alle Items mitgelöscht werden. 
 		em.remove(basket);
 	}
 

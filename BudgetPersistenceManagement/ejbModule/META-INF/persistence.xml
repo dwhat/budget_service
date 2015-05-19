@@ -12,8 +12,13 @@
             dass alle Tabellen bei einem Deployment der Applikation gelöscht und 
             neu angelegt werden. Sobald sich an Ihrer Entity Beans nichts mehr
             ändert, kann hier auch "update" gewählt werden, damit bleiben einmal
-            angelegte Daten erhalten.  -->
+            angelegte Daten erhalten.
+            Bei Final Deploy unbedingt richtig setzen bspws. "none" wenn Daten im
+            Produktivsystem vorhanden  -->
         <property name="hibernate.hbm2ddl.auto" value="create"/>
+        <!--Die Eigenschaft "hibernate.show_sql" legt fest, ob SQL-Code ausgegeben
+        	werden soll. Bei Final Deploy unbedingt auf "false" setzen  -->
+        <property name="hibernate.show_sql" value="true"/>
     </properties>
 </persistence-unit>
 </persistence>
