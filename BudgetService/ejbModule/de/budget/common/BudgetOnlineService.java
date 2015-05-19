@@ -3,6 +3,7 @@ package de.budget.common;
 
 
 //Response-Imports
+import de.budget.dto.CategoryListResponse;
 import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.VendorListResponse;
@@ -76,6 +77,9 @@ public interface BudgetOnlineService {
 	 * @return VendorListResponse Object
 	 */
 	public VendorListResponse getMyVendors(int sessionId);
+
+
+
 	
 	//public Vendor getVendorByName(String name);
 	
@@ -106,9 +110,21 @@ public interface BudgetOnlineService {
 	
 /*	
 	public Customer getCategory(int categoryID);
+	*/
 	
+	
+	/**
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return CategoryListResponse Object
+	 */
+	public CategoryListResponse getMyCategorys(int sessionId);
+	
+	
+	/*
 	public int createCategory(Customer category);
-	
+
 	//Fällt evtl weg da gleich wie create 
 	public int updateCategory(Customer category);
 	

@@ -7,12 +7,14 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
 //DAO-Import
 import de.budget.dao.BudgetOnlineDAOLocal;
-
+import de.budget.dto.CategoryListResponse;
 //Response-Import @author Moritz
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.ReturnCodeResponse;
@@ -25,6 +27,7 @@ import de.budget.Exception.InvalidLoginException;
 import de.budget.Exception.NoSessionException;
 import de.budget.Exception.UsernameAlreadyExistsException;
 import de.budget.entities.BudgetSession;
+import de.budget.entities.Category;
 //Entities-Import 
 import de.budget.entities.User;
 import de.budget.entities.Vendor;
@@ -144,7 +147,30 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Vendor> vendorList = user.getVendors();
-			response.setVendorList(dtoAssembler.makeDto(vendorList));	
+			response.setVendorList(dtoAssembler.makeVendorListDto(vendorList));	
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		return response;
+	}
+	
+	/**
+	 * Gives a Response Object with all Categorys in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return CategoryListResponse Object
+	 */
+	@Override
+	public CategoryListResponse getMyCategorys(int sessionId) {
+		CategoryListResponse response = new CategoryListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			List<Category> categoryList = user.getCategories();
+			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
