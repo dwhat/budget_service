@@ -3,7 +3,7 @@ package de.budget.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -66,7 +66,7 @@ public class Basket implements Serializable {
 	 * @date 12.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="basket")
-	private Set<Item> items;
+	private List<Item> items;
 	
 	
 	/**
@@ -219,7 +219,7 @@ public class Basket implements Serializable {
 	 * @author Marco
 	 * @return a set with all Items of a basket
 	 */
-	public Set<Item> getItems(){
+	public List<Item> getItems(){
 		return this.items;
 	}
 	
@@ -227,7 +227,7 @@ public class Basket implements Serializable {
 	 * @author Marco
 	 * @param items
 	 */
-	public void setItems(Set<Item> items) {
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 	
@@ -270,5 +270,33 @@ public class Basket implements Serializable {
 			quantity = quantity + 1;
 		}
 		return quantity;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the lastChanged
+	 */
+	public Timestamp getLastChanged() {
+		return lastChanged;
+	}
+
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(Timestamp lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 }

@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import de.budget.dto.BasketTO;
 import de.budget.dto.CategoryTO;
 import de.budget.dto.PaymentTO;
 import de.budget.dto.VendorTO;
+import de.budget.entities.Basket;
 import de.budget.entities.Category;
 import de.budget.entities.Payment;
 import de.budget.entities.Vendor;
@@ -21,7 +23,7 @@ import de.budget.entities.Vendor;
 @Stateless
 public class DtoAssembler {
 
-	public VendorTO makeDto(Vendor vendor){
+	public VendorTO makeDto(Vendor vendor) {
 		VendorTO dto = new VendorTO();
 		dto.setId(vendor.getId());
 		dto.setName(vendor.getName());
@@ -40,7 +42,7 @@ public class DtoAssembler {
 		return dtoList;
 	}
 	
-	public CategoryTO makeDto(Category category){
+	public CategoryTO makeDto(Category category) {
 		CategoryTO dto = new CategoryTO();
 		dto.setId(category.getId());
 		dto.setName(category.getName());
@@ -61,7 +63,7 @@ public class DtoAssembler {
 		return dtoList;
 	}
 	
-	public PaymentTO makeDto(Payment payment){
+	public PaymentTO makeDto(Payment payment) {
 		PaymentTO dto = new PaymentTO();
 		dto.setId(payment.getId());
 		dto.setName(payment.getName());
@@ -78,6 +80,28 @@ public class DtoAssembler {
 		ArrayList<PaymentTO> dtoList = new ArrayList<>();
 		for(Payment p : payments) {
 			dtoList.add(makeDto(p));
+		}
+		return dtoList;
+	}
+	
+	public BasketTO makeDto(Basket basket) {
+		BasketTO dto = new BasketTO();
+		dto.setId(basket.getId());
+		dto.setNotice(basket.getNotice());
+		dto.setCreateDate(basket.getCreateDate());
+		dto.setAmount(basket.getAmount());
+		dto.setLastChanged(basket.getLastChanged());
+		dto.setUser(basket.getUser().getUserName());
+		dto.setPurchaseDate(basket.getPurchaseDate());
+		dto.setVendor(basket.getVendor().getId());
+		dto.setPayment(basket.getPayment().getId());
+		return dto;
+	}
+	
+	public List<BasketTO> makeBasketListDto(List<Basket> baskets) {
+		ArrayList<BasketTO> dtoList = new ArrayList<>();
+		for(Basket b : baskets) {
+			dtoList.add(makeDto(b));
 		}
 		return dtoList;
 	}

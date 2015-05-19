@@ -4,12 +4,14 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
 
 
 
@@ -34,6 +36,7 @@ import de.budget.Exception.InvalidLoginException;
 
 import de.budget.Exception.NoSessionException;
 import de.budget.Exception.UsernameAlreadyExistsException;
+import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
 import de.budget.entities.Payment;
@@ -205,6 +208,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Payment> paymentList = user.getPayments();
 			response.setPaymentList(dtoAssembler.makePaymentListDto(paymentList));	
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		return response;
+	}
+	
+	/**
+	 * Gives a Response Object with all Baskets in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return BasketListResponse Object
+	 */
+	@Override
+	public BasketListResponse getMyBaskets(int sessionId) {
+		BasketListResponse response = new BasketListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			List<Basket> paymentList = user.getBaskets();
+			response.setBasketList(dtoAssembler.makeBasketListDto(paymentList));	
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());

@@ -38,8 +38,9 @@ public class CategoryTO implements Serializable {
 	 * @param income
 	 * @param createDate
 	 * @param user
+	 * @param lastChanged 
 	 */
-	public CategoryTO(int id, String name, String notice, boolean active, boolean income, Timestamp createDate, String user) {
+	public CategoryTO(int id, String name, String notice, boolean active, boolean income, Timestamp createDate, Timestamp lastChanged, String user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,6 +48,7 @@ public class CategoryTO implements Serializable {
 		this.active = active;
 		this.income = income;
 		this.createDate = createDate;
+		this.lastChanged = lastChanged;
 		this.user = user;
 	}
 	
