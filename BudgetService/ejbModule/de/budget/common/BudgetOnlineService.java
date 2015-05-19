@@ -4,11 +4,13 @@ package de.budget.common;
 
 //Response-Imports
 import de.budget.dto.BasketListResponse;
+import de.budget.dto.BasketResponse;
 import de.budget.dto.CategoryListResponse;
 import de.budget.dto.PaymentListResponse;
 import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.VendorListResponse;
+import de.budget.dto.VendorResponse;
 
 
 
@@ -80,10 +82,15 @@ public interface BudgetOnlineService {
 	 */
 	public VendorListResponse getMyVendors(int sessionId);
 
-
-
-	
-	//public Vendor getVendorByName(String name);
+	/**
+	 * Method to get a Vendor with the SessionId and the vendorId
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return VendorResponse Object
+	 */
+	public VendorResponse getVendor(int sessionId, int vendorId);
 	
 	
 	//public int createOrUpdateVendor(Customer vendor);
@@ -154,10 +161,16 @@ public interface BudgetOnlineService {
 	 */
 	public BasketListResponse getMyBaskets(int sessionId);
 	
-/*	
-	public Customer getBasket(int basketID);
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param basketID
+	 * @return Basket Object
+	 */
+	public BasketResponse getBasket(int sessionId, int basketID);
 	
-	
+	/*
 	public int createBasket(Customer basket);
 	
 	//Fällt evtl weg da gleich wie create 

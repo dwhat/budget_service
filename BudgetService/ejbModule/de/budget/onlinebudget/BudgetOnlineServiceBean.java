@@ -6,6 +6,10 @@ import java.util.List;
 
 
 
+
+
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
@@ -20,18 +24,26 @@ import javax.ejb.Stateless;
 
 
 
+
+
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
 //DAO-Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.dto.BasketListResponse;
+import de.budget.dto.BasketResponse;
+import de.budget.dto.BasketTO;
 import de.budget.dto.CategoryListResponse;
 import de.budget.dto.PaymentListResponse;
 //Response-Import @author Moritz
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.VendorListResponse;
+import de.budget.dto.VendorResponse;
+import de.budget.dto.VendorTO;
 //Exception-Import
 import de.budget.Exception.BudgetOnlineException;
 import de.budget.Exception.InvalidLoginException;
@@ -232,8 +244,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		try {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
-			List<Basket> paymentList = user.getBaskets();
-			response.setBasketList(dtoAssembler.makeBasketListDto(paymentList));	
+			List<Basket> basketList = user.getBaskets();
+			response.setBasketList(dtoAssembler.makeBasketListDto(basketList));	
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -241,5 +253,49 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
+	
+	
+	/**
+	 * Method to get a Basket with the SessionId and the basketId
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param basketId
+	 * @return BasketResponse Object
+	 */
+	public BasketResponse getBasket(int sessionId, int basketId) {
+		BasketResponse response = new BasketResponse();
 
+		BasketListResponse basketListResponse = getMyBaskets(sessionId);
+		if (basketListResponse.getReturnCode() == 0) {
+			for (BasketTO b : basketListResponse.getBasketList()) {
+				if (b.getId() == basketId) {
+					response.setBasketTo(b);
+				}
+			}
+		}
+		return response;
+	}
+	
+	/**
+	 * Method to get a Vendor with the SessionId and the vendorId
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return VendorResponse Object
+	 */
+	public VendorResponse getVendor(int sessionId, int vendorId) {
+		VendorResponse response = new VendorResponse();
+
+		VendorListResponse vendorListResponse = getMyVendors(sessionId);
+		if (vendorListResponse.getReturnCode() == 0) {
+			for (VendorTO v : vendorListResponse.getVendorList()) {
+				if (v.getId() == vendorId) {
+					response.setVendorTo(v);
+				}
+			}
+		}
+		return response;
+	}
 }
