@@ -3,6 +3,7 @@ package de.budget.common;
 
 
 //Response-Imports
+import de.budget.dto.BasketListResponse;
 import de.budget.dto.CategoryListResponse;
 import de.budget.dto.PaymentListResponse;
 import de.budget.dto.ReturnCodeResponse;
@@ -129,8 +130,6 @@ public interface BudgetOnlineService {
 	 */
 	public CategoryListResponse getMyCategorys(int sessionId);
 
-
-	
 	
 	
 	/*
@@ -145,6 +144,15 @@ public interface BudgetOnlineService {
 	/*########################################################*/
 	
 	/* Basket - SECTION */
+	
+	/**
+	 * Gives a Response Object with all Baskets in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return BasketListResponse Object
+	 */
+	public BasketListResponse getMyBaskets(int sessionId);
 	
 /*	
 	public Customer getBasket(int basketID);
