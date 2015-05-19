@@ -70,6 +70,21 @@ public class Vendor implements Serializable {
 		this.user.addNewVendor(this);
 		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
+	
+	/**
+	 * @author Marco
+	 * @return the id
+	 */
+	public int getId() {
+		return this.id;
+	}
+	/**
+	 * @author Marco
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 	/**
 	 * @author Marco
 	 * @return the name
@@ -107,6 +122,18 @@ public class Vendor implements Serializable {
 	 */
 	public void setCreateDate(Timestamp creationDate) {
 		this.createDate = creationDate;
+	}
+	/**
+	 * @return the lastChanged
+	 */
+	public Timestamp getLastChanged() {
+		return lastChanged;
+	}
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(Timestamp lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 	/**
 	 * @author Marco

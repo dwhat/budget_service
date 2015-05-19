@@ -2,3 +2,5 @@
 *.classpath
 .metadata
 .project
+.classpath
+*/.classpath
