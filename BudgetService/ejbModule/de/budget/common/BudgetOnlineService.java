@@ -5,6 +5,7 @@ package de.budget.common;
 //Response-Imports
 import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.UserLoginResponse;
+import de.budget.dto.VendorListResponse;
 
 
 
@@ -68,14 +69,19 @@ public interface BudgetOnlineService {
 		
 	/* Vendor - SECTION */
 	
+	/**
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return VendorListResponse Object
+	 */
+	public VendorListResponse getMyVendors(int sessionId);
 	
 	//public Vendor getVendorByName(String name);
 	
 	
 	//public int createOrUpdateVendor(Customer vendor);
-	
-	
-	
+
 	//public int deleteVendor(int vendorID);
 	
 	/*########################################################*/

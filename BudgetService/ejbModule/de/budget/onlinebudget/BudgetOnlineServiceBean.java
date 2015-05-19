@@ -1,9 +1,10 @@
 package de.budget.onlinebudget;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-
 
 
 //Interface-Import
@@ -15,16 +16,20 @@ import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.ReturnCodeResponse;
-
+import de.budget.dto.VendorListResponse;
 //Exception-Import
 import de.budget.Exception.BudgetOnlineException;
 import de.budget.Exception.InvalidLoginException;
 
 
+import de.budget.Exception.NoSessionException;
 import de.budget.Exception.UsernameAlreadyExistsException;
+import de.budget.entities.BudgetSession;
 //Entities-Import 
 import de.budget.entities.User;
+import de.budget.entities.Vendor;
 /**************************************************/
+import de.budget.util.DtoAssembler;
 
 
 /**
@@ -45,6 +50,25 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
+	
+	@EJB
+	private DtoAssembler dtoAssembler;
+	
+	/**
+	 * @author Marco
+	 * @param sessionId
+	 * @return BudgetSession Object
+	 * @throws NoSessionException
+	 */
+	private BudgetSession getSession(int sessionId) throws NoSessionException {
+		BudgetSession session = dao.findSessionById(sessionId);
+		if (session==null) {
+			throw new NoSessionException("Bitte zunächst ein Login durchführen.");
+		}
+		else {
+			return session;
+		}
+	}
 	
 	
 	@Override
@@ -81,6 +105,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		
 	}
 
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * Method to register a new user
+	 */
 	@Override
 	public UserLoginResponse registerNewUser(String username, String password, String email) {
 		UserLoginResponse response = new UserLoginResponse();
@@ -97,6 +126,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(BudgetOnlineException be) {
 			response.setReturnCode(be.getErrorCode());
 			response.setMessage(be.getMessage());
+		}
+		return response;
+	}
+	
+	/**
+	 * Gives a Response Object with all Vendors in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return VendorListResponse Object
+	 */
+	@Override
+	public VendorListResponse getMyVendors(int sessionId) {
+		VendorListResponse response = new VendorListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			List<Vendor> vendorList = user.getVendors();
+			response.setVendorList(dtoAssembler.makeDto(vendorList));	
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		return response;
 	}

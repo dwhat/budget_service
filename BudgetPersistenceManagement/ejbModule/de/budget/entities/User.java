@@ -2,8 +2,8 @@ package de.budget.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -56,7 +56,7 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<Category> categories;
+	private List<Category> categories;
 	
 	/**
 	 * Bidirectional one to many relationship
@@ -64,7 +64,7 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<Payment> payments;
+	private List<Payment> payments;
 	
 	/**
 	 * Bidirectional one to many relationship
@@ -72,7 +72,7 @@ public class User implements Serializable {
 	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<Vendor> vendors;
+	private List<Vendor> vendors;
 	
 	/**
 	 * Bidirectional one to many relationship
@@ -80,7 +80,7 @@ public class User implements Serializable {
 	 * @date 12.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-	private Set<Basket> baskets;
+	private List<Basket> baskets;
 
 	
 	
@@ -105,10 +105,10 @@ public class User implements Serializable {
 		this.password = password;
 		this.email = email;
 		this.createDate = new Timestamp(System.currentTimeMillis());
-		this.categories = new HashSet<Category>();
-		this.payments = new HashSet<Payment>();
-		this.vendors = new HashSet<Vendor>();
-		this.baskets = new HashSet<Basket>();
+		this.categories = new ArrayList<Category>();
+		this.payments = new ArrayList<Payment>();
+		this.vendors = new ArrayList<Vendor>();
+		this.baskets = new ArrayList<Basket>();
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @return a Set with all Categories of this User
 	 */
-	public Set<Category> getCategories(){
+	public List<Category> getCategories(){
 		return this.categories;
 	}
 	
@@ -195,7 +195,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param categories
 	 */
-	public void setCategories(Set<Category> categories) {
+	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
 	
@@ -212,7 +212,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @return a Set with all Payments of this User
 	 */
-	public Set<Payment> getPayments(){
+	public List<Payment> getPayments(){
 		return this.payments;
 	}
 	
@@ -220,7 +220,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param payment
 	 */
-	public void setPayments(Set<Payment> payments) {
+	public void setPayments(List<Payment> payments) {
 		this.payments = payments;
 	}
 	
@@ -235,9 +235,9 @@ public class User implements Serializable {
 	
 	/**
 	 * @author Marco
-	 * @return a Set with all Vendors of this User
+	 * @return a List with all Vendors of this User
 	 */
-	public Set<Vendor> getVendors(){
+	public List<Vendor> getVendors(){
 		return this.vendors;
 	}
 	
@@ -245,7 +245,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param vendors
 	 */
-	public void setVendors(Set<Vendor> vendors) {
+	public void setVendors(List<Vendor> vendors) {
 		this.vendors = vendors;
 	}
 	
@@ -262,7 +262,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @return a Set with all Baskets of this User
 	 */
-	public Set<Basket> getBaskets(){
+	public List<Basket> getBaskets(){
 		return this.baskets;
 	}
 	
@@ -270,7 +270,7 @@ public class User implements Serializable {
 	 * @author Marco
 	 * @param baskets
 	 */
-	public void setBaskets(Set<Basket> baskets) {
+	public void setBaskets(List<Basket> baskets) {
 		this.baskets = baskets;
 	}
 	
