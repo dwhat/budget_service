@@ -4,6 +4,7 @@ package de.budget.common;
 
 //Response-Imports
 import de.budget.dto.CategoryListResponse;
+import de.budget.dto.PaymentListResponse;
 import de.budget.dto.ReturnCodeResponse;
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.VendorListResponse;
@@ -92,6 +93,13 @@ public interface BudgetOnlineService {
 	
 	/* Payment - SECTION */
 	
+	/**
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return PaymentListResponse Object
+	 */
+	public PaymentListResponse getMyPayments(int sessionId);
 /*	
 	public Customer getPayment(int paymentID);
 	
@@ -120,6 +128,9 @@ public interface BudgetOnlineService {
 	 * @return CategoryListResponse Object
 	 */
 	public CategoryListResponse getMyCategorys(int sessionId);
+
+
+	
 	
 	
 	/*

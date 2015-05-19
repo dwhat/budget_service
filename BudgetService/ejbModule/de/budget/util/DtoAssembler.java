@@ -6,8 +6,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 
 import de.budget.dto.CategoryTO;
+import de.budget.dto.PaymentTO;
 import de.budget.dto.VendorTO;
 import de.budget.entities.Category;
+import de.budget.entities.Payment;
 import de.budget.entities.Vendor;
 
 /**
@@ -55,6 +57,27 @@ public class DtoAssembler {
 		ArrayList<CategoryTO> dtoList = new ArrayList<>();
 		for(Category c : categories) {
 			dtoList.add(makeDto(c));
+		}
+		return dtoList;
+	}
+	
+	public PaymentTO makeDto(Payment payment){
+		PaymentTO dto = new PaymentTO();
+		dto.setId(payment.getId());
+		dto.setName(payment.getName());
+		dto.setNumber(payment.getNumber());
+		dto.setBic(payment.getBic());
+		dto.setCreateDate(payment.getCreateDate());
+		dto.setActive(payment.isActive());
+		dto.setLastChanged(payment.getLastChanged());
+		dto.setUser(payment.getUser().getUserName());
+		return dto;
+	}
+	
+	public List<PaymentTO> makePaymentListDto(List<Payment> payments) {
+		ArrayList<PaymentTO> dtoList = new ArrayList<>();
+		for(Payment p : payments) {
+			dtoList.add(makeDto(p));
 		}
 		return dtoList;
 	}

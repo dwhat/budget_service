@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
@@ -18,7 +19,7 @@ public class Payment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id @GeneratedValue
 	private int id;
 	
 	@NotNull
@@ -166,6 +167,34 @@ public class Payment implements Serializable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/**
+	 * @return the lastChanged
+	 */
+	public Timestamp getLastChanged() {
+		return lastChanged;
+	}
+
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(Timestamp lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 

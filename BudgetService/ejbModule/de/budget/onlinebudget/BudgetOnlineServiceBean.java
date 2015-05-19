@@ -2,6 +2,8 @@ package de.budget.onlinebudget;
 
 import java.util.List;
 
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
@@ -12,12 +14,15 @@ import javax.ejb.Stateless;
 
 
 
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
 //DAO-Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.dto.CategoryListResponse;
+import de.budget.dto.PaymentListResponse;
 //Response-Import @author Moritz
 import de.budget.dto.UserLoginResponse;
 import de.budget.dto.ReturnCodeResponse;
@@ -31,6 +36,7 @@ import de.budget.Exception.NoSessionException;
 import de.budget.Exception.UsernameAlreadyExistsException;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
+import de.budget.entities.Payment;
 //Entities-Import 
 import de.budget.entities.User;
 import de.budget.entities.Vendor;
@@ -162,7 +168,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * Gives a Response Object with all Categorys in a list
+	 * Gives a Response Object with all Categories in a list
 	 * @author Marco
 	 * @date 19.05.2015
 	 * @param sessionId
@@ -176,6 +182,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Category> categoryList = user.getCategories();
 			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		return response;
+	}
+	
+	/**
+	 * Gives a Response Object with all Payments in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return CategoryListResponse Object
+	 */
+	@Override
+	public PaymentListResponse getMyPayments(int sessionId) {
+		PaymentListResponse response = new PaymentListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			List<Payment> paymentList = user.getPayments();
+			response.setPaymentList(dtoAssembler.makePaymentListDto(paymentList));	
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
