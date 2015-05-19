@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -32,6 +33,18 @@ public class Basket implements Serializable {
 	private double amount;
 	
 	private Timestamp createDate;
+	
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * Optimistischer Locking Ansatz
+	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
+	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
+	 * 
+	 */
+	@Version
+	private Timestamp lastChanged;
+	
 	
 	@NotNull
 	private Timestamp purchaseDate;

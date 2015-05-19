@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 /**
  * Item Class
@@ -38,6 +39,18 @@ public class Item implements Serializable {
 	private Timestamp launchDate;
 	
 	private Timestamp finishDate;
+	
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * Optimistischer Locking Ansatz
+	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
+	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
+	 * 
+	 */
+	@Version
+	private Timestamp lastChanged;
+	
 	
 	@ManyToOne
 	private Basket basket;

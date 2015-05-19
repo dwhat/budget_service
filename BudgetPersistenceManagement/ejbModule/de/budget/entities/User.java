@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,6 +38,17 @@ public class User implements Serializable {
 	private String email;
 	
 	private Timestamp createDate;
+	
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * Optimistischer Locking Ansatz
+	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
+	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
+	 * 
+	 */
+	@Version
+	private Timestamp lastChanged;
 	
 	/**
 	 * Bidirectional one to many relationship

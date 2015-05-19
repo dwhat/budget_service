@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 /**
  * Payment Class
@@ -32,6 +33,18 @@ public class Payment implements Serializable {
 	private boolean active;
 	
 	private Timestamp createDate;
+	
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * Optimistischer Locking Ansatz
+	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
+	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
+	 * 
+	 */
+	@Version
+	private Timestamp lastChanged;
+	
 	
 	@ManyToOne
 	private User user;

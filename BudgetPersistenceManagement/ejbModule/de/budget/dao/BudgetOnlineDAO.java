@@ -31,6 +31,27 @@ import de.budget.entities.Item;
  * 
  * @author Marco
  * @author Moritz
+ * 
+ * Querys:
+ * ebenfalls denkbar wäre 
+ * NativeQuery
+ * em.executeQuery("Select c FROM Customer c where c.name Like :name", Customer.class);
+ * query.setParemter("name", "%meier%";
+ * 
+ * List<customer> result = query.getResultList();
+ * 
+ * nicht mit SQL zu verwechseln !!
+ * 
+ * NamedQuery:
+ * 
+ * 
+ * Update:
+ * em.merge(customer); gebe Instanz in DB rein und update somit
+ * em.refresh(customer); DB überschreibt meine Instanz 
+ * 
+ * Remove:
+ *
+ * em.remove
  *
  */
 @Stateless
@@ -177,21 +198,22 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		return category;
 	}
 	
+
+
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param User Object
-	 * @return Vendor Object
+	 * @author Moritz
+	 * @date  19.05.2015
+	 * @param VendorObjekt
+	 * @return VendorKopieObjekt
 	 */
 	@Override
-	public Vendor createVendor(User user) {
-		Vendor vendor = new Vendor(user);
+	public Vendor createVendor(Vendor vendor) {
 		if (vendor != null) {
 			em.persist(vendor);
 		}
 		return vendor;
 	}
-
+	
 	/**
 	 * @author Marco
 	 * @date 18.05.2015
@@ -311,5 +333,74 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public void deletePayment(int paymentId) {
 		Payment payment = em.find(Payment.class, paymentId);
 		em.remove(payment);
+	}
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param Userobjekt
+	 * @return UserobjektKopie
+	 */
+	@Override
+	public User updateUser(User user) {
+		return em.merge(user);
+	}
+
+	
+	
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param VendorObjekt
+	 * @return VendorobjektKopie
+	 */
+	@Override
+	public Vendor updateVendor(Vendor vendor) {
+		return em.merge(vendor);
+	}
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param BasketObjekt
+	 * @return BasketObjektKopie
+	 */
+	@Override
+	public Basket updateBaseket(Basket basket) {
+		return em.merge(basket);
+	}
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param CategoryObjekt
+	 * @return CategoryObjektKopie
+	 */
+	@Override
+	public Category updateCategory(Category category) {
+		return em.merge(category);
+	}
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param ItemObjekt
+	 * @return ItemObjektKopie
+	 */
+	@Override
+	public Item updateItem(Item item) {
+		return em.merge(item);
+	}
+
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * @param PaymentObjekt
+	 * @return PaymentObjektKopie
+	 */
+	@Override
+	public Payment updatePayment(Payment payment) {
+		return em.merge(payment);
 	}
 }

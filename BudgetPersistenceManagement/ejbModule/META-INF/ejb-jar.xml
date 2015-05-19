@@ -12,7 +12,7 @@
 		      <env-entry>
 		         <env-entry-name>de.budget.dao.DataBuilder/password1</env-entry-name>
 		         <env-entry-type>java.lang.String</env-entry-type>
-		         <env-entry-value>joe1</env-entry-value>
+		         <env-entry-value>12345678</env-entry-value>
 		      </env-entry>
 		      <env-entry>
 		         <env-entry-name>de.budget.dao.DataBuilder/username2</env-entry-name>
@@ -22,7 +22,7 @@
 		      <env-entry>
 		         <env-entry-name>de.budget.dao.DataBuilder/password2</env-entry-name>
 		         <env-entry-type>java.lang.String</env-entry-type>
-		         <env-entry-value>emma1</env-entry-value>
+		         <env-entry-value>12345678</env-entry-value>
 		      </env-entry>
 		      <env-entry>
 		         <env-entry-name>de.budget.dao.DataBuilder/email1</env-entry-name>

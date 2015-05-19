@@ -34,18 +34,27 @@ public class DataBuilder {
 	 */
 	@PostConstruct
 	private void init() {
-		logger.info("in init");
+		logger.info("Databuilder init");
 		User user1 = em.find(User.class, username1);
 		if (user1 == null) {
 			user1 = new User(username1, password1, email1);
 			em.persist(user1);
-			logger.info("User angelegt");
+			logger.info("User1 angelegt");
+		}
+		else
+		{
+			logger.info("User1 existiert schon");
 		}
 
 		User user2 = em.find(User.class, username2);
 		if (user2 == null) {
 			user2 = new User(username2, password2, email2);
 			em.persist(user2);		
+			logger.info("User2 angelegt");
+		}
+		else
+		{
+			logger.info("User2 existiert schon");
 		}
 	}
 	

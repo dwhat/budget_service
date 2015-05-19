@@ -3,11 +3,13 @@ package de.budget.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+
 //Import Persistence
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 //Import Base64 // libsOrdner 
@@ -30,6 +32,18 @@ public class Vendor implements Serializable {
 	private String name;
 	
 	private Timestamp createDate;
+	
+	/**
+	 * @author Moritz
+	 * @date 19.05.2015
+	 * Optimistischer Locking Ansatz
+	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
+	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
+	 * 
+	 */
+	@Version
+	private Timestamp lastChanged;
+	
 	
 	@ManyToOne
 	private User user;
