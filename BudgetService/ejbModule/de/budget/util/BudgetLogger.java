@@ -1,4 +1,4 @@
-package de.budget.common;
+package de.budget.util;
 
 
 

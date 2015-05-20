@@ -1,4 +1,4 @@
-package de.budget.dto;
+package de.budget.dto.Response;
 
 /**
  * UserReturnCode Klasse die die ReturnCodeResponse erweitert um die SessionID

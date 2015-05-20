@@ -1,6 +1,8 @@
-package de.budget.dto;
+package de.budget.dto.Response;
 
 import java.util.List;
+
+import de.budget.dto.BasketTO;
 
 /**
  * @date 19.05.2015

@@ -3,14 +3,14 @@ package de.budget.common;
 
 
 //Response-Imports
-import de.budget.dto.BasketListResponse;
-import de.budget.dto.BasketResponse;
-import de.budget.dto.CategoryListResponse;
-import de.budget.dto.PaymentListResponse;
-import de.budget.dto.ReturnCodeResponse;
-import de.budget.dto.UserLoginResponse;
-import de.budget.dto.VendorListResponse;
-import de.budget.dto.VendorResponse;
+import de.budget.dto.Response.BasketListResponse;
+import de.budget.dto.Response.BasketResponse;
+import de.budget.dto.Response.CategoryListResponse;
+import de.budget.dto.Response.PaymentListResponse;
+import de.budget.dto.Response.ReturnCodeResponse;
+import de.budget.dto.Response.UserLoginResponse;
+import de.budget.dto.Response.VendorListResponse;
+import de.budget.dto.Response.VendorResponse;
 
 
 

@@ -1,4 +1,4 @@
-package de.budget.dto;
+package de.budget.dto.Response;
 
 import java.io.Serializable;
 

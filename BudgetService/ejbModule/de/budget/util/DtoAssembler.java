@@ -15,7 +15,10 @@ import de.budget.entities.Payment;
 import de.budget.entities.Vendor;
 
 /**
- * Klasse zum erstellen von DTOs
+ * Klasse zum erstellen von DTOs 
+ * 
+ * DTO's werden über die vorherigen Entities gebildet. 
+ * 
  * @date 19.05.2015
  * @author Marco
  *

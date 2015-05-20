@@ -1,4 +1,6 @@
-package de.budget.dto;
+package de.budget.dto.Response;
+
+import de.budget.dto.BasketTO;
 
 /**
  * Class for the Basket response
