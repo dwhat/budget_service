@@ -78,7 +78,7 @@ public class SimpleBudgetJavaClient {
 			int sessionID = resp1.getSessionId();
 			
 			// Payment anlegen
-			PaymentResponse payResp = remoteSystem.createPayment(resp1.getSessionId(),"Konto1", "123456789", "BIC");
+			PaymentResponse payResp = remoteSystem.createPayment(sessionID,"Konto1", "123456789", "BIC");
 			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getReturnCode());
 			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getPaymentTo().getName());
 			System.out.println("Joa hat ein Payment angelegt");
