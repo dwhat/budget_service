@@ -396,9 +396,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public PaymentResponse createPayment(int sessionId, String name, String number, String bic) {
 		PaymentResponse paymentResp = new PaymentResponse();
 		try {
+			// Hole SessionObjekt
 			BudgetSession session = getSession(sessionId);
+			//Hole User Objekt
 			User user = this.dao.findUserByName(session.getUsername());
+			//Lege Payment Objekt an
 			Payment payment = dao.createPayment(user, name, number, bic);
+			// Response befüllen
 			paymentResp.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
 		catch (BudgetOnlineException e) {
