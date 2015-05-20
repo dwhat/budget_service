@@ -1,24 +1,28 @@
 package de.xbank.client;
 
+import java.util.ArrayList;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import de.budget.common.BudgetOnlineService;
-import de.budget.dto.UserLoginResponse;
+import de.budget.dto.PaymentTO;
+import de.budget.dto.Response.PaymentListResponse;
+import de.budget.dto.Response.PaymentResponse;
+import de.budget.dto.Response.UserLoginResponse;
 
 
 
 /**
- * @author Thoene
- * Diese Klasse realisiert einen rudimentaeren Client zum Zugriff auf das OnlineBankingSystem.
+ * @author marco
+ * test client for the BudgetServer
  */
 public class SimpleBudgetJavaClient {
 	
 	private static BudgetOnlineService remoteSystem;
 	
 	/**
-	 * In dieser Main-Methode werden Requests an den Onlinebanking-Server abgeschickt. Sie koennen die durchgefuehrten
-	 * Szenarien nach Belieben anpassen.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -38,7 +42,7 @@ public class SimpleBudgetJavaClient {
  	       //Test-Szeanarien ausfuehren:
 		   szenarioEmma();
 		   szenarioJoe();		   	       
-		   szenarioEmma();
+		   szenarioPeter();
 		   
 		}
 		catch (Exception ex) {
@@ -64,7 +68,7 @@ public class SimpleBudgetJavaClient {
 	}
 
     /**
-     * Test-Szenario: Joe meldet sich an, fragt seine Konten ab und überweist an Emma
+     * Test-Szenario: Joe meldet sich an, fragt seine Konten ab 
      */
 	private static void szenarioJoe() {
 		try {
@@ -72,11 +76,39 @@ public class SimpleBudgetJavaClient {
 			UserLoginResponse resp1 = remoteSystem.login("joe", "joe1");
 			System.out.println("Joe hat sich angemeldet.");
 			int sessionID = resp1.getSessionId();
+			
+			// Payment anlegen
+			PaymentResponse payResp = remoteSystem.createPayment(resp1.getSessionId(),"Konto1", "123456789", "BIC");
+			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getReturnCode());
+			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getPaymentTo().getName());
+			System.out.println("Joa hat ein Payment angelegt");
+			
+			// Payment abrufen
+			PaymentListResponse payListResp = remoteSystem.getMyPayments(resp1.getSessionId());
+			ArrayList<PaymentTO> paymentList = (ArrayList<PaymentTO>) payListResp.getPaymentList();
+			System.out.println("Erster Name des Kontos: " + paymentList.get(0).getName());
+			
+			// Ausloggen
 			remoteSystem.logout(sessionID);
 			System.out.println("Joe hat sich abgemeldet.");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private static void szenarioPeter() {
+		System.out.println("============================================================");
+		System.out.println("Szenario Peter");
+		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "peter1", "test1@gmx.de");
+		if (resp1.getReturnCode() == 0) {
+			int sessionId = resp1.getSessionId();
+			System.out.println("Peter hat sich registiert.");
+			remoteSystem.logout(sessionId);
+			System.out.println("Peter hat sich ausgelogt.");
+		}
+		else {
+			System.out.println(resp1.getMessage());
 		}
 	}
 }
