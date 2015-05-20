@@ -393,17 +393,18 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return Payment Object
 	 */
 	@Override
-	public Payment createPayment(int sessionId, String name, String number, String bic) {
-		Payment payment = null;
+	public PaymentResponse createPayment(int sessionId, String name, String number, String bic) {
+		PaymentResponse paymentResp = new PaymentResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
-			payment = dao.createPayment(user, name, number, bic);
-			return payment;
+			Payment payment = dao.createPayment(user, name, number, bic);
+			paymentResp.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
 		catch (BudgetOnlineException e) {
-
+			paymentResp.setReturnCode(404);
+			paymentResp.setMessage("Couldn't create a payment.");
 		}
-		return null;
+		return paymentResp;
 	}
 }

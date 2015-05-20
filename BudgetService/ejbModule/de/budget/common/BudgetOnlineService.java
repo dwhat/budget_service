@@ -12,7 +12,6 @@ import de.budget.dto.Response.ReturnCodeResponse;
 import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
-import de.budget.entities.Payment;
 
 
 
@@ -131,7 +130,7 @@ public interface BudgetOnlineService {
 	public ReturnCodeResponse deletePayment(int sessionId, int paymentId);
 	
 
-	public Payment createPayment(int sessionId, String name, String number, String bic);
+	public PaymentResponse createPayment(int sessionId, String name, String number, String bic);
 	/*	
 	//Fällt evtl weg da gleich wie create 
 	public int updatePayment(Customer payment);
