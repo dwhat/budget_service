@@ -337,6 +337,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * @author Marco
+	 * @param sessionId
+	 * @param paymentName
+	 * @return PaymentResponseObject
+	 */
+	private PaymentResponse getPaymentByName(int sessionId, String paymentName) {
+		PaymentResponse response = new PaymentResponse();
+
+		PaymentListResponse paymentListResponse = getMyPayments(sessionId);
+		if (paymentListResponse.getReturnCode() == 0) {
+			for (PaymentTO p : paymentListResponse.getPaymentList()) {
+				if (p.getName().equals(paymentName)) {
+					response.setPaymentTo(p);
+				}
+			}
+		}
+		else {
+			response = null;
+		}
+		return response;
+	}
+	
+	/**
 	 * Method to delete a payment
 	 * @author Marco
 	 * @param sessionId
@@ -359,7 +382,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;	
 	}
 	
-	
+	/**
+	 * Method to create a new Payment
+	 * @author Marco
+	 * @date 20.05.2015
+	 * @param sessionId
+	 * @param name
+	 * @param number
+	 * @param bic
+	 * @return Payment Object
+	 */
 	@Override
 	public Payment createPayment(int sessionId, String name, String number, String bic) {
 		Payment payment = null;
