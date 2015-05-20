@@ -73,12 +73,21 @@ public class Item implements Serializable {
 	 * @param basket 
 	 * @param category 
 	 */
-	public Item(Basket basket, Category category) {
+	public Item(String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) {
+		this.name = name;
+		this.quantity = quantity;
+		this.price = price;
+		this.notice = notice;
+		this.period = period;
+		this.launchDate = launchDate;
+		this.finishDate = finishDate;
+		this.active = true;
 		this.category = category;
 		this.basket = basket;
 		this.basket.addNewItem(this);
 		this.basket.getUser().addNewCategory(category);
 		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.lastChanged = new Timestamp(System.currentTimeMillis());
 	}
 
 	

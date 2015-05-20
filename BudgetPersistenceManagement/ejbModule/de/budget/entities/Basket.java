@@ -85,14 +85,18 @@ public class Basket implements Serializable {
 	  * @param payment
 	  * @param vendor
 	  */
-	 public Basket(User user, Payment payment, Vendor vendor) {
+	 public Basket(User user, String notice, double amount, Timestamp purchaseDate, Payment payment, Vendor vendor) {
 		 this.user = user;
+		 this.notice = notice;
+		 this.amount = amount;
 		 this.payment = payment;
 		 this.vendor = vendor;
+		 this.purchaseDate = purchaseDate;
 		 this.user.addNewBasket(this);
 		 this.user.addNewPayment(payment);
 		 this.user.addNewVendor(vendor);
 		 this.createDate = new Timestamp(System.currentTimeMillis());
+		 this.lastChanged = new Timestamp(System.currentTimeMillis());
 	 }
 
 	/**

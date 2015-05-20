@@ -59,10 +59,15 @@ public class Category implements Serializable{
 	 * @author Marco
 	 * @date 11.05.2015
 	 */
-	public Category(User user) {
+	public Category(User user, boolean income, String name, String notice) {
 		this.user = user;
+		this.income = income;
+		this.name = name;
+		this.notice = notice;
+		this.active = true;
 		this.user.addNewCategory(this);
 		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.lastChanged = new Timestamp(System.currentTimeMillis());
 	}
 	
 	/**

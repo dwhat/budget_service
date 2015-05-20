@@ -244,7 +244,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public Basket createBasket(User user, Payment payment, Vendor vendor) {
 		if(user != null && payment != null && vendor != null) {
-			Basket basket = new Basket(user, payment, vendor);
+			//Basket basket = new Basket(user, payment, vendor);
 			if (basket != null){
 				em.persist(basket);
 				return basket;

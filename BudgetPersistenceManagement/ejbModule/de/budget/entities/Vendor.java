@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 
+
 //Import Persistence
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,10 +66,13 @@ public class Vendor implements Serializable {
 	 * @author Marco
 	 * @param user
 	 */
-	public Vendor (User user){
+	public Vendor (User user, String name, String logo){
 		this.user = user;
+		this.name = name;
+		this.logo = logo;
 		this.user.addNewVendor(this);
 		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.lastChanged = new Timestamp(System.currentTimeMillis());
 	}
 	
 	/**
