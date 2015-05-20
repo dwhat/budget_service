@@ -84,6 +84,20 @@ public class Item implements Serializable {
 	
 	
 	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
 	 * @author Marco
 	 * @return the name
 	 */
@@ -257,6 +271,20 @@ public class Item implements Serializable {
 	 */
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the lastChanged
+	 */
+	public Timestamp getLastChanged() {
+		return lastChanged;
+	}
+
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(Timestamp lastChanged) {
+		this.lastChanged = lastChanged;
 	}
 
 
