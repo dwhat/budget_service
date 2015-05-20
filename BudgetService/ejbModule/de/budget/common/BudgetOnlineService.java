@@ -7,10 +7,12 @@ import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.PaymentListResponse;
+import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
 import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
+import de.budget.entities.Payment;
 
 
 
@@ -108,12 +110,29 @@ public interface BudgetOnlineService {
 	 * @return PaymentListResponse Object
 	 */
 	public PaymentListResponse getMyPayments(int sessionId);
-/*	
-	public Customer getPayment(int paymentID);
 	
+	/**
+	 * Method to get a payment with the SessionId and the paymentId
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return PaymentResponse Object
+	 */
+	public PaymentResponse getPayment(int sessionId, int paymentId);
 	
-	public int createPayment(Customer payment);
+	/**
+	 * Method to delete a payment
+	 * @author Marco
+	 * @param sessionId
+	 * @param paymentId
+	 * @return ReturnCodeResponse Object
+	 */
+	public ReturnCodeResponse deletePayment(int sessionId, int paymentId);
 	
+
+	public Payment createPayment(int sessionId, String name, String number, String bic);
+	/*	
 	//Fällt evtl weg da gleich wie create 
 	public int updatePayment(Customer payment);
 	

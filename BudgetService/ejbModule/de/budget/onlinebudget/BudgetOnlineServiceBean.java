@@ -13,6 +13,9 @@ import java.util.List;
 
 
 
+
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
@@ -34,18 +37,23 @@ import javax.ejb.Stateless;
 
 
 
+
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
 //DAO-Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.dto.BasketTO;
+import de.budget.dto.PaymentTO;
 //Response-Import @author Moritz
 import de.budget.dto.VendorTO;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.PaymentListResponse;
+import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
 import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.VendorListResponse;
@@ -303,5 +311,67 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		return response;
+	}
+	
+	/**
+	 * Method to get a payment with the SessionId and the paymentId
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return PaymentResponse Object
+	 */
+	@Override
+	public PaymentResponse getPayment(int sessionId, int paymentId) {
+		PaymentResponse response = new PaymentResponse();
+
+		PaymentListResponse paymentListResponse = getMyPayments(sessionId);
+		if (paymentListResponse.getReturnCode() == 0) {
+			for (PaymentTO p : paymentListResponse.getPaymentList()) {
+				if (p.getId() == paymentId) {
+					response.setPaymentTo(p);
+				}
+			}
+		}
+		return response;
+	}
+	
+	/**
+	 * Method to delete a payment
+	 * @author Marco
+	 * @param sessionId
+	 * @param paymentId
+	 * @return ReturnCodeResponse Object
+	 */
+	@Override
+	public ReturnCodeResponse deletePayment(int sessionId, int paymentId) {
+		PaymentResponse paymentResp = getPayment(sessionId, paymentId);
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		
+		if(paymentResp.getReturnCode() == 0) {
+			dao.deletePayment(paymentResp.getPaymentTo().getId());
+			logger.info("Payment erfolgreich gelöscht");
+		}
+		else {
+			response.setReturnCode(404);
+			response.setMessage("Payment to delete not found.");
+		}
+		return response;	
+	}
+	
+	
+	@Override
+	public Payment createPayment(int sessionId, String name, String number, String bic) {
+		Payment payment = null;
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			payment = dao.createPayment(user, name, number, bic);
+			return payment;
+		}
+		catch (BudgetOnlineException e) {
+
+		}
+		return null;
 	}
 }

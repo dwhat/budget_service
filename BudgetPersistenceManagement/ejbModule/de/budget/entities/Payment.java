@@ -66,9 +66,14 @@ public class Payment implements Serializable {
 	 * @author Marco
 	 * @date 11.05.2015
 	 */
-	public Payment(User user) {
+	public Payment(User user, String name, String number, String bic) {
 		this.user = user;
+		this.name = name;
+		this.number = number;
+		this.bic = bic;
+		this.active = true;
 		this.user.addNewPayment(this);
+		this.lastChanged = new Timestamp(System.currentTimeMillis());
 		this.createDate = new Timestamp(System.currentTimeMillis());
 	}
 	

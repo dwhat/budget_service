@@ -225,8 +225,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Payment Object
 	 */
 	@Override
-	public Payment createPayment(User user) {
-		Payment payment = new Payment(user);
+	public Payment createPayment(User user, String name, String number, String bic) {
+		Payment payment = new Payment(user, name, number, bic);
 		if (payment != null) {
 			em.persist(payment);
 		}

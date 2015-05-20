@@ -6,6 +6,7 @@ package de.budget.dao;
 import javax.ejb.Local;
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -53,7 +54,7 @@ public interface BudgetOnlineDAOLocal {
 	public Item findItemById(int itemId);
 	public void deleteItem(int itemId);
 
-	public Payment createPayment(User user);
+	public Payment createPayment(User user, String name, String number, String bic);
 	public Payment updatePayment(Payment payment);
 	public Payment findPaymentById(int paymentId);
 	public void deletePayment(int paymentId);
