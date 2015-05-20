@@ -15,7 +15,11 @@
             angelegte Daten erhalten.
             Bei Final Deploy unbedingt richtig setzen bspws. "none" wenn Daten im
             Produktivsystem vorhanden  -->
+<<<<<<< HEAD
         <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+=======
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
+>>>>>>> branch 'master' of https://github.com/dwhat/budget_service
         <!--Die Eigenschaft "hibernate.show_sql" legt fest, ob SQL-Code ausgegeben
         	werden soll. Bei Final Deploy unbedingt auf "false" setzen  -->
         <property name="hibernate.show_sql" value="true"/>
