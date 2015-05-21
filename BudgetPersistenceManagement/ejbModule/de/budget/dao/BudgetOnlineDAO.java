@@ -12,6 +12,9 @@ import javax.persistence.PersistenceContext;
 
 
 
+
+import org.jboss.logging.Logger;
+
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
@@ -60,6 +63,10 @@ import de.budget.entities.Item;
  */
 @Stateless
 public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
+	
+	
+	private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
+	
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -226,9 +233,13 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 */
 	@Override
 	public Payment createPayment(User user, String name, String number, String bic) {
+		logger.info("createPayment Methode aufgerufen");
 		Payment payment = new Payment(user, name, number, bic);
+		logger.info("PaymentObject angelegt");
 		if (payment != null) {
+			logger.info("Payment Object ungleich null");
 			em.persist(payment);
+			logger.info("PaymentObject persistiert");
 		}
 		return payment;
 	}
