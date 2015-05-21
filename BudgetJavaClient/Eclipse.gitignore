@@ -1,6 +1,8 @@
 /build/
+build/
 /bin/
 *.class
+.class
 *.jar
 *.db
 *.classpath
