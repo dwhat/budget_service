@@ -10,6 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BudgetPersistenceManagement"/>
 	<classpathentry kind="lib" path="libs/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Moritz/workspace_git/budget_service/BudgetService/libs/jboss-client.jar"/>
+	<classpathentry kind="lib" path="libs/jboss-client.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

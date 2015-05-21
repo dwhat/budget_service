@@ -3,6 +3,9 @@
 /bin/
 
 
+
+*.classpath
+
 # Directories #
 /build/
 /bin/

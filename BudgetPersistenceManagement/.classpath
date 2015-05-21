@@ -8,6 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/Moritz/workspace_git/budget_service/BudgetService/libs/jboss-client.jar"/>
+	<classpathentry kind="lib" path="/BudgetService/libs/jboss-client.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
