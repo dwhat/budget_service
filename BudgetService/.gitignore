@@ -2,6 +2,8 @@
 /.project
 /.classpath
 
+*.classpath
+
 
 # Directories #
 /build/
@@ -14,7 +16,7 @@ target/
 *.class
  
 # Package Files #
-*.jar
+
 *.war
 *.ear
 *.db
