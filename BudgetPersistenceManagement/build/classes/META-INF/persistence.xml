@@ -4,9 +4,9 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <!-- Durch "java:jboss/datasources/ExampleDS" wird JBoss angewiesen, die integrierte HSQLDB,
          die als "Example Datasource" eingebunden ist, für die Persistenz der Applikation zu verwenden -->
-    <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+    <jta-data-source>java:jboss/datasources/BudgetDS</jta-data-source>
     <properties>
-        <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
         <!--Die Eigenschaft "hibernate.hbm2ddl.auto" legt fest, wie mit bereits 
             bestehenden Tabellen verfahren werden soll. "create-drop" bedeutet, 
             dass alle Tabellen bei einem Deployment der Applikation gelöscht und 
@@ -15,7 +15,7 @@
             angelegte Daten erhalten.
             Bei Final Deploy unbedingt richtig setzen bspws. "none" wenn Daten im
             Produktivsystem vorhanden  -->
-        <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        <property name="hibernate.hbm2ddl.auto" value="create"/>
         <!--Die Eigenschaft "hibernate.show_sql" legt fest, ob SQL-Code ausgegeben
         	werden soll. Bei Final Deploy unbedingt auf "false" setzen  -->
         <property name="hibernate.show_sql" value="true"/>
