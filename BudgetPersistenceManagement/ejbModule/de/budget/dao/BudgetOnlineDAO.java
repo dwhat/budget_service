@@ -195,7 +195,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 */
 	@Override
 	public Category createCategory(User user) {
-		Category category = new Category(user);
+		Category category = new Category(user, false, null, null);
 		if (category != null) {
 			em.persist(category);
 		}
@@ -244,7 +244,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public Basket createBasket(User user, Payment payment, Vendor vendor) {
 		if(user != null && payment != null && vendor != null) {
-			//Basket basket = new Basket(user, payment, vendor);
+			Basket basket = new Basket(user, null, 0, null, payment, vendor);
 			if (basket != null){
 				em.persist(basket);
 				return basket;
@@ -263,7 +263,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public Item createItem(Basket basket, Category category) {
 		if(basket != null && category != null) {
-			Item item = new Item(basket, category);
+			Item item = new Item(null, 0, 0, null, 0, null, null, basket, category);
 			if (item != null) {
 				em.persist(item);
 				return item;
