@@ -1,5 +1,13 @@
 /build/
-.classpath
+/bin/
+*.class
+*.jar
+*.db
+*.classpath
 .metadata
+.classpath
+.loadpath
+.setting/
 .project
 .buildpath
+*.launch
