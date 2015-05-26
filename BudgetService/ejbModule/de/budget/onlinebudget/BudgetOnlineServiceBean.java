@@ -1,6 +1,8 @@
 package de.budget.onlinebudget;
 
+import java.sql.Timestamp;
 import java.util.List;
+
 
 
 
@@ -42,6 +44,7 @@ import javax.ejb.Stateless;
 
 
 
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -55,6 +58,8 @@ import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.CategoryResponse;
+import de.budget.dto.Response.ItemListResponse;
+import de.budget.dto.Response.ItemResponse;
 import de.budget.dto.Response.PaymentListResponse;
 import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
@@ -492,5 +497,143 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public BasketResponse createBasket(int sessionId, String notice,
+			double amount, Timestamp purchaseDate, int paymentId, int vendorId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteBasket(int sessionId, int basketID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemResponse createIncome(int sessionId, String name,
+			double quantity, double price, String notice, int period,
+			Timestamp launchDate, Timestamp finishDate, int basketId,
+			int categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemResponse getIncome(int sessionId, int itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemListResponse getListOfIncomesOfBasket(int sessionId, int basketId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteIncome(int sessionId, int itemID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public int createLoss(int sessionId, String name, double quantity,
+			double price, String notice, int period, Timestamp launchDate,
+			Timestamp finishDate, int basketId, int categoryId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteLoss(int sessionId, int lossId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemResponse getLoss(int sessionId, int itemId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemListResponse getListOfLossesOfBasket(int sessionId, int basketId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public double getLossesOfPeriod(int sessionId, int daysOfPeriod) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public double getIncomesOfPeriod(int sessionId, int daysOfPeriod) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

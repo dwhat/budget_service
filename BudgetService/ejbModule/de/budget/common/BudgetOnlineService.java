@@ -3,10 +3,14 @@ package de.budget.common;
 
 
 //Response-Imports
+import java.sql.Timestamp;
+
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.CategoryResponse;
+import de.budget.dto.Response.ItemListResponse;
+import de.budget.dto.Response.ItemResponse;
 import de.budget.dto.Response.PaymentListResponse;
 import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
@@ -224,44 +228,163 @@ public interface BudgetOnlineService {
 	 */
 	public BasketResponse getBasket(int sessionId, int basketID);
 	
-	/*
-	public int createBasket(Customer basket);
+
+	/**
+	 * Method to create a basket
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param notice
+	 * @param amount
+	 * @param purchaseDate
+	 * @param paymentId
+	 * @param vendorId
+	 * @return
+	 */
+	public BasketResponse createBasket(int sessionId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId);
 	
 	//Fällt evtl weg da gleich wie create 
-	public int updateBasket(Customer basket);
+	//public int updateBasket(Customer basket);
 	
+	/**
+	 * Method to delete a basket
+	 * @author marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param basketID
+	 * @return
+	 */
+	public ReturnCodeResponse deleteBasket(int sessionId, int basketID);
 	
-	public int deleteBasket(int basketID);
-	
-	/*########################################################*/
-	
-	/* Charts/Balance - SECTION */
-/*	
-	public Map<Integer,Integer> getChart(int customerID);
-	
-	public int getBalance(int customerID);
-	
-	/*########################################################*/
-	
+
 	/* Incomes - SECTION */
-/*	
-	public int createIncome(Map<Integer,Customer> incomes);
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param name
+	 * @param quantity
+	 * @param price
+	 * @param notice
+	 * @param period
+	 * @param launchDate
+	 * @param finishDate
+	 * @param basketId
+	 * @param categoryId
+	 * @return
+	 */
+	public ItemResponse createIncome(int sessionId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
 	
-	public int updateIncome(Customer income,int incomeID);
+	//public int updateIncome(Customer income,int incomeID);
 	
-	public int deleteIncome(int incomeID);
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param itemId
+	 * @return
+	 */
+	public ItemResponse getIncome(int sessionId, int itemId);
+	
+	/**
+	 * method to get all incomes of a basket
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param basketId
+	 * @return
+	 */
+	public ItemListResponse getListOfIncomesOfBasket(int sessionId, int basketId);
+	
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param itemID
+	 * @return
+	 */
+	public ReturnCodeResponse deleteIncome(int sessionId, int itemID);
 	
 	/*########################################################*/
 	
 	/* Losses - SECTION */
-/*	
-	public int createLoss(Map<Integer,Customer> losses);
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param name
+	 * @param quantity
+	 * @param price
+	 * @param notice
+	 * @param period
+	 * @param launchDate
+	 * @param finishDate
+	 * @param basketId
+	 * @param categoryId
+	 * @return
+	 */
+	public int createLoss(int sessionId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
 	
-	public int updateLoss(Customer loss,int lossID);
+	//public int updateLoss(Customer loss,int lossID);
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param lossId
+	 * @return
+	 */
+	public ReturnCodeResponse deleteLoss(int sessionId, int lossId);
 	
-	public int deleteLoss(int lossID);
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param itemId
+	 * @return
+	 */
+	public ItemResponse getLoss(int sessionId, int itemId);
 	
-*/	
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param basketId
+	 * @return
+	 */
+	public ItemListResponse getListOfLossesOfBasket(int sessionId, int basketId);
 	
+	
+	
+	
+	
+	
+	/*########################################################*/
+	
+	/* Charts/Balance - SECTION */
+	
+	//public Map<Integer,Integer> getChart(int customerID);
+	
+	//public int getBalance(int customerID);
+	
+	/*########################################################*/
+	
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param daysOfPeriod
+	 * @return
+	 */
+	public double getLossesOfPeriod(int sessionId, int daysOfPeriod);
+	
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param daysOfPeriod
+	 * @return
+	 */
+	public double getIncomesOfPeriod(int sessionId, int daysOfPeriod);
 
 }
