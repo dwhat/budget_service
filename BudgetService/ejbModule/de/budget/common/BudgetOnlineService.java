@@ -6,10 +6,12 @@ package de.budget.common;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
+import de.budget.dto.Response.CategoryResponse;
 import de.budget.dto.Response.PaymentListResponse;
 import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
 import de.budget.dto.Response.UserLoginResponse;
+import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
 
@@ -64,12 +66,19 @@ public interface BudgetOnlineService {
 	
 	/* Customer - SECTION */
 
-	//public User getUser(String username);
+	/**
+	 * Method to get a User by name
+	 * @author Marco
+	 * @param sessionId
+	 * @param userName
+	 * @return
+	 */
+	public UserResponse getUserByName(int sessionId, int userName);
 	
 
 	//public int createOrUpdateUser(User user);
 	
-	//public int deleteUser(String username);
+	public ReturnCodeResponse deleteUser(int sessionId, String username);
 	
 	/*########################################################*/
 		
@@ -93,10 +102,26 @@ public interface BudgetOnlineService {
 	 */
 	public VendorResponse getVendor(int sessionId, int vendorId);
 	
-	
-	//public int createOrUpdateVendor(Customer vendor);
+	/**
+	 * method to create a vendor
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param name
+	 * @param logo (base64 String)
+	 * @return
+	 */
+	public VendorResponse createVendor(int sessionId, String name, String logo);
 
-	//public int deleteVendor(int vendorID);
+	/**
+	 * Method to delete a vendor
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return
+	 */
+	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId);
 	
 	/*########################################################*/
 	
@@ -131,20 +156,19 @@ public interface BudgetOnlineService {
 	
 
 	public PaymentResponse createPayment(int sessionId, String name, String number, String bic);
-	/*	
-	//Fällt evtl weg da gleich wie create 
-	public int updatePayment(Customer payment);
-	
-	
-	public int deletePayment(int paymentID);
-*/	
+
 	/*########################################################*/
 	
 	/* Category - SECTION */
 	
-/*	
-	public Customer getCategory(int categoryID);
-	*/
+	/**
+	 * @author Marco
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public CategoryResponse getCategory(int sessionId, int categoryId);
+
 	
 	
 	/**
@@ -157,14 +181,26 @@ public interface BudgetOnlineService {
 
 	
 	
-	/*
-	public int createCategory(Customer category);
 
-	//Fällt evtl weg da gleich wie create 
-	public int updateCategory(Customer category);
-	
-	
-	public int deleteCategory(int categoryID);
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param income
+	 * @param name
+	 * @param notice
+	 * @return
+	 */
+	public CategoryResponse createCategory(int sessionId, boolean income, String name, String notice);
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId);
 	
 	/*########################################################*/
 	

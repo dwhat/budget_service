@@ -16,12 +16,14 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
 
 
 
@@ -52,10 +54,12 @@ import de.budget.dto.VendorTO;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
+import de.budget.dto.Response.CategoryResponse;
 import de.budget.dto.Response.PaymentListResponse;
 import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.ReturnCodeResponse;
 import de.budget.dto.Response.UserLoginResponse;
+import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
 //Exception-Import
@@ -410,5 +414,83 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			paymentResp.setMessage("Couldn't create a payment.");
 		}
 		return paymentResp;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public UserResponse getUserByName(int sessionId, int userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteUser(int sessionId, String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public VendorResponse createVendor(int sessionId, String name, String logo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public CategoryResponse getCategory(int sessionId, int categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public CategoryResponse createCategory(int sessionId, boolean income,
+			String name, String notice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
