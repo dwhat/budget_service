@@ -2,6 +2,9 @@ package de.budget.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+
+
 /**
  * @date 26.05.2015
  * @author Marco
@@ -17,7 +20,12 @@ public class UserTO implements Serializable {
 	private String email;
 	private Timestamp createDate;
 	private Timestamp lastChanged;
+	private List<BasketTO> basketList;
+	private List<CategoryTO> categoryList;
+	private List<PaymentTO> paymentList;
+	private List<VendorTO> vendorList;
 	
+
 	/**
 	 * Default Constructor
 	 * @date 26.05.2015
@@ -26,6 +34,65 @@ public class UserTO implements Serializable {
 	public UserTO() {
 		
 	}
+	
+	
+	/**
+	 * @return the basketList
+	 */
+	public List<BasketTO> getBasketList() {
+		return basketList;
+	}
+
+	/**
+	 * @param basketList the basketList to set
+	 */
+	public void setBasketList(List<BasketTO> basketList) {
+		this.basketList = basketList;
+	}
+
+	/**
+	 * @return the categoryList
+	 */
+	public List<CategoryTO> getCategoryList() {
+		return categoryList;
+	}
+
+	/**
+	 * @param categoryList the categoryList to set
+	 */
+	public void setCategoryList(List<CategoryTO> categoryList) {
+		this.categoryList = categoryList;
+	}
+
+	/**
+	 * @return the paymentList
+	 */
+	public List<PaymentTO> getPaymentList() {
+		return paymentList;
+	}
+
+	/**
+	 * @param paymentList the paymentList to set
+	 */
+	public void setPaymentList(List<PaymentTO> paymentList) {
+		this.paymentList = paymentList;
+	}
+
+	/**
+	 * @return the vendorList
+	 */
+	public List<VendorTO> getVendorList() {
+		return vendorList;
+	}
+
+	/**
+	 * @param vendorList the vendorList to set
+	 */
+	public void setVendorList(List<VendorTO> vendorList) {
+		this.vendorList = vendorList;
+	}
+
+
 
 	/**
 	 * @return the password

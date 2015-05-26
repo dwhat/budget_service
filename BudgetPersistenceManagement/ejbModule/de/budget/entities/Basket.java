@@ -2,6 +2,7 @@ package de.budget.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,6 +96,7 @@ public class Basket implements Serializable {
 		 this.user.addNewBasket(this);
 		 this.user.addNewPayment(payment);
 		 this.user.addNewVendor(vendor);
+		 this.items = new ArrayList<Item>();
 		 this.createDate = new Timestamp(System.currentTimeMillis());
 		 this.lastChanged = new Timestamp(System.currentTimeMillis());
 	 }
@@ -118,11 +120,13 @@ public class Basket implements Serializable {
 	}
 
 	/**
+	 * method to sum the amount and returns this value
 	 * @author Marco
 	 * @date 12.05.2015
 	 * @return the amount
 	 */
 	public double getAmount() {
+		this.amount = sumAmount();
 		return amount;
 	}
 
@@ -250,7 +254,7 @@ public class Basket implements Serializable {
 	 * @date 17.05.2015
 	 * @return amount of the basket
 	 */
-	public double sumAmount() {
+	private double sumAmount() {
 		double amount = 0.0;
 		Iterator<Item> it = items.iterator();
 		while (it.hasNext()) {

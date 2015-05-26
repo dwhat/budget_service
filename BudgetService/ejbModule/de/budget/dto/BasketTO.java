@@ -3,6 +3,7 @@ package de.budget.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @date 18.05.2015
@@ -23,6 +24,7 @@ public class BasketTO implements Serializable{
 	private String user;
 	private int vendor;
 	private int payment;
+	private List<ItemTO> items;
 	
 	/**
 	 * Default Constructor
@@ -182,6 +184,20 @@ public class BasketTO implements Serializable{
 	 */
 	public void setPayment(int payment) {
 		this.payment = payment;
+	}
+
+	/**
+	 * @return the items
+	 */
+	public List<ItemTO> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<ItemTO> items) {
+		this.items = items;
 	}
 	
 }
