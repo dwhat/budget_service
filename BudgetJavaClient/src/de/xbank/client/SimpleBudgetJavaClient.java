@@ -106,12 +106,11 @@ public class SimpleBudgetJavaClient {
 	private static void szenarioPeter() {
 		System.out.println("============================================================");
 		System.out.println("Szenario Peter");
-<<<<<<< HEAD
+
 		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "12345678", "test1@gmx.de");
-=======
-		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "peter1", "test1@gmx.de");
+
 		System.out.println("Szenario Peter");
->>>>>>> ba40f5b6c5ec39889a27da4bf0411d158b0dd71d
+
 		if (resp1.getReturnCode() == 0) {
 			int sessionId = resp1.getSessionId();
 			System.out.println("Peter hat sich registiert.");
