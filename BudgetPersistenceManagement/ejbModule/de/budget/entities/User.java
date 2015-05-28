@@ -217,6 +217,20 @@ public class User implements Serializable {
 	}
 	
 	/**
+	 * Method to get an specific PaymentObject
+	 * @param paymentId
+	 * @return Payment Object
+	 */
+	public Payment getPayment(int paymentId) {
+		for (Payment p : this.payments) {
+			if (p.getId()== paymentId) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * @author Marco
 	 * @param payment
 	 */

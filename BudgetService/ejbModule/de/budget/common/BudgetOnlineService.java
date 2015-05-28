@@ -159,7 +159,19 @@ public interface BudgetOnlineService {
 	public ReturnCodeResponse deletePayment(int sessionId, int paymentId);
 	
 
-	public PaymentResponse createPayment(int sessionId, String name, String number, String bic);
+	/**
+	 * method to create or update a payment
+	 * @author Marco
+	 * @author Moritz
+	 * @param sessionId
+	 * @param paymentId
+	 * @param name
+	 * @param number
+	 * @param bic
+	 * @param active
+	 * @return PaymentResponse
+	 */
+	public PaymentResponse createOrUpdatePayment(int sessionId, int paymentId, String name, String number, String bic, boolean active);
 
 	/*########################################################*/
 	

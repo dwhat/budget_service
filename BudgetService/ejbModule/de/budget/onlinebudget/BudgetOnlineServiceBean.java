@@ -6,39 +6,12 @@ import java.util.List;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Logger-Import
 import org.jboss.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -345,28 +318,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	
-	/**
-	 * @author Marco
-	 * @param sessionId
-	 * @param paymentName
-	 * @return PaymentResponseObject
-	 */
-	private PaymentResponse getPaymentByName(int sessionId, String paymentName) {
-		PaymentResponse response = new PaymentResponse();
-
-		PaymentListResponse paymentListResponse = getMyPayments(sessionId);
-		if (paymentListResponse.getReturnCode() == 0) {
-			for (PaymentTO p : paymentListResponse.getPaymentList()) {
-				if (p.getName().equals(paymentName)) {
-					response.setPaymentTo(p);
-				}
-			}
-		}
-		else {
-			response = null;
-		}
-		return response;
-	}
 	
 	/**
 	 * Method to delete a payment
@@ -392,25 +343,35 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * Method to create a new Payment
+	 * method to create or update a payment
 	 * @author Marco
-	 * @date 20.05.2015
+	 * @author Moritz
 	 * @param sessionId
+	 * @param paymentId alte Id zum finden des Update Datensatzes nötig, bei Neuanlage negativen Wert benutzen
 	 * @param name
 	 * @param number
 	 * @param bic
-	 * @return Payment Object
+	 * @param active
+	 * @return PaymentResponse
 	 */
 	@Override
-	public PaymentResponse createPayment(int sessionId, String name, String number, String bic) {
+	public PaymentResponse createOrUpdatePayment(int sessionId, int paymentId, String name, String number, String bic, boolean active) {
 		PaymentResponse paymentResp = new PaymentResponse();
+		
 		try {
 			// Hole SessionObjekt
 			BudgetSession session = getSession(sessionId);
 			//Hole User Objekt
 			User user = this.dao.findUserByName(session.getUsername());
 			//Lege Payment Objekt an
-			Payment payment = dao.createPayment(user, name, number, bic);
+			Payment payment = user.getPayment(paymentId);
+			
+			if(payment == null) {
+				payment = dao.createPayment(user, name, number, bic);
+			}
+			else {
+				payment = dao.updatePayment(payment);
+			}
 			// Response befüllen
 			paymentResp.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
@@ -419,8 +380,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			paymentResp.setMessage("Couldn't create a payment.");
 		}
 		return paymentResp;
+		
 	}
-
 
 	/**
 	 * @author Marco
