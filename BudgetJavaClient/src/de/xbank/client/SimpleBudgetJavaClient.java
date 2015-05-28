@@ -44,9 +44,9 @@ public class SimpleBudgetJavaClient {
  	       System.out.println();
  	       
  	       //Test-Szeanarien ausfuehren:
-		   szenarioEmma();
+		   //szenarioEmma();
 		   szenarioJoe();		   	       
-		   szenarioPeter();
+		   //szenarioPeter();
 		   
 		}
 		catch (Exception ex) {
@@ -60,7 +60,7 @@ public class SimpleBudgetJavaClient {
 	private static void szenarioEmma() {
 		try {
 		   System.out.println("============================================================");			
-	       UserLoginResponse resp1 = remoteSystem.login("emma", "emma1");
+	       UserLoginResponse resp1 = remoteSystem.login("emma", "12345678");
 		   System.out.println("Emma hat sich angemeldet.");
 		   int sessionID = resp1.getSessionId();
 	       remoteSystem.logout(sessionID);
@@ -77,7 +77,7 @@ public class SimpleBudgetJavaClient {
 	private static void szenarioJoe() {
 		try {
 			System.out.println("============================================================");			
-			UserLoginResponse resp1 = remoteSystem.login("joe", "joe1");
+			UserLoginResponse resp1 = remoteSystem.login("joe", "12345678");
 			System.out.println("Joe hat sich angemeldet.");
 			int sessionID = resp1.getSessionId();
 			
@@ -104,7 +104,7 @@ public class SimpleBudgetJavaClient {
 	private static void szenarioPeter() {
 		System.out.println("============================================================");
 		System.out.println("Szenario Peter");
-		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "peter1", "test1@gmx.de");
+		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "12345678", "test1@gmx.de");
 		if (resp1.getReturnCode() == 0) {
 			int sessionId = resp1.getSessionId();
 			System.out.println("Peter hat sich registiert.");
