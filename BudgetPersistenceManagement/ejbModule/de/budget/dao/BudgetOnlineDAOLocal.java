@@ -7,9 +7,11 @@ import javax.ejb.Local;
 
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
+import de.budget.entities.Income;
 import de.budget.entities.Payment;
 import de.budget.entities.User;
 import de.budget.entities.Vendor;
@@ -53,10 +55,16 @@ public interface BudgetOnlineDAOLocal {
 	public Item updateItem(Item item);
 	public Item findItemById(int itemId);
 	public void deleteItem(int itemId);
+	
+	public Income createIncome(User user, Category category);
+	public Income updateIncome(Income income);
+	public Income findIncomeById(int incomeId);
+	public void deleteIncome(int income);
 
 	public Payment createPayment(User user, String name, String number, String bic);
 	public Payment updatePayment(Payment payment);
 	public Payment findPaymentById(int paymentId);
 	public void deletePayment(int paymentId);
+
 	
 }

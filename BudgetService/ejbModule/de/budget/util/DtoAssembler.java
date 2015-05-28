@@ -7,11 +7,13 @@ import javax.ejb.Stateless;
 
 import de.budget.dto.BasketTO;
 import de.budget.dto.CategoryTO;
+import de.budget.dto.IncomeTO;
 import de.budget.dto.ItemTO;
 import de.budget.dto.PaymentTO;
 import de.budget.dto.VendorTO;
 import de.budget.entities.Basket;
 import de.budget.entities.Category;
+import de.budget.entities.Income;
 import de.budget.entities.Item;
 import de.budget.entities.Payment;
 import de.budget.entities.Vendor;
@@ -118,7 +120,6 @@ public class DtoAssembler {
 		dto.setQuantity(item.getQuantity());
 		dto.setPrice(item.getPrice());
 		dto.setNotice(item.getNotice());
-		dto.setActive(item.isActive());
 		dto.setPeriod(item.getPeriod());
 		dto.setCreateDate(item.getCreateDate());
 		dto.setLaunchDate(item.getLaunchDate());
@@ -135,5 +136,30 @@ public class DtoAssembler {
 			dtoList.add(makeDto(b));
 		}
 		return dtoList;
+	}
+	
+	public List<IncomeTO> makeIncomeListDto(List<Income> incomes) {
+		ArrayList<IncomeTO> dtoList = new ArrayList<>();
+		for(Income i : incomes) {
+			dtoList.add(makeDto(i));
+		}
+		return dtoList;
+	}
+	
+	public IncomeTO makeDto(Income income) {
+		IncomeTO dto = new IncomeTO();
+		dto.setId(income.getId());
+		dto.setName(income.getName());
+		dto.setQuantity(income.getQuantity());
+		dto.setAmount(income.getAmount());
+		dto.setNotice(income.getNotice());
+		dto.setPeriod(income.getPeriod());
+		dto.setCreateDate(income.getCreateDate());
+		dto.setLaunchDate(income.getLaunchDate());
+		dto.setFinishDate(income.getFinishDate());
+		dto.setLastChanged(income.getLastChanged());
+		dto.setUser(income.getUser().getUserName());
+		dto.setCategory(income.getCategory().getId());
+		return dto;
 	}
 }

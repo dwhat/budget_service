@@ -67,6 +67,14 @@ public class User implements Serializable {
 	private List<Payment> payments;
 	
 	/**
+	 * @author Marco
+	 * @date 28.05.2015
+	 * Bidirectional one to many relationship
+	 */
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+	private List<Income> incomes;
+	
+	/**
 	 * Bidirectional one to many relationship
 	 * @author Marco
 	 * @date 11.05.2015
@@ -200,6 +208,20 @@ public class User implements Serializable {
 	}
 	
 	/**
+	 * Method to get an specific CategoryObject
+	 * @param categoryId
+	 * @return Category Object
+	 */
+	public Category getCategory(int categoryId) {
+		for (Category c : this.categories) {
+			if (c.getId()== categoryId) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Method to add one category to this User
 	 * @author Marco
 	 * @param newCategory
@@ -248,11 +270,62 @@ public class User implements Serializable {
 	}
 	
 	/**
+	 * @return the incomes
+	 */
+	public List<Income> getIncomes() {
+		return incomes;
+	}
+
+	/**
+	 * Method to get an specific IncomeObject
+	 * @param incomeId
+	 * @return Income Object
+	 */
+	public Income getIncome(int incomeId) {
+		for (Income i : this.incomes) {
+			if (i.getId()== incomeId) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param incomes the incomes to set
+	 */
+	public void setIncomes(List<Income> incomes) {
+		this.incomes = incomes;
+	}
+
+	/**
+	 * @author Marco
+	 * @date 28.05.2015
+	 * @param newIncome
+	 */
+	public void addNewIncome(Income newIncome) {
+		this.incomes.add(newIncome);
+	}
+	
+	/**
 	 * @author Marco
 	 * @return a List with all Vendors of this User
 	 */
 	public List<Vendor> getVendors(){
 		return this.vendors;
+	}
+	
+	/**
+	 * Method to get an specific VendorObject
+	 * @param vendorId
+	 * @return Vendor Object
+	 */
+	public Vendor getVendor(int vendorId) {
+		for (Vendor v : this.vendors) {
+			if (v.getId()== vendorId) {
+				return v;
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -278,6 +351,21 @@ public class User implements Serializable {
 	 */
 	public List<Basket> getBaskets(){
 		return this.baskets;
+	}
+	
+	/**
+	 * Method to get an specific BasketObject
+	 * @author Marco
+	 * @param basketId
+	 * @return Basket Object
+	 */
+	public Basket getBasket(int basketId) {
+		for (Basket b : this.baskets) {
+			if (b.getId()== basketId) {
+				return b;
+			}
+		}
+		return null;
 	}
 	
 	/**

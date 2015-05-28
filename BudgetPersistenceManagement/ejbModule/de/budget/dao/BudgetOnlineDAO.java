@@ -13,12 +13,15 @@ import javax.persistence.PersistenceContext;
 
 
 
+
 import org.jboss.logging.Logger;
+
 
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
 import de.budget.entities.Category;
+import de.budget.entities.Income;
 import de.budget.entities.Payment;
 //Entities-Import 
 import de.budget.entities.User;
@@ -163,6 +166,17 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public Item findItemById(int itemId) {
 		return em.find(Item.class, itemId);
 	}
+	
+	/**
+	 * @author Marco
+	 * @date 18.05.2015
+	 * @param incomeId
+	 * @return Income Object
+	 */
+	@Override
+	public Income findIncomeById(int incomeId) {
+		return em.find(Income.class, incomeId);
+	}
 
 	/**
 	 * @author Marco
@@ -281,6 +295,22 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public Income createIncome(User user, Category category) {
+		return null; //TODO
+	}
+	
+	@Override
+	public Income updateIncome(Income income){
+		return null; //TODO
+		
+	}
+	
+	@Override
+	public void deleteIncome(int income){
+		//TODO
 	}
 
 	/**

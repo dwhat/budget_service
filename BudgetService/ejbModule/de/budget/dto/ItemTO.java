@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 /**
  * @date 18.05.2015
  * @author Marco
- * Class for the date transfer of a Item
+ * Class for the date transfer of an Item
  */
 public class ItemTO implements Serializable {
 
@@ -16,8 +16,7 @@ public class ItemTO implements Serializable {
 	private String name;	
 	private double quantity;	
 	private double price;	
-	private String notice;	
-	private boolean active; //true, if Income; false, if los	
+	private String notice;		
 	private int period;	
 	private Timestamp createDate;	
 	private Timestamp launchDate;	
@@ -43,7 +42,6 @@ public class ItemTO implements Serializable {
 	 * @param quantity
 	 * @param price
 	 * @param notice
-	 * @param active
 	 * @param period
 	 * @param createDate
 	 * @param launchDate
@@ -52,13 +50,12 @@ public class ItemTO implements Serializable {
 	 * @param basket
 	 * @param category
 	 */
-	public ItemTO(int id, String name, double quantity, double price, String notice, boolean active, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, int basket, int category) {
+	public ItemTO(int id, String name, double quantity, double price, String notice, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, int basket, int category) {
 		this.setId(id);
 		this.setName(name);
 		this.setQuantity(quantity);
 		this.setPrice(price);
 		this.setNotice(notice);
-		this.setActive(active);
 		this.setPeriod(period);
 		this.setCreateDate(createDate);
 		this.setLaunchDate(launchDate);
@@ -158,23 +155,6 @@ public class ItemTO implements Serializable {
 		this.notice = notice;
 	}
 
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @param active the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
 
 	/**
 	 * @author Marco

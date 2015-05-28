@@ -10,12 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 /**
- * Item Class
+ * @date 27.05.2015
  * @author Marco
- * 12.05.2015
+ * Income Class
  */
 @Entity
-public class Item implements Serializable {
+public class Income implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,19 +24,25 @@ public class Item implements Serializable {
 	
 	private String name;
 	
-	private double quantity;
-	
-	private double price;
-	
 	private String notice;
+	
+	private double quantity;
+
+	private double amount;
 	
 	private int period;
 	
-	private Timestamp createDate;
+	@ManyToOne
+	private User user;
 	
 	private Timestamp launchDate;
 	
 	private Timestamp finishDate;
+	
+	private Timestamp createDate;
+	
+	@ManyToOne
+	private Category category;
 	
 	/**
 	 * @author Moritz
@@ -49,44 +55,28 @@ public class Item implements Serializable {
 	@Version
 	private Timestamp lastChanged;
 	
-	
-	@ManyToOne
-	private Basket basket;
-	
-	@ManyToOne
-	private Category category;
-	
-	
 	/**
-	 * Default Constructor
-	 * @author Marco
+	 *@author Marco
+	 *Default Constructor
 	 */
-	public Item() {
-		super();
+	public Income() {
+		
 	}
 	
-	/**
-	 * Constructor
-	 * @author Marco
-	 * @param basket 
-	 * @param category 
-	 */
-	public Item(String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) {
+	public Income(String name, String notice, double quantity, double amount, int period,Timestamp launchDate, Timestamp finishDate, Category category) {
 		this.name = name;
-		this.quantity = quantity;
-		this.price = price;
 		this.notice = notice;
+		this.quantity = quantity;
+		this.amount = amount;
 		this.period = period;
 		this.launchDate = launchDate;
 		this.finishDate = finishDate;
-		this.category = category;
-		this.basket = basket;
-		this.basket.addNewItem(this);
-		this.basket.getUser().addNewCategory(category);
-		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.user.addNewIncome(this);
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
+		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.category = category;
+		
 	}
-
 	
 	
 	/**
@@ -104,127 +94,111 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * @author Marco
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	/**
-	 * @author Marco
-	 * @return the quantity
-	 */
-	public double getQuantity() {
-		return quantity;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param quantity the quantity to set
-	 */
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	
-	/**
-	 * @author Marco
-	 * @return the price
-	 */
-	public double getPrice() {
-		return price;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param price the price to set
-	 */
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	
-	/**
-	 * @author Marco
 	 * @return the notice
 	 */
 	public String getNotice() {
 		return notice;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @param notice the notice to set
 	 */
 	public void setNotice(String notice) {
 		this.notice = notice;
 	}
-	
+
 	/**
-	 * @author Marco
+	 * @return the quantity
+	 */
+	public double getQuantity() {
+		return quantity;
+	}
+
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public double getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	/**
 	 * @return the period
 	 */
 	public int getPeriod() {
 		return period;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @param period the period to set
 	 */
 	public void setPeriod(int period) {
 		this.period = period;
 	}
-	
+
 	/**
-	 * @author Marco
-	 * @return the creationDate
+	 * @return the user
 	 */
-	public Timestamp getCreateDate() {
-		return createDate;
+	public User getUser() {
+		return user;
 	}
-	
+
 	/**
-	 * @author Marco
-	 * @param creationDate the creationDate to set
+	 * @param user the user to set
 	 */
-	public void setCreateDate(Timestamp creationDate) {
-		this.createDate = creationDate;
+	public void setUser(User user) {
+		this.user = user;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @return the launchDate
 	 */
 	public Timestamp getLaunchDate() {
 		return launchDate;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @param launchDate the launchDate to set
 	 */
 	public void setLaunchDate(Timestamp launchDate) {
 		this.launchDate = launchDate;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @return the finishDate
 	 */
 	public Timestamp getFinishDate() {
 		return finishDate;
 	}
-	
+
 	/**
-	 * @author Marco
 	 * @param finishDate the finishDate to set
 	 */
 	public void setFinishDate(Timestamp finishDate) {
@@ -232,35 +206,17 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @return the basket
+	 * @return the createDate
 	 */
-	public Basket getBasket() {
-		return basket;
+	public Timestamp getCreateDate() {
+		return createDate;
 	}
-	
+
 	/**
-	 * @author Marco
-	 * @param basket the basket to set
+	 * @param createDate the createDate to set
 	 */
-	public void setBasket(Basket basket) {
-		this.basket = basket;
-	}
-	
-	/**
-	 * @author Marco
-	 * @return the category
-	 */
-	public Category getCategory() {
-		return category;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param category the category to set
-	 */
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
 	}
 
 	/**
@@ -277,5 +233,17 @@ public class Item implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 
+	/**
+	 * @return the category
+	 */
+	public Category getCategory() {
+		return category;
+	}
 
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 }
