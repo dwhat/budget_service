@@ -370,6 +370,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				payment = dao.createPayment(user, name, number, bic);
 			}
 			else {
+				payment.setName(name);
+				payment.setNumber(number);
+				payment.setActive(active);
+				payment.setBic(bic);
 				payment = dao.updatePayment(payment);
 			}
 			// Response befüllen
