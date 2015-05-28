@@ -34,6 +34,7 @@ public class SimpleBudgetJavaClient {
 			
            Context context = new InitialContext();
 	       
+           //java:global/BudgetEAR/BudgetService/BudgetOnlineServiceBean!de.budget.common.BudgetOnlineService
 	       //Lookup-String für eine EJB besteht aus: Name_EA/Name_EJB-Modul/Name_EJB-Klasse!Name_RemoteInterface
 	       String lookupString = "ejb:BudgetEAR/BudgetService/BudgetOnlineServiceBean!de.budget.common.BudgetOnlineService";
 	       remoteSystem = (BudgetOnlineService) context.lookup(lookupString);
@@ -63,6 +64,7 @@ public class SimpleBudgetJavaClient {
 	       UserLoginResponse resp1 = remoteSystem.login("emma", "12345678");
 		   System.out.println("Emma hat sich angemeldet.");
 		   int sessionID = resp1.getSessionId();
+		   System.out.println("Emma hat sich angemeldet.");
 	       remoteSystem.logout(sessionID);
 		   System.out.println("Emma hat sich abgemeldet.");
 		}
@@ -82,7 +84,7 @@ public class SimpleBudgetJavaClient {
 			int sessionID = resp1.getSessionId();
 			
 			// Payment anlegen
-			PaymentResponse payResp = remoteSystem.createPayment(sessionID,"Konto1", "123456789", "BIC");
+			PaymentResponse payResp = remoteSystem.createOrUpdatePayment(sessionID, 0, "Konto1", "123456789", "BIC", true);
 			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getReturnCode());
 			System.out.println("Neuerzeugtes Konto mit Namen: " + payResp.getPaymentTo().getName());
 			System.out.println("Joa hat ein Payment angelegt");
@@ -104,7 +106,12 @@ public class SimpleBudgetJavaClient {
 	private static void szenarioPeter() {
 		System.out.println("============================================================");
 		System.out.println("Szenario Peter");
+<<<<<<< HEAD
 		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "12345678", "test1@gmx.de");
+=======
+		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "peter1", "test1@gmx.de");
+		System.out.println("Szenario Peter");
+>>>>>>> ba40f5b6c5ec39889a27da4bf0411d158b0dd71d
 		if (resp1.getReturnCode() == 0) {
 			int sessionId = resp1.getSessionId();
 			System.out.println("Peter hat sich registiert.");
