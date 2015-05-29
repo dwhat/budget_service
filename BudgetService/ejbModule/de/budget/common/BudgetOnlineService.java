@@ -21,9 +21,6 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
-import de.budget.entities.Basket;
-import de.budget.entities.Category;
-import de.budget.entities.Item;
 
 
 
@@ -264,7 +261,7 @@ public interface BudgetOnlineService {
 	 * @param items   List with items to add to the basket
 	 * @return
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items);
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Integer> items);
 	
 	/**
 	 * Method to delete a basket
@@ -422,4 +419,59 @@ public interface BudgetOnlineService {
 	 * @return IncomeListResponse
 	 */
 	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome);
+	
+	/**
+	 * gets all Incomes of a specific category for incomes
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public IncomeListResponse getIncomeOfCategory(int sessionId, int categoryId);
+	
+	/**
+	 * gets all Items of a specific category for losses
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public ItemListResponse getItemsOfLossCategory(int sessionId, int categoryId);
+	
+	/**
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return a list with all baskets of a vendor
+	 */
+	public BasketListResponse getBasketsOfVendor(int sessionId, int vendorId);
+	
+	/**
+	 * gets all baskets of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public BasketListResponse getBasketOfMonth(int sessionId);
+	
+	/**
+	 * gets all income of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public IncomeListResponse getIncomeOfMonth(int sessionId);
+	
+	/**
+	 * gets all baskets of a specific payment
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return
+	 */
+	public BasketListResponse getBasketsOfPayment(int sessionId, int paymentId);
 }

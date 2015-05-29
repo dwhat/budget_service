@@ -58,7 +58,6 @@ import de.budget.Exception.UsernameAlreadyExistsException;
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
-import de.budget.entities.Item;
 import de.budget.entities.Payment;
 //Entities-Import 
 import de.budget.entities.User;
@@ -403,6 +402,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public UserResponse getUserByName(int sessionId, int userName) {
 		// TODO Auto-generated method stub
+		UserResponse resp = new UserResponse();
 		return null;
 	}
 
@@ -480,7 +480,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice,
-			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items) {
+			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Integer> items) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -589,6 +589,31 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return null;
 	}
 
+	/**
+	 * gets all Items of a specific category for losses
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	@Override
+	public ItemListResponse getItemsOfLossCategory(int sessionId, int categoryId) {
+		return null;
+	}
+	
+	/**
+	 * gets all Incomes of a specific category for incomes
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	@Override
+	public IncomeListResponse getIncomeOfCategory(int sessionId, int categoryId) {
+		return null;
+	}
 
 	/**
 	 * @author Marco
@@ -630,6 +655,52 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return a list with all baskets of a vendor
+	 */
+	@Override
+	public BasketListResponse getBasketsOfVendor(int sessionId, int vendorId){
+		return null;
+	}
+	/**
+	 * gets all baskets of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public BasketListResponse getBasketOfMonth(int sessionId) {
+		return null;
+	}
+	
+	/**
+	 * gets all income of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public IncomeListResponse getIncomeOfMonth(int sessionId) {
+		return null;
+	}
+	
+	/**
+	 * gets all baskets of a specific payment
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return
+	 */
+	@Override
+	public BasketListResponse getBasketsOfPayment(int sessionId, int paymentId) {
 		return null;
 	}
 }
