@@ -3,7 +3,15 @@ package de.budget.dao;
 //Lokales Interface das die Operationen erleichtert 
 // wie zb findUser // createSession etc
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.ejb.Local;
+
+
+
+
+
 
 
 
@@ -36,27 +44,27 @@ public interface BudgetOnlineDAOLocal {
 	public BudgetSession findSessionById(int sessionId);
 	public void closeSession(int sessionId);
 	
-	public Vendor createVendor(Vendor vendor);	
+	public Vendor createVendor(User user, String name, String logo);	
 	public Vendor updateVendor(Vendor vendor);
 	public Vendor findVendorById(int vendorId);
 	public void deleteVendor(int vendorId);
 	
-	public Basket createBasket(User user, Payment payment, Vendor vendor);
+	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items);
 	public Basket updateBaseket(Basket basket);
 	public Basket findBasketById(int basketId);
 	public void deleteBasket(int basketId);
 	
-	public Category createCategory(User user);
+	public Category createCategory(User user, String name, String notice, boolean income);
 	public Category updateCategory(Category category);
 	public Category findCategoryById(int categoryId);
 	public void deleteCategory(int categoryId);
 	
-	public Item createItem(Basket basket, Category category);
+	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category);
 	public Item updateItem(Item item);
 	public Item findItemById(int itemId);
 	public void deleteItem(int itemId);
 	
-	public Income createIncome(User user, Category category);
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category);
 	public Income updateIncome(Income income);
 	public Income findIncomeById(int incomeId);
 	public void deleteIncome(int income);

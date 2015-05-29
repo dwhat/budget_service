@@ -4,6 +4,9 @@ package de.budget.dao;
 
 
 //EJB Imports
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.ejb.Stateless;
 
 //Peristence Imports
@@ -14,7 +17,11 @@ import javax.persistence.PersistenceContext;
 
 
 
+
+
 import org.jboss.logging.Logger;
+
+
 
 
 //Interface Import
@@ -215,8 +222,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Category Object
 	 */
 	@Override
-	public Category createCategory(User user) {
-		Category category = new Category(user, false, null, null);
+	public Category createCategory(User user, String name, String notice, boolean income) {
+		Category category = new Category(user, income, name, notice);
 		if (category != null) {
 			em.persist(category);
 		}
@@ -227,14 +234,16 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 
 	/**
 	 * @author Moritz
+	 * @author Marco
 	 * @date  19.05.2015
 	 * @param VendorObjekt
 	 * @return VendorKopieObjekt
 	 */
 	@Override
-	public Vendor createVendor(Vendor vendor) {
-		if (vendor != null) {
-			em.persist(vendor);
+	public Vendor createVendor(User user, String name, String logo) {
+		Vendor vendor = new Vendor(user, name, logo);
+		if(vendor != null) {
+			em.persist(vendor);;
 		}
 		return vendor;
 	}
@@ -267,9 +276,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Basket Object
 	 */
 	@Override
-	public Basket createBasket(User user, Payment payment, Vendor vendor) {
+	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) {
 		if(user != null && payment != null && vendor != null) {
-			Basket basket = new Basket(user, null, 0, null, payment, vendor);
+			Basket basket = new Basket(user, notice, amount, purchaseDate, payment, vendor, items);
 			if (basket != null){
 				em.persist(basket);
 				return basket;
@@ -286,9 +295,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Item Object
 	 */
 	@Override
-	public Item createItem(Basket basket, Category category) {
+	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) {
 		if(basket != null && category != null) {
-			Item item = new Item(null, 0, 0, null, 0, null, null, basket, category);
+			Item item = new Item(name, quantity, price, notice, period, launchDate, finishDate, basket, category);
 			if (item != null) {
 				em.persist(item);
 				return item;
@@ -297,20 +306,44 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		return null;
 	}
 	
+	/**
+	 * create an income
+	 * @author Marco 
+	 * @date 29.05.2015
+	 */
 	@Override
-	public Income createIncome(User user, Category category) {
-		return null; //TODO
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category) {
+		if(user != null && category != null) {
+			Income income = new Income(name, notice, quantity, amount, period, launchDate, finishDate, category);
+			if (income != null) {
+				em.persist(income);
+				return income;
+			}
+		}
+		return null;
 	}
 	
+	/**
+	 * update an income Object
+	 * @author Marco
+	 * @date 29.05.2015
+	 */
 	@Override
 	public Income updateIncome(Income income){
-		return null; //TODO
+		em.merge(income);
+		return income;
 		
 	}
 	
+	/**
+	 * remove an income Object
+	 * @author Marco
+	 * @date 29.05.2015
+	 */
 	@Override
-	public void deleteIncome(int income){
-		//TODO
+	public void deleteIncome(int incomeId){
+		Income income = em.find(Income.class, incomeId);
+		em.remove(income);
 	}
 
 	/**
@@ -391,9 +424,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public User updateUser(User user) {
 		return em.merge(user);
 	}
-
-	
-	
 
 	/**
 	 * @author Moritz
