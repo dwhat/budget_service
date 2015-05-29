@@ -4,11 +4,14 @@ package de.budget.common;
 
 //Response-Imports
 import java.sql.Timestamp;
+import java.util.List;
 
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.CategoryResponse;
+import de.budget.dto.Response.IncomeListResponse;
+import de.budget.dto.Response.IncomeResponse;
 import de.budget.dto.Response.ItemListResponse;
 import de.budget.dto.Response.ItemResponse;
 import de.budget.dto.Response.PaymentListResponse;
@@ -18,6 +21,9 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
+import de.budget.entities.Basket;
+import de.budget.entities.Category;
+import de.budget.entities.Item;
 
 
 
@@ -82,6 +88,12 @@ public interface BudgetOnlineService {
 
 	//public int createOrUpdateUser(User user);
 	
+	/**
+	 * @author Marco
+	 * @param sessionId
+	 * @param username
+	 * @return
+	 */
 	public ReturnCodeResponse deleteUser(int sessionId, String username);
 	
 	/*########################################################*/
@@ -111,11 +123,12 @@ public interface BudgetOnlineService {
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
+	 * @param vendorId only necessary for update 
 	 * @param name
 	 * @param logo (base64 String)
 	 * @return
 	 */
-	public VendorResponse createVendor(int sessionId, String name, String logo);
+	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo);
 
 	/**
 	 * Method to delete a vendor
@@ -184,8 +197,6 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public CategoryResponse getCategory(int sessionId, int categoryId);
-
-	
 	
 	/**
 	 * @author Marco
@@ -195,19 +206,18 @@ public interface BudgetOnlineService {
 	 */
 	public CategoryListResponse getMyCategorys(int sessionId);
 
-	
-	
-
 	/**
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
+	 * @param categoryId only necessary for update
 	 * @param income
+	 * @param active
 	 * @param name
 	 * @param notice
 	 * @return
 	 */
-	public CategoryResponse createCategory(int sessionId, boolean income, String name, String notice);
+	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active, String name, String notice);
 
 	/**
 	 * @author Marco
@@ -240,23 +250,21 @@ public interface BudgetOnlineService {
 	 */
 	public BasketResponse getBasket(int sessionId, int basketID);
 	
-
 	/**
 	 * Method to create a basket
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
+	 * @param basketId
 	 * @param notice
 	 * @param amount
 	 * @param purchaseDate
 	 * @param paymentId
 	 * @param vendorId
+	 * @param items   List with items to add to the basket
 	 * @return
 	 */
-	public BasketResponse createBasket(int sessionId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId);
-	
-	//Fällt evtl weg da gleich wie create 
-	//public int updateBasket(Customer basket);
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items);
 	
 	/**
 	 * Method to delete a basket
@@ -274,6 +282,7 @@ public interface BudgetOnlineService {
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
+	 * @param incomeId    only necessary for update
 	 * @param name
 	 * @param quantity
 	 * @param price
@@ -281,11 +290,11 @@ public interface BudgetOnlineService {
 	 * @param period
 	 * @param launchDate
 	 * @param finishDate
-	 * @param basketId
-	 * @param categoryId
+	 * @param basket
+	 * @param category
 	 * @return
 	 */
-	public ItemResponse createIncome(int sessionId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
+	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
 	
 	//public int updateIncome(Customer income,int incomeID);
 	
@@ -296,7 +305,7 @@ public interface BudgetOnlineService {
 	 * @param itemId
 	 * @return
 	 */
-	public ItemResponse getIncome(int sessionId, int itemId);
+	public IncomeResponse getIncome(int sessionId, int itemId);
 	
 	/**
 	 * method to get all incomes of a basket
@@ -306,7 +315,7 @@ public interface BudgetOnlineService {
 	 * @param basketId
 	 * @return
 	 */
-	public ItemListResponse getListOfIncomesOfBasket(int sessionId, int basketId);
+	public IncomeListResponse getListOfIncomesOfBasket(int sessionId, int basketId);
 	
 	/**
 	 * @author Marco
@@ -319,12 +328,13 @@ public interface BudgetOnlineService {
 	
 	/*########################################################*/
 	
-	/* Losses - SECTION */
+	/* Items - SECTION */
 
 	/**
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
+	 * @param itemId
 	 * @param name
 	 * @param quantity
 	 * @param price
@@ -336,9 +346,8 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public int createLoss(int sessionId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
+	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
 	
-	//public int updateLoss(Customer loss,int lossID);
 	/**
 	 * @author Marco
 	 * @date 26.05.2015
@@ -346,7 +355,7 @@ public interface BudgetOnlineService {
 	 * @param lossId
 	 * @return
 	 */
-	public ReturnCodeResponse deleteLoss(int sessionId, int lossId);
+	public ReturnCodeResponse deleteItem(int sessionId, int lossId);
 	
 	/**
 	 * @author Marco
@@ -355,7 +364,7 @@ public interface BudgetOnlineService {
 	 * @param itemId
 	 * @return
 	 */
-	public ItemResponse getLoss(int sessionId, int itemId);
+	public ItemResponse getItem(int sessionId, int itemId);
 	
 	/**
 	 * @author Marco
@@ -364,13 +373,8 @@ public interface BudgetOnlineService {
 	 * @param basketId
 	 * @return
 	 */
-	public ItemListResponse getListOfLossesOfBasket(int sessionId, int basketId);
-	
-	
-	
-	
-	
-	
+	public ItemListResponse getListOfItemsOfBasket(int sessionId, int basketId);
+
 	/*########################################################*/
 	
 	/* Charts/Balance - SECTION */
@@ -399,4 +403,23 @@ public interface BudgetOnlineService {
 	 */
 	public double getIncomesOfPeriod(int sessionId, int daysOfPeriod);
 
+	/**
+	 * Gibt die letzten Baskets als Liste zurück
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param numberOfBaskets Anzahl der letzten auszugebenen Baskets
+	 * @return BasketListResponse Object
+	 */
+	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets);
+	
+	/**
+	 * Gibt die letzten Incomes als Liste zurück
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param numberOfIncome
+	 * @return IncomeListResponse
+	 */
+	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome);
 }

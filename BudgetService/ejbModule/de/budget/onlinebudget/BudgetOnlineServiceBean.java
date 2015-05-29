@@ -6,12 +6,18 @@ import java.util.List;
 
 
 
+
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
+
+
 
 
 
@@ -31,6 +37,8 @@ import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
 import de.budget.dto.Response.CategoryResponse;
+import de.budget.dto.Response.IncomeListResponse;
+import de.budget.dto.Response.IncomeResponse;
 import de.budget.dto.Response.ItemListResponse;
 import de.budget.dto.Response.ItemResponse;
 import de.budget.dto.Response.PaymentListResponse;
@@ -50,6 +58,7 @@ import de.budget.Exception.UsernameAlreadyExistsException;
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
+import de.budget.entities.Item;
 import de.budget.entities.Payment;
 //Entities-Import 
 import de.budget.entities.User;
@@ -414,7 +423,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public VendorResponse createVendor(int sessionId, String name, String logo) {
+	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -447,7 +456,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public CategoryResponse createCategory(int sessionId, boolean income,
+	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active,
 			String name, String notice) {
 		// TODO Auto-generated method stub
 		return null;
@@ -470,8 +479,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public BasketResponse createBasket(int sessionId, String notice,
-			double amount, Timestamp purchaseDate, int paymentId, int vendorId) {
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice,
+			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -493,7 +502,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ItemResponse createIncome(int sessionId, String name,
+	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name,
 			double quantity, double price, String notice, int period,
 			Timestamp launchDate, Timestamp finishDate, int basketId,
 			int categoryId) {
@@ -507,7 +516,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ItemResponse getIncome(int sessionId, int itemId) {
+	public IncomeResponse getIncome(int sessionId, int itemId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -518,7 +527,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ItemListResponse getListOfIncomesOfBasket(int sessionId, int basketId) {
+	public IncomeListResponse getListOfIncomesOfBasket(int sessionId, int basketId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -540,11 +549,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public int createLoss(int sessionId, String name, double quantity,
+	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
 			double price, String notice, int period, Timestamp launchDate,
 			Timestamp finishDate, int basketId, int categoryId) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 
@@ -553,7 +562,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ReturnCodeResponse deleteLoss(int sessionId, int lossId) {
+	public ReturnCodeResponse deleteItem(int sessionId, int itemId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -564,7 +573,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ItemResponse getLoss(int sessionId, int itemId) {
+	public ItemResponse getItem(int sessionId, int itemId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -575,7 +584,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ItemListResponse getListOfLossesOfBasket(int sessionId, int basketId) {
+	public ItemListResponse getListOfItemsOfBasket(int sessionId, int basketId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -600,5 +609,27 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public double getIncomesOfPeriod(int sessionId, int daysOfPeriod) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 28.05.2015
+	 */
+	@Override
+	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @author Marco
+	 * @date 28.05.2015
+	 */
+	@Override
+	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
