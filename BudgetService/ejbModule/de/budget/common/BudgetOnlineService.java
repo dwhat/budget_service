@@ -71,6 +71,8 @@ public interface BudgetOnlineService {
 	
 	/*########################################################*/
 	
+	
+	
 	/* Customer - SECTION */
 
 	/**
@@ -94,6 +96,8 @@ public interface BudgetOnlineService {
 	public ReturnCodeResponse deleteUser(int sessionId, String username);
 	
 	/*########################################################*/
+	
+	
 		
 	/* Vendor - SECTION */
 	
@@ -138,6 +142,8 @@ public interface BudgetOnlineService {
 	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId);
 	
 	/*########################################################*/
+	
+	
 	
 	/* Payment - SECTION */
 	
@@ -185,6 +191,8 @@ public interface BudgetOnlineService {
 
 	/*########################################################*/
 	
+	
+	
 	/* Category - SECTION */
 	
 	/**
@@ -226,6 +234,8 @@ public interface BudgetOnlineService {
 	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId);
 	
 	/*########################################################*/
+	
+	
 	
 	/* Basket - SECTION */
 	
@@ -273,8 +283,53 @@ public interface BudgetOnlineService {
 	 */
 	public ReturnCodeResponse deleteBasket(int sessionId, int basketID);
 	
+	/**
+	 * Gibt die letzten Baskets als Liste zurück
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param numberOfBaskets Anzahl der letzten auszugebenen Baskets
+	 * @return BasketListResponse Object
+	 */
+	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets);
+	
+	/**
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return a list with all baskets of a vendor
+	 */
+	public BasketListResponse getBasketsOfVendor(int sessionId, int vendorId);
+	
+	/**
+	 * gets all baskets of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public BasketListResponse getBasketOfMonth(int sessionId);
+	
+	
+	/**
+	 * gets all baskets of a specific payment
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return
+	 */
+	public BasketListResponse getBasketsOfPayment(int sessionId, int paymentId);
+
+
+	
+	/*########################################################*/
+	
+	
+	
 
 	/* Incomes - SECTION */
+	
 	/**
 	 * @author Marco
 	 * @date 26.05.2015
@@ -315,6 +370,36 @@ public interface BudgetOnlineService {
 	public IncomeListResponse getListOfIncomesOfBasket(int sessionId, int basketId);
 	
 	/**
+	 * Gibt die letzten Incomes als Liste zurück
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param numberOfIncome
+	 * @return IncomeListResponse
+	 */
+	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome);
+	
+	/**
+	 * gets all Incomes of a specific category for incomes
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public IncomeListResponse getIncomeOfCategory(int sessionId, int categoryId);
+	
+
+	/**
+	 * gets all income of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public IncomeListResponse getIncomeOfMonth(int sessionId);
+	
+	
+	/**
 	 * @author Marco
 	 * @date 26.05.2015
 	 * @param sessionId
@@ -323,7 +408,12 @@ public interface BudgetOnlineService {
 	 */
 	public ReturnCodeResponse deleteIncome(int sessionId, int itemID);
 	
+	
+	
 	/*########################################################*/
+	
+	
+	
 	
 	/* Items - SECTION */
 
@@ -371,16 +461,28 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public ItemListResponse getListOfItemsOfBasket(int sessionId, int basketId);
+	
+
+	/**
+	 * gets all Items of a specific category for losses
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public ItemListResponse getItemsOfLossCategory(int sessionId, int categoryId);
 
 	/*########################################################*/
+	
+	
+	
 	
 	/* Charts/Balance - SECTION */
 	
 	//public Map<Integer,Integer> getChart(int customerID);
 	
 	//public int getBalance(int customerID);
-	
-	/*########################################################*/
 	
 	/**
 	 * @author Marco
@@ -399,79 +501,8 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public double getIncomesOfPeriod(int sessionId, int daysOfPeriod);
-
-	/**
-	 * Gibt die letzten Baskets als Liste zurück
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param numberOfBaskets Anzahl der letzten auszugebenen Baskets
-	 * @return BasketListResponse Object
-	 */
-	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets);
 	
-	/**
-	 * Gibt die letzten Incomes als Liste zurück
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param numberOfIncome
-	 * @return IncomeListResponse
-	 */
-	public IncomeListResponse getLastIncome(int sessionId, int numberOfIncome);
+	/*########################################################*/
 	
-	/**
-	 * gets all Incomes of a specific category for incomes
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param categoryId
-	 * @return
-	 */
-	public IncomeListResponse getIncomeOfCategory(int sessionId, int categoryId);
-	
-	/**
-	 * gets all Items of a specific category for losses
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param categoryId
-	 * @return
-	 */
-	public ItemListResponse getItemsOfLossCategory(int sessionId, int categoryId);
-	
-	/**
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param vendorId
-	 * @return a list with all baskets of a vendor
-	 */
-	public BasketListResponse getBasketsOfVendor(int sessionId, int vendorId);
-	
-	/**
-	 * gets all baskets of the actual month
-	 * @author Marco
-	 * @param sessionId
-	 * @return
-	 */
-	public BasketListResponse getBasketOfMonth(int sessionId);
-	
-	/**
-	 * gets all income of the actual month
-	 * @author Marco
-	 * @param sessionId
-	 * @return
-	 */
-	public IncomeListResponse getIncomeOfMonth(int sessionId);
-	
-	/**
-	 * gets all baskets of a specific payment
-	 * @author Marco
-	 * @date 29.05.2015
-	 * @param sessionId
-	 * @param paymentId
-	 * @return
-	 */
-	public BasketListResponse getBasketsOfPayment(int sessionId, int paymentId);
 }
+
