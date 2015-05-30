@@ -50,7 +50,7 @@ public interface BudgetOnlineDAOLocal {
 	public void deleteVendor(int vendorId);
 	
 	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items);
-	public Basket updateBaseket(Basket basket);
+	public Basket updateBasket(Basket basket);
 	public Basket findBasketById(int basketId);
 	public void deleteBasket(int basketId);
 	

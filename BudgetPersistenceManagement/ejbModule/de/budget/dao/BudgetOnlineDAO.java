@@ -443,7 +443,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return BasketObjektKopie
 	 */
 	@Override
-	public Basket updateBaseket(Basket basket) {
+	public Basket updateBasket(Basket basket) {
 		return em.merge(basket);
 	}
 

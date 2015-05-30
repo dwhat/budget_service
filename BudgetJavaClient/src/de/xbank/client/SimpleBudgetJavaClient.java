@@ -12,7 +12,7 @@ import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.UserLoginResponse;
 
 
-import org.jboss.ejb.client.*;
+
 
 
 
@@ -90,7 +90,7 @@ public class SimpleBudgetJavaClient {
 			System.out.println("Joa hat ein Payment angelegt");
 			
 			// Payment abrufen
-			PaymentListResponse payListResp = remoteSystem.getMyPayments(resp1.getSessionId());
+			PaymentListResponse payListResp = remoteSystem.getPayments(resp1.getSessionId());
 			ArrayList<PaymentTO> paymentList = (ArrayList<PaymentTO>) payListResp.getPaymentList();
 			System.out.println("Erster Name des Kontos: " + paymentList.get(0).getName());
 			
@@ -107,7 +107,7 @@ public class SimpleBudgetJavaClient {
 		System.out.println("============================================================");
 		System.out.println("Szenario Peter");
 
-		UserLoginResponse resp1 = remoteSystem.registerNewUser("peter", "12345678", "test1@gmx.de");
+		UserLoginResponse resp1 = remoteSystem.setUser("peter", "12345678", "test1@gmx.de");
 
 		System.out.println("Szenario Peter");
 
