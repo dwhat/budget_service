@@ -802,14 +802,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	// Eventuell auch noch basketID als Parameter 
 	@Override
-	public ItemResponse getItem(int sessionId, int itemId) {
+	public ItemResponse getItemByBasket(int sessionId, int itemId, int basketId) {
 		ItemResponse response = new ItemResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
-			//TODO Item Methoden im BasketModel anlegen
-			//Item item = basket.getItem(itemId);
-			//response.setIncomeTo(dtoAssembler.makeDto(item));	
+			Basket basket = user.getBasket(basketId);
+			Item item = basket.getItem(itemId);
+			response.setItemTo(dtoAssembler.makeDto(item));	
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
