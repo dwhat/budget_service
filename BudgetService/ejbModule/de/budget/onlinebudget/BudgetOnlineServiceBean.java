@@ -10,12 +10,14 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
 
 
 
@@ -66,6 +68,7 @@ import de.budget.entities.User;
 import de.budget.entities.Vendor;
 /**************************************************/
 import de.budget.util.DtoAssembler;
+import de.budget.onlinebudget.OutputRequesterBean;
 
 
 /**
@@ -89,6 +92,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	@EJB
 	private DtoAssembler dtoAssembler;
+	
+	/**
+	 * EJB zur Beauftragung von Nachrichtenversand
+	 */
+	@EJB
+	private OutputRequesterBean outputRequester;
 	
 	/**
 	 * @author Marco
