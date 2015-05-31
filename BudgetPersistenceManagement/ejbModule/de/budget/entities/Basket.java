@@ -246,6 +246,21 @@ public class Basket implements Serializable {
 	}
 	
 	/**
+	 * @author Moritz
+	 * @param itemId
+	 * @return
+	 */
+	public Item getItem(int itemId)
+	{
+		for (Item i : this.items) {
+			if (i.getId()== itemId) {
+				return i;
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * @author Marco
 	 * @return a set with all Items of a basket
 	 */

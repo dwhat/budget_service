@@ -444,7 +444,7 @@ public interface BudgetOnlineService {
 	 * @param itemId
 	 * @return
 	 */
-	public ItemResponse getItem(int sessionId, int itemId);
+	public ItemResponse getItemByBasket(int sessionId, int itemId, int basketId);
 	
 	/**
 	 * @author Marco
