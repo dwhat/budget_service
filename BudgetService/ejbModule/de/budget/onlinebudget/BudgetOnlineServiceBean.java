@@ -193,6 +193,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public UserLoginResponse setUser(String username, String password, String email) {
 		UserLoginResponse response = new UserLoginResponse();
 		try {
+			
+			// TODO prüfen ob Username bereits verwendet wurde
 			logger.info("Versuche neuen User anzulegen. Name=" + username);
 			User user = dao.createUser(username, password, email);
 			if (user != null) {
@@ -219,7 +221,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 30.05.2015
 	 */
 	@Override
-	public UserResponse getUserByName(int sessionId, int userName) {
+	public UserResponse getUserByName(int sessionId, String userName) {
 		// 
 		UserResponse UserResp = new UserResponse();	
 		try {
@@ -283,7 +285,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return
 	 */
 	@Override
-	public BasketListResponse getBasketsByMonth(int sessionId) {
+	public BasketListResponse getBasketsOfActualMonth(int sessionId) {
 		return null;
 	}
 	
@@ -790,7 +792,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return
 	 */
 	@Override
-	public IncomeListResponse getIncomesByMonth(int sessionId) {
+	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
 		return null;
 	}
 	

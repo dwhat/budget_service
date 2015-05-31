@@ -15,7 +15,7 @@ import javax.jms.TextMessage;
 @Stateless
 @LocalBean
 public class OutputRequesterBean {
-
+ //TODO
 	  @Resource(mappedName="java:/JmsXA")
 	  private ConnectionFactory jmsFactory;
 	  

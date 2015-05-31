@@ -75,7 +75,7 @@ public interface BudgetOnlineService {
 	 * @param userName
 	 * @return
 	 */
-	public UserResponse getUserByName(int sessionId, int userName);
+	public UserResponse getUserByName(int sessionId, String userName);
 	
 
 	//public int createOrUpdateUser(User user);
@@ -301,7 +301,7 @@ public interface BudgetOnlineService {
 	 * @param sessionId
 	 * @return
 	 */
-	public BasketListResponse getBasketsByMonth(int sessionId);
+	public BasketListResponse getBasketsOfActualMonth(int sessionId);
 	
 	
 	/**
@@ -389,7 +389,7 @@ public interface BudgetOnlineService {
 	 * @param sessionId
 	 * @return
 	 */
-	public IncomeListResponse getIncomesByMonth(int sessionId);
+	public IncomeListResponse getIncomesOfActualMonth(int sessionId);
 	
 	
 	/**
