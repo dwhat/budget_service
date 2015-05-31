@@ -199,7 +199,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		try {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
-			
+			//TODO
 			//UserResp.setUserTo(dtoAssembler.makeDto(user));	
 		}
 		catch (BudgetOnlineException e) {
@@ -800,14 +800,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
+	// Eventuell auch noch basketID als Parameter 
 	@Override
 	public ItemResponse getItem(int sessionId, int itemId) {
 		ItemResponse response = new ItemResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
 			User user = this.dao.findUserByName(session.getUsername());
-//TODO Item Methoden im UserModel anlegen
-			//Item item = user.getItem(itemId);
+			//TODO Item Methoden im BasketModel anlegen
+			//Item item = basket.getItem(itemId);
 			//response.setIncomeTo(dtoAssembler.makeDto(item));	
 		}
 		catch (BudgetOnlineException e) {
@@ -824,8 +825,19 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public ItemListResponse getItemsByBasket(int sessionId, int basketId) {
-		// TODO Auto-generated method stub
-		return null;
+		ItemListResponse response = new ItemListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			User user = this.dao.findUserByName(session.getUsername());
+			Basket basket = user.getBasket(basketId);
+			List<Item> itemList = basket.getItems();
+			response.setItemList(dtoAssembler.makeItemListDto(itemList));
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		return response;
 	}
 
 	/**
