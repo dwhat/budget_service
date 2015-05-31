@@ -129,18 +129,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (user != null && user.getPassword().equals(password)) 
 			{
 				int sessionId = dao.createSession(user);
+				
 				logger.info("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
+				// Request OK zurückschicken
+				response.setReturnCode(200);
 			}
 			else 
 			{
 				logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+user.getUserName());
+				response.setReturnCode(404);
+				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+ username);
 			}
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
+			//evtl darauf einigen einen 404(Not-Found) zurückzuschicken 
 		}
 		return response;
 	}
@@ -152,10 +157,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * 
 	 */
 	@Override
-	public ReturnCodeResponse logout(int sessionId) {
-		dao.closeSession(sessionId);
+	public ReturnCodeResponse logout(int sessionId)  {
+		
 		ReturnCodeResponse response = new ReturnCodeResponse();
-		logger.info("Logout erfolgreich. Session=" + sessionId);
+		//try {
+			dao.closeSession(sessionId);	
+			logger.info("Logout erfolgreich. Session=" + sessionId);
+			response.setReturnCode(200);
+		//}
+		//catch(BudgetOnlineException e) {
+		//	response.setReturnCode(500);
+		//	response.setMessage(e.getMessage());
+		//}
+		
+		
 		return response;
 		
 	}
@@ -175,8 +190,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				int sessionId = dao.createSession(user);
 				response.setSessionId(sessionId);
 				logger.info("User angelegt. Session=" + sessionId);
+				response.setReturnCode(200);
 			}
 			else {
+				response.setReturnCode(409);
 				throw new UsernameAlreadyExistsException("Username has already been taken. Please try again.");
 			}
 		}

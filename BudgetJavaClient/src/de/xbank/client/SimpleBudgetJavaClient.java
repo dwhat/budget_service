@@ -46,8 +46,8 @@ public class SimpleBudgetJavaClient {
  	       
  	       //Test-Szeanarien ausfuehren:
 		   //szenarioEmma();
-		   szenarioJoe();		   	       
-		   //szenarioPeter();
+		   //szenarioJoe();		   	       
+		   szenarioPeter();
 		   
 		}
 		catch (Exception ex) {
@@ -116,6 +116,9 @@ public class SimpleBudgetJavaClient {
 			System.out.println("Peter hat sich registiert.");
 			remoteSystem.logout(sessionId);
 			System.out.println("Peter hat sich ausgelogt.");
+		}
+		else if(resp1.getReturnCode() == 409) {
+			System.out.println("Der User existiert bereits");
 		}
 		else {
 			System.out.println(resp1.getMessage());

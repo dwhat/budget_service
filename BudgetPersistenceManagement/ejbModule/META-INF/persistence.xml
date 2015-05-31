@@ -15,7 +15,7 @@
             angelegte Daten erhalten.
             Bei Final Deploy unbedingt richtig setzen bspws. "none" wenn Daten im
             Produktivsystem vorhanden  -->
-        <property name="hibernate.hbm2ddl.auto" value="validate"/>
+        <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
         <!--Die Eigenschaft "hibernate.show_sql" legt fest, ob SQL-Code ausgegeben
         	werden soll. Bei Final Deploy unbedingt auf "false" setzen  -->
         <property name="hibernate.show_sql" value="true"/>
