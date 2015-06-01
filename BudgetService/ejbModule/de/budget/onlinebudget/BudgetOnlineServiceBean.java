@@ -294,8 +294,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to get the last baskets of a user
 	 * @author Marco
 	 * @date 28.05.2015
+	 * @param sessionId
+	 * @param numberOfBaskets   Anzahl der geünschten letzten Baskets
+	 * @return BasketListResponse
 	 */
 	@Override
 	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets) {
@@ -346,7 +350,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * gets all baskets of the actual month
+	 * Gets all baskets of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
@@ -359,7 +363,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	
 	/**
-	 * gets all baskets of a specific payment
+	 * Gets all baskets of a specific payment
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
@@ -493,6 +497,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 
 	/**
+	 * Method to create or update a basket
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -507,9 +512,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			Basket basket = user.getBasket(basketId);
 			Payment payment = user.getPayment(paymentId);
 			Vendor vendor = user.getVendor(vendorId);
-			
-			
-			
+
 			if(basket == null) {
 				basket = dao.createBasket(user, notice, amount,purchaseDate,payment,vendor,items);
 			}
@@ -540,11 +543,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 
 
-
-	
-	
-	
-	
 	/*#################      VENDOR - SECTION     ##############*/
 	
 	
@@ -611,6 +609,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 
 	/**
+	 * Method to delete a vendor
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -639,6 +638,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to create oder update a vendor
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -709,7 +709,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * helper method, to find a payment and 
+	 * Helper method, to find a payment and 
 	 * @author Marco
 	 * @date 01.06.2015
 	 * @param sessionId
@@ -793,7 +793,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	
 	/**
-	 * method to create or update a payment
+	 * Method to create or update a payment
 	 * @author Marco
 	 * @author Moritz
 	 * @param sessionId
@@ -843,6 +843,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to get a category of the user
 	 * @author Moritz
 	 * @date 30.05.2015
 	 */
@@ -932,6 +933,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to create oder update a category
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -986,17 +988,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to get a special income
 	 * @author Moritz
 	 * @date 30.05.2015
 	 */
 	@Override
-	public IncomeResponse getIncome(int sessionId, int itemId) {
+	public IncomeResponse getIncome(int sessionId, int incomeId) {
 		IncomeResponse response = new IncomeResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			Income income = user.getIncome(itemId);
-			response.setIncomeTo(dtoAssembler.makeDto(income));	
+			if(session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Income income = user.getIncome(incomeId);
+				response.setIncomeTo(dtoAssembler.makeDto(income));	
+			}
+			else {
+				response.setMessage("Sie sind nicht eingeloggt");
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(500);
@@ -1013,7 +1021,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * gets all Incomes of a specific category for incomes
+	 * Gets all Incomes of a specific category for incomes
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
@@ -1055,8 +1063,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 
 	/**
+	 * Method to get the last Incomes of a user
 	 * @author Marco
 	 * @date 28.05.2015
+	 * @param sessionId
+	 * @param numberOfIncome   Anzahl der gewünschten letzten Incomes
 	 */
 	@Override
 	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
@@ -1065,7 +1076,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * gets all income of the actual month
+	 * Gets all income of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
@@ -1108,6 +1119,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to create or update an income
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -1124,19 +1136,24 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to get a special item of a special basket
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
-	// Eventuell auch noch basketID als Parameter 
 	@Override
 	public ItemResponse getItemByBasket(int sessionId, int itemId, int basketId) {
 		ItemResponse response = new ItemResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			Basket basket = user.getBasket(basketId);
-			Item item = basket.getItem(itemId);
-			response.setItemTo(dtoAssembler.makeDto(item));	
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Basket basket = user.getBasket(basketId);
+				Item item = basket.getItem(itemId);
+				response.setItemTo(dtoAssembler.makeDto(item));	
+			}
+			else {
+				response.setMessage("Sie sind nicht angemeldet");
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(500);
@@ -1154,6 +1171,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to gett all items of a basket
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -1188,7 +1206,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 
 	/**
-	 * gets all Items of a specific category for losses
+	 * Gets all Items of a specific category for losses
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
@@ -1261,6 +1279,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to create or update an item
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
