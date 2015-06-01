@@ -353,16 +353,6 @@ public interface BudgetOnlineService {
 	public IncomeResponse getIncome(int sessionId, int itemId);
 	
 	/**
-	 * method to get all incomes of a basket
-	 * @author Marco
-	 * @date 26.05.2015
-	 * @param sessionId
-	 * @param basketId
-	 * @return
-	 */
-	public IncomeListResponse getIncomesByBasket(int sessionId, int basketId);
-	
-	/**
 	 * Gibt die letzten Incomes als Liste zurück
 	 * @author Marco
 	 * @date 29.05.2015

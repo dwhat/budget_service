@@ -1,7 +1,9 @@
 package de.budget.onlinebudget;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+
 
 
 
@@ -18,6 +20,7 @@ import org.jboss.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+
 
 
 
@@ -72,6 +75,8 @@ import de.budget.entities.Vendor;
 import de.budget.util.DtoAssembler;
 import de.budget.onlinebudget.OutputRequesterBean;
 
+
+//TODO überall Session auf null prüfen um nullpointer zu vermeiden, siehe getItemByLossCategory
 
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
@@ -248,13 +253,37 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to delete an user
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
 	@Override
 	public ReturnCodeResponse deleteUser(int sessionId, String username) {
-		// TODO Auto-generated method stub
-		return null;
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				if(session.getUsername().equals(username)) { //prüft ob man den eigenen user Löscht
+					dao.deleteUser(username);
+					logger.info("User erfolgreich gelöscht");
+				}
+				else {
+					response.setMessage("Sie können keinen fremden User löschen");
+				}
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("User to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 
 	
@@ -276,6 +305,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to get all baskets of a specific vendor
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
@@ -284,8 +314,37 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public BasketListResponse getBasketsByVendor(int sessionId, int vendorId){
-		return null;
+		BasketListResponse response = new BasketListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the vendor, wird später befüllt
+				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
+				
+				for(Basket b : basketsOfUser) {
+					if(vendorId == b.getVendor().getId()){
+						basketList.add(b);
+					}
+				}
+				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;	
 	}
+	
 	/**
 	 * gets all baskets of the actual month
 	 * @author Marco
@@ -309,7 +368,35 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public BasketListResponse getBasketsByPayment(int sessionId, int paymentId) {
-		return null;
+		BasketListResponse response = new BasketListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the payment, wird später befüllt
+				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
+				
+				for(Basket b : basketsOfUser) {
+					if(paymentId == b.getPayment().getId()){
+						basketList.add(b);
+					}
+				}
+				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;		
 	}
 	
 	/**
@@ -325,9 +412,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		
 		try {
 			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			Basket basket = user.getBasket(basketId);
-			response.setBasketTo(dtoAssembler.makeDto(basket));	
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Basket basket = user.getBasket(basketId);
+				response.setBasketTo(dtoAssembler.makeDto(basket));	
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(500);
@@ -374,13 +463,32 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to delete a basket
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ReturnCodeResponse deleteBasket(int sessionId, int basketID) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReturnCodeResponse deleteBasket(int sessionId, int basketId) {
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deleteBasket(basketId);
+				logger.info("Basket erfolgreich gelöscht");
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Basket to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 
@@ -508,8 +616,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId) {
-		// TODO Auto-generated method stub
-		return null;
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deleteVendor(vendorId);
+				logger.info("Vendor erfolgreich gelöscht");
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Vendor to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 	/**
@@ -565,10 +691,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public PaymentResponse getPayment(int sessionId, int paymentId) {
 		PaymentResponse response = new PaymentResponse();
 		try {
-			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			//Zur Übersichtlichkeit noch die lange Form gelassen
-			Payment payment = user.getPayment(paymentId);
+			Payment payment = getPaymentHelper(sessionId, paymentId);
 			response.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
 		catch(NoSessionException e) {
@@ -583,6 +706,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.info(e.getMessage());
 		}
 		return response;
+	}
+	
+	/**
+	 * helper method, to find a payment and 
+	 * @author Marco
+	 * @date 01.06.2015
+	 * @param sessionId
+	 * @param paymentId
+	 * @return a Payment Object
+	 */
+	private Payment getPaymentHelper(int sessionId, int paymentId) throws NoSessionException, IllegalArgumentException {
+		BudgetSession session = getSession(sessionId);
+		if (session != null) {
+			User user = this.dao.findUserByName(session.getUsername());
+			Payment payment = user.getPayment(paymentId);
+			return payment;
+		}
+		else {		
+			return null;
+		}
 	}
 	
 	/**
@@ -625,17 +768,24 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public ReturnCodeResponse deletePayment(int sessionId, int paymentId) {
-		PaymentResponse paymentResp = getPayment(sessionId, paymentId);
-		//TODO
 		ReturnCodeResponse response = new ReturnCodeResponse();
-		
-		if(paymentResp.getReturnCode() == 0) {
-			dao.deletePayment(paymentResp.getPaymentTo().getId());
-			logger.info("Payment erfolgreich gelöscht");
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deletePayment(paymentId);
+				logger.info("Payment erfolgreich gelöscht");
+			}
 		}
-		else {
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage("Payment to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
 		}
 		return response;	
 	}
@@ -751,13 +901,32 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	
 	/**
+	 * Method to delete a category
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
 	@Override
 	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deleteCategory(categoryId);
+				logger.info("Category erfolgreich gelöscht");
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Category to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 
@@ -853,18 +1022,35 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeListResponse getIncomesByCategory(int sessionId, int categoryId) {
-		return null;
-	}
-
-
-	/**
-	 * @author Marco
-	 * @date 26.05.2015
-	 */
-	@Override
-	public IncomeListResponse getIncomesByBasket(int sessionId, int basketId) {
-		// TODO Auto-generated method stub
-		return null;
+		IncomeListResponse response = new IncomeListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Income> incomeList = new ArrayList<Income>(); // List with all Incomes with the category. wird später befüllt
+				List<Income> incomes = user.getIncomes(); // List with all Items of the user
+				for (Income i : incomes) {
+					if(categoryId == i.getCategory().getId()) {
+						incomeList.add(i);
+					}
+				}
+				response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
+		
 	}
 	
 
@@ -887,18 +1073,38 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
 		return null;
+		//TODO
 	}
 	
 
 
 	/**
+	 * Method to delete an income
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
 	@Override
-	public ReturnCodeResponse deleteIncome(int sessionId, int itemID) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReturnCodeResponse deleteIncome(int sessionId, int incomeId) {
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deleteIncome(incomeId);
+				logger.info("Income erfolgreich gelöscht");
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Income to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 	/**
@@ -956,10 +1162,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		ItemListResponse response = new ItemListResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			Basket basket = user.getBasket(basketId);
-			List<Item> itemList = basket.getItems();
-			response.setItemList(dtoAssembler.makeItemListDto(itemList));
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Basket basket = user.getBasket(basketId);
+				List<Item> itemList = basket.getItems();
+				response.setItemList(dtoAssembler.makeItemListDto(itemList));
+			}
+			else {
+				response.setReturnCode(400);
+				response.setMessage("Keine Session gefunden");
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(500);
@@ -985,18 +1197,67 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public ItemListResponse getItemsByLossCategory(int sessionId, int categoryId) {
-		return null;
+		ItemListResponse response = new ItemListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Item> itemList = new ArrayList<Item>(); // List with all Items with the category. wird später befüllt
+				List<Basket> baskets = user.getBaskets();
+				for (Basket b : baskets) {
+					List<Item> items = b.getItems(); // List with all Items of the basket
+					for (Item i : items) {
+						if(categoryId == i.getCategory().getId()) {
+							itemList.add(i);
+						}
+					}
+				}
+				response.setItemList(dtoAssembler.makeItemListDto(itemList));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 	
 	/**
+	 * Method to delete an item
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
 	@Override
 	public ReturnCodeResponse deleteItem(int sessionId, int itemId) {
-		// TODO Auto-generated method stub
-		return null;
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				dao.deleteItem(itemId);
+				logger.info("Item erfolgreich gelöscht");
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Item to delete not found.");
+		}
+		catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 	/**
@@ -1020,6 +1281,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 
 	/**
+	 * Method to find all loss of a time period
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -1031,6 +1293,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
+	 * Method to find all incomes of a time period
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
