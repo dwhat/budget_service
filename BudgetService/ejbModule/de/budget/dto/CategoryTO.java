@@ -19,7 +19,7 @@ public class CategoryTO implements Serializable {
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
 	private Timestamp createDate;
 	private Timestamp lastChanged;
-	private String user;
+	private UserTO user;
 	
 	/**
 	 * Default Constructor
@@ -31,16 +31,17 @@ public class CategoryTO implements Serializable {
 	
 	/**
 	 * @author Marco
+	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param notice
 	 * @param active
 	 * @param income
 	 * @param createDate
+	 * @param lastChanged
 	 * @param user
-	 * @param lastChanged 
 	 */
-	public CategoryTO(int id, String name, String notice, boolean active, boolean income, Timestamp createDate, Timestamp lastChanged, String user) {
+	public CategoryTO(int id, String name, String notice, boolean active, boolean income, Timestamp createDate, Timestamp lastChanged, UserTO user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -141,13 +142,13 @@ public class CategoryTO implements Serializable {
 	/**
 	 * @return the user
 	 */
-	public String getUser() {
+	public UserTO getUser() {
 		return user;
 	}
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(String user) {
+	public void setUser(UserTO user) {
 		this.user = user;
 	}
 

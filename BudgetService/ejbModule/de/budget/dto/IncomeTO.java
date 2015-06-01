@@ -19,12 +19,13 @@ public class IncomeTO implements Serializable {
 	private double amount;
 	private double quantity;
 	private int period;
-	private String user;
+	private UserTO user;
 	private Timestamp launchDate;
 	private Timestamp finishDate;
 	private Timestamp createDate;
 	private Timestamp lastChanged;
-	private int category;
+	private CategoryTO category;
+	
 	
 	/**
 	 * Deafault Constructor
@@ -37,6 +38,7 @@ public class IncomeTO implements Serializable {
 	
 	/**
 	 * @author Marco
+	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param quantity
@@ -50,7 +52,7 @@ public class IncomeTO implements Serializable {
 	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, String user, int category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, UserTO user, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;
@@ -152,14 +154,14 @@ public class IncomeTO implements Serializable {
 	/**
 	 * @return the user
 	 */
-	public String getUser() {
+	public UserTO getUser() {
 		return user;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(String user) {
+	public void setUser(UserTO user) {
 		this.user = user;
 	}
 
@@ -222,14 +224,14 @@ public class IncomeTO implements Serializable {
 	/**
 	 * @return the category
 	 */
-	public int getCategory() {
+	public CategoryTO getCategory() {
 		return category;
 	}
 
 	/**
 	 * @param category the category to set
 	 */
-	public void setCategory(int category) {
+	public void setCategory(CategoryTO category) {
 		this.category = category;
 	}
 	

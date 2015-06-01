@@ -14,8 +14,4 @@ public class UsernameAlreadyExistsException extends BudgetOnlineException {
 	public UsernameAlreadyExistsException(String message) {
 		super(CODE, message);
 	}
-	
-	public int getErrorCode() {
-		return this.CODE;
-	}
 }

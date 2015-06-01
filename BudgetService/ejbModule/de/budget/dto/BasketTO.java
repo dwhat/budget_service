@@ -21,9 +21,9 @@ public class BasketTO implements Serializable{
 	private Timestamp createDate;
 	private Timestamp purchaseDate;
 	private Timestamp lastChanged;
-	private String user;
-	private int vendor;
-	private int payment;
+	private UserTO user;
+	private VendorTO vendor;
+	private PaymentTO payment;
 	private List<ItemTO> items;
 	
 	/**
@@ -46,18 +46,20 @@ public class BasketTO implements Serializable{
 	 * @param user
 	 * @param vendor
 	 * @param payment
+	 * @param items
 	 */
-	public BasketTO(int id, String notice, double amount, Timestamp createDate, Timestamp purchaseDate, Timestamp lastChanged, String user, int vendor, int payment) {
+	public BasketTO(int id, String notice, double amount, Timestamp createDate, Timestamp purchaseDate, Timestamp lastChanged, UserTO user, VendorTO vendor, PaymentTO payment, List<ItemTO> items) {
 		super();
-		this.setId(id);
-		this.setNotice(notice);
-		this.setAmount(amount);
-		this.setCreateDate(createDate);
-		this.setPurchaseDate(purchaseDate);
-		this.setLastChanged(lastChanged);
-		this.setUser(user);
-		this.setVendor(vendor);
-		this.setPayment(payment);
+		this.id = id;
+		this.notice = notice;
+		this.amount = amount;
+		this.createDate = createDate;
+		this.purchaseDate =purchaseDate;
+		this.lastChanged = lastChanged;
+		this.user = user;
+		this.vendor = vendor;
+		this.payment = payment;
+		this.items = items;
 	}
 
 	/**
@@ -147,42 +149,42 @@ public class BasketTO implements Serializable{
 	/**
 	 * @return the user
 	 */
-	public String getUser() {
+	public UserTO getUser() {
 		return user;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(String user) {
+	public void setUser(UserTO user) {
 		this.user = user;
 	}
 
 	/**
 	 * @return the vendor
 	 */
-	public int getVendor() {
+	public VendorTO getVendor() {
 		return vendor;
 	}
 
 	/**
 	 * @param vendor the vendor to set
 	 */
-	public void setVendor(int vendor) {
+	public void setVendor(VendorTO vendor) {
 		this.vendor = vendor;
 	}
 
 	/**
 	 * @return the payment
 	 */
-	public int getPayment() {
+	public PaymentTO getPayment() {
 		return payment;
 	}
 
 	/**
 	 * @param payment the payment to set
 	 */
-	public void setPayment(int payment) {
+	public void setPayment(PaymentTO payment) {
 		this.payment = payment;
 	}
 
@@ -199,5 +201,6 @@ public class BasketTO implements Serializable{
 	public void setItems(List<ItemTO> items) {
 		this.items = items;
 	}
+
 	
 }

@@ -11,7 +11,7 @@ public class VendorTO implements Serializable {
 	private String name;
 	private Timestamp createDate;
 	private Timestamp lastChanged;
-	private String user;
+	private UserTO user;
 	private String logo;
 
 	/**
@@ -34,13 +34,13 @@ public class VendorTO implements Serializable {
 	 * @param user
 	 * @param logo
 	 */
-	public VendorTO(int id, String name, Timestamp createDate, Timestamp lastChanged, String user, String logo) {
-		this.setId(id);
-		this.setName(name);
-		this.setCreateDate(createDate);
-		this.setLastChanged(lastChanged);
-		this.setUser(user);
-		this.setLogo(logo);
+	public VendorTO(int id, String name, Timestamp createDate, Timestamp lastChanged, UserTO user, String logo) {
+		this.id = id;
+		this.name = name;
+		this.createDate = createDate;
+		this.lastChanged = lastChanged;
+		this.user = user;
+		this.logo = logo;
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class VendorTO implements Serializable {
 	 * @date 19.05.2015
 	 * @return the user
 	 */
-	public String getUser() {
+	public UserTO getUser() {
 		return user;
 	}
 
@@ -129,7 +129,7 @@ public class VendorTO implements Serializable {
 	 * @date 19.05.2015
 	 * @param user the user to set
 	 */
-	public void setUser(String user) {
+	public void setUser(UserTO user) {
 		this.user = user;
 	}
 

@@ -10,18 +10,20 @@ import de.budget.dto.CategoryTO;
 import de.budget.dto.IncomeTO;
 import de.budget.dto.ItemTO;
 import de.budget.dto.PaymentTO;
+import de.budget.dto.UserTO;
 import de.budget.dto.VendorTO;
 import de.budget.entities.Basket;
 import de.budget.entities.Category;
 import de.budget.entities.Income;
 import de.budget.entities.Item;
 import de.budget.entities.Payment;
+import de.budget.entities.User;
 import de.budget.entities.Vendor;
 
 /**
- * Klasse zum erstellen von DTOs 
+ * Klasse zum Erstellen von DTOs, die zum Datentransfer benötigt werden
  * 
- * DTO's werden über die vorherigen Entities gebildet. 
+ * DTO's werden von den vorherigen Entities gebildet. 
  * 
  * @date 19.05.2015
  * @author Marco
@@ -29,15 +31,30 @@ import de.budget.entities.Vendor;
  */
 @Stateless
 public class DtoAssembler {
-
+	
+	
 	public VendorTO makeDto(Vendor vendor) {
 		VendorTO dto = new VendorTO();
 		dto.setId(vendor.getId());
 		dto.setName(vendor.getName());
 		dto.setCreateDate(vendor.getCreateDate());
 		dto.setLastChanged(vendor.getLastChanged());
-		dto.setUser(vendor.getUser().getUserName());
+		dto.setUser(makeDto(vendor.getUser()));
 		dto.setLogo(vendor.getLogo());
+		return dto;
+	}
+	
+	public UserTO makeDto (User user) {
+		UserTO dto = new UserTO();
+		dto.setUsername(user.getUserName());
+		dto.setPassword(user.getPassword());
+		dto.setEmail(user.getEmail());
+		dto.setCreateDate(user.getCreateDate());
+		dto.setLastChanged(user.getLastChanged());
+		dto.setBasketList(makeBasketListDto(user.getBaskets()));
+		dto.setVendorList(makeVendorListDto(user.getVendors()));
+		dto.setCategoryList(makeCategoryListDto(user.getCategories()));
+		dto.setPaymentList(makePaymentListDto(user.getPayments()));
 		return dto;
 	}
 	
@@ -58,7 +75,7 @@ public class DtoAssembler {
 		dto.setActive(category.isActive());
 		dto.setIncome(category.isIncome());
 		dto.setLastChanged(category.getLastChanged());
-		dto.setUser(category.getUser().getUserName());
+		dto.setUser(makeDto(category.getUser()));
 		return dto;
 	}
 	
@@ -79,7 +96,7 @@ public class DtoAssembler {
 		dto.setCreateDate(payment.getCreateDate());
 		dto.setActive(payment.isActive());
 		dto.setLastChanged(payment.getLastChanged());
-		dto.setUser(payment.getUser().getUserName());
+		dto.setUser(makeDto(payment.getUser()));
 		return dto;
 	}
 	
@@ -98,10 +115,11 @@ public class DtoAssembler {
 		dto.setCreateDate(basket.getCreateDate());
 		dto.setAmount(basket.getAmount());
 		dto.setLastChanged(basket.getLastChanged());
-		dto.setUser(basket.getUser().getUserName());
+		dto.setUser(makeDto(basket.getUser()));
 		dto.setPurchaseDate(basket.getPurchaseDate());
-		dto.setVendor(basket.getVendor().getId());
-		dto.setPayment(basket.getPayment().getId());
+		dto.setVendor(makeDto(basket.getVendor()));
+		dto.setPayment(makeDto(basket.getPayment()));
+		dto.setItems(makeItemListDto(basket.getItems()));
 		return dto;
 	}
 	
@@ -125,8 +143,8 @@ public class DtoAssembler {
 		dto.setLaunchDate(item.getLaunchDate());
 		dto.setFinishDate(item.getFinishDate());
 		dto.setLastChanged(item.getLastChanged());
-		dto.setBasket(item.getBasket().getId());
-		dto.setCategory(item.getCategory().getId());
+		dto.setBasket(makeDto(item.getBasket()));
+		dto.setCategory(makeDto(item.getCategory()));
 		return dto;
 	}
 	
@@ -158,8 +176,8 @@ public class DtoAssembler {
 		dto.setLaunchDate(income.getLaunchDate());
 		dto.setFinishDate(income.getFinishDate());
 		dto.setLastChanged(income.getLastChanged());
-		dto.setUser(income.getUser().getUserName());
-		dto.setCategory(income.getCategory().getId());
+		dto.setUser(makeDto(income.getUser()));
+		dto.setCategory(makeDto(income.getCategory()));
 		return dto;
 	}
 }

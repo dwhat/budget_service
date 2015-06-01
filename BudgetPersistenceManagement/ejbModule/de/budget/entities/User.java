@@ -386,6 +386,20 @@ public class User implements Serializable {
 	}
 	
 	/**
+	 * @return the lastChanged
+	 */
+	public Timestamp getLastChanged() {
+		return lastChanged;
+	}
+
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(Timestamp lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
+	/**
 	 * @author Marco
 	 */
 	@Override

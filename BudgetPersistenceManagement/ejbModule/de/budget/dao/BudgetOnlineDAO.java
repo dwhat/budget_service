@@ -15,13 +15,7 @@ import javax.persistence.PersistenceContext;
 
 
 
-
-
-
-
 import org.jboss.logging.Logger;
-
-
 
 
 //Interface Import
@@ -74,7 +68,7 @@ import de.budget.entities.Item;
 @Stateless
 public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
-	
+	//TODO ExceptionHandling
 	private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
 	
 	
@@ -88,7 +82,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return UserObjekt
 	 */
 	@Override
-	public User findUserByName(String userName) {
+	public User findUserByName(String userName)  throws IllegalArgumentException{
 		return em.find(User.class, userName);
 	}
 
@@ -113,9 +107,11 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param sessionID
 	 */
 	@Override
-	public void closeSession(int sessionId) {
-		BudgetSession session = em.find(BudgetSession.class, sessionId);
-		em.remove(session);
+	public void closeSession(int sessionId) throws IllegalArgumentException {
+
+			BudgetSession session = em.find(BudgetSession.class, sessionId);
+			em.remove(session);
+		
 	}
 
 	/**
@@ -126,7 +122,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return SessionObjekt
 	 */
 	@Override
-	public BudgetSession findSessionById(int sessionId) {
+	public BudgetSession findSessionById(int sessionId)  throws IllegalArgumentException{
 		return em.find(BudgetSession.class, sessionId);
 	}
 
@@ -137,7 +133,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Vendor Object
 	 */
 	@Override
-	public Vendor findVendorById(int vendorId) {
+	public Vendor findVendorById(int vendorId)  throws IllegalArgumentException{
 		return em.find(Vendor.class, vendorId);
 	}
 
@@ -148,7 +144,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Basket Object
 	 */
 	@Override
-	public Basket findBasketById(int basketId) {
+	public Basket findBasketById(int basketId)  throws IllegalArgumentException{
 		return em.find(Basket.class,  basketId);
 	}
 
@@ -159,7 +155,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Category Object
 	 */
 	@Override
-	public Category findCategoryById(int categoryId) {
+	public Category findCategoryById(int categoryId)  throws IllegalArgumentException{
 		return em.find(Category.class, categoryId);
 	}
 
@@ -170,7 +166,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Item Object
 	 */
 	@Override
-	public Item findItemById(int itemId) {
+	public Item findItemById(int itemId)  throws IllegalArgumentException{
 		return em.find(Item.class, itemId);
 	}
 	
@@ -181,7 +177,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Income Object
 	 */
 	@Override
-	public Income findIncomeById(int incomeId) {
+	public Income findIncomeById(int incomeId)  throws IllegalArgumentException{
 		return em.find(Income.class, incomeId);
 	}
 
@@ -192,7 +188,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Payment Object
 	 */
 	@Override
-	public Payment findPaymentById(int paymentId) {
+	public Payment findPaymentById(int paymentId)  throws IllegalArgumentException{
 		return em.find(Payment.class, paymentId);
 	}
 	/**
@@ -329,7 +325,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public Income updateIncome(Income income){
+	public Income updateIncome(Income income) throws IllegalArgumentException{
 		em.merge(income);
 		return income;
 		
@@ -341,7 +337,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public void deleteIncome(int incomeId){
+	public void deleteIncome(int incomeId) throws IllegalArgumentException{
 		Income income = em.find(Income.class, incomeId);
 		em.remove(income);
 	}
@@ -352,7 +348,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param username
 	 */
 	@Override
-	public void deleteUser(String username) {
+	public void deleteUser(String username) throws IllegalArgumentException{
 		User user = em.find(User.class, username);
 		em.remove(user);
 	}
@@ -363,7 +359,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param vendorId
 	 */
 	@Override
-	public void deleteVendor(int vendorId) {
+	public void deleteVendor(int vendorId) throws IllegalArgumentException{
 		Vendor vendor = em.find(Vendor.class, vendorId);
 		em.remove(vendor);	
 	}
@@ -374,7 +370,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param basketId
 	 */
 	@Override
-	public void deleteBasket(int basketId) {
+	public void deleteBasket(int basketId) throws IllegalArgumentException{
 		Basket basket = em.find(Basket.class,  basketId);
 		//Hier prüfen ob dann auch autoatisch alle Items mitgelöscht werden. 
 		em.remove(basket);
@@ -386,7 +382,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param categoryId
 	 */
 	@Override
-	public void deleteCategory(int categoryId) {
+	public void deleteCategory(int categoryId) throws IllegalArgumentException {
 		Category category = em.find(Category.class,  categoryId);
 		em.remove(category);
 	}
@@ -397,7 +393,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param itemId
 	 */
 	@Override
-	public void deleteItem(int itemId) {
+	public void deleteItem(int itemId) throws IllegalArgumentException {
 		Item item = em.find(Item.class, itemId);
 		em.remove(item);
 		
@@ -409,7 +405,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param paymentId
 	 */
 	@Override
-	public void deletePayment(int paymentId) {
+	public void deletePayment(int paymentId) throws IllegalArgumentException {
 		Payment payment = em.find(Payment.class, paymentId);
 		em.remove(payment);
 	}
@@ -421,7 +417,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return UserobjektKopie
 	 */
 	@Override
-	public User updateUser(User user) {
+	public User updateUser(User user) throws IllegalArgumentException {
 		return em.merge(user);
 	}
 
@@ -432,7 +428,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return VendorobjektKopie
 	 */
 	@Override
-	public Vendor updateVendor(Vendor vendor) {
+	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException {
 		return em.merge(vendor);
 	}
 
@@ -443,7 +439,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return BasketObjektKopie
 	 */
 	@Override
-	public Basket updateBasket(Basket basket) {
+	public Basket updateBasket(Basket basket) throws IllegalArgumentException {
 		return em.merge(basket);
 	}
 
@@ -454,7 +450,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return CategoryObjektKopie
 	 */
 	@Override
-	public Category updateCategory(Category category) {
+	public Category updateCategory(Category category) throws IllegalArgumentException {
 		return em.merge(category);
 	}
 
@@ -465,7 +461,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return ItemObjektKopie
 	 */
 	@Override
-	public Item updateItem(Item item) {
+	public Item updateItem(Item item) throws IllegalArgumentException {
 		return em.merge(item);
 	}
 
@@ -476,7 +472,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return PaymentObjektKopie
 	 */
 	@Override
-	public Payment updatePayment(Payment payment) {
+	public Payment updatePayment(Payment payment) throws IllegalArgumentException {
 		return em.merge(payment);
 	}
 }

@@ -8,9 +8,6 @@ public class InvalidLoginException extends BudgetOnlineException {
 	public InvalidLoginException(String message) {
 		super(CODE, message);
 	}
-	
-	public int getErrorCode() {
-		return this.CODE;
-	}
+
 
 }
