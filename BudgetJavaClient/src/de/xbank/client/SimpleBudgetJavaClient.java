@@ -52,7 +52,7 @@ public class SimpleBudgetJavaClient {
 	}
 	
     /**
-     * Test-Szenario: Emma meldet sich an und fragt ihren Kontostand ab.
+     * Test-Szenario: Emma meldet sich
      */
 	private static void szenarioEmma() {
 		try {
@@ -70,7 +70,7 @@ public class SimpleBudgetJavaClient {
 	}
 
     /**
-     * Test-Szenario: Joe meldet sich an, fragt seine Konten ab 
+     * Test-Szenario: Joe meldet sich an, und legt ein payment an und ruft dieses ab
      */
 	private static void szenarioJoe() {
 		try {
@@ -99,6 +99,9 @@ public class SimpleBudgetJavaClient {
 		}
 	}
 	
+	/**
+	 * Peter registriert sich neu und loggt sich danach aus
+	 */
 	private static void szenarioPeter() {
 		System.out.println("============================================================");
 		System.out.println("Szenario Peter");

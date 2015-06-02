@@ -1,10 +1,9 @@
-/.classpath
+/build/
 /.project
-/bin/
-
-
+/.classpath
 
 *.classpath
+
 
 # Directories #
 /build/

@@ -1,19 +1,19 @@
 package de.budget.client;
 
-
-import java.math.BigDecimal;
-import java.util.List;
+import de.budget.onlinebudget.BudgetOnlineServiceBean;
+import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
+import de.budget.onlinebudget.UserLoginResponse;
 
 
 public class SimpleOnlineBudgetClient {
 
-	private static BudgetOnlineIntegration remoteSystem;
+	private static BudgetOnlineServiceBean remoteSystem;
 	
 	
 	public static void main(String[] args) {
 		try {
-		   XbankOnlineIntegrationService service = new XbankOnlineIntegrationService();
-		   remoteSystem = service.getXbankOnlineIntegrationPort();
+		   BudgetOnlineServiceBeanService service = new BudgetOnlineServiceBeanService();
+		   remoteSystem = service.getBudgetOnlineServiceBeanPort();
  	       
  	       //Zeige, welche Referenz auf das Server-Objekt der Client erhalten hast:
  	       System.out.println("Client hat folgendes Server-Objekt erhalten:");
@@ -21,7 +21,7 @@ public class SimpleOnlineBudgetClient {
  	       System.out.println();
  	       
  	       //Test-Szeanarien ausfuehren:
-		   //szenarioEmma();
+		   szenarioEmma();
 		   //szenarioJoe();		   	       
 		   //szenarioEmma();
 		   //szenarioPeter();
@@ -34,18 +34,16 @@ public class SimpleOnlineBudgetClient {
 	}
 	
     /**
-     * Test-Szenario: Emma meldet sich an und fragt ihren Kontostand ab.
+     * Test-Szenario: Emma meldet sich an
      */
-	/*
+
 	private static void szenarioEmma() {
 	   System.out.println("============================================================");
        UserLoginResponse loginResponse = remoteSystem.login("emma", "emma1");
        if (loginResponse.getReturnCode()==0) {
     	   int sessionId = loginResponse.getSessionId();
-		   System.out.println("Emma hat sich angemeldet, um ihren Kontostand abzufragen.");
+		   System.out.println("Emma hat sich angemeldet");
 		   
-		   AccountBalanceResponse accountBalanceResponse = remoteSystem.getBalance(sessionId, EMMAS_KONTO);
-		   System.out.println("Auf Emmas Konto " + EMMAS_KONTO + " betraegt der Saldo: " + accountBalanceResponse.getBalance());
 		   
 	       remoteSystem.logout(sessionId);
 		   System.out.println("Emma hat sich abgemeldet.");
@@ -54,7 +52,7 @@ public class SimpleOnlineBudgetClient {
     	   System.out.println(loginResponse.getMessage());
        }
 	}
-*/
+
     /**
      * Test-Szenario: Joe meldet sich an, fragt seine Konten ab und überweist an Emma
      */
