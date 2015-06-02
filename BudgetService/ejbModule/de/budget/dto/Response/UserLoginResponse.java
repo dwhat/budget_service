@@ -22,5 +22,4 @@ public class UserLoginResponse extends ReturnCodeResponse {
 	public void setSessionId(int sessionId) {
 		this.sessionId = sessionId;
 	}
-
 }

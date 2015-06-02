@@ -7,10 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -20,6 +23,11 @@ import javax.validation.constraints.NotNull;
  * @author Marco
  * @date 12.05.2015
  */
+//@NamedQueries( {
+	//@NamedQuery (
+		//	name = "findLastBaskets",
+			//query = "select b from Basket b where b.username like :username order by b.purchaseDate")
+//})
 @Entity
 public class Basket implements Serializable {
 

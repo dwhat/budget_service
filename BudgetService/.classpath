@@ -15,5 +15,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Program Files/wildfly-8.2.0.Final/modules/system/layers/base/org/jboss/ws/api/main/jbossws-api-1.0.2.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -54,6 +54,7 @@ public interface BudgetOnlineDAOLocal {
 	public Basket updateBasket(Basket basket) throws IllegalArgumentException;
 	public Basket findBasketById(int basketId) throws IllegalArgumentException;
 	public void deleteBasket(int basketId) throws IllegalArgumentException;
+	public List<Basket> getLastBaskets(User user, int numberOfLastBaskets);
 	
 	public Category createCategory(User user, String name, String notice, boolean income);
 	public Category updateCategory(Category category) throws IllegalArgumentException;

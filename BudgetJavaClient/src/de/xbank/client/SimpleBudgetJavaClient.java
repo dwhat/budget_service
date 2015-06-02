@@ -12,14 +12,10 @@ import de.budget.dto.Response.PaymentResponse;
 import de.budget.dto.Response.UserLoginResponse;
 
 
-
-
-
-
-
 /**
+ * Test client for the BudgetServer
  * @author marco
- * test client for the BudgetServer
+ * 
  */
 public class SimpleBudgetJavaClient {
 	
@@ -45,9 +41,9 @@ public class SimpleBudgetJavaClient {
  	       System.out.println();
  	       
  	       //Test-Szeanarien ausfuehren:
-		   //szenarioEmma();
+		   szenarioEmma();
 		   //szenarioJoe();		   	       
-		   szenarioPeter();
+		   //szenarioPeter();
 		   
 		}
 		catch (Exception ex) {

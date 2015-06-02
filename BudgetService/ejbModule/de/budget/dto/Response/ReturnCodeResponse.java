@@ -3,7 +3,7 @@ package de.budget.dto.Response;
 import java.io.Serializable;
 
 /**
- * ReturnCode Klasse die verschiedene Stati(ReturnCodes,Messages) an den Aufrufer zurückgeben kann 
+ * ReturnCode SuperKlasse die verschiedene Stati(ReturnCodes,Messages) an den Aufrufer zurückgeben kann 
  * @author Moritz
  *
  */

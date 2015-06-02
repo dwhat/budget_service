@@ -5,6 +5,7 @@ package de.budget.dao;
 
 //EJB Imports
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -15,7 +16,12 @@ import javax.persistence.PersistenceContext;
 
 
 
+import javax.persistence.Query;
+
 import org.jboss.logging.Logger;
+
+
+
 
 
 //Interface Import
@@ -146,6 +152,24 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public Basket findBasketById(int basketId)  throws IllegalArgumentException{
 		return em.find(Basket.class,  basketId);
+	}
+	
+	//TODO immer em.close() am ende der Methoden
+	
+	
+	/**
+	 * Method to find the last baskets
+	 * @param user
+	 * @param numberOfLastBaskets
+	 * @return
+	 */
+	public List<Basket> getLastBaskets(User user, int numberOfLastBaskets) {
+		Query q = em.createNamedQuery("findLastBaskets", Basket.class);
+		q.setParameter("userId", user.getUserName());
+		q.setMaxResults(numberOfLastBaskets);
+		@SuppressWarnings("unchecked")
+		ArrayList<Basket> list = (ArrayList<Basket>) q.getResultList();
+		return list;
 	}
 
 	/**

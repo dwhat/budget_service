@@ -19,7 +19,7 @@ public class OutputRequesterBean {
 	  @Resource(mappedName="java:/JmsXA")
 	  private ConnectionFactory jmsFactory;
 	  
-	  @Resource(mappedName="java:/queue/BankingOutput")
+	  @Resource(mappedName="java:/queue/BudgetOutput")
 	  private Queue outputQueue;
 	  
 	  /**

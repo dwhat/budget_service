@@ -6,32 +6,16 @@ import java.util.List;
 
 
 
-
-
-
-
-
-
-
-
 //Logger-Import
 import org.jboss.logging.Logger;
+import org.jboss.ws.api.annotation.WebContext;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 
-
-
-
-
-
-
-
-
-
-
+import javax.jws.WebService;
 
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
@@ -86,22 +70,30 @@ import de.budget.onlinebudget.OutputRequesterBean;
  */
 @Stateless
 @Remote(BudgetOnlineService.class)
+@WebService
+@WebContext(contextRoot = "/budget")
 public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	private static final Logger logger = Logger.getLogger(BudgetOnlineServiceBean.class);
 	
 	/**
-	 * EJB zur Abfrage von DatensÃ¤tzen
-	 * Referenz auf die EJB wird per Dependency Injection gefÃ¼llt. 
+	 * EJB zur Abfrage von Datensätzen
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt. 
 	 */
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
 	
+	
+	/**
+	 * EJB zum Erstellen von Data-Transfer-Objects
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
+	 */
 	@EJB
 	private DtoAssembler dtoAssembler;
 	
 	/**
-	 * EJB zur Beauftragung von Nachrichtenversand
+	 * EJB zur Beauftragung des Nachrichtenversand
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
 	 */
 	@EJB
 	private OutputRequesterBean outputRequester;
@@ -121,10 +113,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			return session;
 		}
 	}
-	
-	
-		
-	
+
 	/*#################      USER - SECTION     ##############*/
 	
 	/**
@@ -303,10 +292,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets) {
-		// TODO Auto-generated method stub
-		return null;
+		BasketListResponse response = new BasketListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				
+				
+				//TODO SQL Abfrage 
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;	
 	}
-
 
 	/**
 	 * Method to get all baskets of a specific vendor
@@ -357,7 +365,28 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public BasketListResponse getBasketsOfActualMonth(int sessionId) {
-		return null;
+		BasketListResponse response = new BasketListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				
+				
+				//TODO SQL Abfrage 
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;	
 	}
 	
 
@@ -1071,8 +1100,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
-		// TODO Auto-generated method stub
-		return null;
+		IncomeListResponse response = new IncomeListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				//TODO SQL Abfrage
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 	/**
@@ -1083,8 +1130,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
-		return null;
-		//TODO
+		IncomeListResponse response = new IncomeListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				//TODO SQL Abfrage
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
 	}
 	
 
