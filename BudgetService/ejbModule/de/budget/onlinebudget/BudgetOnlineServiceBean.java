@@ -73,7 +73,7 @@ import de.budget.onlinebudget.OutputRequesterBean;
  *
  */
 @Stateless
-@Remote(BudgetOnlineService.class)
+//@Remote(BudgetOnlineService.class)
 @WebService
 @WebContext(contextRoot = "/budget")
 public class BudgetOnlineServiceBean implements BudgetOnlineService {
