@@ -6,6 +6,8 @@ import java.util.List;
 
 
 
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -16,6 +18,8 @@ import javax.ejb.Stateless;
 
 
 import javax.jws.WebService;
+
+
 
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
@@ -297,9 +301,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				
-				
-				//TODO SQL Abfrage 
+				String username = user.getUserName();
+				ArrayList<Basket> basketList = (ArrayList<Basket>) this.dao.getLastBaskets(username, numberOfBaskets);
+				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
+				response.setReturnCode(0);
 			}
 		}
 		catch(NoSessionException e) {
@@ -363,17 +368,28 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @return
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public BasketListResponse getBasketsOfActualMonth(int sessionId) {
 		BasketListResponse response = new BasketListResponse();
+		int actualMonth = new Timestamp(System.currentTimeMillis()).getMonth();
+		int actualYear = new Timestamp(System.currentTimeMillis()).getYear();
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				
-				
-				//TODO SQL Abfrage 
-			}
+				List<Basket> basketList = user.getBaskets();
+				ArrayList<Basket> resultList = new ArrayList<>();
+				for (Basket b : basketList) {
+					int basketMonth = b.getPurchaseDate().getMonth();
+					int basketYear = b.getPurchaseDate().getYear();
+					if(basketMonth == actualMonth && basketYear == actualYear) {
+						resultList.add(b);
+					}
+				}
+				response.setBasketList(dtoAssembler.makeBasketListDto(resultList));
+				response.setReturnCode(0);
+			} 
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(500);

@@ -24,6 +24,8 @@ import org.jboss.logging.Logger;
 
 
 
+
+
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
@@ -157,15 +159,26 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	//TODO immer em.close() am ende der Methoden
 	
 	
+	
+	/**
+	 * Method to find all basket of the actual month
+	 * @author Marco
+	 * @date 02.06.2015
+	 */
+	public List<Basket> getBasketsOfActualMonth(String username){
+		// TODO SQL QUERY
+		return null;
+	}
+	
 	/**
 	 * Method to find the last baskets
 	 * @param user
 	 * @param numberOfLastBaskets
 	 * @return
 	 */
-	public List<Basket> getLastBaskets(User user, int numberOfLastBaskets) {
+	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets) {
 		Query q = em.createNamedQuery("findLastBaskets", Basket.class);
-		q.setParameter("userId", user.getUserName());
+		q.setParameter("username", username);
 		q.setMaxResults(numberOfLastBaskets);
 		@SuppressWarnings("unchecked")
 		ArrayList<Basket> list = (ArrayList<Basket>) q.getResultList();

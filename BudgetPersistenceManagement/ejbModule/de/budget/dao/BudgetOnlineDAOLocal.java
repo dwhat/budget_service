@@ -17,6 +17,7 @@ import javax.ejb.Local;
 
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -54,7 +55,8 @@ public interface BudgetOnlineDAOLocal {
 	public Basket updateBasket(Basket basket) throws IllegalArgumentException;
 	public Basket findBasketById(int basketId) throws IllegalArgumentException;
 	public void deleteBasket(int basketId) throws IllegalArgumentException;
-	public List<Basket> getLastBaskets(User user, int numberOfLastBaskets);
+	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets);
+	public List<Basket> getBasketsOfActualMonth(String username);
 	
 	public Category createCategory(User user, String name, String notice, boolean income);
 	public Category updateCategory(Category category) throws IllegalArgumentException;
