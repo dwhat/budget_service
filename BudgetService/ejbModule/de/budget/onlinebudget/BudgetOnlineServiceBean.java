@@ -121,12 +121,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/*#################      USER - SECTION     ##############*/
 	
 	/**
-	 * Session anhand username und password erstellen und zurückliefern
+	 * Session anhand username und password erstellen und in ResponseObject zurückliefern
 	 * 
 	 * @author Moritz
 	 * @param Username 
 	 * @param password
-	 * @return UserSession
+	 * @return UserLoginResponse
 	 * 
 	 */
 	@Override

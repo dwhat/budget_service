@@ -39,8 +39,8 @@ public class SimpleOnlineBudgetClient {
 
 	private static void szenarioEmma() {
 	   System.out.println("============================================================");
-       UserLoginResponse loginResponse = remoteSystem.login("emma", "emma1");
-       if (loginResponse.getReturnCode()==0) {
+       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+       if (loginResponse != null & loginResponse.getReturnCode()==0) {
     	   int sessionId = loginResponse.getSessionId();
 		   System.out.println("Emma hat sich angemeldet");
 		   
@@ -54,7 +54,7 @@ public class SimpleOnlineBudgetClient {
 	}
 
     /**
-     * Test-Szenario: Joe meldet sich an, fragt seine Konten ab und überweist an Emma
+     * Test-Szenario: Joe meldet sich an
      */
 	/*
 	private static void szenarioJoe() {

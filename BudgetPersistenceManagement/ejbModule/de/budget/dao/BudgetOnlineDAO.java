@@ -26,6 +26,7 @@ import org.jboss.logging.Logger;
 
 
 
+
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
@@ -67,16 +68,14 @@ import de.budget.entities.Item;
  * Remove:
  *
  * em.remove
- * 
- * 
- * TODO
- * Überlegen ob TryCatch Blöcke für einzelnen EntityManagerAufrufe notwendig ?!
  *
  */
 @Stateless
 public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 	//TODO ExceptionHandling
+	
+	
 	private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
 	
 	
@@ -354,6 +353,20 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Method to get the last Incomes of a user
+	 * @author Marco
+	 * @date 03.06.2015
+	 */
+	public List<Income> getLastIncome(String username, int numberOfLastIncomes) {
+		Query q = em.createNamedQuery("findLastIncomes", Income.class);
+		q.setParameter("username", username);
+		q.setMaxResults(numberOfLastIncomes);
+		@SuppressWarnings("unchecked")
+		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
+		return list;
 	}
 	
 	/**

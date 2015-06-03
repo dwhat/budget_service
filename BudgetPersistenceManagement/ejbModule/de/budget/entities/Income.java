@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 
 /**
@@ -14,6 +16,12 @@ import javax.persistence.Version;
  * @author Marco
  * Income Class
  */
+@NamedQueries( {
+	@NamedQuery (
+			name = "findLastIncomes",
+			query = "select i from Income i where i.user.userName like :username order by i.launchDate" 
+			)
+})
 @Entity
 public class Income implements Serializable {
 
