@@ -1428,8 +1428,60 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
 			double price, String notice, int period, Timestamp launchDate,
 			Timestamp finishDate, int basketId, int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+
+
+		
+		
+		ItemResponse response = new ItemResponse();
+		
+		try {
+			// Hole SessionObjekt
+			BudgetSession session = getSession(sessionId);
+			//Hole User Objekt
+			if(session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				
+				//suche basket
+				Basket basket = user.getBasket(basketId);
+				
+				//Lege Item Objekt an
+				Item item = basket.getItem(itemId);
+				//Suche Category
+				Category category = user.getCategory(categoryId);
+
+				
+				if(item == null) {	
+					item = dao.createItem(name, quantity, price , notice,  period, launchDate, finishDate, basket, category);
+				}
+				else {
+					item.setName(name);
+					item.setNotice(notice);
+					item.setPrice(price);
+					item.setQuantity(quantity);
+					item.setPeriod(period);
+					item.setLaunchDate(launchDate);
+					item.setFinishDate(finishDate);
+					item.setCategory(category);
+					item.setBasket(basket);
+					
+					
+					item = dao.updateItem(item);
+				}
+				// Response befüllen
+				response.setItemTo(dtoAssembler.makeDto(item));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a item.");
+		}
+		return response;
+		
 	}
 
 
