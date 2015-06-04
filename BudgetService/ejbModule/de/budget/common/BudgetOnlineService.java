@@ -330,16 +330,15 @@ public interface BudgetOnlineService {
 	 * @param incomeId    only necessary for update
 	 * @param name
 	 * @param quantity
-	 * @param price
+	 * @param amount
 	 * @param notice
 	 * @param period
 	 * @param launchDate
 	 * @param finishDate
-	 * @param basket
 	 * @param category
 	 * @return
 	 */
-	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
+	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, int period, Timestamp launchDate, Timestamp finishDate, int categoryId);
 	
 	//public int updateIncome(Customer income,int incomeID);
 	

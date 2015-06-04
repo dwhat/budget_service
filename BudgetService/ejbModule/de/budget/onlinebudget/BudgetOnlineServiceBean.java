@@ -5,15 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
-
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import javax.ejb.EJB;
-import javax.ejb.Remote;
+//import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
 
@@ -64,7 +61,7 @@ import de.budget.util.DtoAssembler;
 import de.budget.onlinebudget.OutputRequesterBean;
 
 
-//TODO ï¿½berall Session auf null prï¿½fen um nullpointer zu vermeiden, siehe getItemByLossCategory
+//TODO Überall Session auf null prüfen um nullpointer zu vermeiden, siehe getItemByLossCategory
 
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
@@ -81,8 +78,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private static final Logger logger = Logger.getLogger(BudgetOnlineServiceBean.class);
 	
 	/**
-	 * EJB zur Abfrage von Datensï¿½tzen
-	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt. 
+	 * EJB zur Abfrage von Datensätzen
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt. 
 	 */
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
@@ -90,19 +87,22 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * EJB zum Erstellen von Data-Transfer-Objects
-	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt.
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
 	 */
 	@EJB
 	private DtoAssembler dtoAssembler;
 	
 	/**
 	 * EJB zur Beauftragung des Nachrichtenversand
-	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt.
+	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
 	 */
 	@EJB
 	private OutputRequesterBean outputRequester;
 	
+	
+	
 	/**
+	 * Private HilfsMethode zum Laden der Session aus der Datenbank
 	 * @author Marco
 	 * @param sessionId
 	 * @return BudgetSession Object
@@ -111,7 +111,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private BudgetSession getSession(int sessionId) throws NoSessionException {
 		BudgetSession session = dao.findSessionById(sessionId);
 		if (session==null) {
-			throw new NoSessionException("Bitte zunï¿½chst ein Login durchfï¿½hren.");
+			throw new NoSessionException("Please first login");
 		}
 		else {
 			return session;
@@ -121,7 +121,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/*#################      USER - SECTION     ##############*/
 	
 	/**
-	 * Session anhand username und password erstellen und in ResponseObject zurï¿½ckliefern
+	 * Session anhand username und password erstellen und in ResponseObject zurückliefern
 	 * 
 	 * @author Moritz
 	 * @param Username 
@@ -141,29 +141,29 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				
 				logger.info("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
-				// Request OK zurï¿½ckschicken
+				// Request OK zurückschicken
 				response.setReturnCode(200);
 			}
 			else 
 			{
-				logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
+				logger.info("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username=" + username);
 				response.setReturnCode(404);
-				throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+ username);
+				throw new InvalidLoginException("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username="+ username);
 			}
 		}
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
-			//evtl darauf einigen einen 404(Not-Found) zurï¿½ckzuschicken 
+			//TODO evtl darauf einigen einen 404(Not-Found) zurückzuschicken 
 		}
 		return response;
 	}
 
 	/**
-	 * UserSession zerstï¿½ren
+	 * Method to logout. Deletes a session
 	 * 
 	 * @author Moritz
-	 * 
+	 * @date 19.05.2015
 	 */
 	@Override
 	public ReturnCodeResponse logout(int sessionId)  {
@@ -176,7 +176,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		catch(IllegalArgumentException e) {
 			response.setReturnCode(500);
-			response.setMessage(e.getMessage());
+			response.setMessage("You must be logged in to log out");
 		}
 		return response;	
 	}
@@ -192,14 +192,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		UserLoginResponse response = new UserLoginResponse();
 		try {
 			
-			// TODO prï¿½fen ob Username bereits verwendet wurde
-			logger.info("Versuche neuen User anzulegen. Name=" + username);
-			User user = dao.createUser(username, password, email);
-			if (user != null) {
-				int sessionId = dao.createSession(user);
-				response.setSessionId(sessionId);
-				logger.info("User angelegt. Session=" + sessionId);
-				response.setReturnCode(200);
+			//prüfen ob Username noch verwendbar ist
+			if(dao.findUserByName(username) == null) {
+				logger.info("Versuche neuen User anzulegen. Name=" + username);
+				User user = dao.createUser(username, password, email);
+				if (user != null) {
+					int sessionId = dao.createSession(user);
+					response.setSessionId(sessionId);
+					logger.info("User angelegt. Session=" + sessionId);
+					response.setReturnCode(200);
+				}
+				else {
+					response.setReturnCode(111); //TODO
+					response.setMessage("Could not create a user");
+				}
 			}
 			else {
 				response.setReturnCode(409);
@@ -209,6 +215,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(BudgetOnlineException be) {
 			response.setReturnCode(be.getErrorCode());
 			response.setMessage(be.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(1111);
+			response.setMessage("Could not create a user");
 		}
 		return response;
 	}
@@ -225,16 +235,18 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		UserResponse UserResp = new UserResponse();	
 		try {
 			BudgetSession session = getSession(sessionId);
-			User user = this.dao.findUserByName(session.getUsername());
-			UserResp.setUserTo(dtoAssembler.makeDto(user));	
+			if(session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				UserResp.setUserTo(dtoAssembler.makeDto(user));	
+			}
 		}
 		catch(NoSessionException e) {
-			UserResp.setReturnCode(500);
+			UserResp.setReturnCode(e.getErrorCode());
 			UserResp.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
 			UserResp.setReturnCode(500);
-			UserResp.setMessage(e.getMessage());
+			UserResp.setMessage("Could not find username");
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -246,7 +258,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 
 	/**
-	 * Method to delete an user
+	 * Method to delete the own user
 	 * @author Marco
 	 * @date 26.05.2015
 	 */
@@ -256,17 +268,17 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
-				if(session.getUsername().equals(username)) { //prï¿½ft ob man den eigenen user Lï¿½scht
+				if(session.getUsername().equals(username)) { //prüft ob man den eigenen user Löscht
 					dao.deleteUser(username);
-					logger.info("User erfolgreich gelï¿½scht");
+					logger.info("User erfolgreich gelöscht");
 				}
 				else {
-					response.setMessage("Sie kï¿½nnen keinen fremden User lï¿½schen");
+					response.setMessage("Sie können keinen fremden User löschen");
 				}
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -308,7 +320,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -349,7 +361,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -392,7 +404,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			} 
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -435,7 +447,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -468,7 +480,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -498,7 +510,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setBasketList(dtoAssembler.makeBasketListDto(basketList));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -527,7 +539,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -549,7 +561,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice,
 			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items) {
-		BasketResponse basketResp = new BasketResponse();
+		BasketResponse response = new BasketResponse();
 		
 		try {
 			BudgetSession session = getSession(sessionId);
@@ -571,20 +583,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				
 				basket = dao.updateBasket(basket);
 			}
-			basketResp.setBasketTo(dtoAssembler.makeDto(basket));
+			response.setBasketTo(dtoAssembler.makeDto(basket));
 		}
 		catch(NoSessionException e) {
-			basketResp.setReturnCode(500);
-			basketResp.setMessage(e.getMessage());
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			basketResp.setReturnCode(500);
-			basketResp.setMessage(e.getMessage());
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
 		}
-		return basketResp;
+		return response;
 	}
 
 
@@ -609,7 +621,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setVendorTo(dtoAssembler.makeDto(vendor));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -639,7 +651,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setVendorList(dtoAssembler.makeVendorListDto(vendorList));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -669,7 +681,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -689,7 +701,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo) {
-		VendorResponse vendorResp = new VendorResponse();
+		VendorResponse response = new VendorResponse();
 		
 		try {
 			BudgetSession session = getSession(sessionId);
@@ -704,20 +716,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				vendor.setLogo(logo);
 				vendor = dao.updateVendor(vendor);
 			}
-			vendorResp.setVendorTo(dtoAssembler.makeDto(vendor));
+			response.setVendorTo(dtoAssembler.makeDto(vendor));
 		}
 		catch(NoSessionException e) {
-			vendorResp.setReturnCode(500);
-			vendorResp.setMessage(e.getMessage());
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			vendorResp.setReturnCode(500);
-			vendorResp.setMessage(e.getMessage());
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
 		}
-		return vendorResp;
+		return response;
 	}
 
 	
@@ -740,7 +752,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -790,7 +802,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setPaymentList(dtoAssembler.makePaymentListDto(paymentList));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -822,7 +834,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -851,7 +863,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public PaymentResponse createOrUpdatePayment(int sessionId, int paymentId, String name, String number, String bic, boolean active) {
-		PaymentResponse paymentResp = new PaymentResponse();
+		PaymentResponse response = new PaymentResponse();
 		
 		try {
 			// Hole SessionObjekt
@@ -872,13 +884,17 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				payment = dao.updatePayment(payment);
 			}
 			// Response befï¿½llen
-			paymentResp.setPaymentTo(dtoAssembler.makeDto(payment));
+			response.setPaymentTo(dtoAssembler.makeDto(payment));
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		catch (BudgetOnlineException e) {
-			paymentResp.setReturnCode(404);
-			paymentResp.setMessage("Couldn't create a payment.");
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a payment.");
 		}
-		return paymentResp;
+		return response;
 		
 	}
 	
@@ -902,7 +918,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setCategoryTo(dtoAssembler.makeDto(category));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -932,7 +948,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -962,7 +978,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -985,7 +1001,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active,
 			String name, String notice) {
-		CategoryResponse categoryResp = new CategoryResponse();
+		CategoryResponse response = new CategoryResponse();
 		
 		try {
 			// Hole SessionObjekt
@@ -1006,20 +1022,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				category = dao.updateCategory(category);
 			}
 			// Response befï¿½llen
-			categoryResp.setCategoryTo(dtoAssembler.makeDto(category));
+			response.setCategoryTo(dtoAssembler.makeDto(category));
 		}
 		catch(NoSessionException e) {
-			categoryResp.setReturnCode(500);
-			categoryResp.setMessage(e.getMessage());
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			categoryResp.setReturnCode(500);
-			categoryResp.setMessage(e.getMessage());
+			response.setReturnCode(500);
+			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
 		}
-		return categoryResp;
+		return response;
 	}
 
 
@@ -1052,7 +1068,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1092,7 +1108,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1125,7 +1141,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1155,7 +1171,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1186,7 +1202,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
@@ -1206,11 +1222,55 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name,
-			double quantity, double price, String notice, int period,
-			Timestamp launchDate, Timestamp finishDate, int basketId,
+			double quantity, double amount, String notice, int period,
+			Timestamp launchDate, Timestamp finishDate,
 			int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		IncomeResponse response = new IncomeResponse();
+		
+		try {
+			// Hole SessionObjekt
+			BudgetSession session = getSession(sessionId);
+			//Hole User Objekt
+			if(session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				//Lege Payment Objekt an
+				Income income = user.getIncome(incomeId);
+				//Suche Category
+				Category category = dao.findCategoryById(categoryId);
+				
+				if(income == null) {	
+					income = dao.createIncome(user, name, notice, quantity, amount, period, launchDate, finishDate, category);
+				}
+				else {
+					income.setName(name);
+					income.setNotice(notice);
+					income.setAmount(amount);
+					income.setQuantity(quantity);
+					income.setPeriod(period);
+					income.setLaunchDate(launchDate);
+					income.setFinishDate(finishDate);
+					income.setCategory(category);
+					
+					
+					income = dao.updateIncome(income);
+				}
+				// Response befüllen
+				response.setIncomeTo(dtoAssembler.makeDto(income));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a income.");
+		}
+		return response;
+		
 	}
 	
 	/*#################      ITEM - SECTION     ##############*/
@@ -1237,7 +1297,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1273,7 +1333,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1316,7 +1376,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
@@ -1346,7 +1406,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
 		catch (IllegalArgumentException e) {
