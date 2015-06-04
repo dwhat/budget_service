@@ -232,27 +232,28 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public UserResponse getUserByName(int sessionId, String userName) {
-		UserResponse UserResp = new UserResponse();	
+		UserResponse userResp = new UserResponse();	
 		try {
 			BudgetSession session = getSession(sessionId);
 			if(session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				UserResp.setUserTo(dtoAssembler.makeDto(user));	
+				userResp.setUserTo(dtoAssembler.makeDto(user));	
+				userResp.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
-			UserResp.setReturnCode(e.getErrorCode());
-			UserResp.setMessage(e.getMessage());
+			userResp.setReturnCode(e.getErrorCode());
+			userResp.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			UserResp.setReturnCode(500);
-			UserResp.setMessage("Could not find username");
+			userResp.setReturnCode(500);
+			userResp.setMessage("Could not find username");
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
 		}
 		
-		return UserResp;
+		return userResp;
 		
 	}
 
@@ -270,6 +271,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				if(session.getUsername().equals(username)) { //prüft ob man den eigenen user Löscht
 					dao.deleteUser(username);
+					response.setReturnCode(200);
 					logger.info("User erfolgreich gelöscht");
 				}
 				else {
@@ -316,7 +318,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				String username = user.getUserName();
 				ArrayList<Basket> basketList = (ArrayList<Basket>) this.dao.getLastBaskets(username, numberOfBaskets);
 				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
-				response.setReturnCode(0);
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
@@ -400,7 +402,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					}
 				}
 				response.setBasketList(dtoAssembler.makeBasketListDto(resultList));
-				response.setReturnCode(0);
+				response.setReturnCode(200);
 			} 
 		}
 		catch(NoSessionException e) {
@@ -477,6 +479,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				Basket basket = user.getBasket(basketId);
 				response.setBasketTo(dtoAssembler.makeDto(basket));	
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
@@ -508,6 +511,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Basket> basketList = user.getBaskets();
 			response.setBasketList(dtoAssembler.makeBasketListDto(basketList));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -535,6 +539,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteBasket(basketId);
+				response.setReturnCode(200);
 				logger.info("Basket erfolgreich gelï¿½scht");
 			}
 		}
@@ -584,6 +589,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				basket = dao.updateBasket(basket);
 			}
 			response.setBasketTo(dtoAssembler.makeDto(basket));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -619,6 +625,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			Vendor vendor = user.getVendor(vendorId);
 			response.setVendorTo(dtoAssembler.makeDto(vendor));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -649,6 +656,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Vendor> vendorList = user.getVendors();
 			response.setVendorList(dtoAssembler.makeVendorListDto(vendorList));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -677,6 +685,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteVendor(vendorId);
+				response.setReturnCode(200);
 				logger.info("Vendor erfolgreich gelï¿½scht");
 			}
 		}
@@ -717,6 +726,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				vendor = dao.updateVendor(vendor);
 			}
 			response.setVendorTo(dtoAssembler.makeDto(vendor));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -750,6 +760,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		try {
 			Payment payment = getPaymentHelper(sessionId, paymentId);
 			response.setPaymentTo(dtoAssembler.makeDto(payment));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -800,6 +811,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Payment> paymentList = user.getPayments();
 			response.setPaymentList(dtoAssembler.makePaymentListDto(paymentList));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -830,6 +842,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deletePayment(paymentId);
+				response.setReturnCode(200);
 				logger.info("Payment erfolgreich gelï¿½scht");
 			}
 		}
@@ -885,6 +898,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 			// Response befï¿½llen
 			response.setPaymentTo(dtoAssembler.makeDto(payment));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -916,6 +930,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			Category category = user.getCategory(categoryId);
 			response.setCategoryTo(dtoAssembler.makeDto(category));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -946,6 +961,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			User user = this.dao.findUserByName(session.getUsername());
 			List<Category> categoryList = user.getCategories();
 			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -974,6 +990,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteCategory(categoryId);
+				response.setReturnCode(200);
 				logger.info("Category erfolgreich gelï¿½scht");
 			}
 		}
@@ -1023,6 +1040,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 			// Response befï¿½llen
 			response.setCategoryTo(dtoAssembler.makeDto(category));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -1062,6 +1080,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				Income income = user.getIncome(incomeId);
 				response.setIncomeTo(dtoAssembler.makeDto(income));	
+				response.setReturnCode(200);
 			}
 			else {
 				response.setMessage("Sie sind nicht eingeloggt");
@@ -1137,7 +1156,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				//TODO SQL Abfrage
+				String username = user.getUserName();
+				ArrayList<Income> incomeList = (ArrayList<Income>) this.dao.getLastIncome(username, numberOfIncome);
+				response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
@@ -1163,11 +1185,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
 		IncomeListResponse response = new IncomeListResponse();
+		int actualMonth = new Timestamp(System.currentTimeMillis()).getMonth();
+		int actualYear = new Timestamp(System.currentTimeMillis()).getYear();
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				//TODO SQL Abfrage
+				List<Income> incomeList = user.getIncomes();
+				ArrayList<Income> resultList = new ArrayList<>();
+				for (Income i : incomeList) {
+					int incomeMonth = i.getLaunchDate().getMonth(); //TODO launchDate ist nicht ideal (überdenken wie es bei wiederkehrenden Einnahmen behandelt wird
+					int incomeYear = i.getLaunchDate().getYear();
+					if(incomeMonth == actualMonth && incomeYear == actualYear) {
+						resultList.add(i);
+					}
+				}
+				response.setIncomeList(dtoAssembler.makeIncomeListDto(resultList));
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
@@ -1198,6 +1232,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteIncome(incomeId);
+				response.setReturnCode(200);
 				logger.info("Income erfolgreich gelï¿½scht");
 			}
 		}
@@ -1291,6 +1326,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Basket basket = user.getBasket(basketId);
 				Item item = basket.getItem(itemId);
 				response.setItemTo(dtoAssembler.makeDto(item));	
+				response.setReturnCode(200);
 			}
 			else {
 				response.setMessage("Sie sind nicht angemeldet");
@@ -1326,6 +1362,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Basket basket = user.getBasket(basketId);
 				List<Item> itemList = basket.getItems();
 				response.setItemList(dtoAssembler.makeItemListDto(itemList));
+				response.setReturnCode(200);
 			}
 			else {
 				response.setReturnCode(400);
@@ -1402,6 +1439,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteItem(itemId);
+				response.setReturnCode(200);
 				logger.info("Item erfolgreich gelï¿½scht");
 			}
 		}

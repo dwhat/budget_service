@@ -2,6 +2,7 @@ package de.budget.client;
 
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
+import de.budget.onlinebudget.ReturnCodeResponse;
 import de.budget.onlinebudget.UserLoginResponse;
 
 
@@ -43,10 +44,12 @@ public class SimpleOnlineBudgetClient {
        if (loginResponse != null & loginResponse.getReturnCode()==200) {
     	   int sessionId = loginResponse.getSessionId();
 		   System.out.println("Emma hat sich angemeldet");
+		   System.out.println(loginResponse.getReturnCode());
 		   
-		   
-	       remoteSystem.logout(sessionId);
+	       ReturnCodeResponse resp = remoteSystem.logout(sessionId);
 		   System.out.println("Emma hat sich abgemeldet.");
+		   System.out.println(resp.getReturnCode());
+		   
        }
        else {
     	   System.out.println(loginResponse.getMessage());
