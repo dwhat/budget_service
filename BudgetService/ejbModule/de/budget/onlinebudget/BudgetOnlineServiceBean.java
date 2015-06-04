@@ -64,7 +64,7 @@ import de.budget.util.DtoAssembler;
 import de.budget.onlinebudget.OutputRequesterBean;
 
 
-//TODO überall Session auf null prüfen um nullpointer zu vermeiden, siehe getItemByLossCategory
+//TODO ï¿½berall Session auf null prï¿½fen um nullpointer zu vermeiden, siehe getItemByLossCategory
 
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
@@ -81,8 +81,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private static final Logger logger = Logger.getLogger(BudgetOnlineServiceBean.class);
 	
 	/**
-	 * EJB zur Abfrage von Datensätzen
-	 * Referenz auf die EJB wird per Dependency Injection gefüllt. 
+	 * EJB zur Abfrage von Datensï¿½tzen
+	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt. 
 	 */
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
@@ -90,14 +90,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * EJB zum Erstellen von Data-Transfer-Objects
-	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
+	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt.
 	 */
 	@EJB
 	private DtoAssembler dtoAssembler;
 	
 	/**
 	 * EJB zur Beauftragung des Nachrichtenversand
-	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
+	 * Referenz auf die EJB wird per Dependency Injection gefï¿½llt.
 	 */
 	@EJB
 	private OutputRequesterBean outputRequester;
@@ -111,7 +111,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private BudgetSession getSession(int sessionId) throws NoSessionException {
 		BudgetSession session = dao.findSessionById(sessionId);
 		if (session==null) {
-			throw new NoSessionException("Bitte zunächst ein Login durchführen.");
+			throw new NoSessionException("Bitte zunï¿½chst ein Login durchfï¿½hren.");
 		}
 		else {
 			return session;
@@ -121,7 +121,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/*#################      USER - SECTION     ##############*/
 	
 	/**
-	 * Session anhand username und password erstellen und in ResponseObject zurückliefern
+	 * Session anhand username und password erstellen und in ResponseObject zurï¿½ckliefern
 	 * 
 	 * @author Moritz
 	 * @param Username 
@@ -141,7 +141,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				
 				logger.info("Login erfolgreich. Session=" + sessionId);
 				response.setSessionId(sessionId);
-				// Request OK zurückschicken
+				// Request OK zurï¿½ckschicken
 				response.setReturnCode(200);
 			}
 			else 
@@ -154,13 +154,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
-			//evtl darauf einigen einen 404(Not-Found) zurückzuschicken 
+			//evtl darauf einigen einen 404(Not-Found) zurï¿½ckzuschicken 
 		}
 		return response;
 	}
 
 	/**
-	 * UserSession zerstören
+	 * UserSession zerstï¿½ren
 	 * 
 	 * @author Moritz
 	 * 
@@ -192,7 +192,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		UserLoginResponse response = new UserLoginResponse();
 		try {
 			
-			// TODO prüfen ob Username bereits verwendet wurde
+			// TODO prï¿½fen ob Username bereits verwendet wurde
 			logger.info("Versuche neuen User anzulegen. Name=" + username);
 			User user = dao.createUser(username, password, email);
 			if (user != null) {
@@ -256,12 +256,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
-				if(session.getUsername().equals(username)) { //prüft ob man den eigenen user Löscht
+				if(session.getUsername().equals(username)) { //prï¿½ft ob man den eigenen user Lï¿½scht
 					dao.deleteUser(username);
-					logger.info("User erfolgreich gelöscht");
+					logger.info("User erfolgreich gelï¿½scht");
 				}
 				else {
-					response.setMessage("Sie können keinen fremden User löschen");
+					response.setMessage("Sie kï¿½nnen keinen fremden User lï¿½schen");
 				}
 			}
 		}
@@ -291,7 +291,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @author Marco
 	 * @date 28.05.2015
 	 * @param sessionId
-	 * @param numberOfBaskets   Anzahl der geünschten letzten Baskets
+	 * @param numberOfBaskets   Anzahl der geï¿½nschten letzten Baskets
 	 * @return BasketListResponse
 	 */
 	@Override
@@ -336,7 +336,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the vendor, wird später befüllt
+				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the vendor, wird spï¿½ter befï¿½llt
 				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
 				
 				for(Basket b : basketsOfUser) {
@@ -422,7 +422,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the payment, wird später befüllt
+				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the payment, wird spï¿½ter befï¿½llt
 				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
 				
 				for(Basket b : basketsOfUser) {
@@ -523,7 +523,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteBasket(basketId);
-				logger.info("Basket erfolgreich gelöscht");
+				logger.info("Basket erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -665,7 +665,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteVendor(vendorId);
-				logger.info("Vendor erfolgreich gelöscht");
+				logger.info("Vendor erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -818,7 +818,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deletePayment(paymentId);
-				logger.info("Payment erfolgreich gelöscht");
+				logger.info("Payment erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -842,7 +842,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @author Marco
 	 * @author Moritz
 	 * @param sessionId
-	 * @param paymentId alte Id zum finden des Update Datensatzes nötig, bei Neuanlage negativen Wert benutzen
+	 * @param paymentId alte Id zum finden des Update Datensatzes nï¿½tig, bei Neuanlage negativen Wert benutzen
 	 * @param name
 	 * @param number
 	 * @param bic
@@ -871,7 +871,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				payment.setBic(bic);
 				payment = dao.updatePayment(payment);
 			}
-			// Response befüllen
+			// Response befï¿½llen
 			paymentResp.setPaymentTo(dtoAssembler.makeDto(payment));
 		}
 		catch (BudgetOnlineException e) {
@@ -958,7 +958,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteCategory(categoryId);
-				logger.info("Category erfolgreich gelöscht");
+				logger.info("Category erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -1005,7 +1005,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				category.setIncome(income);
 				category = dao.updateCategory(category);
 			}
-			// Response befüllen
+			// Response befï¿½llen
 			categoryResp.setCategoryTo(dtoAssembler.makeDto(category));
 		}
 		catch(NoSessionException e) {
@@ -1080,7 +1080,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				List<Income> incomeList = new ArrayList<Income>(); // List with all Incomes with the category. wird später befüllt
+				List<Income> incomeList = new ArrayList<Income>(); // List with all Incomes with the category. wird spï¿½ter befï¿½llt
 				List<Income> incomes = user.getIncomes(); // List with all Items of the user
 				for (Income i : incomes) {
 					if(categoryId == i.getCategory().getId()) {
@@ -1112,7 +1112,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @author Marco
 	 * @date 28.05.2015
 	 * @param sessionId
-	 * @param numberOfIncome   Anzahl der gewünschten letzten Incomes
+	 * @param numberOfIncome   Anzahl der gewï¿½nschten letzten Incomes
 	 */
 	@Override
 	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
@@ -1182,7 +1182,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteIncome(incomeId);
-				logger.info("Income erfolgreich gelöscht");
+				logger.info("Income erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -1301,7 +1301,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				List<Item> itemList = new ArrayList<Item>(); // List with all Items with the category. wird später befüllt
+				List<Item> itemList = new ArrayList<Item>(); // List with all Items with the category. wird spï¿½ter befï¿½llt
 				List<Basket> baskets = user.getBaskets();
 				for (Basket b : baskets) {
 					List<Item> items = b.getItems(); // List with all Items of the basket
@@ -1342,7 +1342,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				dao.deleteItem(itemId);
-				logger.info("Item erfolgreich gelöscht");
+				logger.info("Item erfolgreich gelï¿½scht");
 			}
 		}
 		catch(NoSessionException e) {
