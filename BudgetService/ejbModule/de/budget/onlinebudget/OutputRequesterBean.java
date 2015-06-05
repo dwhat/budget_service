@@ -30,6 +30,7 @@ public class OutputRequesterBean {
 	  public void printLetter(String letter) {
 		try (JMSContext context = jmsFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)){
 			TextMessage message = context.createTextMessage();
+			//message.set
 			message.setStringProperty("DocType", "Letter");
 			message.setText(letter);
 			context.createProducer().send(outputQueue, message);

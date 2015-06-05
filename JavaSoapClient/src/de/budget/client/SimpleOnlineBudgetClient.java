@@ -2,6 +2,7 @@ package de.budget.client;
 
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
+import de.budget.onlinebudget.PaymentResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
 import de.budget.onlinebudget.UserLoginResponse;
 
@@ -45,6 +46,14 @@ public class SimpleOnlineBudgetClient {
     	   int sessionId = loginResponse.getSessionId();
 		   System.out.println("Emma hat sich angemeldet");
 		   System.out.println(loginResponse.getReturnCode());
+		   
+		   System.out.println("Emma legt ein Payment an");
+		   PaymentResponse paymentResponse = remoteSystem.createOrUpdatePayment(sessionId, 0, "Volksbank", "123456789", "DE12345678", true);
+		   System.out.println("Emma hat ein Payment angelegt");
+		   System.out.println("Paymentname = " + paymentResponse.getPaymentTo().getName());
+		   System.out.println("Paymentnumber = " + paymentResponse.getPaymentTo().getNumber());
+		   System.out.println("PaymentBIC = " + paymentResponse.getPaymentTo().getBic());
+		   System.out.println(paymentResponse.getReturnCode());
 		   
 	       ReturnCodeResponse resp = remoteSystem.logout(sessionId);
 		   System.out.println("Emma hat sich abgemeldet.");

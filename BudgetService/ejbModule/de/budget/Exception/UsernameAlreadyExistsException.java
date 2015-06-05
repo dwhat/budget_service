@@ -9,7 +9,7 @@ package de.budget.Exception;
 public class UsernameAlreadyExistsException extends BudgetOnlineException {
 	
 	private static final long serialVersionUID = 1L;
-	private static final int CODE = 30;
+	private static final int CODE = 409;
 
 	public UsernameAlreadyExistsException(String message) {
 		super(CODE, message);

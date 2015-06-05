@@ -7,6 +7,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import javax.mail.Address;
 
 import org.jboss.logging.Logger;
 
@@ -35,6 +36,7 @@ public class OutputRequestProcessor implements MessageListener {
 	@Override
 	public void onMessage(Message message) {
        try {
+    	  //Address[] addresses = message.getJMS
     	  TextMessage msg = (TextMessage) message;
           logger.info("Received message from queue/BankingOutput: " + msg.getText());
        }

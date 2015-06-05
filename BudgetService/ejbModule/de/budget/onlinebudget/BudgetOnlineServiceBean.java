@@ -910,7 +910,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					payment.setBic(bic);
 					payment = dao.updatePayment(payment);
 				}
-				// Response befï¿½llen
+				// Response befüllen
 				response.setPaymentTo(dtoAssembler.makeDto(payment));
 				response.setReturnCode(200);
 			}
