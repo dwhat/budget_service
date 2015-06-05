@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import javax.persistence.EntityExistsException;
 //Peristence Imports
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.jboss.logging.Logger;
+
 
 
 
@@ -73,9 +75,6 @@ import de.budget.entities.Item;
 @Stateless
 public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
-	//TODO ExceptionHandling
-	
-	
 	private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
 	
 	
@@ -101,7 +100,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * 
 	 */
 	@Override
-	public int createSession(User userObject) {
+	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException{
 		BudgetSession session = new BudgetSession(userObject);
 		em.persist(session);
 		return session.getId();
@@ -236,7 +235,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return created userobject or null if there was a failure
 	 */
 	@Override
-	public User createUser(String username, String password, String email) {
+	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException{
 		if(findUserByName(username) == null) {
 			User user = new User(username, password, email);
 			em.persist(user);
@@ -254,7 +253,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Category Object
 	 */
 	@Override
-	public Category createCategory(User user, String name, String notice, boolean income) {
+	public Category createCategory(User user, String name, String notice, boolean income) throws EntityExistsException, IllegalArgumentException{
 		Category category = new Category(user, income, name, notice);
 		if (category != null) {
 			em.persist(category);
@@ -262,7 +261,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		return category;
 	}
 	
-
 
 	/**
 	 * @author Moritz
@@ -272,7 +270,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return VendorKopieObjekt
 	 */
 	@Override
-	public Vendor createVendor(User user, String name, String logo) {
+	public Vendor createVendor(User user, String name, String logo) throws EntityExistsException, IllegalArgumentException{
 		Vendor vendor = new Vendor(user, name, logo);
 		if(vendor != null) {
 			em.persist(vendor);;
@@ -287,7 +285,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Payment Object
 	 */
 	@Override
-	public Payment createPayment(User user, String name, String number, String bic) {
+	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException{
 		logger.info("createPayment Methode aufgerufen");
 		Payment payment = new Payment(user, name, number, bic);
 		logger.info("PaymentObject angelegt");
@@ -308,7 +306,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Basket Object
 	 */
 	@Override
-	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) {
+	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
 		if(user != null && payment != null && vendor != null) {
 			Basket basket = new Basket(user, notice, amount, purchaseDate, payment, vendor, items);
 			if (basket != null){
@@ -327,7 +325,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Item Object
 	 */
 	@Override
-	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) {
+	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException {
 		if(basket != null && category != null) {
 			Item item = new Item(name, quantity, price, notice, period, launchDate, finishDate, basket, category);
 			if (item != null) {
@@ -344,7 +342,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category) {
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category) throws EntityExistsException , IllegalArgumentException{
 		if(user != null && category != null) {
 			Income income = new Income(name, notice, quantity, amount, period, launchDate, finishDate, category);
 			if (income != null) {

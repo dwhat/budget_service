@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -29,6 +30,8 @@ import javax.jws.WebService;
 
 
 
+
+import javax.persistence.EntityExistsException;
 
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
@@ -78,8 +81,6 @@ import de.budget.entities.Vendor;
 import de.budget.util.DtoAssembler;
 import de.budget.onlinebudget.OutputRequesterBean;
 
-
-//TODO Überall Session auf null prüfen um nullpointer zu vermeiden, siehe getItemByLossCategory
 
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
@@ -242,8 +243,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(be.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(1111);
+			response.setReturnCode(404);
 			response.setMessage("Could not create a user");
+		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
 		}
 		return response;
 	}
@@ -643,6 +648,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
+		}
 		catch(IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
@@ -807,6 +816,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
+		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1003,6 +1016,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(404);
 			response.setMessage("Couldn't create a payment.");
 		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
+		}
 		return response;
 		
 	}
@@ -1165,6 +1182,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(CategoryNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
+		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
 		}
 		catch(IllegalArgumentException e) {
 			response.setReturnCode(404);
@@ -1442,6 +1463,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(404);
 			response.setMessage("Couldn't create a income.");
 		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Income to delete not found.");
+		}
 		return response;
 		
 	}
@@ -1673,6 +1702,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(404);
 			response.setMessage("Couldn't create a item.");
+		}
+		catch (IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage("Item not found.");
+		}
+		catch(EntityExistsException e) {
+			response.setReturnCode(600);
+			response.setMessage("Entity allready exists");
 		}
 		return response;
 		
