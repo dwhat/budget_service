@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 /**
  * @date 27.05.2015
@@ -30,12 +31,13 @@ public class Income implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	
+	@NotNull
 	private String name;
 	
 	private String notice;
-	
+	@NotNull
 	private double quantity;
-
+	@NotNull
 	private double amount;
 	
 	private int period;

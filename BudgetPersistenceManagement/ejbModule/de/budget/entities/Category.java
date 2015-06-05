@@ -28,6 +28,7 @@ public class Category implements Serializable{
 	private String name;
 	private String notice;
 	private boolean active;
+	@NotNull
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
 	private Timestamp createDate;
 	

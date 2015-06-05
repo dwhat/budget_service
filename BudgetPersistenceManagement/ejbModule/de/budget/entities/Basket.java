@@ -42,7 +42,7 @@ public class Basket implements Serializable {
 	private int id;
 	
 	private String notice;
-	
+	@NotNull
 	private double amount;
 	
 	private Timestamp createDate;

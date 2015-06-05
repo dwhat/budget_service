@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 /**
  * Item Class
@@ -22,10 +23,11 @@ public class Item implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	
+	@NotNull
 	private String name;
-	
+	@NotNull
 	private double quantity;
-	
+	@NotNull
 	private double price;
 	
 	private String notice;
