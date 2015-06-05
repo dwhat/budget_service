@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+
+
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -15,6 +21,12 @@ import javax.ejb.Stateless;
 
 
 import javax.jws.WebService;
+
+
+
+
+
+
 
 
 
@@ -40,13 +52,19 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
+
 //Exception-Import
 import de.budget.Exception.BudgetOnlineException;
+import de.budget.Exception.CategoryNotFoundException;
+import de.budget.Exception.IncomeNotFoundException;
 import de.budget.Exception.InvalidLoginException;
-
-
+import de.budget.Exception.InvalidPasswordException;
+import de.budget.Exception.ItemNotFoundException;
 import de.budget.Exception.NoSessionException;
+import de.budget.Exception.PaymentNotFoundException;
 import de.budget.Exception.UsernameAlreadyExistsException;
+import de.budget.Exception.BasketNotFoundException;
+import de.budget.Exception.VendorNotFoundException;
 //Entities-Import
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
@@ -147,7 +165,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			else 
 			{
 				logger.info("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username=" + username);
-				response.setReturnCode(404);
 				throw new InvalidLoginException("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username="+ username);
 			}
 		}
@@ -175,7 +192,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(200);
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage("You must be logged in to log out");
 		}
 		return response;	
@@ -195,22 +212,30 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			//prüfen ob Username noch verwendbar ist
 			if(dao.findUserByName(username) == null) {
 				logger.info("Versuche neuen User anzulegen. Name=" + username);
-				User user = dao.createUser(username, password, email);
-				if (user != null) {
-					int sessionId = dao.createSession(user);
-					response.setSessionId(sessionId);
-					logger.info("User angelegt. Session=" + sessionId);
-					response.setReturnCode(200);
+				if(password.toCharArray().length > 7){
+					User user = dao.createUser(username, password, email);
+					if (user != null) {
+						int sessionId = dao.createSession(user);
+						response.setSessionId(sessionId);
+						logger.info("User angelegt. Session=" + sessionId);
+						response.setReturnCode(200);
+					}
+					else {
+						response.setReturnCode(111); //TODO
+						response.setMessage("Could not create a user");
+					}
 				}
 				else {
-					response.setReturnCode(111); //TODO
-					response.setMessage("Could not create a user");
+					throw new InvalidPasswordException("Your password is too short. It must be at least 8 symbols.");
 				}
 			}
 			else {
-				response.setReturnCode(409);
 				throw new UsernameAlreadyExistsException("Username has already been taken. Please try again.");
 			}
+		}
+		catch(InvalidPasswordException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
 		}
 		catch(BudgetOnlineException be) {
 			response.setReturnCode(be.getErrorCode());
@@ -246,7 +271,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			userResp.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			userResp.setReturnCode(500);
+			userResp.setReturnCode(404);
 			userResp.setMessage("Could not find username");
 		}
 		catch(Exception e) {
@@ -326,7 +351,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -367,7 +392,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -410,7 +435,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -453,7 +478,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -478,16 +503,25 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				Basket basket = user.getBasket(basketId);
-				response.setBasketTo(dtoAssembler.makeDto(basket));	
-				response.setReturnCode(200);
+				if(basket != null) {
+					response.setBasketTo(dtoAssembler.makeDto(basket));	
+					response.setReturnCode(200);
+				}
+				else {
+					throw new BasketNotFoundException("Coundn't find basket for this payment");
+				}
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(BasketNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -520,7 +554,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -542,7 +576,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				dao.deleteBasket(basketId);
 				response.setReturnCode(200);
-				logger.info("Basket erfolgreich gelï¿½scht");
+				logger.info("Basket erfolgreich gelöscht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -591,16 +625,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				
 					basket = dao.updateBasket(basket);
 				}
-				response.setBasketTo(dtoAssembler.makeDto(basket));
-				response.setReturnCode(200);
+				if (basket != null) {
+					response.setBasketTo(dtoAssembler.makeDto(basket));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new BasketNotFoundException("Basket to update not found");
+				}
+				
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(BasketNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -629,16 +673,25 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				Vendor vendor = user.getVendor(vendorId);
-				response.setVendorTo(dtoAssembler.makeDto(vendor));	
-				response.setReturnCode(200);
+				if(vendor != null) {
+					response.setVendorTo(dtoAssembler.makeDto(vendor));	
+					response.setReturnCode(200);
+				}
+				else {
+					throw new VendorNotFoundException("Vendor not found for this id");
+				}
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch (VendorNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -671,7 +724,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -694,7 +747,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				dao.deleteVendor(vendorId);
 				response.setReturnCode(200);
-				logger.info("Vendor erfolgreich gelï¿½scht");
+				logger.info("Vendor erfolgreich gelöscht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -734,16 +787,25 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					vendor.setLogo(logo);
 					vendor = dao.updateVendor(vendor);
 				}
-				response.setVendorTo(dtoAssembler.makeDto(vendor));
-				response.setReturnCode(200);
+				if(vendor != null) {
+					response.setVendorTo(dtoAssembler.makeDto(vendor));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new VendorNotFoundException("Vendor to update not found");
+				}
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch (VendorNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -769,15 +831,24 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		PaymentResponse response = new PaymentResponse();
 		try {
 			Payment payment = getPaymentHelper(sessionId, paymentId);
-			response.setPaymentTo(dtoAssembler.makeDto(payment));
-			response.setReturnCode(200);
+			if(payment != null) {
+				response.setPaymentTo(dtoAssembler.makeDto(payment));
+				response.setReturnCode(200);
+			}
+			else {
+				throw new PaymentNotFoundException("Payment not found for this id");
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(PaymentNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -830,7 +901,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -855,7 +926,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				dao.deletePayment(paymentId);
 				response.setReturnCode(200);
-				logger.info("Payment erfolgreich gelï¿½scht");
+				logger.info("Payment erfolgreich gelöscht");
 			}
 		}
 		catch(NoSessionException e) {
@@ -911,11 +982,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					payment = dao.updatePayment(payment);
 				}
 				// Response befüllen
-				response.setPaymentTo(dtoAssembler.makeDto(payment));
-				response.setReturnCode(200);
+				if( payment != null) {
+					response.setPaymentTo(dtoAssembler.makeDto(payment));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new PaymentNotFoundException("Payment to update not found");
+				}
 			}
 		}
 		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch (PaymentNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
@@ -945,16 +1025,25 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				Category category = user.getCategory(categoryId);
-				response.setCategoryTo(dtoAssembler.makeDto(category));	
-				response.setReturnCode(200);
+				if(category != null) {
+					response.setCategoryTo(dtoAssembler.makeDto(category));	
+					response.setReturnCode(200);
+				}
+				else {
+					throw new CategoryNotFoundException("Category not found for this id");
+				}
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(CategoryNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -987,7 +1076,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1059,17 +1148,26 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					category.setIncome(income);
 					category = dao.updateCategory(category);
 				}
-				// Response befï¿½llen
-				response.setCategoryTo(dtoAssembler.makeDto(category));
-				response.setReturnCode(200);
+				// Response befüllen
+				if(category != null) {
+					response.setCategoryTo(dtoAssembler.makeDto(category));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new CategoryNotFoundException("Category to update not found");
+				}
 			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(CategoryNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1101,8 +1199,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if(session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				Income income = user.getIncome(incomeId);
-				response.setIncomeTo(dtoAssembler.makeDto(income));	
-				response.setReturnCode(200);
+				if(income != null) {
+					response.setIncomeTo(dtoAssembler.makeDto(income));	
+					response.setReturnCode(200);
+				}
+				else {
+					throw new IncomeNotFoundException("No income found for this id");
+				}
 			}
 			else {
 				response.setMessage("Sie sind nicht eingeloggt");
@@ -1112,8 +1215,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(IncomeNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1153,7 +1260,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1189,7 +1296,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1231,7 +1338,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1314,11 +1421,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					income = dao.updateIncome(income);
 				}
 				// Response befüllen
-				response.setIncomeTo(dtoAssembler.makeDto(income));
-				response.setReturnCode(200);
+				if (income != null) {
+					response.setIncomeTo(dtoAssembler.makeDto(income));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new IncomeNotFoundException("Income to update not found");
+				}
 			}
 		}
 		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch(IncomeNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
@@ -1347,8 +1463,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				Basket basket = user.getBasket(basketId);
 				Item item = basket.getItem(itemId);
-				response.setItemTo(dtoAssembler.makeDto(item));	
-				response.setReturnCode(200);
+				if(item != null) {
+					response.setItemTo(dtoAssembler.makeDto(item));	
+					response.setReturnCode(200);
+				}
+				else {
+					throw new ItemNotFoundException("No Item found with the id "+ itemId + " in the basket " + basketId);
+				}
 			}
 			else {
 				response.setMessage("Sie sind nicht angemeldet");
@@ -1358,8 +1479,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
+		catch(ItemNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1396,7 +1521,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1439,7 +1564,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(500);
+			response.setReturnCode(404);
 			response.setMessage(e.getMessage());
 		}
 		catch(Exception e) {
@@ -1528,11 +1653,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					item = dao.updateItem(item);
 				}
 				// Response befüllen
-				response.setItemTo(dtoAssembler.makeDto(item));
-				response.setReturnCode(200);
+				if(item != null) {
+					response.setItemTo(dtoAssembler.makeDto(item));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new ItemNotFoundException("Item could not be updated");
+				}
 			}
 		}
 		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch (ItemNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}

@@ -1,3 +1,7 @@
+
+/**
+ * Package for Exceptions
+ */
 package de.budget.Exception;
 
 public class InvalidLoginException extends BudgetOnlineException {

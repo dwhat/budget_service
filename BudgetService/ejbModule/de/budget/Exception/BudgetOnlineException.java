@@ -1,3 +1,6 @@
+/**
+ * Package for Exceptions
+ */
 package de.budget.Exception;
 
 import org.jboss.logging.Logger;
