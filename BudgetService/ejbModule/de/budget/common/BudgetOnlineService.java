@@ -2,10 +2,13 @@ package de.budget.common;
 
 
 
-//Response-Imports
+//Java Datentypen Import
 import java.sql.Timestamp;
 import java.util.List;
 
+
+//Response-Imports
+import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
@@ -21,6 +24,9 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
+
+
+//Entities Import
 import de.budget.entities.Item;
 
 
@@ -473,7 +479,7 @@ public interface BudgetOnlineService {
 	 * @param daysOfPeriod
 	 * @return
 	 */
-	public double getLossByPeriod(int sessionId, int daysOfPeriod);
+	public AmountResponse getLossByPeriod(int sessionId, int daysOfPeriod);
 	
 	/**
 	 * @author Marco
@@ -482,7 +488,7 @@ public interface BudgetOnlineService {
 	 * @param daysOfPeriod
 	 * @return
 	 */
-	public double getIncomeByPeriod(int sessionId, int daysOfPeriod);
+	public AmountResponse getIncomeByPeriod(int sessionId, int daysOfPeriod);
 	
 	
 	

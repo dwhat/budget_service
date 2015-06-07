@@ -12,6 +12,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -33,6 +34,7 @@ import javax.jws.WebService;
 
 import javax.persistence.EntityExistsException;
 
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -40,6 +42,7 @@ import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 
+import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
 import de.budget.dto.Response.CategoryListResponse;
@@ -1012,14 +1015,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (BudgetOnlineException e) {
-			response.setReturnCode(404);
-			response.setMessage("Couldn't create a payment.");
-		}
 		catch(EntityExistsException e) {
 			response.setReturnCode(600);
 			response.setMessage("Entity allready exists");
 		}
+		/*Moritz -> Catchblock wird niemals erreicht !
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a payment.");
+		}
+		*/
 		return response;
 		
 	}
@@ -1344,8 +1349,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				List<Income> incomeList = user.getIncomes();
 				ArrayList<Income> resultList = new ArrayList<>();
 				for (Income i : incomeList) {
-					int incomeMonth = i.getLaunchDate().getMonth(); //TODO launchDate ist nicht ideal (überdenken wie es bei wiederkehrenden Einnahmen behandelt wird
-					int incomeYear = i.getLaunchDate().getYear();
+					//TODO launchDate ist nicht ideal (überdenken wie es bei wiederkehrenden Einnahmen behandelt wird
+					//Moritz-> nun auf Anlegedatum geändert, 
+					int incomeMonth = i.getCreateDate().getMonth(); 
+					int incomeYear = i.getCreateDate().getYear();
 					if(incomeMonth == actualMonth && incomeYear == actualYear) {
 						resultList.add(i);
 					}
@@ -1459,10 +1466,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (BudgetOnlineException e) {
-			response.setReturnCode(404);
-			response.setMessage("Couldn't create a income.");
-		}
 		catch(EntityExistsException e) {
 			response.setReturnCode(600);
 			response.setMessage("Entity allready exists");
@@ -1471,6 +1474,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(404);
 			response.setMessage("Income to delete not found.");
 		}
+		/*Moritz-> Catchblock wird niemals erreicht, da alle anderen alles abhandeln
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a income.");
+		}
+		*/
 		return response;
 		
 	}
@@ -1699,10 +1708,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (BudgetOnlineException e) {
-			response.setReturnCode(404);
-			response.setMessage("Couldn't create a item.");
-		}
+		
 		catch (IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage("Item not found.");
@@ -1711,6 +1717,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(600);
 			response.setMessage("Entity allready exists");
 		}
+		/* Moritz-> Catchblock wird niemals erreicht !
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a item.");
+		}
+		*/
 		return response;
 		
 	}
@@ -1725,25 +1737,62 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to find all loss of a time period
-	 * @author Marco
-	 * @date 26.05.2015
+	 * @author Moritz
+	 * @date 07.06.2015
 	 */
 	@Override
-	public double getLossByPeriod(int sessionId, int daysOfPeriod) {
-		// TODO Auto-generated method stub
-		return 0;
+	public AmountResponse getLossByPeriod(int sessionId, int daysOfPeriod) {
+		AmountResponse response = new AmountResponse();
+		try {
+		double sum = 0;
+		
+		response.setValue(sum);
+		response.setReturnCode(200);
+		}
+		catch(Exception e) {
+			logger.info("FehlergetLossbyPeriod:" + e.getMessage());
+		}
+		return response;
 	}
 
 
 	/**
 	 * Method to find all incomes of a time period
-	 * @author Marco
-	 * @date 26.05.2015
+	 * @author Moritz
+	 * @date 07.06.2015
 	 */
 	@Override
-	public double getIncomeByPeriod(int sessionId, int daysOfPeriod) {
-		// TODO Auto-generated method stub
-		return 0;
+	public AmountResponse getIncomeByPeriod(int sessionId, int daysOfPeriod) {
+		AmountResponse response = new AmountResponse();
+		double sum = 0;
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Income> incomeList = user.getIncomes();
+				
+				for (Income i : incomeList) {
+					if(i.getPeriod() == daysOfPeriod) {
+						sum += (i.getAmount() * i.getQuantity());
+					}
+				}
+				response.setValue(sum);
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info("FehlergetIncomebyPeriod:" + e.getMessage());
+		}
+		return response;
+		
 	}
 
 
