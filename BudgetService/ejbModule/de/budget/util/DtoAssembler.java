@@ -36,10 +36,15 @@ import de.budget.entities.Vendor;
 @Stateless
 public class DtoAssembler {
 	
+	/**
+	 * für interne methodenaufrufe, da this verboten ist in EJB, da man dadurch die Aufgabe des Containers übernimmt
+	 * @author Marco
+	 */
 	private DtoAssembler dtoAssem;
 	
 	/**
 	 * The SessionContext of this EJB
+	 * @author Marco
 	 */
 	@Resource
 	private SessionContext ctx;
@@ -61,7 +66,7 @@ public class DtoAssembler {
 		dto.setName(vendor.getName());
 		dto.setCreateDate(vendor.getCreateDate());
 		dto.setLastChanged(vendor.getLastChanged());
-		dto.setUser(makeDto(vendor.getUser()));
+		dto.setUser(dtoAssem.makeDto(vendor.getUser()));
 		dto.setLogo(vendor.getLogo());
 		return dto;
 	}
@@ -74,11 +79,12 @@ public class DtoAssembler {
 		Timestamp createDate = user.getCreateDate();
 		Timestamp lastChanged = user.getLastChanged();
 		/*
-		dto.setBasketList(makeBasketListDto(user.getBaskets()));
-		dto.setVendorList(makeVendorListDto(user.getVendors()));
-		dto.setCategoryList(makeCategoryListDto(user.getCategories()));
-		dto.setPaymentList(makePaymentListDto(user.getPayments()));
-		*/
+		 * TODO
+		dto.setBasketList(dtoAssem.makeBasketListDto(user.getBaskets()));
+		dto.setVendorList(dtoAssem.makeVendorListDto(user.getVendors()));
+		dto.setCategoryList(dtoAssem.makeCategoryListDto(user.getCategories()));
+		dto.setPaymentList(dtoAssem.makePaymentListDto(user.getPayments()));
+		 */
 		UserTO dto = new UserTO(username, password, email, createDate, lastChanged, null, null, null, null);
 		return dto;
 	}
@@ -86,13 +92,13 @@ public class DtoAssembler {
 	public List<VendorTO> makeVendorListDto(List<Vendor> vendors) {
 		ArrayList<VendorTO> dtoList = new ArrayList<>();
 		for(Vendor v : vendors) {
-			dtoList.add(makeDto(v));
+			dtoList.add(dtoAssem.makeDto(v));
 		}
 		return dtoList;
 	}
 	
 	public CategoryTO makeDto(Category category) {
-
+		/*
 		int id = category.getId();
 		String name = category.getName();
 		String notice = category.getNotice();
@@ -100,10 +106,10 @@ public class DtoAssembler {
 		boolean active = category.isActive();
 		boolean income = category.isIncome();
 		Timestamp lastChanged= category.getLastChanged();
-		UserTO user = dtoAssem.makeDto(category.getUser());
-				
+		UserTO user = dtoAssem.makeDto(category.getUser());		
 		CategoryTO dto = new CategoryTO(id, name, notice, active, income,createDate, lastChanged, user);
-		/*
+		*/
+		CategoryTO dto = new CategoryTO();
 		dto.setId(category.getId());
 		dto.setName(category.getName());
 		dto.setNotice(category.getNotice());
@@ -111,15 +117,15 @@ public class DtoAssembler {
 		dto.setActive(category.isActive());
 		dto.setIncome(category.isIncome());
 		dto.setLastChanged(category.getLastChanged());
-		dto.setUser(makeDto(category.getUser()));
-		*/
+		dto.setUser(dtoAssem.makeDto(category.getUser()));
+		
 		return dto;
 	}
 	
 	public List<CategoryTO> makeCategoryListDto(List<Category> categories) {
 		ArrayList<CategoryTO> dtoList = new ArrayList<>();
 		for(Category c : categories) {
-			dtoList.add(makeDto(c));
+			dtoList.add(dtoAssem.makeDto(c));
 		}
 		return dtoList;
 	}
@@ -133,14 +139,14 @@ public class DtoAssembler {
 		dto.setCreateDate(payment.getCreateDate());
 		dto.setActive(payment.isActive());
 		dto.setLastChanged(payment.getLastChanged());
-		dto.setUser(makeDto(payment.getUser()));
+		dto.setUser(dtoAssem.makeDto(payment.getUser()));
 		return dto;
 	}
 	
 	public List<PaymentTO> makePaymentListDto(List<Payment> payments) {
 		ArrayList<PaymentTO> dtoList = new ArrayList<>();
 		for(Payment p : payments) {
-			dtoList.add(makeDto(p));
+			dtoList.add(dtoAssem.makeDto(p));
 		}
 		return dtoList;
 	}
@@ -153,18 +159,18 @@ public class DtoAssembler {
 		dto.setCreateDate(basket.getCreateDate());
 		dto.setAmount(basket.getAmount());
 		dto.setLastChanged(basket.getLastChanged());
-		dto.setUser(makeDto(basket.getUser()));
+		dto.setUser(dtoAssem.makeDto(basket.getUser()));
 		dto.setPurchaseDate(basket.getPurchaseDate());
-		dto.setVendor(makeDto(basket.getVendor()));
-		dto.setPayment(makeDto(basket.getPayment()));
-		dto.setItems(makeItemListDto(basket.getItems()));
+		dto.setVendor(dtoAssem.makeDto(basket.getVendor()));
+		dto.setPayment(dtoAssem.makeDto(basket.getPayment()));
+		dto.setItems(dtoAssem.makeItemListDto(basket.getItems()));
 		return dto;
 	}
 	
 	public List<ItemTO> makeItemListDto(List<Item> items) {
 		ArrayList<ItemTO> dtoList = new ArrayList<>();
 		for(Item i : items) {
-			dtoList.add(makeDto(i));
+			dtoList.add(dtoAssem.makeDto(i));
 		}
 		return dtoList;
 	}
@@ -181,15 +187,15 @@ public class DtoAssembler {
 		dto.setLaunchDate(item.getLaunchDate());
 		dto.setFinishDate(item.getFinishDate());
 		dto.setLastChanged(item.getLastChanged());
-		dto.setBasket(makeDto(item.getBasket()));
-		dto.setCategory(makeDto(item.getCategory()));
+		dto.setBasket(dtoAssem.makeDto(item.getBasket()));
+		dto.setCategory(dtoAssem.makeDto(item.getCategory()));
 		return dto;
 	}
 	
 	public List<BasketTO> makeBasketListDto(List<Basket> baskets) {
 		ArrayList<BasketTO> dtoList = new ArrayList<>();
 		for(Basket b : baskets) {
-			dtoList.add(makeDto(b));
+			dtoList.add(dtoAssem.makeDto(b));
 		}
 		return dtoList;
 	}
@@ -197,7 +203,7 @@ public class DtoAssembler {
 	public List<IncomeTO> makeIncomeListDto(List<Income> incomes) {
 		ArrayList<IncomeTO> dtoList = new ArrayList<>();
 		for(Income i : incomes) {
-			dtoList.add(makeDto(i));
+			dtoList.add(dtoAssem.makeDto(i));
 		}
 		return dtoList;
 	}
@@ -214,8 +220,8 @@ public class DtoAssembler {
 		dto.setLaunchDate(income.getLaunchDate());
 		dto.setFinishDate(income.getFinishDate());
 		dto.setLastChanged(income.getLastChanged());
-		dto.setUser(makeDto(income.getUser()));
-		dto.setCategory(makeDto(income.getCategory()));
+		dto.setUser(dtoAssem.makeDto(income.getUser()));
+		dto.setCategory(dtoAssem.makeDto(income.getCategory()));
 		return dto;
 	}
 }

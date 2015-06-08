@@ -175,7 +175,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
-			//TODO evtl darauf einigen einen 404(Not-Found) zurückzuschicken 
 		}
 		return response;
 	}
@@ -1746,7 +1745,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		AmountResponse response = new AmountResponse();
 		try {
 		double sum = 0;
-		
+		//TODO
 		response.setValue(sum);
 		response.setReturnCode(200);
 		}
@@ -1771,7 +1770,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Income> incomeList = user.getIncomes();
-				
+				//TODO
 				for (Income i : incomeList) {
 					if(i.getPeriod() == daysOfPeriod) {
 						sum += (i.getAmount() * i.getQuantity());
