@@ -7,12 +7,6 @@ import java.util.List;
 
 
 
-
-
-
-
-
-
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -26,13 +20,8 @@ import javax.jws.WebService;
 
 
 
-
-
-
-
-
-
 import javax.persistence.EntityExistsException;
+
 
 
 //Interface-Import
@@ -42,6 +31,7 @@ import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 
+import de.budget.dto.ItemTO;
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
 import de.budget.dto.Response.BasketResponse;
@@ -607,10 +597,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice,
-			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items) {
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
 		BasketResponse response = new BasketResponse();
-		
+		//TODO DTOS rückentpacken zu Items
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -620,7 +609,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Vendor vendor = user.getVendor(vendorId);
 
 				if(basket == null) {
-					basket = dao.createBasket(user, name, notice, amount,purchaseDate,payment,vendor,items);
+					//basket = dao.createBasket(user, name, notice, amount,purchaseDate,payment,vendor,items);
 				}
 				else {
 					basket.setName(name);
@@ -629,7 +618,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					basket.setPurchaseDate(purchaseDate);
 					basket.setPayment(user.getPayment(paymentId));
 					basket.setVendor(user.getVendor(vendorId));
-					basket.setItems(items);
+					//basket.setItems(items);
 				
 					basket = dao.updateBasket(basket);
 				}

@@ -7,6 +7,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 
+//ItemTO import, da sie fürs Anlegen eines Baskets benötigt werden
+import de.budget.dto.ItemTO;
+
 //Response-Imports
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
@@ -24,11 +27,6 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
-
-
-//Entities Import
-import de.budget.entities.Item;
-
 
 
 /*
@@ -268,10 +266,10 @@ public interface BudgetOnlineService {
 	 * @param purchaseDate
 	 * @param paymentId
 	 * @param vendorId
-	 * @param items   List with items to add to the basket
+	 * @param items   List with itemTO Objects to add to the basket
 	 * @return
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items);
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
 	
 	/**
 	 * Method to delete a basket
@@ -342,7 +340,7 @@ public interface BudgetOnlineService {
 	 * @param period
 	 * @param launchDate
 	 * @param finishDate
-	 * @param category
+	 * @param categoryId
 	 * @return
 	 */
 	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, int period, Timestamp launchDate, Timestamp finishDate, int categoryId);
