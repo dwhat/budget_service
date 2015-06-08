@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="active" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
+ *         &lt;element name="colour" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="income" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "categoryTO", propOrder = {
     "active",
+    "colour",
     "createDate",
     "id",
     "income",
@@ -46,6 +48,7 @@ import javax.xml.bind.annotation.XmlType;
 public class CategoryTO {
 
     protected boolean active;
+    protected String colour;
     protected Timestamp createDate;
     protected int id;
     protected boolean income;
@@ -68,6 +71,30 @@ public class CategoryTO {
      */
     public void setActive(boolean value) {
         this.active = value;
+    }
+
+    /**
+     * Gets the value of the colour property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getColour() {
+        return colour;
+    }
+
+    /**
+     * Sets the value of the colour property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setColour(String value) {
+        this.colour = value;
     }
 
     /**

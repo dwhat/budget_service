@@ -869,6 +869,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link AmountResponse }
+     * 
+     */
+    public AmountResponse createAmountResponse() {
+        return new AmountResponse();
+    }
+
+    /**
      * Create an instance of {@link ReturnCodeResponse }
      * 
      */

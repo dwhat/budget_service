@@ -221,7 +221,7 @@ public interface BudgetOnlineService {
 	 * @param notice
 	 * @return
 	 */
-	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active, String name, String notice);
+	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active, String name, String notice, String colour);
 
 	/**
 	 * @author Marco

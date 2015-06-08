@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
     "arg2",
     "arg3",
     "arg4",
-    "arg5"
+    "arg5",
+    "arg6"
 })
 public class CreateOrUpdateCategory {
 
@@ -47,6 +49,7 @@ public class CreateOrUpdateCategory {
     protected boolean arg3;
     protected String arg4;
     protected String arg5;
+    protected String arg6;
 
     /**
      * Gets the value of the arg0 property.
@@ -158,6 +161,30 @@ public class CreateOrUpdateCategory {
      */
     public void setArg5(String value) {
         this.arg5 = value;
+    }
+
+    /**
+     * Gets the value of the arg6 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getArg6() {
+        return arg6;
+    }
+
+    /**
+     * Sets the value of the arg6 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setArg6(String value) {
+        this.arg6 = value;
     }
 
 }

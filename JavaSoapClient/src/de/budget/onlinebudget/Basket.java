@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="items" type="{http://onlinebudget.budget.de/}item" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="payment" type="{http://onlinebudget.budget.de/}payment" minOccurs="0"/>
  *         &lt;element name="purchaseDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
@@ -44,6 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "id",
     "items",
     "lastChanged",
+    "name",
     "notice",
     "payment",
     "purchaseDate",
@@ -58,6 +60,7 @@ public class Basket {
     @XmlElement(nillable = true)
     protected List<Item> items;
     protected Timestamp lastChanged;
+    protected String name;
     protected String notice;
     protected Payment payment;
     protected Timestamp purchaseDate;
@@ -171,6 +174,30 @@ public class Basket {
      */
     public void setLastChanged(Timestamp value) {
         this.lastChanged = value;
+    }
+
+    /**
+     * Gets the value of the name property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the value of the name property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**

@@ -118,6 +118,7 @@ public class DtoAssembler {
 		dto.setIncome(category.isIncome());
 		dto.setLastChanged(category.getLastChanged());
 		dto.setUser(dtoAssem.makeDto(category.getUser()));
+		dto.setColour(category.getColour());
 		
 		return dto;
 	}

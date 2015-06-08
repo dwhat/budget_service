@@ -882,14 +882,19 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return a Payment Object
 	 */
 	private Payment getPaymentHelper(int sessionId, int paymentId) throws NoSessionException, IllegalArgumentException {
-		BudgetSession session = getSession(sessionId);
-		if (session != null) {
-			User user = this.dao.findUserByName(session.getUsername());
-			Payment payment = user.getPayment(paymentId);
-			return payment;
+		try {	
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Payment payment = user.getPayment(paymentId);
+				return payment;
+			}
+			else {		
+				throw new NoSessionException("Please first login");
+			}
 		}
-		else {		
-			throw new NoSessionException("Please first login");
+		catch (Exception e) {
+			throw e;
 		}
 	}
 	
@@ -1147,7 +1152,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active,
-			String name, String notice) {
+			String name, String notice, String colour) {
 		CategoryResponse response = new CategoryResponse();
 		
 		try {
@@ -1161,13 +1166,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Category category = user.getCategory(categoryId);
 			
 				if(category == null) {
-					category = dao.createCategory(user, name, notice, income);
+					category = dao.createCategory(user, name, notice, income, colour);
 				}
 				else {
 					category.setName(name);
 					category.setNotice(notice);
 					category.setActive(active);
 					category.setIncome(income);
+					category.setColour(colour);
 					category = dao.updateCategory(category);
 				}
 				// Response befüllen

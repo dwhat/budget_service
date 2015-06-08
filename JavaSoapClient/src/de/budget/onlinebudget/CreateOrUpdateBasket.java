@@ -21,11 +21,12 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="arg4" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
- *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="arg5" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg7" type="{http://onlinebudget.budget.de/}item" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="arg7" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}item" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,18 +44,20 @@ import javax.xml.bind.annotation.XmlType;
     "arg4",
     "arg5",
     "arg6",
-    "arg7"
+    "arg7",
+    "arg8"
 })
 public class CreateOrUpdateBasket {
 
     protected int arg0;
     protected int arg1;
     protected String arg2;
-    protected double arg3;
-    protected Timestamp arg4;
-    protected int arg5;
+    protected String arg3;
+    protected double arg4;
+    protected Timestamp arg5;
     protected int arg6;
-    protected List<Item> arg7;
+    protected int arg7;
+    protected List<Item> arg8;
 
     /**
      * Gets the value of the arg0 property.
@@ -115,56 +118,64 @@ public class CreateOrUpdateBasket {
     /**
      * Gets the value of the arg3 property.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public double getArg3() {
+    public String getArg3() {
         return arg3;
     }
 
     /**
      * Sets the value of the arg3 property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setArg3(double value) {
+    public void setArg3(String value) {
         this.arg3 = value;
     }
 
     /**
      * Gets the value of the arg4 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getArg4() {
+    public double getArg4() {
         return arg4;
     }
 
     /**
      * Sets the value of the arg4 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setArg4(Timestamp value) {
+    public void setArg4(double value) {
         this.arg4 = value;
     }
 
     /**
      * Gets the value of the arg5 property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public int getArg5() {
+    public Timestamp getArg5() {
         return arg5;
     }
 
     /**
      * Sets the value of the arg5 property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setArg5(int value) {
+    public void setArg5(Timestamp value) {
         this.arg5 = value;
     }
 
@@ -187,16 +198,32 @@ public class CreateOrUpdateBasket {
     /**
      * Gets the value of the arg7 property.
      * 
+     */
+    public int getArg7() {
+        return arg7;
+    }
+
+    /**
+     * Sets the value of the arg7 property.
+     * 
+     */
+    public void setArg7(int value) {
+        this.arg7 = value;
+    }
+
+    /**
+     * Gets the value of the arg8 property.
+     * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the arg7 property.
+     * This is why there is not a <CODE>set</CODE> method for the arg8 property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getArg7().add(newItem);
+     *    getArg8().add(newItem);
      * </pre>
      * 
      * 
@@ -206,11 +233,11 @@ public class CreateOrUpdateBasket {
      * 
      * 
      */
-    public List<Item> getArg7() {
-        if (arg7 == null) {
-            arg7 = new ArrayList<Item>();
+    public List<Item> getArg8() {
+        if (arg8 == null) {
+            arg8 = new ArrayList<Item>();
         }
-        return this.arg7;
+        return this.arg8;
     }
 
 }

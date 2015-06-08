@@ -253,8 +253,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Category Object
 	 */
 	@Override
-	public Category createCategory(User user, String name, String notice, boolean income) throws EntityExistsException, IllegalArgumentException{
-		Category category = new Category(user, income, name, notice);
+	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException{
+		Category category = new Category(user, income, name, notice, colour);
 		if (category != null) {
 			em.persist(category);
 		}

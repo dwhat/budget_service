@@ -219,7 +219,6 @@ public interface BudgetOnlineServiceBean {
      * @param arg2
      * @param arg1
      * @param arg0
-     * @param arg10
      * @param arg6
      * @param arg7
      * @param arg8
@@ -251,9 +250,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg8", targetNamespace = "")
         Timestamp arg8,
         @WebParam(name = "arg9", targetNamespace = "")
-        int arg9,
-        @WebParam(name = "arg10", targetNamespace = "")
-        int arg10);
+        int arg9);
 
     /**
      * 
@@ -334,13 +331,13 @@ public interface BudgetOnlineServiceBean {
      * @param arg1
      * @param arg0
      * @return
-     *     returns double
+     *     returns de.budget.onlinebudget.AmountResponse
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getIncomeByPeriod", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomeByPeriod")
     @ResponseWrapper(localName = "getIncomeByPeriodResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomeByPeriodResponse")
-    public double getIncomeByPeriod(
+    public AmountResponse getIncomeByPeriod(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -416,13 +413,13 @@ public interface BudgetOnlineServiceBean {
      * @param arg1
      * @param arg0
      * @return
-     *     returns double
+     *     returns de.budget.onlinebudget.AmountResponse
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getLossByPeriod", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetLossByPeriod")
     @ResponseWrapper(localName = "getLossByPeriodResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetLossByPeriodResponse")
-    public double getLossByPeriod(
+    public AmountResponse getLossByPeriod(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0,
         @WebParam(name = "arg1", targetNamespace = "")
@@ -438,6 +435,7 @@ public interface BudgetOnlineServiceBean {
      * @param arg0
      * @param arg6
      * @param arg7
+     * @param arg8
      * @return
      *     returns de.budget.onlinebudget.BasketResponse
      */
@@ -453,15 +451,17 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg2", targetNamespace = "")
         String arg2,
         @WebParam(name = "arg3", targetNamespace = "")
-        double arg3,
+        String arg3,
         @WebParam(name = "arg4", targetNamespace = "")
-        Timestamp arg4,
+        double arg4,
         @WebParam(name = "arg5", targetNamespace = "")
-        int arg5,
+        Timestamp arg5,
         @WebParam(name = "arg6", targetNamespace = "")
         int arg6,
         @WebParam(name = "arg7", targetNamespace = "")
-        List<Item> arg7);
+        int arg7,
+        @WebParam(name = "arg8", targetNamespace = "")
+        List<Item> arg8);
 
     /**
      * 
@@ -587,6 +587,7 @@ public interface BudgetOnlineServiceBean {
      * @param arg2
      * @param arg1
      * @param arg0
+     * @param arg6
      * @return
      *     returns de.budget.onlinebudget.CategoryResponse
      */
@@ -606,7 +607,9 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg4", targetNamespace = "")
         String arg4,
         @WebParam(name = "arg5", targetNamespace = "")
-        String arg5);
+        String arg5,
+        @WebParam(name = "arg6", targetNamespace = "")
+        String arg6);
 
     /**
      * 

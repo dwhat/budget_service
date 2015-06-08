@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="return" type="{http://onlinebudget.budget.de/}amountResponse" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,21 +33,29 @@ import javax.xml.bind.annotation.XmlType;
 public class GetIncomeByPeriodResponse {
 
     @XmlElement(name = "return")
-    protected double _return;
+    protected AmountResponse _return;
 
     /**
      * Gets the value of the return property.
      * 
+     * @return
+     *     possible object is
+     *     {@link AmountResponse }
+     *     
      */
-    public double getReturn() {
+    public AmountResponse getReturn() {
         return _return;
     }
 
     /**
      * Sets the value of the return property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link AmountResponse }
+     *     
      */
-    public void setReturn(double value) {
+    public void setReturn(AmountResponse value) {
         this._return = value;
     }
 

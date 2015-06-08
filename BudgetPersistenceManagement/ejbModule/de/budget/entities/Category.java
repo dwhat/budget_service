@@ -30,6 +30,9 @@ public class Category implements Serializable{
 	private boolean active;
 	@NotNull
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
+	
+	private String colour;
+	
 	private Timestamp createDate;
 	
 	/**
@@ -60,12 +63,13 @@ public class Category implements Serializable{
 	 * @author Marco
 	 * @date 11.05.2015
 	 */
-	public Category(User user, boolean income, String name, String notice) {
+	public Category(User user, boolean income, String name, String notice, String colour) {
 		this.user = user;
 		this.income = income;
 		this.name = name;
 		this.notice = notice;
 		this.active = true;
+		this.setColour(colour);
 		this.user.addNewCategory(this);
 		this.createDate = new Timestamp(System.currentTimeMillis());
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
@@ -134,6 +138,20 @@ public class Category implements Serializable{
 	 */
 	public void setIncome(boolean income) {
 		this.income = income;
+	}
+
+	/**
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
+	 * @param colour the colour to set
+	 */
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 
 	/**

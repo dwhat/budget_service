@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg7" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="arg9" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg10" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,8 +45,7 @@ import javax.xml.bind.annotation.XmlType;
     "arg6",
     "arg7",
     "arg8",
-    "arg9",
-    "arg10"
+    "arg9"
 })
 public class CreateOrUpdateIncome {
 
@@ -61,7 +59,6 @@ public class CreateOrUpdateIncome {
     protected Timestamp arg7;
     protected Timestamp arg8;
     protected int arg9;
-    protected int arg10;
 
     /**
      * Gets the value of the arg0 property.
@@ -253,22 +250,6 @@ public class CreateOrUpdateIncome {
      */
     public void setArg9(int value) {
         this.arg9 = value;
-    }
-
-    /**
-     * Gets the value of the arg10 property.
-     * 
-     */
-    public int getArg10() {
-        return arg10;
-    }
-
-    /**
-     * Sets the value of the arg10 property.
-     * 
-     */
-    public void setArg10(int value) {
-        this.arg10 = value;
     }
 
 }

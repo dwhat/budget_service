@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlType;
     CategoryListResponse.class,
     BasketListResponse.class,
     ItemListResponse.class,
+    AmountResponse.class,
     IncomeResponse.class,
     PaymentListResponse.class,
     BasketResponse.class,

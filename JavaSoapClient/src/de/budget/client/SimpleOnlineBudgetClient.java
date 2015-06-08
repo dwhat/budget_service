@@ -53,7 +53,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Emma hat sich angemeldet");
 			   System.out.println(loginResponse.getReturnCode());
 			   
-			   CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "Lohn", "Lohnnotiz");
+			   CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "Lohn", "Lohnnotiz", "FFFFFF");
 			   System.out.println(catResp.getReturnCode());
 			   if(catResp.getReturnCode() == 200) {
 				   System.out.println("Category angelegt");
