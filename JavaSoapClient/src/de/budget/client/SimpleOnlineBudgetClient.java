@@ -12,6 +12,9 @@ import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
 import de.budget.onlinebudget.PaymentResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
 import de.budget.onlinebudget.UserLoginResponse;
+import de.budget.onlinebudget.VendorListResponse;
+import de.budget.onlinebudget.VendorResponse;
+import de.budget.onlinebudget.VendorTO;
 
 
 public class SimpleOnlineBudgetClient {
@@ -34,7 +37,8 @@ public class SimpleOnlineBudgetClient {
 		   //szenarioJoe();		   	       
 		   //szenarioEmma();
 		   //szenarioPeter();
- 	      szenarioCategory();
+ 	      //szenarioCategory();
+ 	      szenarioVendor();
 		   
 		}
 		catch (Exception ex) {
@@ -55,7 +59,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Emma hat sich angemeldet");
 			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
 			   
-			   createCategoryHelper(sessionId, 0, true, true, "Lohn", "notiz", "FFTTZZ");
+			   createCategoryHelper(sessionId, -99, true, true, "Lohn", "notiz", "FFTTZZ");
 			   createCategoryHelper(sessionId, 0, true, true, "Lohn1", "notiz1", "FFTTZZ");
 			   createCategoryHelper(sessionId, 0, false, true, "Einkauf", "notiz1", "FFTTZZ");
 			   
@@ -65,7 +69,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("KategorieListe ausgeben ReturnCode: " + catListResp.getReturnCode());
 			   if(catListResp.getReturnCode() == 200) {
 				   ArrayList<CategoryTO> catList= (ArrayList<CategoryTO>) catListResp.getCategoryList();
-				   System.out.println("es sind " + catList.size() + " Kategorien vorhanden.");
+				   System.out.println("Es sind " + catList.size() + " Kategorien vorhanden.");
 				   sampleCategoryId = catList.get(1).getId();
 				   for (CategoryTO c : catList){
 					   System.out.println("ID: "+ c.getId() + "  Name: " + c.getName());
@@ -132,6 +136,96 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + catResp.getMessage());
 		   }
 		   System.out.println("Message: " + catResp.getMessage());
+    }
+	
+	/**
+	 * szenario to test a login an to create, update, get and delete a vendor
+	 * @author Marco
+	 */
+	private static void szenarioVendor() {
+		   System.out.println("============================================================");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
+	    	   int sessionId = loginResponse.getSessionId();
+			   System.out.println("Emma hat sich angemeldet");
+			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
+			   
+			   createVendorHelper(sessionId, -99, "Rewe", "BILD");
+			   createVendorHelper(sessionId, -99, "ALDI", "BILD");
+			   createVendorHelper(sessionId, -99, "LIDL", "BILD");
+			   
+			   int sampleVendorId = 0; //Für spätere Test bei update und get
+			   VendorListResponse venListResp = remoteSystem.getVendors(sessionId);
+			   System.out.println("VendorListe ausgeben ReturnCode: " + venListResp.getReturnCode());
+			   if(venListResp.getReturnCode() == 200) {
+				   ArrayList<VendorTO> venList= (ArrayList<VendorTO>) venListResp.getVendorList();
+				   System.out.println("Es sind " + venList.size() + " Händler vorhanden.");
+				   sampleVendorId = venList.get(1).getId();
+				   for (VendorTO v : venList){
+					   System.out.println("ID: "+ v.getId() + "  Name: " + v.getName());
+				   }
+			   }
+			   else {
+				   System.out.println("Message: " + venListResp.getMessage());
+			   }
+			   System.out.println("Message: " + venListResp.getMessage());
+			   
+			   System.out.println("Suche Vendor mit Id " + sampleVendorId);
+			   VendorResponse venResp = remoteSystem.getVendor(sessionId, sampleVendorId);
+			   System.out.println("VendorÄndern ReturnCode: " + venResp.getReturnCode());
+			   if(venResp.getReturnCode() == 200) {
+				   System.out.println("ID: "+ venResp.getVendorTo().getId() + "  Name: " + venResp.getVendorTo().getName());
+			   }
+			   else {
+				   System.out.println("Message: " + venResp.getMessage());
+			   }
+			   System.out.println("Message: " + venResp.getMessage());
+			   
+			   System.out.println("Ändere Vendor mit Id " + sampleVendorId);
+			   createVendorHelper(sessionId, sampleVendorId, "Geändert", "ändereBild");
+			   
+			   System.out.println("Lösche Vendor mit Id " + sampleVendorId);
+			   ReturnCodeResponse resp = remoteSystem.deleteVendor(sessionId, sampleVendorId);
+			   System.out.println("Vendorlöschen ReturnCode: " + resp.getReturnCode());
+			   if(resp.getReturnCode() == 200) {
+				   System.out.println("Suche Vendor mit Id " + sampleVendorId);
+				   VendorResponse venResp1 = remoteSystem.getVendor(sessionId, sampleVendorId);
+				   System.out.println("vendor ReturnCode: " + venResp1.getReturnCode());
+			   }
+			   else {
+				   System.out.println("Message: " + resp.getMessage());
+			   }
+			   System.out.println("Message: " + resp.getMessage());
+			   
+	       }
+	       
+	}
+	
+	/**
+	 * HelferMethode zum anlegen von Kategorien
+	 * @author Marco
+	 * @date 08.06.2015
+	 */
+	private static void createVendorHelper (int sessionId, int vendorId, String name, String logo) {
+		System.out.println("Lege Vendor an. ");
+		   VendorResponse venResp = remoteSystem.createOrUpdateVendor(sessionId, vendorId, name, logo);
+		   System.out.println("VendorAnlegen ReturnCode: " + venResp.getReturnCode());
+		   if(venResp.getReturnCode() == 200) {
+			   System.out.println("Vendor angelegt");
+			   if(venResp.getVendorTo() != null) {
+				   System.out.println("Vendor Eigenschaften: ");
+				   System.out.println("Name = " + venResp.getVendorTo().getName());
+				   System.out.println("Logo = " + venResp.getVendorTo().getLogo());
+				   System.out.println("Owner = " + venResp.getVendorTo().getUser().getUsername());
+			   }
+			   else {
+				   System.out.println ("Vendor ist gleich null");
+			   }
+		   }
+		   else {
+			   System.out.println("Message: " + venResp.getMessage());
+		   }
+		   System.out.println("Message: " + venResp.getMessage());
     }
 	
 	
