@@ -2,7 +2,9 @@ package de.budget.client;
 
 import java.util.ArrayList;
 
+import de.budget.onlinebudget.CategoryListResponse;
 import de.budget.onlinebudget.CategoryResponse;
+import de.budget.onlinebudget.CategoryTO;
 import de.budget.onlinebudget.PaymentTO;
 import de.budget.onlinebudget.PaymentListResponse;
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
@@ -42,7 +44,7 @@ public class SimpleOnlineBudgetClient {
 	}
 	
 	/**
-	 * szenario to test a login an to create a category
+	 * szenario to test a login an to create, update, get and delete a category
 	 * @author Marco
 	 */
 	private static void szenarioCategory() {
@@ -51,28 +53,87 @@ public class SimpleOnlineBudgetClient {
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
-			   System.out.println(loginResponse.getReturnCode());
+			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
 			   
-			   CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "Lohn", "Lohnnotiz", "FFFFFF");
-			   System.out.println(catResp.getReturnCode());
-			   if(catResp.getReturnCode() == 200) {
-				   System.out.println("Category angelegt");
-				   if(catResp.getCategoryTo() != null) {
-					   System.out.println("Name = " + catResp.getCategoryTo().getName());
-					   System.out.println("Notiz = " + catResp.getCategoryTo().getNotice());
-					   System.out.println("Owner = " + catResp.getCategoryTo().getUser().getUsername());
-				   }
-				   else {
-					   System.out.println ("Category ist gleich null");
+			   createCategoryHelper(sessionId, 0, true, true, "Lohn", "notiz", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, true, true, "Lohn1", "notiz1", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, false, true, "Einkauf", "notiz1", "FFTTZZ");
+			   
+
+			   int sampleCategoryId = 0; //Für spätere Test bei update und get
+			   CategoryListResponse catListResp = remoteSystem.getCategorys(sessionId);
+			   System.out.println("KategorieListe ausgeben ReturnCode: " + catListResp.getReturnCode());
+			   if(catListResp.getReturnCode() == 200) {
+				   ArrayList<CategoryTO> catList= (ArrayList<CategoryTO>) catListResp.getCategoryList();
+				   System.out.println("es sind " + catList.size() + " Kategorien vorhanden.");
+				   sampleCategoryId = catList.get(1).getId();
+				   for (CategoryTO c : catList){
+					   System.out.println("ID: "+ c.getId() + "  Name: " + c.getName());
 				   }
 			   }
 			   else {
-				   System.out.println(catResp.getMessage());
+				   System.out.println("Message: " + catListResp.getMessage());
 			   }
-			   System.out.println(catResp.getMessage());
+			   System.out.println("Message: " + catListResp.getMessage());
+			   
+			   System.out.println("Suche Kategory mit Id " + sampleCategoryId);
+			   CategoryResponse catResp = remoteSystem.getCategory(sessionId, sampleCategoryId);
+			   System.out.println("KategorieÄndern ReturnCode: " + catResp.getReturnCode());
+			   if(catResp.getReturnCode() == 200) {
+				   System.out.println("ID: "+ catResp.getCategoryTo().getId() + "  Name: " + catResp.getCategoryTo().getName());
+			   }
+			   else {
+				   System.out.println("Message: " + catResp.getMessage());
+			   }
+			   System.out.println("Message: " + catResp.getMessage());
+			   
+			   System.out.println("Ändere Kategory mit Id " + sampleCategoryId);
+			   createCategoryHelper(sessionId, sampleCategoryId, false, true, "EinkaufÄndern", "notiz1", "FFTTZZ");
+			   
+			   System.out.println("Lösche Kategory mit Id " + sampleCategoryId);
+			   ReturnCodeResponse resp = remoteSystem.deleteCategory(sessionId, sampleCategoryId);
+			   System.out.println("Kategorielöschen ReturnCode: " + resp.getReturnCode());
+			   if(resp.getReturnCode() == 200) {
+				   System.out.println("Suche Kategory mit Id " + sampleCategoryId);
+				   CategoryResponse catResp1 = remoteSystem.getCategory(sessionId, sampleCategoryId);
+				   System.out.println("Kategorie ReturnCode: " + catResp1.getReturnCode());
+			   }
+			   else {
+				   System.out.println("Message: " + resp.getMessage());
+			   }
+			   System.out.println("Message: " + resp.getMessage());
+			   
 	       }
 	       
 	}
+	
+	/**
+	 * HelferMethode zum anlegen von Kategorien
+	 * @author Marco
+	 * @date 08.06.2015
+	 */
+	private static void createCategoryHelper (int sessionId, int catId, boolean income, boolean active, String name, String notice, String colour) {
+		System.out.println("Lege Kategorie an. ");
+		   CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, catId, income, active, name, notice, colour);
+		   System.out.println("KategorieAnlegen ReturnCode: " + catResp.getReturnCode());
+		   if(catResp.getReturnCode() == 200) {
+			   System.out.println("Category angelegt");
+			   if(catResp.getCategoryTo() != null) {
+				   System.out.println("Kategorie Eigenschaften: ");
+				   System.out.println("Name = " + catResp.getCategoryTo().getName());
+				   System.out.println("Notiz = " + catResp.getCategoryTo().getNotice());
+				   System.out.println("Owner = " + catResp.getCategoryTo().getUser().getUsername());
+			   }
+			   else {
+				   System.out.println ("Category ist gleich null");
+			   }
+		   }
+		   else {
+			   System.out.println("Message: " + catResp.getMessage());
+		   }
+		   System.out.println("Message: " + catResp.getMessage());
+    }
+	
 	
     /**
      * Test-Szenario: Emma meldet sich an
