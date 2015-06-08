@@ -262,6 +262,7 @@ public interface BudgetOnlineService {
 	 * @date 26.05.2015
 	 * @param sessionId
 	 * @param basketId
+	 * @param name
 	 * @param notice
 	 * @param amount
 	 * @param purchaseDate
@@ -270,7 +271,7 @@ public interface BudgetOnlineService {
 	 * @param items   List with items to add to the basket
 	 * @return
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items);
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items);
 	
 	/**
 	 * Method to delete a basket

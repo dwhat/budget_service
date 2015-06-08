@@ -306,9 +306,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Basket Object
 	 */
 	@Override
-	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
 		if(user != null && payment != null && vendor != null) {
-			Basket basket = new Basket(user, notice, amount, purchaseDate, payment, vendor, items);
+			Basket basket = new Basket(user, name, notice, amount, purchaseDate, payment, vendor, items);
 			if (basket != null){
 				em.persist(basket);
 				return basket;

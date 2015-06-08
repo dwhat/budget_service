@@ -608,7 +608,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String notice,
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice,
 			double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<Item> items) {
 		BasketResponse response = new BasketResponse();
 		
@@ -621,9 +621,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Vendor vendor = user.getVendor(vendorId);
 
 				if(basket == null) {
-					basket = dao.createBasket(user, notice, amount,purchaseDate,payment,vendor,items);
+					basket = dao.createBasket(user, name, notice, amount,purchaseDate,payment,vendor,items);
 				}
 				else {
+					basket.setName(name);
 					basket.setNotice(notice);
 					basket.setAmount(amount);
 					basket.setPurchaseDate(purchaseDate);

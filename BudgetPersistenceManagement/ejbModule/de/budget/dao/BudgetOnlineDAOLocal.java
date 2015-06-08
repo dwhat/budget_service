@@ -51,7 +51,7 @@ public interface BudgetOnlineDAOLocal {
 	public Vendor findVendorById(int vendorId) throws IllegalArgumentException;
 	public void deleteVendor(int vendorId) throws IllegalArgumentException;
 	
-	public Basket createBasket(User user, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items);
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items);
 	public Basket updateBasket(Basket basket) throws IllegalArgumentException;
 	public Basket findBasketById(int basketId) throws IllegalArgumentException;
 	public void deleteBasket(int basketId) throws IllegalArgumentException;

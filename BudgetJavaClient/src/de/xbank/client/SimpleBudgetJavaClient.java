@@ -52,7 +52,7 @@ public class SimpleBudgetJavaClient {
 	}
 	
     /**
-     * Test-Szenario: Emma meldet sich
+     * Test-Szenario: Emma meldet sich an und danach wieder ab
      */
 	private static void szenarioEmma() {
 		try {

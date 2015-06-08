@@ -41,6 +41,9 @@ public class Basket implements Serializable {
 	@Id @GeneratedValue
 	private int id;
 	
+	@NotNull
+	private String name; 
+	
 	private String notice;
 	@NotNull
 	private double amount;
@@ -98,11 +101,12 @@ public class Basket implements Serializable {
 	  * @param payment
 	  * @param vendor
 	  */
-	 public Basket(User user, String notice, double amount, Timestamp purchaseDate, Payment payment, Vendor vendor) {
+	 public Basket(User user, String name, String notice, double amount, Timestamp purchaseDate, Payment payment, Vendor vendor) {
 		 this.user = user;
 		 this.notice = notice;
 		 this.amount = amount;
 		 this.payment = payment;
+		 this.name = name;
 		 this.vendor = vendor;
 		 this.purchaseDate = purchaseDate;
 		 this.user.addNewBasket(this);
@@ -120,11 +124,12 @@ public class Basket implements Serializable {
 	  * @param payment
 	  * @param vendor
 	  */
-	 public Basket(User user, String notice, double amount, Timestamp purchaseDate, Payment payment, Vendor vendor, List<Item> items) {
+	 public Basket(User user, String name, String notice, double amount, Timestamp purchaseDate, Payment payment, Vendor vendor, List<Item> items) {
 		 this.user = user;
 		 this.notice = notice;
 		 this.amount = amount;
 		 this.payment = payment;
+		 this.name = name;
 		 this.vendor = vendor;
 		 this.purchaseDate = purchaseDate;
 		 this.user.addNewBasket(this);
@@ -151,6 +156,22 @@ public class Basket implements Serializable {
 	 */
 	public void setNotice(String notice) {
 		this.notice = notice;
+	}
+
+	/**
+	 * @return the name
+	 * @author Marco 
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @author Marco
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**

@@ -1,8 +1,12 @@
 package de.budget.util;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
 import de.budget.dto.BasketTO;
@@ -32,6 +36,24 @@ import de.budget.entities.Vendor;
 @Stateless
 public class DtoAssembler {
 	
+	private DtoAssembler dtoAssem;
+	
+	/**
+	 * The SessionContext of this EJB
+	 */
+	@Resource
+	private SessionContext ctx;
+	
+	/**
+	 * Methode, die beim der Erzeugung der Bean aufgerufen wird
+	 * Initialisiert den DtoAssembler für den "verbotenen This Aufruf"
+	 * @author Marco
+	 * @date 08.06.2015
+	 */
+	@PostConstruct
+	public void init() {
+		dtoAssem = ctx.getBusinessObject(DtoAssembler.class);
+	}
 	
 	public VendorTO makeDto(Vendor vendor) {
 		VendorTO dto = new VendorTO();
@@ -45,16 +67,19 @@ public class DtoAssembler {
 	}
 	
 	public UserTO makeDto (User user) {
-		UserTO dto = new UserTO();
-		dto.setUsername(user.getUserName());
-		dto.setPassword(user.getPassword());
-		dto.setEmail(user.getEmail());
-		dto.setCreateDate(user.getCreateDate());
-		dto.setLastChanged(user.getLastChanged());
+
+		String username = user.getUserName();
+		String password = user.getPassword();
+		String email = user.getEmail();
+		Timestamp createDate = user.getCreateDate();
+		Timestamp lastChanged = user.getLastChanged();
+		/*
 		dto.setBasketList(makeBasketListDto(user.getBaskets()));
 		dto.setVendorList(makeVendorListDto(user.getVendors()));
 		dto.setCategoryList(makeCategoryListDto(user.getCategories()));
 		dto.setPaymentList(makePaymentListDto(user.getPayments()));
+		*/
+		UserTO dto = new UserTO(username, password, email, createDate, lastChanged, null, null, null, null);
 		return dto;
 	}
 	
@@ -67,7 +92,18 @@ public class DtoAssembler {
 	}
 	
 	public CategoryTO makeDto(Category category) {
-		CategoryTO dto = new CategoryTO();
+
+		int id = category.getId();
+		String name = category.getName();
+		String notice = category.getNotice();
+		Timestamp createDate = category.getCreateDate();
+		boolean active = category.isActive();
+		boolean income = category.isIncome();
+		Timestamp lastChanged= category.getLastChanged();
+		UserTO user = dtoAssem.makeDto(category.getUser());
+				
+		CategoryTO dto = new CategoryTO(id, name, notice, active, income,createDate, lastChanged, user);
+		/*
 		dto.setId(category.getId());
 		dto.setName(category.getName());
 		dto.setNotice(category.getNotice());
@@ -76,6 +112,7 @@ public class DtoAssembler {
 		dto.setIncome(category.isIncome());
 		dto.setLastChanged(category.getLastChanged());
 		dto.setUser(makeDto(category.getUser()));
+		*/
 		return dto;
 	}
 	
@@ -111,6 +148,7 @@ public class DtoAssembler {
 	public BasketTO makeDto(Basket basket) {
 		BasketTO dto = new BasketTO();
 		dto.setId(basket.getId());
+		dto.setName(basket.getName());
 		dto.setNotice(basket.getNotice());
 		dto.setCreateDate(basket.getCreateDate());
 		dto.setAmount(basket.getAmount());

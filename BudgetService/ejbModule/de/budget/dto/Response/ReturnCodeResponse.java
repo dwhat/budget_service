@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class ReturnCodeResponse implements Serializable {
 	
 	private static final long serialVersionUID = 3397348747136795401L;
-	private static final int CODE_OK = 0;
+	private static final int CODE_OK = 200;
 	
 	private int returnCode;
 	private String message;
