@@ -616,8 +616,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					basket.setNotice(notice);
 					basket.setAmount(amount);
 					basket.setPurchaseDate(purchaseDate);
-					basket.setPayment(user.getPayment(paymentId));
-					basket.setVendor(user.getVendor(vendorId));
+					basket.setPayment(payment);
+					basket.setVendor(vendor);
 					//basket.setItems(items);
 				
 					basket = dao.updateBasket(basket);
