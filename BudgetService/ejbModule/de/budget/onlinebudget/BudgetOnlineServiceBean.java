@@ -119,7 +119,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@EJB
 	private OutputRequesterBean outputRequester;
 	
-	
+	@EJB
+	private Payload payloader;
 	
 	/**
 	 * Private HilfsMethode zum Laden der Session aus der Datenbank
@@ -163,6 +164,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				response.setSessionId(sessionId);
 				// Request OK zurückschicken
 				response.setReturnCode(200);
+				int payloadNumber = payloader.getPayload();
+				payloader.setPayload(payloadNumber+1);
 			}
 			else 
 			{
@@ -191,6 +194,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			dao.closeSession(sessionId);	
 			logger.info("Logout erfolgreich. Session=" + sessionId);
 			response.setReturnCode(200);
+			int payloadNumber = payloader.getPayload();
+			payloader.setPayload(payloadNumber-1);
 		}
 		catch(IllegalArgumentException e) {
 			response.setReturnCode(404);

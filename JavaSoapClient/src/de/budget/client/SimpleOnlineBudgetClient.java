@@ -37,8 +37,8 @@ public class SimpleOnlineBudgetClient {
 		   //szenarioJoe();		   	       
 		   //szenarioEmma();
 		   //szenarioPeter();
- 	      //szenarioCategory();
- 	      szenarioVendor();
+ 	      szenarioCategory();
+ 	      //szenarioVendor();
 		   
 		}
 		catch (Exception ex) {
