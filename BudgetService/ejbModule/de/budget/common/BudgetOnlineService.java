@@ -207,6 +207,24 @@ public interface BudgetOnlineService {
 	 * @return CategoryListResponse Object
 	 */
 	public CategoryListResponse getCategorys(int sessionId);
+	
+	/**
+	 * Method to get all Categories of a use where income is true
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	public CategoryListResponse getCategorysOfIncome(int sessionId);
+	
+	/**
+	 * Method to get all Categories of a use where income is false
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	public CategoryListResponse getCategorysOfLoss(int sessionId);
 
 	/**
 	 * @author Marco

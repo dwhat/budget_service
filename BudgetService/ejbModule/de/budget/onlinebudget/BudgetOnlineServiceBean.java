@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -32,6 +33,7 @@ import javax.persistence.EntityExistsException;
 
 
 
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -39,8 +41,6 @@ import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 
-import de.budget.dto.BasketTO;
-import de.budget.dto.CategoryTO;
 import de.budget.dto.ItemTO;
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
@@ -1101,6 +1101,22 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	
+	private List<Category> getCategoriesHelper(int sessionId) throws Exception {
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				return user.getCategories();
+			}
+			else {
+				throw new NoSessionException("Please first login");
+			}
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	/**
 	 * Gives a Response Object with all Categories in a list
 	 * @author Marco
@@ -1112,13 +1128,80 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public CategoryListResponse getCategorys(int sessionId) {
 		CategoryListResponse response = new CategoryListResponse();
 		try {
-			BudgetSession session = getSession(sessionId);
-			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				List<Category> categoryList = user.getCategories();
-				response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
-				response.setReturnCode(200);
+			List<Category> categoryList = getCategoriesHelper(sessionId);
+			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
+			response.setReturnCode(200);
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
+	}
+	
+	/**
+	 * Method to get all Categories of a use where income is true
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public CategoryListResponse getCategorysOfIncome(int sessionId){
+		CategoryListResponse response = new CategoryListResponse();
+		try {
+			List<Category> categoryList = getCategoriesHelper(sessionId);
+			ArrayList<Category> incomeCategories = new ArrayList<>();
+			for(Category c : categoryList) {
+				if(c.isIncome()) {
+					incomeCategories.add(c);
+				}
 			}
+			response.setCategoryList(dtoAssembler.makeCategoryListDto(incomeCategories));	
+			response.setReturnCode(200);
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
+	}
+	
+	
+	/**
+	 * Method to get all Categories of a use where income is false
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public CategoryListResponse getCategorysOfLoss(int sessionId){
+		CategoryListResponse response = new CategoryListResponse();
+		try {
+			List<Category> categoryList = getCategoriesHelper(sessionId);
+			ArrayList<Category> lossCategories = new ArrayList<>();
+			for(Category c : categoryList) {
+				if(!c.isIncome()) {
+					lossCategories.add(c);
+				}
+			}
+			response.setCategoryList(dtoAssembler.makeCategoryListDto(lossCategories));	
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
