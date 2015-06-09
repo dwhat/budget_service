@@ -218,10 +218,8 @@ public class DtoAssembler {
 		dto.setQuantity(income.getQuantity());
 		dto.setAmount(income.getAmount());
 		dto.setNotice(income.getNotice());
-		dto.setPeriod(income.getPeriod());
 		dto.setCreateDate(income.getCreateDate());
-		dto.setLaunchDate(income.getLaunchDate());
-		dto.setFinishDate(income.getFinishDate());
+		dto.setReceiptDate(income.getReceiptDate());
 		dto.setLastChanged(income.getLastChanged());
 		dto.setUser(dtoAssem.makeDto(income.getUser()));
 		dto.setCategory(dtoAssem.makeDto(income.getCategory()));

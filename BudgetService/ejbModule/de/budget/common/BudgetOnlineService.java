@@ -361,9 +361,8 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, int period, Timestamp launchDate, Timestamp finishDate, int categoryId);
+	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, Timestamp receiptDate, int categoryId);
 	
-	//public int updateIncome(Customer income,int incomeID);
 	
 	/**
 	 * @author Marco
@@ -373,6 +372,15 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public IncomeResponse getIncome(int sessionId, int itemId);
+	
+	/**
+	 * Method to get all incomes of a user
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	public IncomeListResponse getIncomes(int sessionId);
 	
 	/**
 	 * Gibt die letzten Incomes als Liste zurück

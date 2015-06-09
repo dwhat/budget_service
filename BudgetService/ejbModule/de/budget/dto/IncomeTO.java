@@ -18,10 +18,8 @@ public class IncomeTO implements Serializable {
 	private String notice;
 	private double amount;
 	private double quantity;
-	private int period;
 	private UserTO user;
-	private Timestamp launchDate;
-	private Timestamp finishDate;
+	private Timestamp receiptDate;
 	private Timestamp createDate;
 	private Timestamp lastChanged;
 	private CategoryTO category;
@@ -52,16 +50,14 @@ public class IncomeTO implements Serializable {
 	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, UserTO user, CategoryTO category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, Timestamp createDate, Timestamp receiptDate, Timestamp lastChanged, UserTO user, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;
 		this.amount = amount;
 		this.quantity = quantity;
-		this.period = period;
 		this.user = user;
-		this.launchDate = launchDate;
-		this.finishDate = finishDate;
+		this.setReceiptDate(receiptDate);
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
 		this.category = category;
@@ -137,19 +133,6 @@ public class IncomeTO implements Serializable {
 		this.quantity = quantity;
 	}
 
-	/**
-	 * @return the period
-	 */
-	public int getPeriod() {
-		return period;
-	}
-
-	/**
-	 * @param period the period to set
-	 */
-	public void setPeriod(int period) {
-		this.period = period;
-	}
 
 	/**
 	 * @return the user
@@ -165,33 +148,6 @@ public class IncomeTO implements Serializable {
 		this.user = user;
 	}
 
-	/**
-	 * @return the launchDate
-	 */
-	public Timestamp getLaunchDate() {
-		return launchDate;
-	}
-
-	/**
-	 * @param launchDate the launchDate to set
-	 */
-	public void setLaunchDate(Timestamp launchDate) {
-		this.launchDate = launchDate;
-	}
-
-	/**
-	 * @return the finishDate
-	 */
-	public Timestamp getFinishDate() {
-		return finishDate;
-	}
-
-	/**
-	 * @param finishDate the finishDate to set
-	 */
-	public void setFinishDate(Timestamp finishDate) {
-		this.finishDate = finishDate;
-	}
 
 	/**
 	 * @return the createDate
@@ -233,6 +189,20 @@ public class IncomeTO implements Serializable {
 	 */
 	public void setCategory(CategoryTO category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the receiptDate
+	 */
+	public Timestamp getReceiptDate() {
+		return receiptDate;
+	}
+
+	/**
+	 * @param receiptDate the receiptDate to set
+	 */
+	public void setReceiptDate(Timestamp receiptDate) {
+		this.receiptDate = receiptDate;
 	}
 	
 	

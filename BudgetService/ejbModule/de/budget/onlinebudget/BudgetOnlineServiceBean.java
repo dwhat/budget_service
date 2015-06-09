@@ -1367,6 +1367,38 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to get all incomes of a user
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public IncomeListResponse getIncomes(int sessionId){
+		IncomeListResponse response = new IncomeListResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Income> incomes = user.getIncomes(); // List with all Items of the user
+				response.setIncomeList(dtoAssembler.makeIncomeListDto(incomes));
+				response.setReturnCode(200);
+			}
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		catch(IllegalArgumentException e) {
+			response.setReturnCode(404);
+			response.setMessage(e.getMessage());
+		}
+		catch(Exception e) {
+			logger.info(e.getMessage());
+		}
+		return response;
+	}
+	/**
 	 * Gets all Incomes of a specific category for incomes
 	 * @author Marco
 	 * @date 29.05.2015
@@ -1525,9 +1557,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name,
-			double quantity, double amount, String notice, int period,
-			Timestamp launchDate, Timestamp finishDate,
-			int categoryId) {
+			double quantity, double amount, String notice,  Timestamp receiptDate, int categoryId) {
 		
 		
 		IncomeResponse response = new IncomeResponse();
@@ -1544,16 +1574,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Category category = dao.findCategoryById(categoryId);
 				
 				if(income == null) {	
-					income = dao.createIncome(user, name, notice, quantity, amount, period, launchDate, finishDate, category);
+					income = dao.createIncome(user, name, notice, quantity, amount, receiptDate, category);
 				}
 				else {
 					income.setName(name);
 					income.setNotice(notice);
 					income.setAmount(amount);
 					income.setQuantity(quantity);
-					income.setPeriod(period);
-					income.setLaunchDate(launchDate);
-					income.setFinishDate(finishDate);
+					income.setReceiptDate(receiptDate);
 					income.setCategory(category);
 					
 					
@@ -1907,11 +1935,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Income> incomeList = user.getIncomes();
 				//TODO
-				for (Income i : incomeList) {
-					if(i.getPeriod() == daysOfPeriod) {
-						sum += (i.getAmount() * i.getQuantity());
-					}
-				}
+				
 				response.setValue(sum);
 				response.setReturnCode(200);
 			}

@@ -342,9 +342,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category) throws EntityExistsException , IllegalArgumentException{
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Timestamp receiptDate, Category category) throws EntityExistsException , IllegalArgumentException{
 		if(user != null && category != null) {
-			Income income = new Income(name, notice, quantity, amount, period, launchDate, finishDate, category);
+			Income income = new Income(name, notice, quantity, amount, receiptDate, category);
 			if (income != null) {
 				em.persist(income);
 				return income;

@@ -19,6 +19,7 @@ import javax.ejb.Local;
 
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -69,7 +70,7 @@ public interface BudgetOnlineDAOLocal {
 	public Item findItemById(int itemId) throws IllegalArgumentException;
 	public void deleteItem(int itemId) throws IllegalArgumentException;
 	
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, int period, Timestamp launchDate, Timestamp finishDate, Category category);
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Timestamp receiptDate, Category category);
 	public Income updateIncome(Income income) throws IllegalArgumentException;
 	public Income findIncomeById(int incomeId) throws IllegalArgumentException;
 	public void deleteIncome(int income) throws IllegalArgumentException;

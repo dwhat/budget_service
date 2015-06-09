@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import de.budget.onlinebudget.CategoryListResponse;
 import de.budget.onlinebudget.CategoryResponse;
 import de.budget.onlinebudget.CategoryTO;
+import de.budget.onlinebudget.IncomeListResponse;
+import de.budget.onlinebudget.IncomeResponse;
+import de.budget.onlinebudget.IncomeTO;
 import de.budget.onlinebudget.PaymentTO;
 import de.budget.onlinebudget.PaymentListResponse;
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
 import de.budget.onlinebudget.PaymentResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
+import de.budget.onlinebudget.Timestamp;
 import de.budget.onlinebudget.UserLoginResponse;
 import de.budget.onlinebudget.VendorListResponse;
 import de.budget.onlinebudget.VendorResponse;
@@ -38,11 +42,12 @@ public class SimpleOnlineBudgetClient {
  	       	System.out.println();
  	       
  	       	//Test-Szeanarien ausfuehren:
- 	       	szenarioRegister();
+ 	       	//szenarioRegister();
  	       	szenarioCategory();
  	       	szenarioVendor();
  	       	szenarioPayment();
  	       	szenarioCategory();
+ 	       	//szenarioIncome();
 		   
 		}
 		catch (Exception ex) {
@@ -50,6 +55,104 @@ public class SimpleOnlineBudgetClient {
 		   	ex.printStackTrace();
 		}
 	}
+	
+	/**
+	 * szenario to test a login an to create, update, get and delete an income
+	 * @author Marco
+	 */
+	/*
+	private static void szenarioIncome() {
+		   System.out.println("============================================================");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
+	    	   int sessionId = loginResponse.getSessionId();
+			   System.out.println("Emma hat sich angemeldet");
+			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
+			   System.out.println("============================================================");
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", new Timestamp(System.currentTimeMillis()), 1);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", new Timestamp(System.currentTimeMillis()), 1);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", new Timestamp(System.currentTimeMillis()), 1);
+			   System.out.println("============================================================");
+			   int sampleIncomeId = 0; //Für spätere Test bei update und get
+			   IncomeListResponse incListResp = remoteSystem.getIncomes(sessionId);
+			   System.out.println("IncomeListe ausgeben ReturnCode: " + incListResp.getReturnCode());
+			   if(incListResp.getReturnCode() == 200) {
+				   ArrayList<IncomeTO> incList= (ArrayList<IncomeTO>) incListResp.getIncomeList();
+				   System.out.println("Es sind " + incList.size() + " Händler vorhanden.");
+				   sampleIncomeId = incList.get(1).getId();
+				   for (IncomeTO i : incList){
+					   System.out.println("ID: "+ i.getId() + "  Name: " + i.getName());
+				   }
+			   }
+			   else {
+				   System.out.println("Message: " + incListResp.getMessage());
+			   }
+			   System.out.println("Message: " + incListResp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Suche Income mit Id " + sampleIncomeId);
+			   IncomeResponse incResp = remoteSystem.getIncome(sessionId, sampleIncomeId);
+			   System.out.println("IncomeSuchen ReturnCode: " + incResp.getReturnCode());
+			   if(incResp.getReturnCode() == 200) {
+				   System.out.println("ID: "+ incResp.getIncomeTo().getId() + "  Name: " + incResp.getIncomeTo().getName());
+			   }
+			   else {
+				   System.out.println("Message: " + incResp.getMessage());
+			   }
+			   System.out.println("Message: " + incResp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Ändere Income mit Id " + sampleIncomeId);
+			   createIncomeHelper(sessionId, sampleIncomeId, "LohnGeändert", 1.00, 2000.00, "Lohn MärzGeändert", new Timestamp(System.currentTimeMillis()), 1);
+
+			   System.out.println("============================================================");
+			   System.out.println("Lösche Income mit Id " + sampleIncomeId);
+			   ReturnCodeResponse resp = remoteSystem.deleteIncome(sessionId, sampleIncomeId);
+			   System.out.println("Incomelöschen ReturnCode: " + resp.getReturnCode());
+			   if(resp.getReturnCode() == 200) {
+				   System.out.println("Suche Income mit Id " + sampleIncomeId);
+				   IncomeResponse incResp1 = remoteSystem.getIncome(sessionId, sampleIncomeId);
+				   System.out.println("Income ReturnCode: " + incResp1.getReturnCode());
+			   }
+			   else {
+				   System.out.println("Message: " + resp.getMessage());
+			   }
+			   System.out.println("Message: " + resp.getMessage());
+			   remoteSystem.logout(sessionId);
+			   System.out.println("Emma hat sich abgemeldet.");
+			   
+	       }    
+	}
+	*/
+	/**
+	 * HelferMethode zum anlegen von Incomes
+	 * @author Marco
+	 * @date 08.06.2015
+	 */
+	private static void createIncomeHelper (int sessionId, int incomeId, String name,
+			double quantity, double amount, String notice,  Timestamp receiptDate, int categoryId)  {
+		
+		System.out.println("Lege Income an. ");
+		   IncomeResponse incResp = remoteSystem.createOrUpdateIncome(sessionId, incomeId, name, quantity, amount, notice, receiptDate, categoryId);
+		   System.out.println("IncomeAnlegen ReturnCode: " + incResp.getReturnCode());
+		   if(incResp.getReturnCode() == 200) {
+			   System.out.println("Income angelegt");
+			   if(incResp.getIncomeTo() != null) {
+				   System.out.println("Income Eigenschaften: ");
+				   System.out.println("Name = " + incResp.getIncomeTo().getName());
+				   System.out.println("Amount = " + incResp.getIncomeTo().getAmount());
+				   System.out.println("Kategorie = " + incResp.getIncomeTo().getCategory().getName());
+				   System.out.println("Owner = " + incResp.getIncomeTo().getUser().getUsername());
+			   }
+			   else {
+				   System.out.println ("Income ist gleich null");
+			   }
+		   }
+		   else {
+			   System.out.println("Message: " + incResp.getMessage());
+		   }
+		   System.out.println("Message: " + incResp.getMessage());
+		   System.out.println("============================================================");
+    }
+
 	
 	/**
 	 * szenario to test a login an to create, update, get and delete a payments
@@ -66,10 +169,10 @@ public class SimpleOnlineBudgetClient {
 			   
 			   System.out.println("============================================================");
 			   createPaymentHelper(sessionId, -99, "Volksbank", "12356799", "BIC1234", true);
-			   createPaymentHelper(sessionId, -99, "Sparkasse", "bla12356799", "BIC1234", true);
-			   createPaymentHelper(sessionId, -99, "Postbank", "1SDAD2356799", "BIC1234ada", true);
-			   createPaymentHelper(sessionId, -99, "Comerzbank", "12ADAD356799", "BIC1234asda", true);
-			   createPaymentHelper(sessionId, -99, "Dt. Bank", "123ASDAD56799", "BIC1234gfhdf", true);
+			   createPaymentHelper(sessionId, -99, "Sparkasse", "DE123456789", "BIC1234", true);
+			   createPaymentHelper(sessionId, -99, "Postbank", "123456789", "BIC123456789", true);
+			   createPaymentHelper(sessionId, -99, "Comerzbank", "12ADAD356799", "BIC1234DE", true);
+			   createPaymentHelper(sessionId, -99, "Dt. Bank", "123ASDAD56799", "BIC1234NL", true);
 			   
 			   System.out.println("============================================================");
 			   int samplePaymentId = 0; //Für spätere Test bei update und get
@@ -167,8 +270,10 @@ public class SimpleOnlineBudgetClient {
 			   
 			   System.out.println("============================================================");
 			   createCategoryHelper(sessionId, -99, true, true, "Lohn", "notiz", "FFTTZZ");
-			   createCategoryHelper(sessionId, 0, true, true, "Lohn1", "notiz1", "FFTTZZ");
-			   createCategoryHelper(sessionId, 0, false, true, "Einkauf", "notiz1", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, true, true, "Supermarkt", "Supermarkt", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, false, true, "Drogerie", "Drogerie", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, false, true, "Einkauf", "Einkaufskategorie", "FFTTZZ");
+			   createCategoryHelper(sessionId, 0, false, true, "Kneipe", "Feiern", "FFTTZZ");
 			   
 			   System.out.println("============================================================");
 			   int sampleCategoryId = 0; //Für spätere Test bei update und get

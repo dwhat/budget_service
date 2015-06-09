@@ -77,6 +77,20 @@ public interface BudgetOnlineServiceBean {
 
     /**
      * 
+     * @param arg0
+     * @return
+     *     returns de.budget.onlinebudget.IncomeListResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getIncomes", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomes")
+    @ResponseWrapper(localName = "getIncomesResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomesResponse")
+    public IncomeListResponse getIncomes(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -211,20 +225,6 @@ public interface BudgetOnlineServiceBean {
 
     /**
      * 
-     * @param arg0
-     * @return
-     *     returns de.budget.onlinebudget.CategoryListResponse
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getCategorys", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorys")
-    @ResponseWrapper(localName = "getCategorysResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysResponse")
-    public CategoryListResponse getCategorys(
-        @WebParam(name = "arg0", targetNamespace = "")
-        int arg0);
-
-    /**
-     * 
      * @param arg5
      * @param arg4
      * @param arg3
@@ -233,8 +233,6 @@ public interface BudgetOnlineServiceBean {
      * @param arg0
      * @param arg6
      * @param arg7
-     * @param arg8
-     * @param arg9
      * @return
      *     returns de.budget.onlinebudget.IncomeResponse
      */
@@ -256,13 +254,23 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg5", targetNamespace = "")
         String arg5,
         @WebParam(name = "arg6", targetNamespace = "")
-        int arg6,
+        Timestamp arg6,
         @WebParam(name = "arg7", targetNamespace = "")
-        Timestamp arg7,
-        @WebParam(name = "arg8", targetNamespace = "")
-        Timestamp arg8,
-        @WebParam(name = "arg9", targetNamespace = "")
-        int arg9);
+        int arg7);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns de.budget.onlinebudget.CategoryListResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getCategorys", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorys")
+    @ResponseWrapper(localName = "getCategorysResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysResponse")
+    public CategoryListResponse getCategorys(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
 
     /**
      * 
@@ -292,6 +300,20 @@ public interface BudgetOnlineServiceBean {
         String arg4,
         @WebParam(name = "arg5", targetNamespace = "")
         boolean arg5);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns de.budget.onlinebudget.CategoryListResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getCategorysOfIncome", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysOfIncome")
+    @ResponseWrapper(localName = "getCategorysOfIncomeResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysOfIncomeResponse")
+    public CategoryListResponse getCategorysOfIncome(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
 
     /**
      * 
@@ -539,6 +561,20 @@ public interface BudgetOnlineServiceBean {
         String arg0,
         @WebParam(name = "arg1", targetNamespace = "")
         String arg1);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns de.budget.onlinebudget.CategoryListResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getCategorysOfLoss", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysOfLoss")
+    @ResponseWrapper(localName = "getCategorysOfLossResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetCategorysOfLossResponse")
+    public CategoryListResponse getCategorysOfLoss(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0);
 
     /**
      * 

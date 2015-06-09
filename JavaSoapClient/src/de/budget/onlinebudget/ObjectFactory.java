@@ -30,6 +30,7 @@ public class ObjectFactory {
     private final static QName _GetBasketsByVendor_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsByVendor");
     private final static QName _GetIncomesOfActualMonth_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesOfActualMonth");
     private final static QName _GetUserByNameResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getUserByNameResponse");
+    private final static QName _GetCategorysOfIncome_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfIncome");
     private final static QName _GetBasketsResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsResponse");
     private final static QName _GetCategorysResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysResponse");
     private final static QName _DeleteUser_QNAME = new QName("http://onlinebudget.budget.de/", "deleteUser");
@@ -37,6 +38,7 @@ public class ObjectFactory {
     private final static QName _CreateOrUpdateCategory_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateCategory");
     private final static QName _GetVendor_QNAME = new QName("http://onlinebudget.budget.de/", "getVendor");
     private final static QName _CreateOrUpdateIncome_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateIncome");
+    private final static QName _GetIncomes_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomes");
     private final static QName _DeleteCategoryResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteCategoryResponse");
     private final static QName _CreateOrUpdateCategoryResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateCategoryResponse");
     private final static QName _GetPayments_QNAME = new QName("http://onlinebudget.budget.de/", "getPayments");
@@ -44,6 +46,7 @@ public class ObjectFactory {
     private final static QName _DeleteCategory_QNAME = new QName("http://onlinebudget.budget.de/", "deleteCategory");
     private final static QName _GetBasketsByPayment_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsByPayment");
     private final static QName _GetBasketsByPaymentResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsByPaymentResponse");
+    private final static QName _GetCategorysOfIncomeResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfIncomeResponse");
     private final static QName _DeleteIncomeResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteIncomeResponse");
     private final static QName _DeletePaymentResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deletePaymentResponse");
     private final static QName _GetItemsByBasketResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByBasketResponse");
@@ -51,14 +54,14 @@ public class ObjectFactory {
     private final static QName _Login_QNAME = new QName("http://onlinebudget.budget.de/", "login");
     private final static QName _CreateOrUpdateBasket_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateBasket");
     private final static QName _GetPaymentResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getPaymentResponse");
-    private final static QName _CreateOrUpdateVendorResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateVendorResponse");
     private final static QName _LogoutResponse_QNAME = new QName("http://onlinebudget.budget.de/", "logoutResponse");
+    private final static QName _CreateOrUpdateVendorResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateVendorResponse");
     private final static QName _DeleteVendorResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteVendorResponse");
     private final static QName _GetVendorResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getVendorResponse");
     private final static QName _GetIncomesOfActualMonthResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesOfActualMonthResponse");
+    private final static QName _DeleteVendor_QNAME = new QName("http://onlinebudget.budget.de/", "deleteVendor");
     private final static QName _GetLastIncomes_QNAME = new QName("http://onlinebudget.budget.de/", "getLastIncomes");
     private final static QName _CreateOrUpdateItem_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateItem");
-    private final static QName _DeleteVendor_QNAME = new QName("http://onlinebudget.budget.de/", "deleteVendor");
     private final static QName _GetLastBasketsResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getLastBasketsResponse");
     private final static QName _GetPayment_QNAME = new QName("http://onlinebudget.budget.de/", "getPayment");
     private final static QName _DeleteItem_QNAME = new QName("http://onlinebudget.budget.de/", "deleteItem");
@@ -73,6 +76,7 @@ public class ObjectFactory {
     private final static QName _LoginResponse_QNAME = new QName("http://onlinebudget.budget.de/", "loginResponse");
     private final static QName _CreateOrUpdatePaymentResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdatePaymentResponse");
     private final static QName _GetItemsByBasket_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByBasket");
+    private final static QName _GetCategorysOfLoss_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfLoss");
     private final static QName _GetBasketsOfActualMonth_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsOfActualMonth");
     private final static QName _GetItemsByLossCategory_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByLossCategory");
     private final static QName _GetIncomesByCategory_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesByCategory");
@@ -92,20 +96,30 @@ public class ObjectFactory {
     private final static QName _GetBasketsOfActualMonthResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsOfActualMonthResponse");
     private final static QName _GetIncomesByCategoryResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesByCategoryResponse");
     private final static QName _CreateOrUpdateVendor_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateVendor");
+    private final static QName _GetCategorysOfLossResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfLossResponse");
     private final static QName _DeleteIncome_QNAME = new QName("http://onlinebudget.budget.de/", "deleteIncome");
     private final static QName _GetPaymentsResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getPaymentsResponse");
     private final static QName _SetUser_QNAME = new QName("http://onlinebudget.budget.de/", "setUser");
     private final static QName _GetIncomeByPeriodResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomeByPeriodResponse");
     private final static QName _GetUserByName_QNAME = new QName("http://onlinebudget.budget.de/", "getUserByName");
-    private final static QName _DeleteUserResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteUserResponse");
     private final static QName _GetCategoryResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getCategoryResponse");
+    private final static QName _DeleteUserResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteUserResponse");
     private final static QName _CreateOrUpdateIncomeResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateIncomeResponse");
+    private final static QName _GetIncomesResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.budget.onlinebudget
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetCategorysOfIncomeResponse }
+     * 
+     */
+    public GetCategorysOfIncomeResponse createGetCategorysOfIncomeResponse() {
+        return new GetCategorysOfIncomeResponse();
     }
 
     /**
@@ -301,6 +315,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetCategorysOfIncome }
+     * 
+     */
+    public GetCategorysOfIncome createGetCategorysOfIncome() {
+        return new GetCategorysOfIncome();
+    }
+
+    /**
      * Create an instance of {@link GetUserByNameResponse }
      * 
      */
@@ -397,6 +419,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetIncomes }
+     * 
+     */
+    public GetIncomes createGetIncomes() {
+        return new GetIncomes();
+    }
+
+    /**
      * Create an instance of {@link DeleteUser }
      * 
      */
@@ -410,6 +440,14 @@ public class ObjectFactory {
      */
     public GetLossByPeriod createGetLossByPeriod() {
         return new GetLossByPeriod();
+    }
+
+    /**
+     * Create an instance of {@link GetCategorysOfLossResponse }
+     * 
+     */
+    public GetCategorysOfLossResponse createGetCategorysOfLossResponse() {
+        return new GetCategorysOfLossResponse();
     }
 
     /**
@@ -461,19 +499,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetBasketsOfActualMonthResponse }
-     * 
-     */
-    public GetBasketsOfActualMonthResponse createGetBasketsOfActualMonthResponse() {
-        return new GetBasketsOfActualMonthResponse();
-    }
-
-    /**
      * Create an instance of {@link GetIncomesByCategoryResponse }
      * 
      */
     public GetIncomesByCategoryResponse createGetIncomesByCategoryResponse() {
         return new GetIncomesByCategoryResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetBasketsOfActualMonthResponse }
+     * 
+     */
+    public GetBasketsOfActualMonthResponse createGetBasketsOfActualMonthResponse() {
+        return new GetBasketsOfActualMonthResponse();
     }
 
     /**
@@ -514,6 +552,14 @@ public class ObjectFactory {
      */
     public CreateOrUpdateIncomeResponse createCreateOrUpdateIncomeResponse() {
         return new CreateOrUpdateIncomeResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetIncomesResponse }
+     * 
+     */
+    public GetIncomesResponse createGetIncomesResponse() {
+        return new GetIncomesResponse();
     }
 
     /**
@@ -682,6 +728,14 @@ public class ObjectFactory {
      */
     public GetIncome createGetIncome() {
         return new GetIncome();
+    }
+
+    /**
+     * Create an instance of {@link GetCategorysOfLoss }
+     * 
+     */
+    public GetCategorysOfLoss createGetCategorysOfLoss() {
+        return new GetCategorysOfLoss();
     }
 
     /**
@@ -963,6 +1017,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfIncome }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfIncome")
+    public JAXBElement<GetCategorysOfIncome> createGetCategorysOfIncome(GetCategorysOfIncome value) {
+        return new JAXBElement<GetCategorysOfIncome>(_GetCategorysOfIncome_QNAME, GetCategorysOfIncome.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetBasketsResponse }{@code >}}
      * 
      */
@@ -1023,6 +1086,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateIncome")
     public JAXBElement<CreateOrUpdateIncome> createCreateOrUpdateIncome(CreateOrUpdateIncome value) {
         return new JAXBElement<CreateOrUpdateIncome>(_CreateOrUpdateIncome_QNAME, CreateOrUpdateIncome.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetIncomes }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getIncomes")
+    public JAXBElement<GetIncomes> createGetIncomes(GetIncomes value) {
+        return new JAXBElement<GetIncomes>(_GetIncomes_QNAME, GetIncomes.class, null, value);
     }
 
     /**
@@ -1089,6 +1161,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfIncomeResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfIncomeResponse")
+    public JAXBElement<GetCategorysOfIncomeResponse> createGetCategorysOfIncomeResponse(GetCategorysOfIncomeResponse value) {
+        return new JAXBElement<GetCategorysOfIncomeResponse>(_GetCategorysOfIncomeResponse_QNAME, GetCategorysOfIncomeResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteIncomeResponse }{@code >}}
      * 
      */
@@ -1152,21 +1233,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateOrUpdateVendorResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateVendorResponse")
-    public JAXBElement<CreateOrUpdateVendorResponse> createCreateOrUpdateVendorResponse(CreateOrUpdateVendorResponse value) {
-        return new JAXBElement<CreateOrUpdateVendorResponse>(_CreateOrUpdateVendorResponse_QNAME, CreateOrUpdateVendorResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link LogoutResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "logoutResponse")
     public JAXBElement<LogoutResponse> createLogoutResponse(LogoutResponse value) {
         return new JAXBElement<LogoutResponse>(_LogoutResponse_QNAME, LogoutResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateOrUpdateVendorResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateVendorResponse")
+    public JAXBElement<CreateOrUpdateVendorResponse> createCreateOrUpdateVendorResponse(CreateOrUpdateVendorResponse value) {
+        return new JAXBElement<CreateOrUpdateVendorResponse>(_CreateOrUpdateVendorResponse_QNAME, CreateOrUpdateVendorResponse.class, null, value);
     }
 
     /**
@@ -1197,6 +1278,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteVendor }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "deleteVendor")
+    public JAXBElement<DeleteVendor> createDeleteVendor(DeleteVendor value) {
+        return new JAXBElement<DeleteVendor>(_DeleteVendor_QNAME, DeleteVendor.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetLastIncomes }{@code >}}
      * 
      */
@@ -1212,15 +1302,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateItem")
     public JAXBElement<CreateOrUpdateItem> createCreateOrUpdateItem(CreateOrUpdateItem value) {
         return new JAXBElement<CreateOrUpdateItem>(_CreateOrUpdateItem_QNAME, CreateOrUpdateItem.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteVendor }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "deleteVendor")
-    public JAXBElement<DeleteVendor> createDeleteVendor(DeleteVendor value) {
-        return new JAXBElement<DeleteVendor>(_DeleteVendor_QNAME, DeleteVendor.class, null, value);
     }
 
     /**
@@ -1347,6 +1428,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getItemsByBasket")
     public JAXBElement<GetItemsByBasket> createGetItemsByBasket(GetItemsByBasket value) {
         return new JAXBElement<GetItemsByBasket>(_GetItemsByBasket_QNAME, GetItemsByBasket.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfLoss }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfLoss")
+    public JAXBElement<GetCategorysOfLoss> createGetCategorysOfLoss(GetCategorysOfLoss value) {
+        return new JAXBElement<GetCategorysOfLoss>(_GetCategorysOfLoss_QNAME, GetCategorysOfLoss.class, null, value);
     }
 
     /**
@@ -1521,6 +1611,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfLossResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfLossResponse")
+    public JAXBElement<GetCategorysOfLossResponse> createGetCategorysOfLossResponse(GetCategorysOfLossResponse value) {
+        return new JAXBElement<GetCategorysOfLossResponse>(_GetCategorysOfLossResponse_QNAME, GetCategorysOfLossResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteIncome }{@code >}}
      * 
      */
@@ -1566,15 +1665,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteUserResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "deleteUserResponse")
-    public JAXBElement<DeleteUserResponse> createDeleteUserResponse(DeleteUserResponse value) {
-        return new JAXBElement<DeleteUserResponse>(_DeleteUserResponse_QNAME, DeleteUserResponse.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetCategoryResponse }{@code >}}
      * 
      */
@@ -1584,12 +1674,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteUserResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "deleteUserResponse")
+    public JAXBElement<DeleteUserResponse> createDeleteUserResponse(DeleteUserResponse value) {
+        return new JAXBElement<DeleteUserResponse>(_DeleteUserResponse_QNAME, DeleteUserResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CreateOrUpdateIncomeResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateIncomeResponse")
     public JAXBElement<CreateOrUpdateIncomeResponse> createCreateOrUpdateIncomeResponse(CreateOrUpdateIncomeResponse value) {
         return new JAXBElement<CreateOrUpdateIncomeResponse>(_CreateOrUpdateIncomeResponse_QNAME, CreateOrUpdateIncomeResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetIncomesResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getIncomesResponse")
+    public JAXBElement<GetIncomesResponse> createGetIncomesResponse(GetIncomesResponse value) {
+        return new JAXBElement<GetIncomesResponse>(_GetIncomesResponse_QNAME, GetIncomesResponse.class, null, value);
     }
 
 }

@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries( {
 	@NamedQuery (
 			name = "findLastIncomes",
-			query = "select i from Income i where i.user.userName like :username order by i.launchDate" 
+			query = "select i from Income i where i.user.userName like :username order by i.receiptDate" 
 			)
 })
 @Entity
@@ -40,14 +40,10 @@ public class Income implements Serializable {
 	@NotNull
 	private double amount;
 	
-	private int period;
-	
 	@ManyToOne
 	private User user;
 	
-	private Timestamp launchDate;
-	
-	private Timestamp finishDate;
+	private Timestamp receiptDate;
 	
 	private Timestamp createDate;
 	
@@ -73,14 +69,12 @@ public class Income implements Serializable {
 		
 	}
 	
-	public Income(String name, String notice, double quantity, double amount, int period,Timestamp launchDate, Timestamp finishDate, Category category) {
+	public Income(String name, String notice, double quantity, double amount,  Timestamp receiptDate, Category category) {
 		this.name = name;
 		this.notice = notice;
 		this.quantity = quantity;
 		this.amount = amount;
-		this.period = period;
-		this.launchDate = launchDate;
-		this.finishDate = finishDate;
+		this.receiptDate = receiptDate;
 		this.user.addNewIncome(this);
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
 		this.createDate = new Timestamp(System.currentTimeMillis());
@@ -159,19 +153,6 @@ public class Income implements Serializable {
 		this.amount = amount;
 	}
 
-	/**
-	 * @return the period
-	 */
-	public int getPeriod() {
-		return period;
-	}
-
-	/**
-	 * @param period the period to set
-	 */
-	public void setPeriod(int period) {
-		this.period = period;
-	}
 
 	/**
 	 * @return the user
@@ -190,30 +171,6 @@ public class Income implements Serializable {
 	/**
 	 * @return the launchDate
 	 */
-	public Timestamp getLaunchDate() {
-		return launchDate;
-	}
-
-	/**
-	 * @param launchDate the launchDate to set
-	 */
-	public void setLaunchDate(Timestamp launchDate) {
-		this.launchDate = launchDate;
-	}
-
-	/**
-	 * @return the finishDate
-	 */
-	public Timestamp getFinishDate() {
-		return finishDate;
-	}
-
-	/**
-	 * @param finishDate the finishDate to set
-	 */
-	public void setFinishDate(Timestamp finishDate) {
-		this.finishDate = finishDate;
-	}
 
 	/**
 	 * @return the createDate
@@ -255,5 +212,19 @@ public class Income implements Serializable {
 	 */
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the receiptDate
+	 */
+	public Timestamp getReceiptDate() {
+		return receiptDate;
+	}
+
+	/**
+	 * @param receiptDate the receiptDate to set
+	 */
+	public void setReceiptDate(Timestamp receiptDate) {
+		this.receiptDate = receiptDate;
 	}
 }
