@@ -4,6 +4,8 @@
 package de.budget.onlinebudget;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -31,11 +33,13 @@ public class Payload {
 	@PostConstruct
 	private void init() {
 		this.payload = 0;
+		logger.info("Server gestartet. Payload = " + payload);
 	}
 
 	/**
 	 * @return the payload
 	 */
+	@Lock(LockType.READ)
 	public int getPayload() {
 		return payload;
 	}
@@ -43,6 +47,7 @@ public class Payload {
 	/**
 	 * @param payload the payload to set
 	 */
+	@Lock(LockType.WRITE)
 	public void setPayload(int payload) {
 		this.payload = payload;
 	}

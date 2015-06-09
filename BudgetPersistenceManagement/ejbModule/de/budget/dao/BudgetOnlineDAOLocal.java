@@ -18,6 +18,7 @@ import javax.ejb.Local;
 
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -46,7 +47,7 @@ public interface BudgetOnlineDAOLocal {
 	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException;
 	public void closeSession(int sessionId) throws IllegalArgumentException;
 	
-	public Vendor createVendor(User user, String name, String logo);	
+	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber);	
 	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException;
 	public Vendor findVendorById(int vendorId) throws IllegalArgumentException;
 	public void deleteVendor(int vendorId) throws IllegalArgumentException;

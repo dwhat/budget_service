@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg5" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg7" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}item" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}itemTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -57,7 +57,7 @@ public class CreateOrUpdateBasket {
     protected Timestamp arg5;
     protected int arg6;
     protected int arg7;
-    protected List<Item> arg8;
+    protected List<ItemTO> arg8;
 
     /**
      * Gets the value of the arg0 property.
@@ -229,13 +229,13 @@ public class CreateOrUpdateBasket {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Item }
+     * {@link ItemTO }
      * 
      * 
      */
-    public List<Item> getArg8() {
+    public List<ItemTO> getArg8() {
         if (arg8 == null) {
-            arg8 = new ArrayList<Item>();
+            arg8 = new ArrayList<ItemTO>();
         }
         return this.arg8;
     }

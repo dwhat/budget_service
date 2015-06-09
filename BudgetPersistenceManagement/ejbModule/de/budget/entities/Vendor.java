@@ -52,6 +52,14 @@ public class Vendor implements Serializable {
 	//wir verwenden einen base64 string
 	private String logo;
 	
+	private String street;
+	
+	private String city;
+	
+	private int houseNumber; //streetnumber
+	
+	private int PLZ;
+	
 	
 	
 	/**
@@ -66,10 +74,14 @@ public class Vendor implements Serializable {
 	 * @author Marco
 	 * @param user
 	 */
-	public Vendor (User user, String name, String logo){
+	public Vendor (User user, String name, String logo, String street, String city, int PLZ, int houseNumber){
 		this.user = user;
 		this.name = name;
 		this.logo = logo;
+		this.street = street;
+		this.city = city;
+		this.houseNumber = houseNumber;
+		this.PLZ = PLZ;
 		this.user.addNewVendor(this);
 		this.createDate = new Timestamp(System.currentTimeMillis());
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
@@ -152,5 +164,54 @@ public class Vendor implements Serializable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+	/**
+	 * @return the street
+	 */
+	public String getStreet() {
+		return street;
+	}
+	/**
+	 * @param street the street to set
+	 */
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the pLZ
+	 */
+	public int getPLZ() {
+		return PLZ;
+	}
+	/**
+	 * @param pLZ the pLZ to set
+	 */
+	public void setPLZ(int pLZ) {
+		PLZ = pLZ;
+	}
+	/**
+	 * @return the houseNumber
+	 */
+	public int getHouseNumber() {
+		return houseNumber;
+	}
+	/**
+	 * @param houseNumber the houseNumber to set
+	 */
+	public void setHouseNumber(int houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 }

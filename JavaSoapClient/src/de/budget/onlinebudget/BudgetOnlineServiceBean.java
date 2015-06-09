@@ -148,10 +148,14 @@ public interface BudgetOnlineServiceBean {
 
     /**
      * 
+     * @param arg5
+     * @param arg4
      * @param arg3
      * @param arg2
      * @param arg1
      * @param arg0
+     * @param arg6
+     * @param arg7
      * @return
      *     returns de.budget.onlinebudget.VendorResponse
      */
@@ -167,7 +171,15 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg2", targetNamespace = "")
         String arg2,
         @WebParam(name = "arg3", targetNamespace = "")
-        String arg3);
+        String arg3,
+        @WebParam(name = "arg4", targetNamespace = "")
+        String arg4,
+        @WebParam(name = "arg5", targetNamespace = "")
+        String arg5,
+        @WebParam(name = "arg6", targetNamespace = "")
+        int arg6,
+        @WebParam(name = "arg7", targetNamespace = "")
+        int arg7);
 
     /**
      * 
@@ -461,7 +473,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg7", targetNamespace = "")
         int arg7,
         @WebParam(name = "arg8", targetNamespace = "")
-        List<Item> arg8);
+        List<ItemTO> arg8);
 
     /**
      * 
@@ -724,11 +736,9 @@ public interface BudgetOnlineServiceBean {
      * @param arg2
      * @param arg1
      * @param arg0
-     * @param arg10
      * @param arg6
      * @param arg7
      * @param arg8
-     * @param arg9
      * @return
      *     returns de.budget.onlinebudget.ItemResponse
      */
@@ -750,14 +760,10 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg5", targetNamespace = "")
         String arg5,
         @WebParam(name = "arg6", targetNamespace = "")
-        int arg6,
+        Timestamp arg6,
         @WebParam(name = "arg7", targetNamespace = "")
-        Timestamp arg7,
+        int arg7,
         @WebParam(name = "arg8", targetNamespace = "")
-        Timestamp arg8,
-        @WebParam(name = "arg9", targetNamespace = "")
-        int arg9,
-        @WebParam(name = "arg10", targetNamespace = "")
-        int arg10);
+        int arg8);
 
 }

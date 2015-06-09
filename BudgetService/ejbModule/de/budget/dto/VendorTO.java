@@ -2,7 +2,11 @@ package de.budget.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-
+/**
+ * Class for the DTO-Objects of a vendor
+ * @author Marco
+ *
+ */
 public class VendorTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,6 +17,10 @@ public class VendorTO implements Serializable {
 	private Timestamp lastChanged;
 	private UserTO user;
 	private String logo;
+	private String street;
+	private String city;
+	private int PLZ;
+	private int houseNumber;
 
 	/**
 	 * Deafault Constructor
@@ -34,13 +42,17 @@ public class VendorTO implements Serializable {
 	 * @param user
 	 * @param logo
 	 */
-	public VendorTO(int id, String name, Timestamp createDate, Timestamp lastChanged, UserTO user, String logo) {
+	public VendorTO(int id, String name, Timestamp createDate, Timestamp lastChanged, UserTO user, String logo, String street, String city, int PLZ, int houseNumber) {
 		this.id = id;
 		this.name = name;
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
 		this.user = user;
 		this.logo = logo;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.city = city;
+		this.PLZ = PLZ;
 	}
 
 	/**
@@ -149,5 +161,61 @@ public class VendorTO implements Serializable {
 	 */
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+
+	/**
+	 * @return the street
+	 */
+	public String getStreet() {
+		return street;
+	}
+
+	/**
+	 * @param street the street to set
+	 */
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	/**
+	 * @return the pLZ
+	 */
+	public int getPLZ() {
+		return PLZ;
+	}
+
+	/**
+	 * @param pLZ the pLZ to set
+	 */
+	public void setPLZ(int pLZ) {
+		PLZ = pLZ;
+	}
+
+	/**
+	 * @return the houseNumber
+	 */
+	public int getHouseNumber() {
+		return houseNumber;
+	}
+
+	/**
+	 * @param houseNumber the houseNumber to set
+	 */
+	public void setHouseNumber(int houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 }

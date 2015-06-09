@@ -22,11 +22,9 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg7" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
- *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
- *         &lt;element name="arg9" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg10" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg6" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="arg7" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg8" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,9 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "arg5",
     "arg6",
     "arg7",
-    "arg8",
-    "arg9",
-    "arg10"
+    "arg8"
 })
 public class CreateOrUpdateItem {
 
@@ -57,11 +53,9 @@ public class CreateOrUpdateItem {
     protected double arg3;
     protected double arg4;
     protected String arg5;
-    protected int arg6;
-    protected Timestamp arg7;
-    protected Timestamp arg8;
-    protected int arg9;
-    protected int arg10;
+    protected Timestamp arg6;
+    protected int arg7;
+    protected int arg8;
 
     /**
      * Gets the value of the arg0 property.
@@ -178,97 +172,57 @@ public class CreateOrUpdateItem {
     /**
      * Gets the value of the arg6 property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public int getArg6() {
+    public Timestamp getArg6() {
         return arg6;
     }
 
     /**
      * Sets the value of the arg6 property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setArg6(int value) {
+    public void setArg6(Timestamp value) {
         this.arg6 = value;
     }
 
     /**
      * Gets the value of the arg7 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getArg7() {
+    public int getArg7() {
         return arg7;
     }
 
     /**
      * Sets the value of the arg7 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setArg7(Timestamp value) {
+    public void setArg7(int value) {
         this.arg7 = value;
     }
 
     /**
      * Gets the value of the arg8 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getArg8() {
+    public int getArg8() {
         return arg8;
     }
 
     /**
      * Sets the value of the arg8 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setArg8(Timestamp value) {
+    public void setArg8(int value) {
         this.arg8 = value;
-    }
-
-    /**
-     * Gets the value of the arg9 property.
-     * 
-     */
-    public int getArg9() {
-        return arg9;
-    }
-
-    /**
-     * Sets the value of the arg9 property.
-     * 
-     */
-    public void setArg9(int value) {
-        this.arg9 = value;
-    }
-
-    /**
-     * Gets the value of the arg10 property.
-     * 
-     */
-    public int getArg10() {
-        return arg10;
-    }
-
-    /**
-     * Sets the value of the arg10 property.
-     * 
-     */
-    public void setArg10(int value) {
-        this.arg10 = value;
     }
 
 }

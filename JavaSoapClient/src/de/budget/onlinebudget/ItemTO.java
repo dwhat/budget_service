@@ -19,15 +19,13 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="basket" type="{http://onlinebudget.budget.de/}basketTO" minOccurs="0"/>
  *         &lt;element name="category" type="{http://onlinebudget.budget.de/}categoryTO" minOccurs="0"/>
  *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
- *         &lt;element name="finishDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
- *         &lt;element name="launchDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="period" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="quantity" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="receiptDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,30 +39,26 @@ import javax.xml.bind.annotation.XmlType;
     "basket",
     "category",
     "createDate",
-    "finishDate",
     "id",
     "lastChanged",
-    "launchDate",
     "name",
     "notice",
-    "period",
     "price",
-    "quantity"
+    "quantity",
+    "receiptDate"
 })
 public class ItemTO {
 
     protected BasketTO basket;
     protected CategoryTO category;
     protected Timestamp createDate;
-    protected Timestamp finishDate;
     protected int id;
     protected Timestamp lastChanged;
-    protected Timestamp launchDate;
     protected String name;
     protected String notice;
-    protected int period;
     protected double price;
     protected double quantity;
+    protected Timestamp receiptDate;
 
     /**
      * Gets the value of the basket property.
@@ -139,30 +133,6 @@ public class ItemTO {
     }
 
     /**
-     * Gets the value of the finishDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
-     */
-    public Timestamp getFinishDate() {
-        return finishDate;
-    }
-
-    /**
-     * Sets the value of the finishDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
-     */
-    public void setFinishDate(Timestamp value) {
-        this.finishDate = value;
-    }
-
-    /**
      * Gets the value of the id property.
      * 
      */
@@ -200,30 +170,6 @@ public class ItemTO {
      */
     public void setLastChanged(Timestamp value) {
         this.lastChanged = value;
-    }
-
-    /**
-     * Gets the value of the launchDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
-     */
-    public Timestamp getLaunchDate() {
-        return launchDate;
-    }
-
-    /**
-     * Sets the value of the launchDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
-     */
-    public void setLaunchDate(Timestamp value) {
-        this.launchDate = value;
     }
 
     /**
@@ -275,22 +221,6 @@ public class ItemTO {
     }
 
     /**
-     * Gets the value of the period property.
-     * 
-     */
-    public int getPeriod() {
-        return period;
-    }
-
-    /**
-     * Sets the value of the period property.
-     * 
-     */
-    public void setPeriod(int value) {
-        this.period = value;
-    }
-
-    /**
      * Gets the value of the price property.
      * 
      */
@@ -320,6 +250,30 @@ public class ItemTO {
      */
     public void setQuantity(double value) {
         this.quantity = value;
+    }
+
+    /**
+     * Gets the value of the receiptDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
+     */
+    public Timestamp getReceiptDate() {
+        return receiptDate;
+    }
+
+    /**
+     * Sets the value of the receiptDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
+     */
+    public void setReceiptDate(Timestamp value) {
+        this.receiptDate = value;
     }
 
 }

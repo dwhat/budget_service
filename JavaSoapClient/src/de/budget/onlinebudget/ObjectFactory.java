@@ -733,27 +733,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Income }
-     * 
-     */
-    public Income createIncome() {
-        return new Income();
-    }
-
-    /**
      * Create an instance of {@link PaymentTO }
      * 
      */
     public PaymentTO createPaymentTO() {
         return new PaymentTO();
-    }
-
-    /**
-     * Create an instance of {@link Category }
-     * 
-     */
-    public Category createCategory() {
-        return new Category();
     }
 
     /**
@@ -805,14 +789,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Payment }
-     * 
-     */
-    public Payment createPayment() {
-        return new Payment();
-    }
-
-    /**
      * Create an instance of {@link IncomeTO }
      * 
      */
@@ -821,35 +797,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Vendor }
-     * 
-     */
-    public Vendor createVendor() {
-        return new Vendor();
-    }
-
-    /**
      * Create an instance of {@link CategoryListResponse }
      * 
      */
     public CategoryListResponse createCategoryListResponse() {
         return new CategoryListResponse();
-    }
-
-    /**
-     * Create an instance of {@link Item }
-     * 
-     */
-    public Item createItem() {
-        return new Item();
-    }
-
-    /**
-     * Create an instance of {@link Basket }
-     * 
-     */
-    public Basket createBasket() {
-        return new Basket();
     }
 
     /**
@@ -954,14 +906,6 @@ public class ObjectFactory {
      */
     public CategoryTO createCategoryTO() {
         return new CategoryTO();
-    }
-
-    /**
-     * Create an instance of {@link User }
-     * 
-     */
-    public User createUser() {
-        return new User();
     }
 
     /**

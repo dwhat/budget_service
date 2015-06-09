@@ -270,8 +270,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return VendorKopieObjekt
 	 */
 	@Override
-	public Vendor createVendor(User user, String name, String logo) throws EntityExistsException, IllegalArgumentException{
-		Vendor vendor = new Vendor(user, name, logo);
+	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException{
+		Vendor vendor = new Vendor(user, name, logo, street, city, PLZ, houseNumber);
 		if(vendor != null) {
 			em.persist(vendor);;
 		}

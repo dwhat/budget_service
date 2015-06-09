@@ -10,6 +10,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -24,6 +25,7 @@ import javax.jws.WebService;
 
 
 import javax.persistence.EntityExistsException;
+
 
 
 
@@ -798,7 +800,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo) {
+	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo, String street, String city, int PLZ, int houseNumber) {
 		VendorResponse response = new VendorResponse();
 		
 		try {
@@ -808,11 +810,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Vendor vendor = user.getVendor(vendorId);
 			
 				if(vendor == null) {
-					vendor = dao.createVendor(user, name, logo);
+					vendor = dao.createVendor(user, name, logo, street, city, PLZ, houseNumber);
 				}
 				else {
 					vendor.setName(name);
 					vendor.setLogo(logo);
+					vendor.setStreet(street);
+					vendor.setPLZ(PLZ);
+					vendor.setCity(city);
+					vendor.setHouseNumber(houseNumber);
 					vendor = dao.updateVendor(vendor);
 				}
 				if(vendor != null) {

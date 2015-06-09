@@ -68,6 +68,10 @@ public class DtoAssembler {
 		dto.setLastChanged(vendor.getLastChanged());
 		dto.setUser(dtoAssem.makeDto(vendor.getUser()));
 		dto.setLogo(vendor.getLogo());
+		dto.setStreet(vendor.getStreet());
+		dto.setPLZ(vendor.getPLZ());
+		dto.setHouseNumber(vendor.getHouseNumber());
+		dto.setCity(vendor.getCity());
 		return dto;
 	}
 	
