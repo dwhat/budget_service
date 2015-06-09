@@ -214,7 +214,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						response.setReturnCode(200);
 					}
 					else {
-						response.setReturnCode(111); //TODO
+						response.setReturnCode(408);
 						response.setMessage("Could not create a user");
 					}
 				}
