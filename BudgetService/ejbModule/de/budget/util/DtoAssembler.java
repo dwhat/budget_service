@@ -183,10 +183,8 @@ public class DtoAssembler {
 		dto.setQuantity(item.getQuantity());
 		dto.setPrice(item.getPrice());
 		dto.setNotice(item.getNotice());
-		dto.setPeriod(item.getPeriod());
 		dto.setCreateDate(item.getCreateDate());
-		dto.setLaunchDate(item.getLaunchDate());
-		dto.setFinishDate(item.getFinishDate());
+		dto.setReceiptDate(item.getReceiptDate());
 		dto.setLastChanged(item.getLastChanged());
 		dto.setBasket(dtoAssem.makeDto(item.getBasket()));
 		dto.setCategory(dtoAssem.makeDto(item.getCategory()));

@@ -420,7 +420,7 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, int basketId, int categoryId);
+	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double  quantity, double price, String notice, Timestamp receiptDate, int basketId, int categoryId);
 	
 	/**
 	 * @author Marco

@@ -325,9 +325,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @return Item Object
 	 */
 	@Override
-	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException {
+	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException {
 		if(basket != null && category != null) {
-			Item item = new Item(name, quantity, price, notice, period, launchDate, finishDate, basket, category);
+			Item item = new Item(name, quantity, price, notice, receiptDate, basket, category);
 			if (item != null) {
 				em.persist(item);
 				return item;

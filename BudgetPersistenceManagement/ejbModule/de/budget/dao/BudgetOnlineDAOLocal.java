@@ -63,7 +63,7 @@ public interface BudgetOnlineDAOLocal {
 	public Category findCategoryById(int categoryId) throws IllegalArgumentException;
 	public void deleteCategory(int categoryId) throws IllegalArgumentException;
 	
-	public Item createItem(String name, double quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category);
+	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category);
 	public Item updateItem(Item item) throws IllegalArgumentException;
 	public Item findItemById(int itemId) throws IllegalArgumentException;
 	public void deleteItem(int itemId) throws IllegalArgumentException;

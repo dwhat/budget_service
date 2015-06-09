@@ -7,6 +7,9 @@ import java.util.List;
 
 
 
+
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -24,6 +27,9 @@ import javax.persistence.EntityExistsException;
 
 
 
+
+
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -31,6 +37,8 @@ import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 
+import de.budget.dto.BasketTO;
+import de.budget.dto.CategoryTO;
 import de.budget.dto.ItemTO;
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
@@ -599,7 +607,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
 		BasketResponse response = new BasketResponse();
-		//TODO DTOS rückentpacken zu Items
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -607,9 +614,24 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Basket basket = user.getBasket(basketId);
 				Payment payment = user.getPayment(paymentId);
 				Vendor vendor = user.getVendor(vendorId);
+				//wandle empfangene ItemTOs in ItemObjekte
+				ArrayList<Item> itemList = new ArrayList<>();
+				for(ItemTO iTo : items) {
+					int itemId = iTo.getId();
+					String itemName = iTo.getName();	
+					double itemQuantity = iTo.getQuantity();	
+					double itemPrice = iTo.getPrice();	
+					String itemNotice = iTo.getNotice();		
+					Timestamp itemReceiptDate = iTo.getReceiptDate();	
+					int itemBasketId = iTo.getBasket().getId();
+					int itemCategoryId = iTo.getCategory().getId();
 
+					Item item = createOrUpdateItemHelper(sessionId, itemId, itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, itemBasketId, itemCategoryId);
+					itemList.add(item);
+				}
+				
 				if(basket == null) {
-					//basket = dao.createBasket(user, name, notice, amount,purchaseDate,payment,vendor,items);
+					basket = dao.createBasket(user, name, notice, amount, purchaseDate, payment, vendor, itemList);
 				}
 				else {
 					basket.setName(name);
@@ -618,7 +640,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					basket.setPurchaseDate(purchaseDate);
 					basket.setPayment(payment);
 					basket.setVendor(vendor);
-					//basket.setItems(items);
+					basket.setItems(itemList);
 				
 					basket = dao.updateBasket(basket);
 				}
@@ -1638,20 +1660,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * Method to create or update an item
+	 * Helper method to create or update an item
 	 * @author Marco
-	 * @date 26.05.2015
+	 * @param sessionId
+	 * @param itemId
+	 * @param name
+	 * @param quantity
+	 * @param price
+	 * @param notice
+	 * @param receiptDate
+	 * @param basketId
+	 * @param categoryId
+	 * @return ItemObjekt
+	 * @throws Exception 
 	 */
-	@Override
-	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
-			double price, String notice, int period, Timestamp launchDate,
-			Timestamp finishDate, int basketId, int categoryId) {
-
-
-		
-		
-		ItemResponse response = new ItemResponse();
-		
+	private Item createOrUpdateItemHelper(int sessionId, int itemId, String name, double quantity,
+			double price, String notice, Timestamp receiptDate, int basketId, int categoryId) throws Exception {
+	
 		try {
 			// Hole SessionObjekt
 			BudgetSession session = getSession(sessionId);
@@ -1666,19 +1691,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Item item = basket.getItem(itemId);
 				//Suche Category
 				Category category = user.getCategory(categoryId);
-
 				
 				if(item == null) {	
-					item = dao.createItem(name, quantity, price , notice,  period, launchDate, finishDate, basket, category);
+					item = dao.createItem(name, quantity, price , notice, receiptDate, basket, category);
 				}
 				else {
 					item.setName(name);
 					item.setNotice(notice);
 					item.setPrice(price);
 					item.setQuantity(quantity);
-					item.setPeriod(period);
-					item.setLaunchDate(launchDate);
-					item.setFinishDate(finishDate);
+					item.setReceiptDate(receiptDate);
 					item.setCategory(category);
 					item.setBasket(basket);
 					
@@ -1687,13 +1709,38 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				}
 				// Response befüllen
 				if(item != null) {
-					response.setItemTo(dtoAssembler.makeDto(item));
-					response.setReturnCode(200);
+					return item;
 				}
 				else {
 					throw new ItemNotFoundException("Item could not be updated");
 				}
 			}
+			else {
+				throw new NoSessionException("Please first login");
+			}
+		}
+		catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
+	 * Method to create or update an item
+	 * @author Marco
+	 * @date 26.05.2015
+	 */
+	@Override
+	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
+			double price, String notice, Timestamp receiptDate, int basketId, int categoryId) {
+		
+		ItemResponse response = new ItemResponse();
+		
+		try {
+			Item item = createOrUpdateItemHelper(sessionId, itemId, name, quantity, price, notice, receiptDate, basketId, categoryId);
+			
+			response.setItemTo(dtoAssembler.makeDto(item));
+			response.setReturnCode(200);
+			
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -1703,7 +1750,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		
+		catch (BudgetOnlineException e) {
+			response.setReturnCode(404);
+			response.setMessage("Couldn't create a item.");
+		}
 		catch (IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage("Item not found.");
@@ -1711,13 +1761,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(EntityExistsException e) {
 			response.setReturnCode(600);
 			response.setMessage("Entity allready exists");
-		}
-		/* Moritz-> Catchblock wird niemals erreicht !
-		catch (BudgetOnlineException e) {
+		} catch (Exception e) {
+			response.setMessage(e.getMessage());
 			response.setReturnCode(404);
-			response.setMessage("Couldn't create a item.");
-		}
-		*/
+		}		
 		return response;
 		
 	}

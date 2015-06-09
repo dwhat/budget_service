@@ -32,13 +32,9 @@ public class Item implements Serializable {
 	
 	private String notice;
 	
-	private int period;
-	
 	private Timestamp createDate;
 	
-	private Timestamp launchDate;
-	
-	private Timestamp finishDate;
+	private Timestamp receiptDate;
 	
 	/**
 	 * @author Moritz
@@ -73,14 +69,12 @@ public class Item implements Serializable {
 	 * @param basket 
 	 * @param category 
 	 */
-	public Item(String name, double  quantity, double price, String notice, int period, Timestamp launchDate, Timestamp finishDate, Basket basket, Category category) {
+	public Item(String name, double  quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) {
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.notice = notice;
-		this.period = period;
-		this.launchDate = launchDate;
-		this.finishDate = finishDate;
+		this.receiptDate = receiptDate;
 		this.category = category;
 		this.basket = basket;
 		this.basket.addNewItem(this);
@@ -171,22 +165,6 @@ public class Item implements Serializable {
 	
 	/**
 	 * @author Marco
-	 * @return the period
-	 */
-	public int getPeriod() {
-		return period;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param period the period to set
-	 */
-	public void setPeriod(int period) {
-		this.period = period;
-	}
-	
-	/**
-	 * @author Marco
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
@@ -201,37 +179,6 @@ public class Item implements Serializable {
 		this.createDate = creationDate;
 	}
 	
-	/**
-	 * @author Marco
-	 * @return the launchDate
-	 */
-	public Timestamp getLaunchDate() {
-		return launchDate;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param launchDate the launchDate to set
-	 */
-	public void setLaunchDate(Timestamp launchDate) {
-		this.launchDate = launchDate;
-	}
-	
-	/**
-	 * @author Marco
-	 * @return the finishDate
-	 */
-	public Timestamp getFinishDate() {
-		return finishDate;
-	}
-	
-	/**
-	 * @author Marco
-	 * @param finishDate the finishDate to set
-	 */
-	public void setFinishDate(Timestamp finishDate) {
-		this.finishDate = finishDate;
-	}
 
 	/**
 	 * @author Marco
@@ -277,6 +224,20 @@ public class Item implements Serializable {
 	 */
 	public void setLastChanged(Timestamp lastChanged) {
 		this.lastChanged = lastChanged;
+	}
+
+	/**
+	 * @return the receiptDate
+	 */
+	public Timestamp getReceiptDate() {
+		return receiptDate;
+	}
+
+	/**
+	 * @param receiptDate the receiptDate to set
+	 */
+	public void setReceiptDate(Timestamp receiptDate) {
+		this.receiptDate = receiptDate;
 	}
 
 

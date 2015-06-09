@@ -17,10 +17,8 @@ public class ItemTO implements Serializable {
 	private double quantity;	
 	private double price;	
 	private String notice;		
-	private int period;	
 	private Timestamp createDate;	
-	private Timestamp launchDate;	
-	private Timestamp finishDate;
+	private Timestamp receiptDate;	
 	private Timestamp lastChanged;
 	private BasketTO basket;
 	private CategoryTO category;
@@ -42,24 +40,20 @@ public class ItemTO implements Serializable {
 	 * @param quantity
 	 * @param price
 	 * @param notice
-	 * @param period
 	 * @param createDate
-	 * @param launchDate
-	 * @param finishDate
+	 * @param receiptDate
 	 * @param lastChanged
 	 * @param basket
 	 * @param category
 	 */
-	public ItemTO(int id, String name, double quantity, double price, String notice, int period, Timestamp createDate, Timestamp launchDate, Timestamp finishDate, Timestamp lastChanged, BasketTO basket, CategoryTO category) {
+	public ItemTO(int id, String name, double quantity, double price, String notice, Timestamp createDate, Timestamp receiptDate, Timestamp lastChanged, BasketTO basket, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.notice = notice;
-		this.period = period;
 		this.createDate = createDate;
-		this.finishDate = finishDate;
-		this.launchDate = launchDate;
+		this.receiptDate = receiptDate;
 		this.lastChanged = lastChanged;
 		this.category = category;
 		this.basket = basket;
@@ -155,25 +149,6 @@ public class ItemTO implements Serializable {
 		this.notice = notice;
 	}
 
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @return the period
-	 */
-	public int getPeriod() {
-		return period;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @param period the period to set
-	 */
-	public void setPeriod(int period) {
-		this.period = period;
-	}
-
 	/**
 	 * @author Marco
 	 * @date 19.05.2015
@@ -190,42 +165,6 @@ public class ItemTO implements Serializable {
 	 */
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @return the launchDate
-	 */
-	public Timestamp getLaunchDate() {
-		return launchDate;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @param launchDate the launchDate to set
-	 */
-	public void setLaunchDate(Timestamp launchDate) {
-		this.launchDate = launchDate;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @return the finishDate
-	 */
-	public Timestamp getFinishDate() {
-		return finishDate;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @param finishDate the finishDate to set
-	 */
-	public void setFinishDate(Timestamp finishDate) {
-		this.finishDate = finishDate;
 	}
 
 	/**
@@ -280,5 +219,19 @@ public class ItemTO implements Serializable {
 	 */
 	public void setCategory(CategoryTO category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the receiptDate
+	 */
+	public Timestamp getReceiptDate() {
+		return receiptDate;
+	}
+
+	/**
+	 * @param receiptDate the receiptDate to set
+	 */
+	public void setReceiptDate(Timestamp receiptDate) {
+		this.receiptDate = receiptDate;
 	}
 }
