@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 
 import org.jboss.logging.Logger;
 
-import de.budget.dao.BudgetOnlineDAO;
 
 /**
  * @date 27.05.2015
@@ -69,6 +68,7 @@ public class Income implements Serializable {
 	private Timestamp lastChanged;
 	
 	private static final Logger logger = Logger.getLogger(Income.class);
+	
 	/**
 	 *@author Marco
 	 *Default Constructor
