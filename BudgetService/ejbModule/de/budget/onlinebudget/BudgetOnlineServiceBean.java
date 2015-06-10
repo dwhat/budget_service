@@ -14,11 +14,14 @@ import java.util.List;
 
 
 
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBTransactionRolledbackException;
 //import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -35,6 +38,9 @@ import javax.persistence.EntityExistsException;
 
 
 
+
+
+import javax.persistence.TransactionRequiredException;
 
 
 //Interface-Import
@@ -1578,11 +1584,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			//Hole User Objekt
 			if(session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				//Lege Payment Objekt an
-				Income income = user.getIncome(incomeId);
+				
 				Category category = user.getCategory(categoryId);
+				
+				Income income = user.getIncome(incomeId);
+				
 				Date recDate = new Date(receiptDate);
 				logger.info(sessionId + " " + incomeId +" " + name +" " + quantity +" " + amount +" " + notice +" " + recDate +" " + categoryId);
+				
 				if(income == null) {
 					logger.info("Income gleich null -----------------------------");
 					income = dao.createIncome(user, name, notice, quantity, amount, recDate, category);
@@ -1623,6 +1632,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (IllegalArgumentException e) {
 			response.setReturnCode(404);
 			response.setMessage("Income to delete not found.");
+		}
+		catch (TransactionRequiredException e) {
+			logger.info("xyz/TranscationException- " + e.getMessage());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.info("xyz/EJBTransactionException- " + e.getMessage());
 		}
 		/*Moritz-> Catchblock wird niemals erreicht, da alle anderen alles abhandeln
 		catch (BudgetOnlineException e) {

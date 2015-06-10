@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityExistsException;
 //Peristence Imports
@@ -18,8 +19,11 @@ import javax.persistence.PersistenceContext;
 
 
 import javax.persistence.Query;
+import javax.persistence.TransactionRequiredException;
 
 import org.jboss.logging.Logger;
+
+
 
 
 
@@ -343,13 +347,14 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException , IllegalArgumentException{
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException , IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException {
 		if(user != null && category != null) {
 			logger.info("xyz-createIncomeBeginnDAO");
 			Income income = new Income(name, notice, quantity, amount, receiptDate, category, user);
 			logger.info("xyz-");
 			if (income != null) {
 				em.persist(income);
+				user.addNewIncome(income);
 				logger.info("xyz-nach Persist");
 				return income;
 			}
