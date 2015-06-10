@@ -1,8 +1,10 @@
 package de.budget.onlinebudget;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 
@@ -26,6 +28,7 @@ import javax.jws.WebService;
 
 
 import javax.persistence.EntityExistsException;
+
 
 
 
@@ -1453,6 +1456,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @param numberOfIncome   Anzahl der gew�nschten letzten Incomes
 	 */
+	/*
 	@Override
 	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
 		IncomeListResponse response = new IncomeListResponse();
@@ -1479,7 +1483,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
-	
+	*/
 	/**
 	 * Gets all income of the actual month
 	 * @author Marco
@@ -1567,7 +1571,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		
 		
 		IncomeResponse response = new IncomeResponse();
-		
+		logger.info("CreateOrUpdateIncome aufger---------------------------------------------");
 		try {
 			// Hole SessionObjekt
 			BudgetSession session = getSession(sessionId);
@@ -1576,18 +1580,19 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				//Lege Payment Objekt an
 				Income income = user.getIncome(incomeId);
-				//Suche Category
-				Category category = dao.findCategoryById(categoryId);
-				
-				if(income == null) {	
-					income = dao.createIncome(user, name, notice, quantity, amount, new Timestamp(receiptDate), category);
+				Category category = user.getCategory(categoryId);
+				Date recDate = new Date(receiptDate);
+				logger.info(sessionId + " " + incomeId +" " + name +" " + quantity +" " + amount +" " + notice +" " + recDate +" " + categoryId);
+				if(income == null) {
+					logger.info("Income gleich null -----------------------------");
+					income = dao.createIncome(user, name, notice, quantity, amount, recDate, category);
 				}
 				else {
 					income.setName(name);
 					income.setNotice(notice);
 					income.setAmount(amount);
 					income.setQuantity(quantity);
-					income.setReceiptDate(new Timestamp(receiptDate));
+					income.setReceiptDate(recDate);
 					income.setCategory(category);
 					
 					

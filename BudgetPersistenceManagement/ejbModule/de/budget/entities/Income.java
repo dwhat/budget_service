@@ -1,6 +1,7 @@
 package de.budget.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.Entity;
@@ -12,17 +13,23 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.jboss.logging.Logger;
+
+import de.budget.dao.BudgetOnlineDAO;
+
 /**
  * @date 27.05.2015
  * @author Marco
  * Income Class
  */
+/*
 @NamedQueries( {
 	@NamedQuery (
 			name = "findLastIncomes",
 			query = "select i from Income i where i.user.userName like :username order by i.receiptDate" 
 			)
 })
+*/
 @Entity
 public class Income implements Serializable {
 
@@ -43,9 +50,9 @@ public class Income implements Serializable {
 	@ManyToOne
 	private User user;
 	
-	private Timestamp receiptDate;
+	private Date receiptDate;
 	
-	private Timestamp createDate;
+	private Date createDate;
 	
 	@ManyToOne
 	private Category category;
@@ -61,15 +68,16 @@ public class Income implements Serializable {
 	@Version
 	private Timestamp lastChanged;
 	
+	private static final Logger logger = Logger.getLogger(Income.class);
 	/**
 	 *@author Marco
 	 *Default Constructor
 	 */
 	public Income() {
-		
+		super();
 	}
 	
-	public Income(String name, String notice, double quantity, double amount,  Timestamp receiptDate, Category category) {
+	public Income(String name, String notice, double quantity, double amount,  Date receiptDate, Category category, User user) {
 		this.name = name;
 		this.notice = notice;
 		this.quantity = quantity;
@@ -77,8 +85,10 @@ public class Income implements Serializable {
 		this.receiptDate = receiptDate;
 		this.user.addNewIncome(this);
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
-		this.createDate = new Timestamp(System.currentTimeMillis());
+		this.createDate = new Date(System.currentTimeMillis());
 		this.category = category;
+		this.user = user;
+		logger.info("xyz-Constructor angelegt");
 		
 	}
 	
@@ -175,14 +185,14 @@ public class Income implements Serializable {
 	/**
 	 * @return the createDate
 	 */
-	public Timestamp getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
 	/**
 	 * @param createDate the createDate to set
 	 */
-	public void setCreateDate(Timestamp createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
@@ -217,14 +227,14 @@ public class Income implements Serializable {
 	/**
 	 * @return the receiptDate
 	 */
-	public Timestamp getReceiptDate() {
+	public Date getReceiptDate() {
 		return receiptDate;
 	}
 
 	/**
 	 * @param receiptDate the receiptDate to set
 	 */
-	public void setReceiptDate(Timestamp receiptDate) {
+	public void setReceiptDate(Date receiptDate) {
 		this.receiptDate = receiptDate;
 	}
 }

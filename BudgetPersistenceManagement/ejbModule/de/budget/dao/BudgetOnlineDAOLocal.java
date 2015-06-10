@@ -3,10 +3,12 @@ package de.budget.dao;
 //Lokales Interface das die Operationen erleichtert 
 // wie zb findUser // createSession etc
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.Local;
+
 
 
 
@@ -70,11 +72,11 @@ public interface BudgetOnlineDAOLocal {
 	public Item findItemById(int itemId) throws IllegalArgumentException;
 	public void deleteItem(int itemId) throws IllegalArgumentException;
 	
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, Timestamp receiptDate, Category category);
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category);
 	public Income updateIncome(Income income) throws IllegalArgumentException;
 	public Income findIncomeById(int incomeId) throws IllegalArgumentException;
 	public void deleteIncome(int income) throws IllegalArgumentException;
-	public List<Income> getLastIncome(String username, int numberOfLastIncomes);
+	//public List<Income> getLastIncome(String username, int numberOfLastIncomes);
 
 	public Payment createPayment(User user, String name, String number, String bic);
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException;

@@ -42,10 +42,9 @@ public class SimpleOnlineBudgetClient {
  	       
  	       	//Test-Szeanarien ausfuehren:
  	       	//szenarioRegister();
- 	       	szenarioCategory();
+ 	        szenarioCategory();
  	       	//szenarioVendor();
  	       	//szenarioPayment();
- 	       	//szenarioCategory();
  	       	szenarioIncome();
 		   
 		}
@@ -69,12 +68,15 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("============================================================");
 			   System.out.println("Suche Kategorie für Income");
 			   CategoryListResponse catListRespIncome = remoteSystem.getCategorysOfIncome(sessionId);
-			   int katId = catListRespIncome.getCategoryList().get(1).getId();
+			   int katId = catListRespIncome.getCategoryList().get(0).getId();
 			   System.out.println("Kategorie mit Id "+ katId + " gefunden");
+			   
+			   long dateLong = System.currentTimeMillis();
 			   System.out.println("============================================================");
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", System.currentTimeMillis(), katId);
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", System.currentTimeMillis(), katId);
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", System.currentTimeMillis(), katId);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", dateLong, katId);
+			   /*
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", dateLong, katId);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", dateLong, katId);
 			   System.out.println("============================================================");
 			   int sampleIncomeId = 0; //Für spätere Test bei update und get
 			   IncomeListResponse incListResp = remoteSystem.getIncomes(sessionId);
@@ -104,7 +106,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + incResp.getMessage());
 			   System.out.println("============================================================");
 			   System.out.println("Ändere Income mit Id " + sampleIncomeId);
-			   createIncomeHelper(sessionId, sampleIncomeId, "LohnGeändert", 1.00, 2000.00, "Lohn MärzGeändert", System.currentTimeMillis(), katId);
+			   createIncomeHelper(sessionId, sampleIncomeId, "LohnGeändert", 1.00, 2000.00, "Lohn MärzGeändert", dateLong, katId);
 
 			   System.out.println("============================================================");
 			   System.out.println("Lösche Income mit Id " + sampleIncomeId);
@@ -121,7 +123,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + resp.getMessage());
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
-			   
+			   */
 	       }    
 	}
 	/**

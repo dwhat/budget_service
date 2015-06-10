@@ -18,9 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="category" type="{http://onlinebudget.budget.de/}categoryTO" minOccurs="0"/>
- *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="quantity" type="{http://www.w3.org/2001/XMLSchema}double"/>
@@ -38,9 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "incomeTO", propOrder = {
     "amount",
     "category",
-    "createDate",
     "id",
-    "lastChanged",
     "name",
     "notice",
     "quantity",
@@ -51,9 +47,7 @@ public class IncomeTO {
 
     protected double amount;
     protected CategoryTO category;
-    protected long createDate;
     protected int id;
-    protected long lastChanged;
     protected String name;
     protected String notice;
     protected double quantity;
@@ -101,22 +95,6 @@ public class IncomeTO {
     }
 
     /**
-     * Gets the value of the createDate property.
-     * 
-     */
-    public long getCreateDate() {
-        return createDate;
-    }
-
-    /**
-     * Sets the value of the createDate property.
-     * 
-     */
-    public void setCreateDate(long value) {
-        this.createDate = value;
-    }
-
-    /**
      * Gets the value of the id property.
      * 
      */
@@ -130,22 +108,6 @@ public class IncomeTO {
      */
     public void setId(int value) {
         this.id = value;
-    }
-
-    /**
-     * Gets the value of the lastChanged property.
-     * 
-     */
-    public long getLastChanged() {
-        return lastChanged;
-    }
-
-    /**
-     * Sets the value of the lastChanged property.
-     * 
-     */
-    public void setLastChanged(long value) {
-        this.lastChanged = value;
     }
 
     /**

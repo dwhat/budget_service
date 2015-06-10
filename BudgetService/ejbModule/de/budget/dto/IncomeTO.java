@@ -20,8 +20,6 @@ public class IncomeTO implements Serializable {
 	private double quantity;
 	private UserTO user;
 	private long receiptDate;
-	private long createDate;
-	private long lastChanged;
 	private CategoryTO category;
 	
 	
@@ -50,7 +48,7 @@ public class IncomeTO implements Serializable {
 	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, long createDate, long receiptDate, long lastChanged, UserTO user, CategoryTO category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, UserTO user, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;
@@ -58,8 +56,6 @@ public class IncomeTO implements Serializable {
 		this.quantity = quantity;
 		this.user = user;
 		this.receiptDate = receiptDate;
-		this.createDate = createDate;
-		this.lastChanged = lastChanged;
 		this.category = category;
 	}
 
@@ -176,33 +172,7 @@ public class IncomeTO implements Serializable {
 		this.receiptDate = receiptDate;
 	}
 
-	/**
-	 * @return the createDate
-	 */
-	public long getCreateDate() {
-		return createDate;
-	}
 
-	/**
-	 * @param createDate the createDate to set
-	 */
-	public void setCreateDate(long createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
-	 * @return the lastChanged
-	 */
-	public long getLastChanged() {
-		return lastChanged;
-	}
-
-	/**
-	 * @param lastChanged the lastChanged to set
-	 */
-	public void setLastChanged(long lastChanged) {
-		this.lastChanged = lastChanged;
-	}
 
 	
 	

@@ -4,12 +4,12 @@ package de.budget.dao;
 
 
 //EJB Imports
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
-
 import javax.persistence.EntityExistsException;
 //Peristence Imports
 import javax.persistence.EntityManager;
@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.jboss.logging.Logger;
+
 
 
 
@@ -342,11 +343,14 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @date 29.05.2015
 	 */
 	@Override
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, Timestamp receiptDate, Category category) throws EntityExistsException , IllegalArgumentException{
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException , IllegalArgumentException{
 		if(user != null && category != null) {
-			Income income = new Income(name, notice, quantity, amount, receiptDate, category);
+			logger.info("xyz-createIncomeBeginnDAO");
+			Income income = new Income(name, notice, quantity, amount, receiptDate, category, user);
+			logger.info("xyz-");
 			if (income != null) {
 				em.persist(income);
+				logger.info("xyz-nach Persist");
 				return income;
 			}
 		}
@@ -358,6 +362,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @author Marco
 	 * @date 03.06.2015
 	 */
+	/*
 	public List<Income> getLastIncome(String username, int numberOfLastIncomes) {
 		Query q = em.createNamedQuery("findLastIncomes", Income.class);
 		q.setParameter("username", username);
@@ -366,7 +371,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
 		return list;
 	}
-	
+	*/
 	/**
 	 * update an income Object
 	 * @author Marco

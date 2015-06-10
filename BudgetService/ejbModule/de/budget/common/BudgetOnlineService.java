@@ -389,7 +389,7 @@ public interface BudgetOnlineService {
 	 * @param numberOfIncome
 	 * @return IncomeListResponse
 	 */
-	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome);
+	//public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome);
 	
 	/**
 	 * gets all Incomes of a specific category for incomes
