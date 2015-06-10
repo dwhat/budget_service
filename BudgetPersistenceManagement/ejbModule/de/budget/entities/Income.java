@@ -87,7 +87,7 @@ public class Income implements Serializable {
 		this.category = category;
 		this.createDate = new Date(System.currentTimeMillis());
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
-		//this.user.addNewIncome(this);
+		this.user.addNewIncome(this);
 		logger.info("xyz-Constructor angelegt");
 		
 	}

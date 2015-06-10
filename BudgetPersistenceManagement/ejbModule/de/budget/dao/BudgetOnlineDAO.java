@@ -354,7 +354,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 			logger.info("xyz-");
 			if (income != null) {
 				em.persist(income);
-				user.addNewIncome(income);
 				logger.info("xyz-nach Persist");
 				return income;
 			}
