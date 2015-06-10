@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="arg6" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="arg7" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -51,7 +51,7 @@ public class CreateOrUpdateIncome {
     protected double arg3;
     protected double arg4;
     protected String arg5;
-    protected Timestamp arg6;
+    protected long arg6;
     protected int arg7;
 
     /**
@@ -169,24 +169,16 @@ public class CreateOrUpdateIncome {
     /**
      * Gets the value of the arg6 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getArg6() {
+    public long getArg6() {
         return arg6;
     }
 
     /**
      * Sets the value of the arg6 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setArg6(Timestamp value) {
+    public void setArg6(long value) {
         this.arg6 = value;
     }
 

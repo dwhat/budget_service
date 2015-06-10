@@ -254,7 +254,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg5", targetNamespace = "")
         String arg5,
         @WebParam(name = "arg6", targetNamespace = "")
-        Timestamp arg6,
+        long arg6,
         @WebParam(name = "arg7", targetNamespace = "")
         int arg7);
 
@@ -489,7 +489,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg4", targetNamespace = "")
         double arg4,
         @WebParam(name = "arg5", targetNamespace = "")
-        Timestamp arg5,
+        long arg5,
         @WebParam(name = "arg6", targetNamespace = "")
         int arg6,
         @WebParam(name = "arg7", targetNamespace = "")
@@ -796,7 +796,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg5", targetNamespace = "")
         String arg5,
         @WebParam(name = "arg6", targetNamespace = "")
-        Timestamp arg6,
+        long arg6,
         @WebParam(name = "arg7", targetNamespace = "")
         int arg7,
         @WebParam(name = "arg8", targetNamespace = "")

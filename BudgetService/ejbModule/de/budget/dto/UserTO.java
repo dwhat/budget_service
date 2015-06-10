@@ -1,7 +1,6 @@
 package de.budget.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -18,8 +17,8 @@ public class UserTO implements Serializable {
 	private String username;
 	private String password;
 	private String email;
-	private Timestamp createDate;
-	private Timestamp lastChanged;
+	private long createDate;
+	private long lastChanged;
 	private List<BasketTO> basketList;
 	private List<CategoryTO> categoryList;
 	private List<PaymentTO> paymentList;
@@ -48,7 +47,7 @@ public class UserTO implements Serializable {
 	 * @param payments
 	 * @param vendors
 	 */
-	public UserTO(String username, String password, String email, Timestamp createDate, Timestamp lastChanged, List<BasketTO> baskets, List<CategoryTO> categories, List<PaymentTO> payments, List<VendorTO> vendors) {
+	public UserTO(String username, String password, String email, long createDate, long lastChanged, List<BasketTO> baskets, List<CategoryTO> categories, List<PaymentTO> payments, List<VendorTO> vendors) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -106,28 +105,28 @@ public class UserTO implements Serializable {
 	/**
 	 * @return the createDate
 	 */
-	public Timestamp getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
 	/**
 	 * @param createDate the createDate to set
 	 */
-	public void setCreateDate(Timestamp createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
 	/**
 	 * @return the lastChanged
 	 */
-	public Timestamp getLastChanged() {
+	public long getLastChanged() {
 		return lastChanged;
 	}
 
 	/**
 	 * @param lastChanged the lastChanged to set
 	 */
-	public void setLastChanged(Timestamp lastChanged) {
+	public void setLastChanged(long lastChanged) {
 		this.lastChanged = lastChanged;
 	}
 

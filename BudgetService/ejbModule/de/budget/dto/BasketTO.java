@@ -2,7 +2,6 @@ package de.budget.dto;
 
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -19,9 +18,9 @@ public class BasketTO implements Serializable{
 	private String name;
 	private String notice;
 	private double amount;
-	private Timestamp createDate;
-	private Timestamp purchaseDate;
-	private Timestamp lastChanged;
+	private long createDate;
+	private long purchaseDate;
+	private long lastChanged;
 	private UserTO user;
 	private VendorTO vendor;
 	private PaymentTO payment;
@@ -49,7 +48,7 @@ public class BasketTO implements Serializable{
 	 * @param payment
 	 * @param items
 	 */
-	public BasketTO(int id, String name, String notice, double amount, Timestamp createDate, Timestamp purchaseDate, Timestamp lastChanged, UserTO user, VendorTO vendor, PaymentTO payment, List<ItemTO> items) {
+	public BasketTO(int id, String name, String notice, double amount, long createDate, long purchaseDate, long lastChanged, UserTO user, VendorTO vendor, PaymentTO payment, List<ItemTO> items) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -123,42 +122,42 @@ public class BasketTO implements Serializable{
 	/**
 	 * @return the createDate
 	 */
-	public Timestamp getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
 	/**
 	 * @param createDate the createDate to set
 	 */
-	public void setCreateDate(Timestamp createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
 	/**
 	 * @return the purchaseDate
 	 */
-	public Timestamp getPurchaseDate() {
+	public long getPurchaseDate() {
 		return purchaseDate;
 	}
 
 	/**
 	 * @param purchaseDate the purchaseDate to set
 	 */
-	public void setPurchaseDate(Timestamp purchaseDate) {
+	public void setPurchaseDate(long purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
 
 	/**
 	 * @return the lastChanged
 	 */
-	public Timestamp getLastChanged() {
+	public long getLastChanged() {
 		return lastChanged;
 	}
 
 	/**
 	 * @param lastChanged the lastChanged to set
 	 */
-	public void setLastChanged(Timestamp lastChanged) {
+	public void setLastChanged(long lastChanged) {
 		this.lastChanged = lastChanged;
 	}
 

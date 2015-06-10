@@ -612,7 +612,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @date 26.05.2015
 	 */
 	@Override
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
 		BasketResponse response = new BasketResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
@@ -629,7 +629,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					double itemQuantity = iTo.getQuantity();	
 					double itemPrice = iTo.getPrice();	
 					String itemNotice = iTo.getNotice();		
-					Timestamp itemReceiptDate = iTo.getReceiptDate();	
+					Timestamp itemReceiptDate = new Timestamp(iTo.getReceiptDate());	
 					int itemBasketId = iTo.getBasket().getId();
 					int itemCategoryId = iTo.getCategory().getId();
 
@@ -638,13 +638,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				}
 				
 				if(basket == null) {
-					basket = dao.createBasket(user, name, notice, amount, purchaseDate, payment, vendor, itemList);
+					basket = dao.createBasket(user, name, notice, amount, new Timestamp(purchaseDate), payment, vendor, itemList);
 				}
 				else {
 					basket.setName(name);
 					basket.setNotice(notice);
 					basket.setAmount(amount);
-					basket.setPurchaseDate(purchaseDate);
+					basket.setPurchaseDate(new Timestamp(purchaseDate));
 					basket.setPayment(payment);
 					basket.setVendor(vendor);
 					basket.setItems(itemList);
@@ -1101,7 +1101,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	
-	private List<Category> getCategoriesHelper(int sessionId) throws Exception {
+	private List<Category> getCategoriesHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception {
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -1112,7 +1112,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				throw new NoSessionException("Please first login");
 			}
 		}
-		catch (Exception e) {
+		catch(NoSessionException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw e;
+		}
+		catch(Exception e) {
 			throw e;
 		}
 	}
@@ -1557,7 +1563,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name,
-			double quantity, double amount, String notice,  Timestamp receiptDate, int categoryId) {
+			double quantity, double amount, String notice,  long receiptDate, int categoryId) {
 		
 		
 		IncomeResponse response = new IncomeResponse();
@@ -1574,14 +1580,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Category category = dao.findCategoryById(categoryId);
 				
 				if(income == null) {	
-					income = dao.createIncome(user, name, notice, quantity, amount, receiptDate, category);
+					income = dao.createIncome(user, name, notice, quantity, amount, new Timestamp(receiptDate), category);
 				}
 				else {
 					income.setName(name);
 					income.setNotice(notice);
 					income.setAmount(amount);
 					income.setQuantity(quantity);
-					income.setReceiptDate(receiptDate);
+					income.setReceiptDate(new Timestamp(receiptDate));
 					income.setCategory(category);
 					
 					
@@ -1841,9 +1847,24 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				throw new NoSessionException("Please first login");
 			}
 		}
-		catch (Exception e) {
+		catch(NoSessionException e) {
 			throw e;
 		}
+		catch (ItemNotFoundException e) {
+			throw e;
+		}
+		catch (BudgetOnlineException e) {
+			throw e;
+		}
+		catch (IllegalArgumentException e) {
+			throw e;
+		}
+		catch(EntityExistsException e) {
+			throw e;
+		} 
+		catch (Exception e) {
+			throw e;
+		}	
 	}
 	
 	/**
@@ -1853,12 +1874,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 */
 	@Override
 	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
-			double price, String notice, Timestamp receiptDate, int basketId, int categoryId) {
+			double price, String notice, long receiptDate, int basketId, int categoryId) {
 		
 		ItemResponse response = new ItemResponse();
 		
 		try {
-			Item item = createOrUpdateItemHelper(sessionId, itemId, name, quantity, price, notice, receiptDate, basketId, categoryId);
+			Item item = createOrUpdateItemHelper(sessionId, itemId, name, quantity, price, notice, new Timestamp(receiptDate), basketId, categoryId);
 			
 			response.setItemTo(dtoAssembler.makeDto(item));
 			response.setReturnCode(200);

@@ -3,7 +3,6 @@ package de.budget.common;
 
 
 //Java Datentypen Import
-import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -287,7 +286,7 @@ public interface BudgetOnlineService {
 	 * @param items   List with itemTO Objects to add to the basket
 	 * @return
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, Timestamp purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
 	
 	/**
 	 * Method to delete a basket
@@ -361,7 +360,7 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, Timestamp receiptDate, int categoryId);
+	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name, double  quantity, double amount, String notice, long receiptDate, int categoryId);
 	
 	
 	/**
@@ -446,7 +445,7 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double  quantity, double price, String notice, Timestamp receiptDate, int basketId, int categoryId);
+	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double  quantity, double price, String notice, long receiptDate, int basketId, int categoryId);
 	
 	/**
 	 * @author Marco

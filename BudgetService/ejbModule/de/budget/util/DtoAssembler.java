@@ -1,6 +1,5 @@
 package de.budget.util;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,8 +63,8 @@ public class DtoAssembler {
 		VendorTO dto = new VendorTO();
 		dto.setId(vendor.getId());
 		dto.setName(vendor.getName());
-		dto.setCreateDate(vendor.getCreateDate());
-		dto.setLastChanged(vendor.getLastChanged());
+		dto.setCreateDate(vendor.getCreateDate().getTime());
+		dto.setLastChanged(vendor.getLastChanged().getTime());
 		dto.setUser(dtoAssem.makeDto(vendor.getUser()));
 		dto.setLogo(vendor.getLogo());
 		dto.setStreet(vendor.getStreet());
@@ -80,8 +79,8 @@ public class DtoAssembler {
 		String username = user.getUserName();
 		String password = user.getPassword();
 		String email = user.getEmail();
-		Timestamp createDate = user.getCreateDate();
-		Timestamp lastChanged = user.getLastChanged();
+		long createDate = user.getCreateDate().getTime();
+		long lastChanged = user.getLastChanged().getTime();
 		/*
 		 * TODO
 		dto.setBasketList(dtoAssem.makeBasketListDto(user.getBaskets()));
@@ -117,10 +116,10 @@ public class DtoAssembler {
 		dto.setId(category.getId());
 		dto.setName(category.getName());
 		dto.setNotice(category.getNotice());
-		dto.setCreateDate(category.getCreateDate());
+		dto.setCreateDate(category.getCreateDate().getTime());
 		dto.setActive(category.isActive());
 		dto.setIncome(category.isIncome());
-		dto.setLastChanged(category.getLastChanged());
+		dto.setLastChanged(category.getLastChanged().getTime());
 		dto.setUser(dtoAssem.makeDto(category.getUser()));
 		dto.setColour(category.getColour());
 		
@@ -141,9 +140,9 @@ public class DtoAssembler {
 		dto.setName(payment.getName());
 		dto.setNumber(payment.getNumber());
 		dto.setBic(payment.getBic());
-		dto.setCreateDate(payment.getCreateDate());
+		dto.setCreateDate(payment.getCreateDate().getTime());
 		dto.setActive(payment.isActive());
-		dto.setLastChanged(payment.getLastChanged());
+		dto.setLastChanged(payment.getLastChanged().getTime());
 		dto.setUser(dtoAssem.makeDto(payment.getUser()));
 		return dto;
 	}
@@ -161,11 +160,11 @@ public class DtoAssembler {
 		dto.setId(basket.getId());
 		dto.setName(basket.getName());
 		dto.setNotice(basket.getNotice());
-		dto.setCreateDate(basket.getCreateDate());
+		dto.setCreateDate(basket.getCreateDate().getTime());
 		dto.setAmount(basket.getAmount());
-		dto.setLastChanged(basket.getLastChanged());
+		dto.setLastChanged(basket.getLastChanged().getTime());
 		dto.setUser(dtoAssem.makeDto(basket.getUser()));
-		dto.setPurchaseDate(basket.getPurchaseDate());
+		dto.setPurchaseDate(basket.getPurchaseDate().getTime());
 		dto.setVendor(dtoAssem.makeDto(basket.getVendor()));
 		dto.setPayment(dtoAssem.makeDto(basket.getPayment()));
 		dto.setItems(dtoAssem.makeItemListDto(basket.getItems()));
@@ -187,9 +186,9 @@ public class DtoAssembler {
 		dto.setQuantity(item.getQuantity());
 		dto.setPrice(item.getPrice());
 		dto.setNotice(item.getNotice());
-		dto.setCreateDate(item.getCreateDate());
-		dto.setReceiptDate(item.getReceiptDate());
-		dto.setLastChanged(item.getLastChanged());
+		dto.setCreateDate(item.getCreateDate().getTime());
+		dto.setReceiptDate(item.getReceiptDate().getTime());
+		dto.setLastChanged(item.getLastChanged().getTime());
 		dto.setBasket(dtoAssem.makeDto(item.getBasket()));
 		dto.setCategory(dtoAssem.makeDto(item.getCategory()));
 		return dto;
@@ -218,9 +217,9 @@ public class DtoAssembler {
 		dto.setQuantity(income.getQuantity());
 		dto.setAmount(income.getAmount());
 		dto.setNotice(income.getNotice());
-		dto.setCreateDate(income.getCreateDate());
-		dto.setReceiptDate(income.getReceiptDate());
-		dto.setLastChanged(income.getLastChanged());
+		dto.setCreateDate(income.getCreateDate().getTime());
+		dto.setReceiptDate(income.getReceiptDate().getTime());
+		dto.setLastChanged(income.getLastChanged().getTime());
 		dto.setUser(dtoAssem.makeDto(income.getUser()));
 		dto.setCategory(dtoAssem.makeDto(income.getCategory()));
 		return dto;

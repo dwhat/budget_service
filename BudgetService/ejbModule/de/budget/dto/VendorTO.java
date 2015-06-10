@@ -13,8 +13,8 @@ public class VendorTO implements Serializable {
 	
 	private int id; 
 	private String name;
-	private Timestamp createDate;
-	private Timestamp lastChanged;
+	private long createDate;
+	private long lastChanged;
 	private UserTO user;
 	private String logo;
 	private String street;
@@ -42,7 +42,7 @@ public class VendorTO implements Serializable {
 	 * @param user
 	 * @param logo
 	 */
-	public VendorTO(int id, String name, Timestamp createDate, Timestamp lastChanged, UserTO user, String logo, String street, String city, int PLZ, int houseNumber) {
+	public VendorTO(int id, String name, long createDate, long lastChanged, UserTO user, String logo, String street, String city, int PLZ, int houseNumber) {
 		this.id = id;
 		this.name = name;
 		this.createDate = createDate;
@@ -91,39 +91,33 @@ public class VendorTO implements Serializable {
 		this.name = name;
 	}
 
+
+
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the createDate
 	 */
-	public Timestamp getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param createDate the createDate to set
 	 */
-	public void setCreateDate(Timestamp createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the lastChanged
 	 */
-	public Timestamp getLastChanged() {
+	public long getLastChanged() {
 		return lastChanged;
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param lastChanged the lastChanged to set
 	 */
-	public void setLastChanged(Timestamp lastChanged) {
+	public void setLastChanged(long lastChanged) {
 		this.lastChanged = lastChanged;
 	}
 

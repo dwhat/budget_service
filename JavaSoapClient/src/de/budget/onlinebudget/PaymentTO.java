@@ -18,9 +18,9 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="active" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="bic" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="user" type="{http://onlinebudget.budget.de/}userTO" minOccurs="0"/>
@@ -47,9 +47,9 @@ public class PaymentTO {
 
     protected boolean active;
     protected String bic;
-    protected Timestamp createDate;
+    protected long createDate;
     protected int id;
-    protected Timestamp lastChanged;
+    protected long lastChanged;
     protected String name;
     protected String number;
     protected UserTO user;
@@ -97,24 +97,16 @@ public class PaymentTO {
     /**
      * Gets the value of the createDate property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getCreateDate() {
+    public long getCreateDate() {
         return createDate;
     }
 
     /**
      * Sets the value of the createDate property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setCreateDate(Timestamp value) {
+    public void setCreateDate(long value) {
         this.createDate = value;
     }
 
@@ -137,24 +129,16 @@ public class PaymentTO {
     /**
      * Gets the value of the lastChanged property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getLastChanged() {
+    public long getLastChanged() {
         return lastChanged;
     }
 
     /**
      * Sets the value of the lastChanged property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setLastChanged(Timestamp value) {
+    public void setLastChanged(long value) {
         this.lastChanged = value;
     }
 

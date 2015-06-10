@@ -1,7 +1,7 @@
 package de.budget.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+
 
 /**
  * @date 28.05.2015
@@ -19,9 +19,9 @@ public class IncomeTO implements Serializable {
 	private double amount;
 	private double quantity;
 	private UserTO user;
-	private Timestamp receiptDate;
-	private Timestamp createDate;
-	private Timestamp lastChanged;
+	private long receiptDate;
+	private long createDate;
+	private long lastChanged;
 	private CategoryTO category;
 	
 	
@@ -50,14 +50,14 @@ public class IncomeTO implements Serializable {
 	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, Timestamp createDate, Timestamp receiptDate, Timestamp lastChanged, UserTO user, CategoryTO category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, long createDate, long receiptDate, long lastChanged, UserTO user, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;
 		this.amount = amount;
 		this.quantity = quantity;
 		this.user = user;
-		this.setReceiptDate(receiptDate);
+		this.receiptDate = receiptDate;
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
 		this.category = category;
@@ -148,35 +148,6 @@ public class IncomeTO implements Serializable {
 		this.user = user;
 	}
 
-
-	/**
-	 * @return the createDate
-	 */
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-
-	/**
-	 * @param createDate the createDate to set
-	 */
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-
-	/**
-	 * @return the lastChanged
-	 */
-	public Timestamp getLastChanged() {
-		return lastChanged;
-	}
-
-	/**
-	 * @param lastChanged the lastChanged to set
-	 */
-	public void setLastChanged(Timestamp lastChanged) {
-		this.lastChanged = lastChanged;
-	}
-
 	/**
 	 * @return the category
 	 */
@@ -194,16 +165,45 @@ public class IncomeTO implements Serializable {
 	/**
 	 * @return the receiptDate
 	 */
-	public Timestamp getReceiptDate() {
+	public long getReceiptDate() {
 		return receiptDate;
 	}
 
 	/**
 	 * @param receiptDate the receiptDate to set
 	 */
-	public void setReceiptDate(Timestamp receiptDate) {
+	public void setReceiptDate(long receiptDate) {
 		this.receiptDate = receiptDate;
 	}
+
+	/**
+	 * @return the createDate
+	 */
+	public long getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * @param createDate the createDate to set
+	 */
+	public void setCreateDate(long createDate) {
+		this.createDate = createDate;
+	}
+
+	/**
+	 * @return the lastChanged
+	 */
+	public long getLastChanged() {
+		return lastChanged;
+	}
+
+	/**
+	 * @param lastChanged the lastChanged to set
+	 */
+	public void setLastChanged(long lastChanged) {
+		this.lastChanged = lastChanged;
+	}
+
 	
 	
 }

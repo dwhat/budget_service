@@ -1,7 +1,7 @@
 package de.budget.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+
 
 /**
  * @date 18.05.2015
@@ -17,9 +17,9 @@ public class ItemTO implements Serializable {
 	private double quantity;	
 	private double price;	
 	private String notice;		
-	private Timestamp createDate;	
-	private Timestamp receiptDate;	
-	private Timestamp lastChanged;
+	private long createDate;	
+	private long receiptDate;	
+	private long lastChanged;
 	private BasketTO basket;
 	private CategoryTO category;
 
@@ -46,7 +46,7 @@ public class ItemTO implements Serializable {
 	 * @param basket
 	 * @param category
 	 */
-	public ItemTO(int id, String name, double quantity, double price, String notice, Timestamp createDate, Timestamp receiptDate, Timestamp lastChanged, BasketTO basket, CategoryTO category) {
+	public ItemTO(int id, String name, double quantity, double price, String notice, long createDate, long receiptDate, long lastChanged, BasketTO basket, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.quantity = quantity;
@@ -154,7 +154,7 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @return the createDate
 	 */
-	public Timestamp getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
@@ -163,7 +163,7 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @param createDate the createDate to set
 	 */
-	public void setCreateDate(Timestamp createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
@@ -172,7 +172,7 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @return the lastChanged
 	 */
-	public Timestamp getLastChanged() {
+	public long getLastChanged() {
 		return lastChanged;
 	}
 
@@ -181,7 +181,7 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @param lastChanged the lastChanged to set
 	 */
-	public void setLastChanged(Timestamp lastChanged) {
+	public void setLastChanged(long lastChanged) {
 		this.lastChanged = lastChanged;
 	}
 
@@ -224,14 +224,14 @@ public class ItemTO implements Serializable {
 	/**
 	 * @return the receiptDate
 	 */
-	public Timestamp getReceiptDate() {
+	public long getReceiptDate() {
 		return receiptDate;
 	}
 
 	/**
 	 * @param receiptDate the receiptDate to set
 	 */
-	public void setReceiptDate(Timestamp receiptDate) {
+	public void setReceiptDate(long receiptDate) {
 		this.receiptDate = receiptDate;
 	}
 }

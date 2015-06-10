@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="arg5" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg7" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg8" type="{http://onlinebudget.budget.de/}itemTO" maxOccurs="unbounded" minOccurs="0"/>
@@ -54,7 +54,7 @@ public class CreateOrUpdateBasket {
     protected String arg2;
     protected String arg3;
     protected double arg4;
-    protected Timestamp arg5;
+    protected long arg5;
     protected int arg6;
     protected int arg7;
     protected List<ItemTO> arg8;
@@ -158,24 +158,16 @@ public class CreateOrUpdateBasket {
     /**
      * Gets the value of the arg5 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link Timestamp }
-     *     
      */
-    public Timestamp getArg5() {
+    public long getArg5() {
         return arg5;
     }
 
     /**
      * Sets the value of the arg5 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link Timestamp }
-     *     
      */
-    public void setArg5(Timestamp value) {
+    public void setArg5(long value) {
         this.arg5 = value;
     }
 

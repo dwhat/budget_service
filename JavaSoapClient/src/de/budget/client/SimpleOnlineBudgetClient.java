@@ -14,7 +14,6 @@ import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
 import de.budget.onlinebudget.PaymentResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
-import de.budget.onlinebudget.Timestamp;
 import de.budget.onlinebudget.UserLoginResponse;
 import de.budget.onlinebudget.VendorListResponse;
 import de.budget.onlinebudget.VendorResponse;
@@ -44,10 +43,10 @@ public class SimpleOnlineBudgetClient {
  	       	//Test-Szeanarien ausfuehren:
  	       	//szenarioRegister();
  	       	szenarioCategory();
- 	       	szenarioVendor();
- 	       	szenarioPayment();
- 	       	szenarioCategory();
- 	       	//szenarioIncome();
+ 	       	//szenarioVendor();
+ 	       	//szenarioPayment();
+ 	       	//szenarioCategory();
+ 	       	szenarioIncome();
 		   
 		}
 		catch (Exception ex) {
@@ -60,7 +59,6 @@ public class SimpleOnlineBudgetClient {
 	 * szenario to test a login an to create, update, get and delete an income
 	 * @author Marco
 	 */
-	/*
 	private static void szenarioIncome() {
 		   System.out.println("============================================================");
 	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
@@ -69,9 +67,14 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Emma hat sich angemeldet");
 			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
 			   System.out.println("============================================================");
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", new Timestamp(System.currentTimeMillis()), 1);
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", new Timestamp(System.currentTimeMillis()), 1);
-			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", new Timestamp(System.currentTimeMillis()), 1);
+			   System.out.println("Suche Kategorie für Income");
+			   CategoryListResponse catListRespIncome = remoteSystem.getCategorysOfIncome(sessionId);
+			   int katId = catListRespIncome.getCategoryList().get(1).getId();
+			   System.out.println("Kategorie mit Id "+ katId + " gefunden");
+			   System.out.println("============================================================");
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", System.currentTimeMillis(), katId);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", System.currentTimeMillis(), katId);
+			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", System.currentTimeMillis(), katId);
 			   System.out.println("============================================================");
 			   int sampleIncomeId = 0; //Für spätere Test bei update und get
 			   IncomeListResponse incListResp = remoteSystem.getIncomes(sessionId);
@@ -101,7 +104,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + incResp.getMessage());
 			   System.out.println("============================================================");
 			   System.out.println("Ändere Income mit Id " + sampleIncomeId);
-			   createIncomeHelper(sessionId, sampleIncomeId, "LohnGeändert", 1.00, 2000.00, "Lohn MärzGeändert", new Timestamp(System.currentTimeMillis()), 1);
+			   createIncomeHelper(sessionId, sampleIncomeId, "LohnGeändert", 1.00, 2000.00, "Lohn MärzGeändert", System.currentTimeMillis(), katId);
 
 			   System.out.println("============================================================");
 			   System.out.println("Lösche Income mit Id " + sampleIncomeId);
@@ -121,14 +124,13 @@ public class SimpleOnlineBudgetClient {
 			   
 	       }    
 	}
-	*/
 	/**
 	 * HelferMethode zum anlegen von Incomes
 	 * @author Marco
 	 * @date 08.06.2015
 	 */
 	private static void createIncomeHelper (int sessionId, int incomeId, String name,
-			double quantity, double amount, String notice,  Timestamp receiptDate, int categoryId)  {
+			double quantity, double amount, String notice,  long receiptDate, int categoryId)  {
 		
 		System.out.println("Lege Income an. ");
 		   IncomeResponse incResp = remoteSystem.createOrUpdateIncome(sessionId, incomeId, name, quantity, amount, notice, receiptDate, categoryId);
