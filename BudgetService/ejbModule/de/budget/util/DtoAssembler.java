@@ -189,8 +189,8 @@ public class DtoAssembler {
 		dto.setCreateDate(item.getCreateDate().getTime());
 		dto.setReceiptDate(item.getReceiptDate().getTime());
 		dto.setLastChanged(item.getLastChanged().getTime());
-		dto.setBasket(dtoAssem.makeDto(item.getBasket()));
-		dto.setCategory(dtoAssem.makeDto(item.getCategory()));
+		dto.setBasketId(item.getBasket().getId());
+		dto.setCategoryId(item.getCategory().getId());
 		return dto;
 	}
 	

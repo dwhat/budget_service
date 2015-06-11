@@ -608,22 +608,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Basket basket = user.getBasket(basketId);
 				Payment payment = user.getPayment(paymentId);
 				Vendor vendor = user.getVendor(vendorId);
-				//wandle empfangene ItemTOs in ItemObjekte
 				ArrayList<Item> itemList = new ArrayList<>();
-				for(ItemTO iTo : items) {
-					int itemId = iTo.getId();
-					String itemName = iTo.getName();	
-					double itemQuantity = iTo.getQuantity();	
-					double itemPrice = iTo.getPrice();	
-					String itemNotice = iTo.getNotice();		
-					Timestamp itemReceiptDate = new Timestamp(iTo.getReceiptDate());	
-					int itemBasketId = iTo.getBasket().getId();
-					int itemCategoryId = iTo.getCategory().getId();
 
-					Item item = createOrUpdateItemHelper(sessionId, itemId, itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, itemBasketId, itemCategoryId);
-					itemList.add(item);
-				}
-				
 				if(basket == null) {
 					basket = dao.createBasket(user, name, notice, amount, new Timestamp(purchaseDate), payment, vendor, itemList);
 				}
@@ -638,7 +624,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				
 					basket = dao.updateBasket(basket);
 				}
+				//wandle empfangene ItemTOs in ItemObjekte
+				for(ItemTO iTo : items) {
+					String itemName = iTo.getName();	
+					double itemQuantity = iTo.getQuantity();	
+					double itemPrice = iTo.getPrice();	
+					String itemNotice = iTo.getNotice();		
+					Timestamp itemReceiptDate = new Timestamp(iTo.getReceiptDate());	
+					int itemCategoryId = iTo.getCategoryId();
+					Category itemCategory = user.getCategory(itemCategoryId);
+					Item item = new Item(itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, basket, itemCategory);
+					//itemList.add(item);
+					//basket.addNewItem(item);
+				}
+
 				if (basket != null) {
+					//basket.setItems(itemList);
+					//basket = dao.updateBasket(basket);
 					response.setBasketTo(dtoAssembler.makeDto(basket));
 					response.setReturnCode(200);
 				}

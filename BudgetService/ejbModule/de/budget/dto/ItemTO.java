@@ -20,8 +20,8 @@ public class ItemTO implements Serializable {
 	private long createDate;	
 	private long receiptDate;	
 	private long lastChanged;
-	private BasketTO basket;
-	private CategoryTO category;
+	private int basketId;
+	private int categoryId;
 
 	/**
 	 * Deafault Constructor
@@ -46,7 +46,7 @@ public class ItemTO implements Serializable {
 	 * @param basket
 	 * @param category
 	 */
-	public ItemTO(int id, String name, double quantity, double price, String notice, long createDate, long receiptDate, long lastChanged, BasketTO basket, CategoryTO category) {
+	public ItemTO(int id, String name, double quantity, double price, String notice, long createDate, long receiptDate, long lastChanged, int basketId, int categoryId) {
 		this.id = id;
 		this.name = name;
 		this.quantity = quantity;
@@ -55,8 +55,8 @@ public class ItemTO implements Serializable {
 		this.createDate = createDate;
 		this.receiptDate = receiptDate;
 		this.lastChanged = lastChanged;
-		this.category = category;
-		this.basket = basket;
+		this.categoryId = categoryId;
+		this.basketId = basketId;
 	}
 
 	/**
@@ -190,8 +190,8 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @return the basket
 	 */
-	public BasketTO getBasket() {
-		return basket;
+	public int getBasketId() {
+		return basketId;
 	}
 
 	/**
@@ -199,8 +199,8 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @param basket the basket to set
 	 */
-	public void setBasket(BasketTO basket) {
-		this.basket = basket;
+	public void setBasketId(int basketId) {
+		this.basketId = basketId;
 	}
 
 	/**
@@ -208,8 +208,8 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @return the category
 	 */
-	public CategoryTO getCategory() {
-		return category;
+	public int getCategoryId() {
+		return categoryId;
 	}
 
 	/**
@@ -217,8 +217,8 @@ public class ItemTO implements Serializable {
 	 * @date 19.05.2015
 	 * @param category the category to set
 	 */
-	public void setCategory(CategoryTO category) {
-		this.category = category;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	/**

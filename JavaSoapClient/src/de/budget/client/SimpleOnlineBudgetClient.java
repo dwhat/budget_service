@@ -1,13 +1,19 @@
 package de.budget.client;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
+import de.budget.onlinebudget.BasketListResponse;
+import de.budget.onlinebudget.BasketResponse;
+import de.budget.onlinebudget.BasketTO;
 import de.budget.onlinebudget.CategoryListResponse;
 import de.budget.onlinebudget.CategoryResponse;
 import de.budget.onlinebudget.CategoryTO;
 import de.budget.onlinebudget.IncomeListResponse;
 import de.budget.onlinebudget.IncomeResponse;
 import de.budget.onlinebudget.IncomeTO;
+import de.budget.onlinebudget.ItemTO;
 import de.budget.onlinebudget.PaymentTO;
 import de.budget.onlinebudget.PaymentListResponse;
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
@@ -41,11 +47,15 @@ public class SimpleOnlineBudgetClient {
  	       	System.out.println();
  	       
  	       	//Test-Szeanarien ausfuehren:
- 	       	//szenarioRegister();
+ 	       	/*
+ 	       	szenarioRegister();
+ 	       	szenarioLogin();
  	        szenarioCategory();
- 	       	//szenarioVendor();
- 	       	//szenarioPayment();
+ 	       	szenarioVendor();
+ 	       	szenarioPayment();
  	       	szenarioIncome();
+ 	       	*/
+ 	       	szenarioBasket();
 		   
 		}
 		catch (Exception ex) {
@@ -55,7 +65,170 @@ public class SimpleOnlineBudgetClient {
 	}
 	
 	/**
-	 * szenario to test a login an to create, update, get and delete an income
+	 * Szenario to test the login and logout function
+	 */
+	private static void szenarioLogin() {
+		System.out.println("============================================================");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
+	    	   int sessionId = loginResponse.getSessionId();
+			   System.out.println("Emma hat sich angemeldet");
+			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
+			   System.out.println("============================================================");
+			   System.out.println("Emma loggt sich aus.");
+			   remoteSystem.logout(sessionId);
+			   System.out.println("Emma hat sich abgemeldet.");
+	       }
+	}
+	
+	/**
+	 * szenario to test a login and to create update get and delete a basket
+	 */
+	private static void szenarioBasket() {
+		System.out.println("============================================================");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
+	    	   int sessionId = loginResponse.getSessionId();
+			   System.out.println("Emma hat sich angemeldet");
+			   System.out.println("LoginReturnCode: " + loginResponse.getReturnCode());
+			   System.out.println("============================================================");
+			   CategoryListResponse catListRespLoss = remoteSystem.getCategorysOfLoss(sessionId);
+			   int katId = catListRespLoss.getCategoryList().get(0).getId();
+			   System.out.println("Kategorie mit Id "+ katId + " gefunden");
+			   long dateLong = System.currentTimeMillis();
+			   ArrayList<ItemTO> itemToList = new ArrayList<>();
+			   //itemId, name, quantity,price, notice, long receiptDate, int basketId, int categoryId
+			   itemToList.add(createItemTO(0, "Shampoo", 2.00, 2.99, "Für die Haare", dateLong, 0, katId));
+			   itemToList.add(createItemTO(0, "Shampoo", 3.00, 2.99, "Für die Haare", dateLong, 0, katId));
+			   itemToList.add(createItemTO(0, "Shampoo", 5.00, 2.99, "Für die Haare", dateLong, 0, katId));
+			   itemToList.add(createItemTO(0, "Shampoo", 3.00, 2.99, "Für die Haare", dateLong, 0, katId));
+			   int vendorId = remoteSystem.getVendors(sessionId).getVendorList().get(0).getId();
+			   int paymentId = remoteSystem.getPayments(sessionId).getPaymentList().get(0).getId();
+			   createBasketHelper(sessionId, 0, "EinkaufHeute", "Heutiger Einkauf", 2.00, dateLong, paymentId, vendorId, itemToList);
+			   createBasketHelper(sessionId, 0, "EinkaufGestern", "Heutiger Einkauf", 2.00, dateLong, paymentId, vendorId, itemToList);
+			   createBasketHelper(sessionId, 0, "EinkaufJanuar", "Heutiger Einkauf", 2.00, dateLong, paymentId, vendorId, itemToList);
+			   createBasketHelper(sessionId, 0, "EinkaufFebruar", "Heutiger Einkauf", 2.00, dateLong, paymentId, vendorId, itemToList);
+			   
+			   
+			   System.out.println("============================================================");
+			   int sampleBasketId = 0; //Für spätere Test bei update und get
+			   BasketListResponse baskListResp = remoteSystem.getBaskets(sessionId);
+			   System.out.println("BasketListe ausgeben ReturnCode: " + baskListResp.getReturnCode());
+			   if(baskListResp.getReturnCode() == 200) {
+				   ArrayList<BasketTO> baskList= (ArrayList<BasketTO>) baskListResp.getBasketList();
+				   System.out.println("Es sind " + baskList.size() + " Warenkörbe vorhanden.");
+				   sampleBasketId = baskList.get(0).getId();
+				   for (BasketTO b : baskList){
+					   System.out.println("ID: "+ b.getId() + "  Name: " + b.getName());
+				   }
+			   }
+			   else {
+				   System.out.println("Message: " + baskListResp.getMessage());
+			   }
+			   System.out.println("Message: " + baskListResp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Suche Basket mit Id " + sampleBasketId);
+			   BasketResponse baskResp = remoteSystem.getBasket(sessionId, sampleBasketId);
+			   System.out.println("BasketSuchen ReturnCode: " + baskResp.getReturnCode());
+			   if(baskResp.getReturnCode() == 200) {
+				   System.out.println("ID: "+ baskResp.getBasketTo().getId() + "  Name: " + baskResp.getBasketTo().getName());
+			   }
+			   else {
+				   System.out.println("Message: " + baskResp.getMessage());
+			   }
+			   System.out.println("Message: " + baskResp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Ändere Basket mit Id " + sampleBasketId);
+			   createBasketHelper(sessionId, sampleBasketId, "GeändertEinkaufFebruar", "Heutiger Einkauf", 2.00, dateLong, paymentId, vendorId, itemToList);
+
+			   System.out.println("============================================================");
+			   System.out.println("Lösche Basket mit Id " + sampleBasketId);
+			   ReturnCodeResponse resp = remoteSystem.deleteBasket(sessionId, sampleBasketId);
+			   System.out.println("Basketlöschen ReturnCode: " + resp.getReturnCode());
+			   if(resp.getReturnCode() == 200) {
+				   System.out.println("Suche Basket mit Id " + sampleBasketId);
+				   BasketResponse baskResp1 = remoteSystem.getBasket(sessionId, sampleBasketId);
+				   System.out.println("Basket ReturnCode: " + baskResp1.getReturnCode());
+			   }
+			   else {
+				   System.out.println("Message: " + resp.getMessage());
+			   }
+			   System.out.println("Message: " + resp.getMessage());
+			   remoteSystem.logout(sessionId);
+			   System.out.println("Emma hat sich abgemeldet.");
+			   
+	       }
+	}
+	
+	/**
+	 * Helper method to create an Item
+	 * @param sessionId
+	 * @param itemId
+	 * @param name
+	 * @param quantity
+	 * @param price
+	 * @param notice
+	 * @param receiptDate
+	 * @param basketId
+	 * @param categoryId
+	 */
+	private static ItemTO createItemTO(int itemId, String name, double quantity,
+			double price, String notice, long receiptDate, int basketId, int categoryId){
+		
+		ItemTO itemto = new ItemTO();
+		itemto.setId(itemId);
+		itemto.setName(name);
+		itemto.setQuantity(quantity);
+		itemto.setPrice(price);
+		itemto.setNotice(notice);
+		itemto.setReceiptDate(receiptDate);
+		itemto.setBasketId(basketId);
+		itemto.setCategoryId(categoryId);
+		return itemto;
+	}
+	
+	/**
+	 * HelperMethod to create or update a basket
+	 * @param sessionId
+	 * @param basketId
+	 * @param name
+	 * @param notice
+	 * @param amount
+	 * @param purchaseDate
+	 * @param paymentId
+	 * @param vendorId
+	 * @param items
+	 * @author Marco
+	 */
+	private static void createBasketHelper(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items){
+		System.out.println("Lege Basket an. ");
+		BasketResponse baskResp = remoteSystem.createOrUpdateBasket(sessionId, basketId, name, notice, amount, purchaseDate, paymentId, vendorId, items);
+		System.out.println("BasketAnlegen ReturnCode: " + baskResp.getReturnCode());
+		if(baskResp.getReturnCode() == 200) {
+			System.out.println("Basket angelegt");
+			   if(baskResp.getBasketTo() != null) {
+				   System.out.println("Basket Eigenschaften: ");
+				   System.out.println("Name = " + baskResp.getBasketTo().getName());
+				   System.out.println("Amount = " + baskResp.getBasketTo().getAmount());
+				   System.out.println("Notiz = " + baskResp.getBasketTo().getNotice());
+				   System.out.println("Owner = " + baskResp.getBasketTo().getUser().getUsername());
+				   for(ItemTO i : baskResp.getBasketTo().getItems()) {
+					   System.out.println("--ItemName: " + i.getName());
+				   }
+			   }
+			   else {
+				   System.out.println ("Basket ist gleich null");
+			   }
+		   }
+		   else {
+			   System.out.println("Message: " + baskResp.getMessage());
+		   }
+		   System.out.println("Message: " + baskResp.getMessage());
+		   System.out.println("============================================================");
+	}
+	
+	/**
+	 * szenario to test a login and to create, update, get and delete an income
 	 * @author Marco
 	 */
 	private static void szenarioIncome() {
@@ -126,6 +299,7 @@ public class SimpleOnlineBudgetClient {
 			   
 	       }    
 	}
+	
 	/**
 	 * HelferMethode zum anlegen von Incomes
 	 * @author Marco
@@ -460,12 +634,12 @@ public class SimpleOnlineBudgetClient {
 	   System.out.println("============================================================");
 	   System.out.println("Register Szenario:");
 
-       UserLoginResponse loginResponse = remoteSystem.setUser("emma", "12345678", "test@mail.com");
+       UserLoginResponse loginResponse = remoteSystem.setUser("Max", "12345678", "testMax@mail.com");
        if (loginResponse.getReturnCode()==0) {
     	   int sessionId = loginResponse.getSessionId();
-		   System.out.println("Emma hat sich erfolgreich registriert.");
+		   System.out.println("Max hat sich erfolgreich registriert.");
 	       remoteSystem.logout(sessionId);
-		   System.out.println("Emma hat sich abgemeldet.");
+		   System.out.println("Max hat sich abgemeldet.");
 	   }
        else {
     	   System.out.println(loginResponse.getMessage());

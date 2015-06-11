@@ -749,6 +749,23 @@ public interface BudgetOnlineServiceBean {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns de.budget.onlinebudget.IncomeListResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "getLastIncomes", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetLastIncomes")
+    @ResponseWrapper(localName = "getLastIncomesResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetLastIncomesResponse")
+    public IncomeListResponse getLastIncomes(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        int arg1);
+
+    /**
+     * 
      * @param arg5
      * @param arg4
      * @param arg3

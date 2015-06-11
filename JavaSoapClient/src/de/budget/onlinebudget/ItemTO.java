@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="basket" type="{http://onlinebudget.budget.de/}basketTO" minOccurs="0"/>
- *         &lt;element name="category" type="{http://onlinebudget.budget.de/}categoryTO" minOccurs="0"/>
+ *         &lt;element name="basketId" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="categoryId" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "itemTO", propOrder = {
-    "basket",
-    "category",
+    "basketId",
+    "categoryId",
     "createDate",
     "id",
     "lastChanged",
@@ -49,8 +49,8 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ItemTO {
 
-    protected BasketTO basket;
-    protected CategoryTO category;
+    protected int basketId;
+    protected int categoryId;
     protected long createDate;
     protected int id;
     protected long lastChanged;
@@ -61,51 +61,35 @@ public class ItemTO {
     protected long receiptDate;
 
     /**
-     * Gets the value of the basket property.
+     * Gets the value of the basketId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link BasketTO }
-     *     
      */
-    public BasketTO getBasket() {
-        return basket;
+    public int getBasketId() {
+        return basketId;
     }
 
     /**
-     * Sets the value of the basket property.
+     * Sets the value of the basketId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link BasketTO }
-     *     
      */
-    public void setBasket(BasketTO value) {
-        this.basket = value;
+    public void setBasketId(int value) {
+        this.basketId = value;
     }
 
     /**
-     * Gets the value of the category property.
+     * Gets the value of the categoryId property.
      * 
-     * @return
-     *     possible object is
-     *     {@link CategoryTO }
-     *     
      */
-    public CategoryTO getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
     /**
-     * Sets the value of the category property.
+     * Sets the value of the categoryId property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link CategoryTO }
-     *     
      */
-    public void setCategory(CategoryTO value) {
-        this.category = value;
+    public void setCategoryId(int value) {
+        this.categoryId = value;
     }
 
     /**

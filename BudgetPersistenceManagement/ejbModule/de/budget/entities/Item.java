@@ -77,10 +77,9 @@ public class Item implements Serializable {
 		this.receiptDate = receiptDate;
 		this.category = category;
 		this.basket = basket;
-		this.basket.addNewItem(this);
-		this.basket.getUser().addNewCategory(category);
 		this.createDate = new Timestamp(System.currentTimeMillis());
 		this.lastChanged = new Timestamp(System.currentTimeMillis());
+		this.basket.addNewItem(this);
 	}
 
 	
