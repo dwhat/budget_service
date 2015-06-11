@@ -411,9 +411,9 @@ public class SimpleOnlineBudgetClient {
 	 * @author Marco
 	 * @date 08.06.2015
 	 */
-	private static void createPaymentHelper (int sessionId, int catId, String name, String number, String bic, boolean active) {
+	private static void createPaymentHelper (int sessionId, int payId, String name, String number, String bic, boolean active) {
 		System.out.println("Lege Paymente an. ");
-		PaymentResponse payResp = remoteSystem.createOrUpdatePayment(sessionId, catId, name, number, bic, active);
+		PaymentResponse payResp = remoteSystem.createOrUpdatePayment(sessionId, payId, name, number, bic, active);
 		   System.out.println("PaymentAnlegen ReturnCode: " + payResp.getReturnCode());
 		   if(payResp.getReturnCode() == 200) {
 			   System.out.println("Payment angelegt");

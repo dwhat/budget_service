@@ -109,12 +109,10 @@ public class Basket implements Serializable {
 		 this.name = name;
 		 this.vendor = vendor;
 		 this.purchaseDate = purchaseDate;
-		 this.user.addNewBasket(this);
-		 this.user.addNewPayment(payment);
-		 this.user.addNewVendor(vendor);
 		 this.items = new ArrayList<Item>();
 		 this.createDate = new Timestamp(System.currentTimeMillis());
 		 this.lastChanged = new Timestamp(System.currentTimeMillis());
+		 this.user.addNewBasket(this);
 	 }
 	 
 	 /**
