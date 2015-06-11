@@ -74,7 +74,7 @@ public class SimpleOnlineBudgetClient {
 			   long dateLong = System.currentTimeMillis();
 			   System.out.println("============================================================");
 			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn Mai", dateLong, katId);
-			   /*
+			   
 			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn April", dateLong, katId);
 			   createIncomeHelper(sessionId, -99, "Lohn", 1.00, 2000.00, "Lohn März", dateLong, katId);
 			   System.out.println("============================================================");
@@ -123,7 +123,7 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + resp.getMessage());
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
-			   */
+			   
 	       }    
 	}
 	/**

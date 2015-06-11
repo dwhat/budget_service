@@ -48,10 +48,10 @@ public class Item implements Serializable {
 	private Timestamp lastChanged;
 	
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Basket.class)
 	private Basket basket;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Category.class)
 	private Category category;
 	
 	

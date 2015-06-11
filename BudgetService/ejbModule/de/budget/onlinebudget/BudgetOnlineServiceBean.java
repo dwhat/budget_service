@@ -5,43 +5,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
+import javax.ejb.Remote;
 //import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
-
 import javax.jws.WebService;
-
-
 
 import javax.persistence.EntityExistsException;
 
-
-
-
-
-
-
-
-
 import javax.persistence.TransactionRequiredException;
-
 
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
@@ -101,7 +79,7 @@ import de.budget.onlinebudget.OutputRequesterBean;
  *
  */
 @Stateless
-//@Remote(BudgetOnlineService.class)
+@Remote(BudgetOnlineService.class)
 @WebService
 @WebContext(contextRoot = "/budget")
 public class BudgetOnlineServiceBean implements BudgetOnlineService {
@@ -1451,7 +1429,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.info(e.getMessage());
 		}
 		return response;
-		
 	}
 	
 
@@ -1462,7 +1439,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @param numberOfIncome   Anzahl der gew�nschten letzten Incomes
 	 */
-	/*
 	@Override
 	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
 		IncomeListResponse response = new IncomeListResponse();
@@ -1489,7 +1465,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
-	*/
+	
 	/**
 	 * Gets all income of the actual month
 	 * @author Marco

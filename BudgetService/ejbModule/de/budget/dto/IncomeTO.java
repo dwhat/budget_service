@@ -48,7 +48,7 @@ public class IncomeTO implements Serializable {
 	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, UserTO user, CategoryTO category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, UserTO user , CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;

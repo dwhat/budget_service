@@ -366,7 +366,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @author Marco
 	 * @date 03.06.2015
 	 */
-	/*
+	
 	public List<Income> getLastIncome(String username, int numberOfLastIncomes) {
 		Query q = em.createNamedQuery("findLastIncomes", Income.class);
 		q.setParameter("username", username);
@@ -375,7 +375,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
 		return list;
 	}
-	*/
+	
 	/**
 	 * update an income Object
 	 * @author Marco

@@ -389,7 +389,7 @@ public interface BudgetOnlineService {
 	 * @param numberOfIncome
 	 * @return IncomeListResponse
 	 */
-	//public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome);
+	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome);
 	
 	/**
 	 * gets all Incomes of a specific category for incomes
@@ -420,12 +420,7 @@ public interface BudgetOnlineService {
 	 */
 	public ReturnCodeResponse deleteIncome(int sessionId, int itemID);
 	
-	
-	
-	
-	
-	
-	
+
 	
 	/*#################      ITEM - SECTION     ##############*/
 
@@ -486,15 +481,7 @@ public interface BudgetOnlineService {
 	public ItemListResponse getItemsByLossCategory(int sessionId, int categoryId);
 
 	
-	
-	
-	
-	
 	/*#################      XYZ - SECTION     ##############*/
-	
-	//public Map<Integer,Integer> getChart(int customerID);
-	
-	//public int getBalance(int customerID);
 	
 	/**
 	 * @author Marco

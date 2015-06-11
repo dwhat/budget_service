@@ -21,14 +21,14 @@ import org.jboss.logging.Logger;
  * @author Marco
  * Income Class
  */
-/*
+
 @NamedQueries( {
 	@NamedQuery (
 			name = "findLastIncomes",
 			query = "select i from Income i where i.user.userName like :username order by i.receiptDate" 
 			)
 })
-*/
+
 @Entity
 public class Income implements Serializable {
 
@@ -53,7 +53,7 @@ public class Income implements Serializable {
 	
 	private Date createDate;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Category.class)
 	private Category category;
 	
 	/**
@@ -77,7 +77,7 @@ public class Income implements Serializable {
 		super();
 	}
 	
-	public Income(String name, String notice, double quantity, double amount,  Date receiptDate, Category category, User user) {
+	public Income(String name, String notice, double quantity, double amount,  Date receiptDate, Category category , User user) {
 		this.user = user;
 		this.name = name;
 		this.notice = notice;

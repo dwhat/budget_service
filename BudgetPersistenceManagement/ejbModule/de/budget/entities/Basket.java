@@ -70,10 +70,10 @@ public class Basket implements Serializable {
 	@ManyToOne
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Payment.class)
 	private Payment payment;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=Vendor.class)
 	private Vendor vendor;
 
 	/**
