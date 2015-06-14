@@ -109,7 +109,7 @@ public class User implements Serializable {
 	* @date 08.05.2015
 	*/
 	public User(String userName, String password, String email) {
-		this.userName = userName;
+		this.userName = userName.toLowerCase();
 		this.password = password;
 		this.email = email;
 		this.createDate = new Timestamp(System.currentTimeMillis());
@@ -143,7 +143,7 @@ public class User implements Serializable {
 	* @date 08.05.2015
 	*/
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.userName = userName.toLowerCase();
 	}
 
 	/**
