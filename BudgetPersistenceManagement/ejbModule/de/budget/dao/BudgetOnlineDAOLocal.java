@@ -60,7 +60,7 @@ public interface BudgetOnlineDAOLocal {
 	public Basket findBasketById(int basketId) throws IllegalArgumentException;
 	public void deleteBasket(int basketId) throws IllegalArgumentException;
 	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets);
-	public List<Basket> getBasketsOfActualMonth(String username); //TODO
+	public List<Basket> getBasketsOfActualMonth(String username);
 	
 	public Category createCategory(User user, String name, String notice, boolean income, String colour);
 	public Category updateCategory(Category category) throws IllegalArgumentException;
@@ -77,6 +77,7 @@ public interface BudgetOnlineDAOLocal {
 	public Income findIncomeById(int incomeId) throws IllegalArgumentException;
 	public void deleteIncome(int income) throws IllegalArgumentException;
 	public List<Income> getLastIncome(String username, int numberOfLastIncomes);
+	public List<Income> getIncomeOfActualMonth(String username);
 
 	public Payment createPayment(User user, String name, String number, String bic);
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException;

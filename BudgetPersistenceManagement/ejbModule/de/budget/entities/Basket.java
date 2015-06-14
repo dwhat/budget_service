@@ -26,11 +26,11 @@ import javax.validation.constraints.NotNull;
 	@NamedQuery (
 			name = "findLastBaskets",
 			query = "select b from Basket b where b.user.userName like :username order by b.purchaseDate"
+			),
+	@NamedQuery (
+			name = "findBasketsOfMonth",
+			query = "select b from Basket b where b.user.userName like :username AND b.purchaseDate >= :date"
 			)
-	//@NamedQuery (
-		//	name = "findBasketsOfMonth",
-			//query = "select b from Basket b where b.user.userName like :username AND SUBSTRING(b.purchaseDate, 1, 7) like :dateYearOfMonth"
-			//)
 })
 @Entity
 public class Basket implements Serializable {

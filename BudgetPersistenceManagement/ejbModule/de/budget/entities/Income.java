@@ -26,6 +26,10 @@ import org.jboss.logging.Logger;
 	@NamedQuery (
 			name = "findLastIncomes",
 			query = "select i from Income i where i.user.userName like :username order by i.receiptDate" 
+			),
+	@NamedQuery (
+			name = "findIncomeOfMonth",
+			query = "select i from Income i where i.user.userName like :username AND i.receiptDate >= :date"
 			)
 })
 

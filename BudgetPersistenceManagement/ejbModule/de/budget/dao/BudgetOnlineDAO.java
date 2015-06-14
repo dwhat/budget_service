@@ -102,7 +102,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @author Moritz
 	 * @param UserObjekt
 	 * @return SessionID
-	 * 
 	 */
 	@Override
 	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException{
@@ -168,9 +167,16 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @author Marco
 	 * @date 02.06.2015
 	 */
+	@Override
 	public List<Basket> getBasketsOfActualMonth(String username){
-		// TODO SQL QUERY
-		return null;
+		Timestamp date = new Timestamp(System.currentTimeMillis());
+		Timestamp firstOfMonth = new Timestamp(date.getYear(), date.getMonth(), 1, 0, 0, 0, 0); //erster des Monats
+		Query q = em.createNamedQuery("findBasketsOfMonth", Basket.class);
+		q.setParameter("username", username);
+		q.setParameter("date", firstOfMonth);
+		@SuppressWarnings("unchecked")
+		ArrayList<Basket> list = (ArrayList<Basket>) q.getResultList();
+		return list;
 	}
 	
 	/**
@@ -179,6 +185,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param numberOfLastBaskets
 	 * @return
 	 */
+	@Override
 	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets) {
 		Query q = em.createNamedQuery("findLastBaskets", Basket.class);
 		q.setParameter("username", username);
@@ -366,11 +373,27 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @author Marco
 	 * @date 03.06.2015
 	 */
-	
+	@Override
 	public List<Income> getLastIncome(String username, int numberOfLastIncomes) {
 		Query q = em.createNamedQuery("findLastIncomes", Income.class);
 		q.setParameter("username", username);
 		q.setMaxResults(numberOfLastIncomes);
+		@SuppressWarnings("unchecked")
+		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
+		return list;
+	}
+	
+	/**
+	 * Method to find all income of the actual month
+	 * @author Marco
+	 * @date 02.06.2015
+	 */
+	public List<Income> getIncomeOfActualMonth(String username){
+		Timestamp date = new Timestamp(System.currentTimeMillis());
+		Timestamp firstOfMonth = new Timestamp(date.getYear(), date.getMonth(), 1, 0, 0, 0, 0); //erster des Monats
+		Query q = em.createNamedQuery("findIncomeOfMonth", Income.class);
+		q.setParameter("username", username);
+		q.setParameter("date", firstOfMonth);
 		@SuppressWarnings("unchecked")
 		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
 		return list;
