@@ -32,7 +32,7 @@ public class OutputRequesterBean {
 	  @Resource(mappedName="java:/JmsXA")
 	  private ConnectionFactory jmsFactory;
 	  
-	  @Resource(mappedName="java:/queue/BudgetOutput")
+	  @Resource(mappedName="java:/jms/queue/BudgetOutput")
 	  private Queue outputQueue;
 	  
 	  
