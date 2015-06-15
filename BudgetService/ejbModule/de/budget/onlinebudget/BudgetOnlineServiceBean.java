@@ -154,7 +154,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				// Request OK zurückschicken
 				response.setReturnCode(200);
 				int payloadNumber = payloader.getPayload();
-				payloader.setPayload(payloadNumber+1);
+				int newPayload = payloadNumber + 1;
+				payloader.setPayload(newPayload);
+				logger.info("Es sind aktuell " + newPayload + " Benutzer angemeldet");
 			}
 			else 
 			{
@@ -1264,9 +1266,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				//Lege Payment Objekt an
 				Category category = user.getCategory(categoryId);
-			
+				
+				
 				if(category == null) {
-					category = dao.createCategory(user, name, notice, income, colour);
+					ArrayList<String> nameList = new ArrayList<>();
+					for (Category c : user.getCategories()) {
+						nameList.add(c.getName());
+					}
+					if(!nameList.contains(name)) {
+						category = dao.createCategory(user, name, notice, income, colour);
+					}
+					else {
+						response.setReturnCode(400);
+						response.setMessage("Category already Exists with this name");
+					}
 				}
 				else {
 					category.setName(name);
@@ -1308,15 +1321,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 
-
-	
-
-
 	/*#################      INCOME - SECTION     ##############*/
-
-
-	
-
 
 	/**
 	 * Method to get a special income
@@ -1477,24 +1482,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
 		IncomeListResponse response = new IncomeListResponse();
-		int actualMonth = new Timestamp(System.currentTimeMillis()).getMonth();
-		int actualYear = new Timestamp(System.currentTimeMillis()).getYear();
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-				List<Income> incomeList = user.getIncomes();
-				ArrayList<Income> resultList = new ArrayList<>();
-				for (Income i : incomeList) {
-					//TODO launchDate ist nicht ideal (überdenken wie es bei wiederkehrenden Einnahmen behandelt wird
-					//Moritz-> nun auf Anlegedatum geändert, 
-					int incomeMonth = i.getCreateDate().getMonth(); 
-					int incomeYear = i.getCreateDate().getYear();
-					if(incomeMonth == actualMonth && incomeYear == actualYear) {
-						resultList.add(i);
-					}
-				}
-				response.setIncomeList(dtoAssembler.makeIncomeListDto(resultList));
+				List<Income> incomeList = this.dao.getIncomeOfActualMonth(user.getUserName());
+				response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
 				response.setReturnCode(200);
 			}
 		}

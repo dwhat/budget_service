@@ -54,10 +54,10 @@ public class SimpleOnlineBudgetClient {
  	       	szenarioPayment();
  	       	szenarioIncome();
  	       	*/
- 	       //szenarioCategory();
+ 	       szenarioCategory();
  	       //szenarioVendor();
- 	       //szenarioBasket();
- 	       szenarioIncome();
+ 	       szenarioBasket();
+ 	       //szenarioIncome();
 		   
 		}
 		catch (Exception ex) {
@@ -296,6 +296,11 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Message: " + resp.getMessage());
 			   }
 			   System.out.println("Message: " + resp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Suche alle Einnahmen des aktuellen Monats");
+			   IncomeListResponse incListResponse = remoteSystem.getIncomesOfActualMonth(sessionId);
+			   System.out.println("returnCode = " + incListResponse.getReturnCode());
+			   System.out.println("Es sind " + incListResponse.getIncomeList().size() + " Einnahmen für den akutellen Monat vorhanden");
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
 			   
