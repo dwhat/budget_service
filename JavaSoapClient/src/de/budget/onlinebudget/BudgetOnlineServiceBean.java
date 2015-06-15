@@ -199,13 +199,13 @@ public interface BudgetOnlineServiceBean {
      * 
      * @param arg0
      * @return
-     *     returns de.budget.onlinebudget.BasketListResponse
+     *     returns de.budget.onlinebudget.AmountResponse
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getBasketsOfActualMonth", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetBasketsOfActualMonth")
     @ResponseWrapper(localName = "getBasketsOfActualMonthResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetBasketsOfActualMonthResponse")
-    public BasketListResponse getBasketsOfActualMonth(
+    public AmountResponse getBasketsOfActualMonth(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0);
 
@@ -213,13 +213,13 @@ public interface BudgetOnlineServiceBean {
      * 
      * @param arg0
      * @return
-     *     returns de.budget.onlinebudget.IncomeListResponse
+     *     returns de.budget.onlinebudget.AmountResponse
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getIncomesOfActualMonth", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomesOfActualMonth")
     @ResponseWrapper(localName = "getIncomesOfActualMonthResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.GetIncomesOfActualMonthResponse")
-    public IncomeListResponse getIncomesOfActualMonth(
+    public AmountResponse getIncomesOfActualMonth(
         @WebParam(name = "arg0", targetNamespace = "")
         int arg0);
 

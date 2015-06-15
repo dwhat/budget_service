@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://onlinebudget.budget.de/}incomeListResponse" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://onlinebudget.budget.de/}amountResponse" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GetIncomesOfActualMonthResponse {
 
     @XmlElement(name = "return")
-    protected IncomeListResponse _return;
+    protected AmountResponse _return;
 
     /**
      * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link IncomeListResponse }
+     *     {@link AmountResponse }
      *     
      */
-    public IncomeListResponse getReturn() {
+    public AmountResponse getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class GetIncomesOfActualMonthResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link IncomeListResponse }
+     *     {@link AmountResponse }
      *     
      */
-    public void setReturn(IncomeListResponse value) {
+    public void setReturn(AmountResponse value) {
         this._return = value;
     }
 

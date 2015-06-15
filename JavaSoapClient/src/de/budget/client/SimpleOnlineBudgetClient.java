@@ -55,10 +55,11 @@ public class SimpleOnlineBudgetClient {
  	       	szenarioPayment();
  	       	szenarioIncome();
  	       	*/
- 	       szenarioCategory();
+ 	       //szenarioCategory();
  	       //szenarioVendor();
- 	       szenarioBasket();
+ 	       //szenarioBasket();
  	       //szenarioIncome();
+ 	       szenarioLogin();
 		   
 		}
 		catch (Exception ex) {
@@ -72,7 +73,7 @@ public class SimpleOnlineBudgetClient {
 	 */
 	private static void szenarioLogin() {
 		System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -89,7 +90,7 @@ public class SimpleOnlineBudgetClient {
 	 */
 	private static void szenarioBasket() {
 		System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -243,7 +244,7 @@ public class SimpleOnlineBudgetClient {
 	 */
 	private static void szenarioIncome() {
 		   System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -354,7 +355,7 @@ public class SimpleOnlineBudgetClient {
 	 */ 
 	private static void szenarioPayment() {
 		System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -362,8 +363,8 @@ public class SimpleOnlineBudgetClient {
 			   
 			   System.out.println("============================================================");
 			   createPaymentHelper(sessionId, -99, "Volksbank", "12356799", "BIC1234", true);
-			   createPaymentHelper(sessionId, -99, "Sparkasse", "DE123456789", "BIC1234", true);
-			   createPaymentHelper(sessionId, -99, "Postbank", "123456789", "BIC123456789", true);
+			   createPaymentHelper(sessionId, -99, "Sparkasse", "DE25d55ad283aa400af464c76d713c07ad9", "BIC1234", true);
+			   createPaymentHelper(sessionId, -99, "Postbank", "25d55ad283aa400af464c76d713c07ad9", "BIC25d55ad283aa400af464c76d713c07ad9", true);
 			   createPaymentHelper(sessionId, -99, "Comerzbank", "12ADAD356799", "BIC1234DE", true);
 			   createPaymentHelper(sessionId, -99, "Dt. Bank", "123ASDAD56799", "BIC1234NL", true);
 			   
@@ -455,7 +456,7 @@ public class SimpleOnlineBudgetClient {
 	 */
 	private static void szenarioCategory() {
 		   System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -553,7 +554,7 @@ public class SimpleOnlineBudgetClient {
 	 */
 	private static void szenarioVendor() {
 		   System.out.println("============================================================");
-	       UserLoginResponse loginResponse = remoteSystem.login("emma", "12345678");
+	       UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
 	       if (loginResponse != null & loginResponse.getReturnCode()==200) {
 	    	   int sessionId = loginResponse.getSessionId();
 			   System.out.println("Emma hat sich angemeldet");
@@ -649,7 +650,7 @@ public class SimpleOnlineBudgetClient {
 	   System.out.println("============================================================");
 	   System.out.println("Register Szenario:");
 
-       UserLoginResponse loginResponse = remoteSystem.setUser("Max", "12345678", "testMax@mail.com");
+       UserLoginResponse loginResponse = remoteSystem.setUser("Max", "25d55ad283aa400af464c76d713c07ad", "testMax@mail.com");
        if (loginResponse.getReturnCode()==0) {
     	   int sessionId = loginResponse.getSessionId();
 		   System.out.println("Max hat sich erfolgreich registriert.");
