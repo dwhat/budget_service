@@ -1092,6 +1092,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	
+	/**
+	 * Method to find all categories of a user
+	 * @author Marco
+	 * @param sessionId
+	 * @return List with all Categories
+	 * @throws NoSessionException
+	 * @throws IllegalArgumentException
+	 * @throws Exception
+	 */
 	private List<Category> getCategoriesHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception {
 		try {
 			BudgetSession session = getSession(sessionId);
@@ -1472,7 +1481,34 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
-	
+	/**
+	 * Method to get all incomes of the actuell month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	private List<Income> getIncomesOfActualMonthHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception{
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Income> list = this.dao.getIncomeOfActualMonth(user.getUserName());
+				return list;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(NoSessionException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw e;
+		}
+		catch(Exception e) {
+			throw e;
+		}
+	}
 	/**
 	 * Gets all income of the actual month
 	 * @author Marco
@@ -1483,13 +1519,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
 		IncomeListResponse response = new IncomeListResponse();
 		try {
-			BudgetSession session = getSession(sessionId);
-			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				List<Income> incomeList = this.dao.getIncomeOfActualMonth(user.getUserName());
-				response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
-				response.setReturnCode(200);
-			}
+			List<Income> incomeList = getIncomesOfActualMonthHelper(sessionId);
+			response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());

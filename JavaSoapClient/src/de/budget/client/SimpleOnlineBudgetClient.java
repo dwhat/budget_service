@@ -156,6 +156,12 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Message: " + resp.getMessage());
 			   }
 			   System.out.println("Message: " + resp.getMessage());
+			   System.out.println("============================================================");
+			   System.out.println("Suche alle Ausgaben des aktuellen Monats");
+			   BasketListResponse baskListResponse = remoteSystem.getBasketsOfActualMonth(sessionId);
+			   System.out.println("returnCode = " + baskListResponse.getReturnCode());
+			   System.out.println("Es sind " + baskListResponse.getBasketList().size() + " Ausgaben für den akutellen Monat vorhanden");
+			   remoteSystem.logout(sessionId);
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
 			   
