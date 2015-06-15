@@ -12,11 +12,14 @@ package de.budget.Exception;
 public class VendorNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 8759021636475023682L;
+	
+	private static final String ERROR_STRING = "VENDOR_NOT_FOUND_EXCEPTION";
 
-	private static String vendorMessage = "VEndor not found for this id.";
 	
 	public VendorNotFoundException() {
-		super(vendorMessage);
+		super(ERROR_STRING, null);
 	}
-
+	public VendorNotFoundException(String additionalMessage) {
+		super(ERROR_STRING, additionalMessage);
+	}
 }

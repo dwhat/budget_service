@@ -3,7 +3,7 @@
  */
 package de.budget.Exception;
 
-import javax.annotation.Resource;
+
 
 /**
  * Exception which will be thrown if a income cound not be found 
@@ -14,12 +14,14 @@ public class IncomeNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 8759021636475023682L;
 	
-	@Resource
-	private static String incomeMessage = "No income found for this id";
+private static final String ERROR_STRING = "INCOME_NOT_FOUND_EXCEPTION";
 
-
+	
 	public IncomeNotFoundException() {
-		super(incomeMessage);
+		super(ERROR_STRING, null);
+	}
+	public IncomeNotFoundException(String additionalMessage) {
+		super(ERROR_STRING, additionalMessage);
 	}
 
 }

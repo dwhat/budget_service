@@ -13,10 +13,13 @@ public class PaymentNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 8759021636475023682L;
 
-	private static String paymentMessage;
+	private static final String ERROR_STRING = "PAYMENT_NOT_FOUND_EXCEPTION";
 
+	
 	public PaymentNotFoundException() {
-		super(paymentMessage);
+		super(ERROR_STRING, null);
 	}
-
+	public PaymentNotFoundException(String additionalMessage) {
+		super(ERROR_STRING, additionalMessage);
+	}	
 }

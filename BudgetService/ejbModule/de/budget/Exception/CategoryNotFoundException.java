@@ -13,11 +13,14 @@ public class CategoryNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 8759021636475023682L;
 
-	private static String categoryMessage = "Category not found for this id";
+private static final String ERROR_STRING = "CATEGORY_NOT_FOUND_EXCEPTION";
 
-
+	
 	public CategoryNotFoundException() {
-		super(categoryMessage);
+		super(ERROR_STRING, null);
+	}
+	public CategoryNotFoundException(String additionalMessage) {
+		super(ERROR_STRING, additionalMessage);
 	}
 
 }

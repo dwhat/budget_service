@@ -13,11 +13,13 @@ public class ItemNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 8759021636475023682L;
 	
-	private static String itemMessage = "Item not found for this id.";
+private static final String ERROR_STRING = "ITEM_NOT_FOUND_EXCEPTION";
 
-
+	
 	public ItemNotFoundException() {
-		super(itemMessage);
+		super(ERROR_STRING, null);
 	}
-
+	public ItemNotFoundException(String additionalMessage) {
+		super(ERROR_STRING, additionalMessage);
+	}
 }

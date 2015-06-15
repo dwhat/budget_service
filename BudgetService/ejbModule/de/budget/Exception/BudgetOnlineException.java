@@ -52,6 +52,34 @@ public class BudgetOnlineException extends Exception {
 			this.errorMessage = "Objekt existiert bereits.";
 			logger.error("");
 			break;
+		case "ITEM_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		case "INCOME_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		case "CATEGORY_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		case "VENDOR_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		case "PAYMENT_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		case "BASKET_NOT_FOUND_EXCEPTION":
+			this.errorMessage = "Objekt existiert bereits.";
+			logger.error("");
+			break;
+		default:
+			this.errorMessage = additionalMessage;
+			logger.error("");
+			break;
 		}
 		
 	}
