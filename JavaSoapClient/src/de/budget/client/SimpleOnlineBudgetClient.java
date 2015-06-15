@@ -3,6 +3,7 @@ package de.budget.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.budget.onlinebudget.AmountResponse;
 import de.budget.onlinebudget.BasketListResponse;
 import de.budget.onlinebudget.BasketResponse;
 import de.budget.onlinebudget.BasketTO;
@@ -158,9 +159,9 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + resp.getMessage());
 			   System.out.println("============================================================");
 			   System.out.println("Suche alle Ausgaben des aktuellen Monats");
-			   BasketListResponse baskListResponse = remoteSystem.getBasketsOfActualMonth(sessionId);
-			   System.out.println("returnCode = " + baskListResponse.getReturnCode());
-			   System.out.println("Es sind " + baskListResponse.getBasketList().size() + " Ausgaben für den akutellen Monat vorhanden");
+			   AmountResponse amountResponse = remoteSystem.getBasketsOfActualMonth(sessionId);
+			   System.out.println("returnCode = " + amountResponse.getReturnCode());
+			   System.out.println("Sie haben diesen Monat schon " + amountResponse.getValue() + "€ ausgegeben.");
 			   remoteSystem.logout(sessionId);
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
@@ -304,9 +305,9 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("Message: " + resp.getMessage());
 			   System.out.println("============================================================");
 			   System.out.println("Suche alle Einnahmen des aktuellen Monats");
-			   IncomeListResponse incListResponse = remoteSystem.getIncomesOfActualMonth(sessionId);
-			   System.out.println("returnCode = " + incListResponse.getReturnCode());
-			   System.out.println("Es sind " + incListResponse.getIncomeList().size() + " Einnahmen für den akutellen Monat vorhanden");
+			   AmountResponse amountResponse = remoteSystem.getIncomesOfActualMonth(sessionId);
+			   System.out.println("returnCode = " + amountResponse.getReturnCode());
+			   System.out.println("Sie haben diesen Monat " + amountResponse.getValue() + "€ eingenommen.");
 			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
 			   

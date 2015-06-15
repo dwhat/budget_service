@@ -310,12 +310,12 @@ public interface BudgetOnlineService {
 	public BasketListResponse getBasketsByVendor(int sessionId, int vendorId);
 	
 	/**
-	 * gets all baskets of the actual month
+	 * gets the sum of all basketsamounts of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
 	 */
-	public BasketListResponse getBasketsOfActualMonth(int sessionId);
+	public AmountResponse getBasketsOfActualMonth(int sessionId);
 	
 	
 	/**
@@ -389,12 +389,12 @@ public interface BudgetOnlineService {
 	
 
 	/**
-	 * gets all income of the actual month
+	 * gets the sum of all income of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
 	 */
-	public IncomeListResponse getIncomesOfActualMonth(int sessionId);
+	public AmountResponse getIncomesOfActualMonth(int sessionId);
 	
 	
 	/**

@@ -403,33 +403,51 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Method to get all incomes of the actual month
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	private List<Basket> getBasketsOfActualMonthHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception{
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Basket> list = this.dao.getBasketsOfActualMonth(user.getUserName());
+				return list;
+			}
+			else {
+				return null;
+			}
+		}
+		catch(NoSessionException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw e;
+		}
+		catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	/**
 	 * Gets all baskets of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public BasketListResponse getBasketsOfActualMonth(int sessionId) {
-		BasketListResponse response = new BasketListResponse();
-		int actualMonth = new Timestamp(System.currentTimeMillis()).getMonth();
-		int actualYear = new Timestamp(System.currentTimeMillis()).getYear();
+	public AmountResponse getBasketsOfActualMonth(int sessionId) {
+		AmountResponse response = new AmountResponse();
 		try {
-			BudgetSession session = getSession(sessionId);
-			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				List<Basket> basketList = user.getBaskets();
-				ArrayList<Basket> resultList = new ArrayList<>();
-				for (Basket b : basketList) {
-					int basketMonth = b.getPurchaseDate().getMonth();
-					int basketYear = b.getPurchaseDate().getYear();
-					if(basketMonth == actualMonth && basketYear == actualYear) {
-						resultList.add(b);
-					}
-				}
-				response.setBasketList(dtoAssembler.makeBasketListDto(resultList));
-				response.setReturnCode(200);
-			} 
+			List<Basket> basketList = getBasketsOfActualMonthHelper(sessionId);
+			double amount = 0;
+			for (Basket b : basketList) {
+				amount = amount + b.getAmount();
+			}
+			response.setValue(amount);
+			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -442,7 +460,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(Exception e) {
 			logger.info(e.getMessage());
 		}
-		return response;	
+		return response;
 	}
 	
 
@@ -638,6 +656,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					Item item = new Item(itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, basket, itemCategory);
 					//itemList.add(item);
 					//basket.addNewItem(item);
+					//TODO
 				}
 
 				if (basket != null) {
@@ -1482,7 +1501,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	/**
-	 * Method to get all incomes of the actuell month
+	 * Method to get all incomes of the actual month
 	 * @author Marco
 	 * @param sessionId
 	 * @return
@@ -1516,11 +1535,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return
 	 */
 	@Override
-	public IncomeListResponse getIncomesOfActualMonth(int sessionId) {
-		IncomeListResponse response = new IncomeListResponse();
+	public AmountResponse getIncomesOfActualMonth(int sessionId) {
+		AmountResponse response = new AmountResponse();
 		try {
 			List<Income> incomeList = getIncomesOfActualMonthHelper(sessionId);
-			response.setIncomeList(dtoAssembler.makeIncomeListDto(incomeList));
+			double amount = 0;
+			for (Income i : incomeList) {
+				amount = amount + i.getAmount();
+			}
+			response.setValue(amount);
 			response.setReturnCode(200);
 		}
 		catch(NoSessionException e) {
@@ -1874,9 +1897,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw e;
 		}
 		catch (ItemNotFoundException e) {
-			throw e;
-		}
-		catch (BudgetOnlineException e) {
 			throw e;
 		}
 		catch (IllegalArgumentException e) {
