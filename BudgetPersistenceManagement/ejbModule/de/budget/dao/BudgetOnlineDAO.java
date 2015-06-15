@@ -118,10 +118,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 */
 	@Override
 	public void closeSession(int sessionId) throws IllegalArgumentException {
-
 			BudgetSession session = em.find(BudgetSession.class, sessionId);
 			em.remove(session);
-		
 	}
 
 	/**

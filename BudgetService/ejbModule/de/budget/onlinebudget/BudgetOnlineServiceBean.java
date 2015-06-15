@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -14,12 +16,11 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Remote;
 //import javax.ejb.Remote;
 import javax.ejb.Stateless;
-
 import javax.jws.WebService;
-
 import javax.persistence.EntityExistsException;
-
 import javax.persistence.TransactionRequiredException;
+
+
 
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
@@ -50,14 +51,15 @@ import de.budget.dto.Response.VendorResponse;
 import de.budget.Exception.BudgetOnlineException;
 import de.budget.Exception.CategoryNotFoundException;
 import de.budget.Exception.IncomeNotFoundException;
-import de.budget.Exception.InvalidLoginException;
 import de.budget.Exception.InvalidPasswordException;
 import de.budget.Exception.ItemNotFoundException;
 import de.budget.Exception.NoSessionException;
 import de.budget.Exception.PaymentNotFoundException;
+import de.budget.Exception.UserNotFoundException;
 import de.budget.Exception.UsernameAlreadyExistsException;
 import de.budget.Exception.BasketNotFoundException;
 import de.budget.Exception.VendorNotFoundException;
+import de.budget.Exception.WrongPasswordException;
 //Entities-Import
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
@@ -134,6 +136,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Session anhand username und password erstellen und in ResponseObject zurückliefern
 	 * 
 	 * @author Moritz
+	 * @author Marco
 	 * @param Username 
 	 * @param password
 	 * @return UserLoginResponse
@@ -142,31 +145,35 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public UserLoginResponse login(String username, String password) {
 		UserLoginResponse response = new UserLoginResponse();
-		try 
-		{
+		try {
 			User user = this.dao.findUserByName(username);		
-			if (user != null && user.getPassword().equals(password)) 
-			{
-				int sessionId = dao.createSession(user);
+			if (user != null) {
+				if (user.getPassword().equals(password)){
+					int sessionId = dao.createSession(user);
 				
-				logger.info("Login erfolgreich. Session=" + sessionId);
-				response.setSessionId(sessionId);
-				// Request OK zurückschicken
-				response.setReturnCode(200);
-				int payloadNumber = payloader.getPayload();
-				int newPayload = payloadNumber + 1;
-				payloader.setPayload(newPayload);
-				logger.info("Es sind aktuell " + newPayload + " Benutzer angemeldet");
+					logger.info("Login erfolgreich. Session=" + sessionId);
+					response.setSessionId(sessionId);
+					// Request OK zurückschicken
+					response.setReturnCode(200);
+					int payloadNumber = payloader.getPayload();
+					int newPayload = payloadNumber + 1;
+					payloader.setPayload(newPayload);
+					logger.info("Es sind aktuell " + newPayload + " Benutzer angemeldet");
+				}
+				else {
+					logger.info("Login fehlgeschlagen, da password falsch ");
+					throw new WrongPasswordException();
+				}
 			}
 			else 
 			{
-				logger.info("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username=" + username);
-				throw new InvalidLoginException("Login fehlgeschlagen, da User unbekannt oder Passwort falsch. username="+ username);
+				logger.info("Login fehlgeschlagen, da User unbekannt username: " + username);
+				throw new UserNotFoundException(username);
 			}
 		}
-		catch (BudgetOnlineException e) {
+		catch (UserNotFoundException | WrongPasswordException e) {
 			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
+			response.setMessage(e.getErrorMessage());
 		}
 		return response;
 	}
@@ -189,12 +196,17 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			payloader.setPayload(payloadNumber-1);
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("You must be logged in to log out");
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "logout | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		return response;	
 	}
 
+	
 	/**
 	 * Method to register a new user
 	 * @author Marco
@@ -205,7 +217,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public UserLoginResponse setUser(String username, String password, String email) {
 		UserLoginResponse response = new UserLoginResponse();
 		try {
-			
 			//prüfen ob Username noch verwendbar ist
 			if(dao.findUserByName(username) == null) {
 				logger.info("Versuche neuen User anzulegen. Name=" + username);
@@ -227,10 +238,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(IllegalArgumentException e) {
-			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(EntityExistsException e) {
-			throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(InvalidPasswordException | UsernameAlreadyExistsException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -264,10 +285,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(NoSessionException e) {
 			userResp.setReturnCode(e.getErrorCode());
 			userResp.setMessage(e.getMessage());
+			throw new IllegalArgumentException();
 		}
 		catch(IllegalArgumentException e) {
-			userResp.setReturnCode(404);
-			userResp.setMessage("Could not find username");
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				userResp.setReturnCode(be.getErrorCode());
+				userResp.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -303,9 +329,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("User to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteUser | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -346,8 +376,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getLastBaskets | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -387,8 +421,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasketsByVendor | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -418,7 +456,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw e;
 		}
 		catch(IllegalArgumentException e) {
-			throw e;
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasketsOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
 			throw e;
@@ -448,8 +486,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasketsOfActualMonth | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -491,8 +533,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasketsByPayment | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -534,8 +580,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -567,8 +617,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBaskets | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -596,9 +650,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Basket to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -674,12 +732,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -725,8 +791,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getVendor | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -758,8 +828,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getVendors | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -788,9 +862,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Vendor to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteVendor | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -843,12 +921,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateVendor | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateVendor | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -890,8 +976,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getPayment | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -906,8 +996,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @param paymentId
 	 * @return a Payment Object
+	 * @throws BudgetOnlineException 
 	 */
-	private Payment getPaymentHelper(int sessionId, int paymentId) throws NoSessionException, IllegalArgumentException {
+	private Payment getPaymentHelper(int sessionId, int paymentId) throws  BudgetOnlineException, Exception {
 		try {	
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -918,6 +1009,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			else {		
 				throw new NoSessionException("Please first login");
 			}
+		}
+		catch (IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getPayment | " + e.getStackTrace().toString());
 		}
 		catch (Exception e) {
 			throw e;
@@ -948,8 +1042,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getPayments | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -980,9 +1078,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Payment to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deletePayment | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -1047,8 +1149,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdatePayment | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		/*Moritz -> Catchblock wird niemals erreicht !
 		catch (BudgetOnlineException e) {
@@ -1096,8 +1202,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1114,7 +1224,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @throws IllegalArgumentException
 	 * @throws Exception
 	 */
-	private List<Category> getCategoriesHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception {
+	private List<Category> getCategoriesHelper(int sessionId) throws NoSessionException, BudgetOnlineException, Exception {
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -1129,7 +1239,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw e;
 		}
 		catch(IllegalArgumentException e) {
-			throw e;
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategories | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
 			throw e;
@@ -1156,8 +1266,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategories | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1191,8 +1305,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategoriesOfIncome | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1227,8 +1345,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategoriesOfLoss | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1257,9 +1379,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Category to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -1330,12 +1456,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1379,8 +1513,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncome | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1412,8 +1550,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomes | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1451,8 +1593,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomesByCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1486,8 +1632,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getLastIncomes | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1500,7 +1650,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @return
 	 */
-	private List<Income> getIncomesOfActualMonthHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception{
+	private List<Income> getIncomesOfActualMonthHelper(int sessionId) throws NoSessionException, BudgetOnlineException, Exception{
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
@@ -1516,7 +1666,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw e;
 		}
 		catch(IllegalArgumentException e) {
-			throw e;
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomesOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
 			throw e;
@@ -1545,8 +1695,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomesOfActualMonth | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1576,9 +1730,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Income to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteIncome | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -1646,12 +1804,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateIncome | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Income to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateIncome | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (TransactionRequiredException e) {
 			logger.info("xyz/TranscationException- " + e.getMessage());
@@ -1707,8 +1873,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemByBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1744,8 +1914,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByBasket | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1787,8 +1961,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByLossCategory | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info(e.getMessage());
@@ -1817,9 +1995,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Item to delete not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "deleteItem | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch (Exception e) {
 			logger.info(e.getMessage());
@@ -1894,10 +2076,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw e;
 		}
 		catch (IllegalArgumentException e) {
-			throw e;
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateItem | " + e.getStackTrace().toString());
+
 		}
 		catch(EntityExistsException e) {
-			throw e;
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateItem | " + e.getStackTrace().toString());
 		} 
 		catch (Exception e) {
 			throw e;
@@ -1934,14 +2117,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(404);
 			response.setMessage("Couldn't create a item.");
 		}
-		catch (IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Item not found.");
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateItem | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
-		} catch (Exception e) {
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateItem | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch (Exception e) {
 			response.setMessage(e.getMessage());
 			response.setReturnCode(404);
 		}		
@@ -2003,8 +2195,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getMessage());
 		}
 		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage(e.getMessage());
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomeByPeriod | " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
 		}
 		catch(Exception e) {
 			logger.info("FehlergetIncomebyPeriod:" + e.getMessage());
