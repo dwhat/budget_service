@@ -13,8 +13,14 @@ public class InvalidPasswordException extends BudgetOnlineException {
 	private static final long serialVersionUID = 8759021636475023682L;
 	private static final int CODE = 500;
 
-	public InvalidPasswordException(String message) {
-		super(CODE, message);
+	private static final String ERROR_STRING = "PASSWORD_INVALID_EXCEPTION";
+
+	
+	public InvalidPasswordException() {
+		super(CODE, ERROR_STRING, null);
+	}
+	public InvalidPasswordException(String additionalMessage) {
+		super(CODE, ERROR_STRING, additionalMessage);
 	}
 
 }

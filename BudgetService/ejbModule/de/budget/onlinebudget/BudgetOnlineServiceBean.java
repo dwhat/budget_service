@@ -121,7 +121,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private BudgetSession getSession(int sessionId) throws NoSessionException {
 		BudgetSession session = dao.findSessionById(sessionId);
 		if (session==null) {
-			throw new NoSessionException("Please first login");
+			throw new NoSessionException();
 		}
 		else {
 			return session;
@@ -217,34 +217,28 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						logger.info("User angelegt. Session=" + sessionId);
 						response.setReturnCode(200);
 					}
-					else {
-						response.setReturnCode(408);
-						response.setMessage("Could not create a user");
-					}
 				}
 				else {
-					throw new InvalidPasswordException("Your password is too short. It must be at least 8 symbols.");
+					throw new InvalidPasswordException(password);
 				}
 			}
 			else {
-				throw new UsernameAlreadyExistsException("Username has already been taken. Please try again.");
+				throw new UsernameAlreadyExistsException(username);
 			}
 		}
-		catch(InvalidPasswordException e) {
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+		}
+		catch(EntityExistsException e) {
+			throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "setUser | " + e.getStackTrace().toString());
+		}
+		catch(InvalidPasswordException | UsernameAlreadyExistsException e) {
 			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
+			response.setMessage(e.getErrorMessage());
 		}
 		catch(BudgetOnlineException be) {
 			response.setReturnCode(be.getErrorCode());
-			response.setMessage(be.getMessage());
-		}
-		catch(IllegalArgumentException e) {
-			response.setReturnCode(404);
-			response.setMessage("Could not create a user");
-		}
-		catch(EntityExistsException e) {
-			response.setReturnCode(600);
-			response.setMessage("Entity allready exists");
+			response.setMessage(be.getErrorMessage());
 		}
 		return response;
 	}

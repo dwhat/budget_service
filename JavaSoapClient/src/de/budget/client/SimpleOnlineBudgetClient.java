@@ -152,6 +152,7 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Suche Basket mit Id " + sampleBasketId);
 				   BasketResponse baskResp1 = remoteSystem.getBasket(sessionId, sampleBasketId);
 				   System.out.println("Basket ReturnCode: " + baskResp1.getReturnCode());
+				   System.out.println("Basket suchen Message: " + baskResp1.getMessage());
 			   }
 			   else {
 				   System.out.println("Message: " + resp.getMessage());
