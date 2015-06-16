@@ -50,6 +50,7 @@ public class Payload {
 	@Lock(LockType.WRITE)
 	public void setPayload(int payload) {
 		this.payload = payload;
+		logger.info("Es sind aktuell " + this.payload + " Benutzer angemeldet");
 	}
 
 }
