@@ -14,10 +14,10 @@ import de.budget.dto.Response.UserLoginResponse;
 
 /**
  * Test client for the BudgetServer
- * @author marco
+ * @author Marco
  * 
  */
-public class SimpleBudgetJavaClient {
+public class SimpleBudgetJavaTestClient {
 	
 	private static BudgetOnlineService remoteSystem;
 	
