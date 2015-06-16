@@ -359,11 +359,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				String username = user.getUserName();
 				ArrayList<Basket> basketList = (ArrayList<Basket>) this.dao.getLastBaskets(username, numberOfBaskets);
-				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
-				response.setReturnCode(200);
+				if(basketList.size()==0){
+					throw new BasketNotFoundException("no baskets found for this user.");
+				}
+				else {
+					response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
+					response.setReturnCode(200);
+				}
 			}
 		}
-		catch(NoSessionException e) {
+		catch(NoSessionException | BasketNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getErrorMessage());
 		}
@@ -613,11 +618,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Basket> basketList = user.getBaskets();
-				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));	
-				response.setReturnCode(200);
+				if(basketList.size()==0){
+					throw new BasketNotFoundException("No baskets found for this user");
+				}
+				else {
+					response.setBasketList(dtoAssembler.makeBasketListDto(basketList));	
+					response.setReturnCode(200);
+				}
 			}
 		}
-		catch(NoSessionException e) {
+		catch(NoSessionException | BasketNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getErrorMessage());
 		}
@@ -1241,10 +1251,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		CategoryListResponse response = new CategoryListResponse();
 		try {
 			List<Category> categoryList = getCategoriesHelper(sessionId);
-			response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
-			response.setReturnCode(200);
+			if(categoryList.size()==0){
+				throw new CategoryNotFoundException("No categories found for this user");
+			}
+			else {
+				response.setCategoryList(dtoAssembler.makeCategoryListDto(categoryList));	
+				response.setReturnCode(200);
+			}
 		}
-		catch(NoSessionException e) {
+		catch(NoSessionException | CategoryNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getErrorMessage());
 		}
@@ -2108,10 +2123,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		
 		try {
 			Item item = createOrUpdateItemHelper(sessionId, itemId, name, quantity, price, notice, new Timestamp(receiptDate), basketId, categoryId);
-			
-			response.setItemTo(dtoAssembler.makeDto(item));
-			response.setReturnCode(200);
-			
+			if(item == null) {
+				throw new ItemNotFoundException("ItemId: " + itemId);
+			}
+			else {
+				response.setItemTo(dtoAssembler.makeDto(item));
+				response.setReturnCode(200);
+			}
 		}
 		catch(BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -2152,11 +2170,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public AmountResponse getLossByPeriod(int sessionId, int daysOfPeriod) {
 		AmountResponse response = new AmountResponse();
+		double sum = 0;
 		try {
-			double sum = 0;
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
 			//TODO
 			response.setValue(sum);
 			response.setReturnCode(200);
+			}
 		}
 		catch(NoSessionException e) {
 			response.setReturnCode(e.getErrorCode());
