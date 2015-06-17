@@ -19,9 +19,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-
-import de.budget.onlinebudget.BudgetOnlineServiceBean;
-
 /**
  * Test class for JunitTest for the service
  * @author Marco
@@ -49,11 +46,12 @@ public class BudgetOnlineTest {
 	    String servicePart = "BudgetOnlineServiceBeanService";
 	    String portName = "BudgetOnlineServiceBeanPort";
 	    QName serviceQN = new QName(namespaceURI, servicePart);
-	    QName portQN = new QName(namespaceURI, portName);
+	    //QName portQN = new QName(namespaceURI, portName);
 	 
 	    // Creates a service instance
 	    Service service = Service.create(wsdlDocumentLocation, serviceQN);
-	    remoteSystem = service.getPort(portQN, BudgetOnlineServiceBean.class);
+	    //remoteSystem = service.getPort(portQN, BudgetOnlineServiceBean.class);
+	    remoteSystem = service.getPort(BudgetOnlineServiceBean.class);
 
 		sessionId = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad").getSessionId();
 	}

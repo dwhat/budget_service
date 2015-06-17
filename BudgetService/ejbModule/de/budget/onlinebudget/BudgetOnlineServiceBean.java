@@ -3114,7 +3114,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	public ReturnCodeResponse generateReport(int sessionId ) {
-		return null;
+		ReturnCodeResponse response = new ReturnCodeResponse();
+		
+		
+		return response;
 	}
 
 
