@@ -349,18 +349,18 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @author Marco
 	 * @date 28.05.2015
 	 * @param sessionId
-	 * @param numberOfBaskets   Anzahl der ge�nschten letzten Baskets
+	 * @param startPosition  startPosition of the incomes sorted by date
+	 * @param endPosition  endPosition of the incomes sorted by date
 	 * @return BasketListResponse
 	 */
 	@Override
-	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets) {
+	public BasketListResponse getLastBaskets(int sessionId, int startPosition, int endPosition) {
 		BasketListResponse response = new BasketListResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				String username = user.getUserName();
-				ArrayList<Basket> basketList = (ArrayList<Basket>) this.dao.getLastBaskets(username, numberOfBaskets);
+				String username = session.getUsername();
+				ArrayList<Basket> basketList = (ArrayList<Basket>) this.dao.getLastBaskets(username, startPosition, endPosition);
 				if(basketList.size()==0){
 					throw new BasketNotFoundException("no baskets found for this user.");
 				}
@@ -1629,21 +1629,21 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 
 	/**
-	 * Method to get the last Incomes of a user
+	 * Method to get the last Incomes of a user 
 	 * @author Marco
 	 * @date 28.05.2015
 	 * @param sessionId
-	 * @param numberOfIncome   Anzahl der gew�nschten letzten Incomes
+	 * @param startPosition  startPosition of the incomes sorted by date
+	 * @param endPosition  endPosition of the incomes sorted by date
 	 */
 	@Override
-	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome) {
+	public IncomeListResponse getLastIncomes(int sessionId, int startPosition, int endPosition) {
 		IncomeListResponse response = new IncomeListResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				String username = user.getUserName();
-				ArrayList<Income> incomeList = (ArrayList<Income>) this.dao.getLastIncome(username, numberOfIncome);
+				String username = session.getUsername();
+				ArrayList<Income> incomeList = (ArrayList<Income>) this.dao.getLastIncome(username, startPosition, endPosition);
 				if(incomeList.size()==0){
 					throw new IncomeNotFoundException("No incomes found for this user");
 				}
@@ -1670,6 +1670,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
+	
 	/**
 	 * Method to get all incomes of the actual month
 	 * @author Marco

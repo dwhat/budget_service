@@ -172,7 +172,7 @@ public class DtoAssembler {
 	}
 	
 	public List<ItemTO> makeItemListDto(List<Item> items) {
-		ArrayList<ItemTO> dtoList = new ArrayList<>();
+		List<ItemTO> dtoList = new ArrayList<>();
 		for(Item i : items) {
 			dtoList.add(dtoAssem.makeDto(i));
 		}

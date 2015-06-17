@@ -294,10 +294,11 @@ public interface BudgetOnlineService {
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
-	 * @param numberOfBaskets Anzahl der letzten auszugebenen Baskets
+	 * @param startPosition  startPosition of the incomes sorted by date
+	 * @param endPosition  endPosition of the incomes sorted by date
 	 * @return BasketListResponse Object
 	 */
-	public BasketListResponse getLastBaskets(int sessionId, int numberOfBaskets);
+	public BasketListResponse getLastBaskets(int sessionId, int startPosition, int endPosition);
 	
 	/**
 	 * Method to find all baskets of a vendor
@@ -372,10 +373,11 @@ public interface BudgetOnlineService {
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
-	 * @param numberOfIncome
+	 * @param startPosition  startPosition of the incomes sorted by date
+	 * @param endPosition  endPosition of the incomes sorted by date
 	 * @return IncomeListResponse
 	 */
-	public IncomeListResponse getLastIncomes(int sessionId, int numberOfIncome);
+	public IncomeListResponse getLastIncomes(int sessionId, int startPosition, int endPosition);
 	
 	/**
 	 * gets all Incomes of a specific category for incomes

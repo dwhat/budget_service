@@ -22,6 +22,7 @@ import javax.ejb.Local;
 
 
 
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -59,8 +60,8 @@ public interface BudgetOnlineDAOLocal {
 	public Basket updateBasket(Basket basket) throws IllegalArgumentException;
 	public Basket findBasketById(int basketId) throws IllegalArgumentException;
 	public void deleteBasket(int basketId) throws IllegalArgumentException;
-	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets);
-	public List<Basket> getBasketsOfActualMonth(String username);
+	public List<Basket> getLastBaskets(String username, int start, int end) throws IllegalArgumentException;
+	public List<Basket> getBasketsOfActualMonth(String username) throws IllegalArgumentException;
 	
 	public Category createCategory(User user, String name, String notice, boolean income, String colour);
 	public Category updateCategory(Category category) throws IllegalArgumentException;
@@ -76,8 +77,8 @@ public interface BudgetOnlineDAOLocal {
 	public Income updateIncome(Income income) throws IllegalArgumentException;
 	public Income findIncomeById(int incomeId) throws IllegalArgumentException;
 	public void deleteIncome(int income) throws IllegalArgumentException;
-	public List<Income> getLastIncome(String username, int numberOfLastIncomes);
-	public List<Income> getIncomeOfActualMonth(String username);
+	public List<Income> getLastIncome(String username, int start, int end) throws IllegalArgumentException;
+	public List<Income> getIncomeOfActualMonth(String username) throws IllegalArgumentException;
 
 	public Payment createPayment(User user, String name, String number, String bic);
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException;

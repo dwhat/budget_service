@@ -178,21 +178,24 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * Method to find the last baskets
-	 * @param user
-	 * @param numberOfLastBaskets
+	 * Methode zum nachladen von Incomes. Gibt incomes von Posistion start bis end an
+	 * @author Marco
+	 * @param username
+	 * @param start
+	 * @param end
 	 * @return
 	 */
 	@Override
-	public List<Basket> getLastBaskets(String username, int numberOfLastBaskets) {
+	public List<Basket> getLastBaskets(String username, int start, int end) {
 		Query q = em.createNamedQuery("findLastBaskets", Basket.class);
 		q.setParameter("username", username);
-		q.setMaxResults(numberOfLastBaskets);
+		q.setFirstResult(start);
+		q.setMaxResults(end);
 		@SuppressWarnings("unchecked")
 		ArrayList<Basket> list = (ArrayList<Basket>) q.getResultList();
 		return list;
 	}
-
+		
 	/**
 	 * @author Marco
 	 * @date 18.05.2015
@@ -367,15 +370,19 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * Method to get the last Incomes of a user
+	 * Methode zum nachladen von Incomes. Gibt incomes von Posistion start bis end an
 	 * @author Marco
-	 * @date 03.06.2015
+	 * @param username
+	 * @param start
+	 * @param end
+	 * @return
 	 */
 	@Override
-	public List<Income> getLastIncome(String username, int numberOfLastIncomes) {
+	public List<Income> getLastIncome(String username, int start, int end) {
 		Query q = em.createNamedQuery("findLastIncomes", Income.class);
 		q.setParameter("username", username);
-		q.setMaxResults(numberOfLastIncomes);
+		q.setFirstResult(start);
+		q.setMaxResults(end);
 		@SuppressWarnings("unchecked")
 		ArrayList<Income> list = (ArrayList<Income>) q.getResultList();
 		return list;

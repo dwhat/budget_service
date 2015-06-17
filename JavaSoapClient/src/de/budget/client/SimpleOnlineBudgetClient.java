@@ -57,9 +57,9 @@ public class SimpleOnlineBudgetClient {
  	       	*/
  	       //szenarioCategory();
  	       //szenarioVendor();
- 	       //szenarioBasket();
+ 	       szenarioBasket();
  	       //szenarioIncome();
- 	       szenarioLogin();
+ 	       //szenarioLogin();
 		   
 		}
 		catch (Exception ex) {
@@ -165,7 +165,6 @@ public class SimpleOnlineBudgetClient {
 			   System.out.println("returnCode = " + amountResponse.getReturnCode());
 			   System.out.println("Sie haben diesen Monat schon " + amountResponse.getValue() + "€ ausgegeben.");
 			   remoteSystem.logout(sessionId);
-			   remoteSystem.logout(sessionId);
 			   System.out.println("Emma hat sich abgemeldet.");
 			   
 	       }
@@ -226,6 +225,7 @@ public class SimpleOnlineBudgetClient {
 				   for(ItemTO i : baskResp.getBasketTo().getItems()) {
 					   System.out.println("--ItemName: " + i.getName());
 				   }
+				   System.out.println("BASKETTO: " + baskResp.getBasketTo().getItems());
 			   }
 			   else {
 				   System.out.println ("Basket ist gleich null");
