@@ -41,9 +41,9 @@ public class SimpleBudgetJavaTestClient {
  	       System.out.println();
  	       
  	       //Test-Szeanarien ausfuehren:
-		   szenarioEmma();
+		   //szenarioEmma();
 		   //szenarioJoe();		   	       
-		   //szenarioPeter();
+		   szenarioPeter();
 		   
 		}
 		catch (Exception ex) {

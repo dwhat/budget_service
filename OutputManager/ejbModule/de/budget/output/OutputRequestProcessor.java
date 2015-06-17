@@ -24,7 +24,7 @@ import org.jboss.logging.Logger;
 			      propertyValue = "javax.jms.Queue"),
 			 @ActivationConfigProperty(
 			      propertyName = "destination",
-			      propertyValue = "queue/BudgetOutput"),
+			      propertyValue = "java:/jms/queue/BudgetOutput"),
 			 @ActivationConfigProperty(
 			      propertyName = "messageSelector",
 			      propertyValue = "DocType LIKE 'Letter'") })
