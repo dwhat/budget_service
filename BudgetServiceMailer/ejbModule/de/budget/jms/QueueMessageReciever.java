@@ -38,7 +38,7 @@ public class QueueMessageReciever implements MessageListener {
 	@Resource(name = "java:jboss/mail/BudgetMail")
 	private Session mailSession;
 	
-	//Email Absender vorerst als Konstante 
+	//Email Absender vorerst als Konstante, nur für Verständnis
 	private static final String DEFAULT_SENDER = "robotbudget@gmail.com"; 
 
 
@@ -51,9 +51,9 @@ public class QueueMessageReciever implements MessageListener {
 		String Nachricht = "";
 		String UserName = "";
 		
-		
+		//Im moment sind wir in der Lage mehrere Messages zu listen
 		try {
-		
+			/* andere Messagetypen erstemal ignorieren 
 			if(message instanceof TextMessage) {
 				TextMessage body = (TextMessage) message;
 				Nachricht = body.getText();
@@ -62,7 +62,8 @@ public class QueueMessageReciever implements MessageListener {
 				//User user = message.getBody(User.class);
 				Object obj = message.getBody(null);
 			}
-			else if(message instanceof MapMessage) {
+			*/
+			if(message instanceof MapMessage) {
 				MapMessage mapMessage = (MapMessage) message;
 				eMail = mapMessage.getString( "email" );
 				Betreff = mapMessage.getString( "subject" );
@@ -70,9 +71,11 @@ public class QueueMessageReciever implements MessageListener {
 				UserName = mapMessage.getString( "user" );
 			}
 			
-			sendMail(eMail,Betreff,Nachricht,UserName);
-			
-			logger.info("BudgetMailer| versendete Nachricht an: "+ UserName + "Inhalt:" + Nachricht);
+			if(sendMail(eMail,Betreff,Nachricht,UserName)) {
+				logger.info("BudgetMailer| versendete Nachricht an: "+ UserName + "Inhalt:" + Nachricht);
+			}
+			//Der Queue mitteilen das die Nachricht gelesen wurde, um erneute Zustellung zu vermeiden.
+			message.acknowledge();
 		}
 		catch(MessagingException me) {
 			logger.error("BudgetMailer| JMSFehler : " +me.getMessage());
@@ -81,29 +84,24 @@ public class QueueMessageReciever implements MessageListener {
 			e.printStackTrace();
 			logger.error("BudgetMailer| JMSFehler : "+ e.getErrorCode() + "message:" +e.getMessage());
 		}
-			
-		
-		
 	}
 	
 	
-	public void sendMail(String emailTO,String subject, String body, String userName) throws MessagingException {
-		String mailText = "";
+	public boolean sendMail(String emailTO,String subject, String body, String userName) throws MessagingException {
+		boolean result = false;
+		String mailTextStart = "Herzlich Willkommen " + userName + ",<br><br>";
+		String message;
+		String mailTextEnd = "<br><br>Dein Budget-Team...";
+		
+		
 		if(emailTO != null) {
-			
 			//Falls von oben keine Nachricht mitübergeben wurde bauen wir eine
 			if(body.equals(null)) {
-				switch(subject){
-				case("Erfolgreiche-Registrierung"):
-				mailText= "Herzlich Willkommen " + userName + ",<br><br> wir hoffen Du hast viel Spaß mit dieser App!";
-				break;
-				}
-				
+				message = mailTextStart + "Wir hoffen das dir die App gefällt" + mailTextEnd;
 			}
 			else
 			{
-				mailText= "Herzlich Willkommen " + userName + ",<br><br> ";
-				mailText =  mailText + body;
+				message = mailTextStart + body + mailTextEnd;
 			}
 			
 			javax.mail.Message mail = new MimeMessage(mailSession);
@@ -116,18 +114,11 @@ public class QueueMessageReciever implements MessageListener {
 					InternetAddress.parse(DEFAULT_SENDER)[0]);
 			
 			mail.setSubject("Budget|"+subject);
-			
-			
-			
-			
-			//Hier wäre auch HTML denkbar
-			mail.setText("Hallo,\b dies ist eine Testnachricht\b \b Inhalt:" + body + ":EndeInhalt");
-			Transport.send(mail);
-			
-		}
 		
+			mail.setText(message);
+			Transport.send(mail);
+			result = true;
+		}
+		return result;
 	}
-	
-	
-
 }

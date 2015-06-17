@@ -17,7 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import de.budget.common.ReportSender;
-import de.budget.entities.User;
+
 
 /**
  * Bean Implemenation for SenderInterface
