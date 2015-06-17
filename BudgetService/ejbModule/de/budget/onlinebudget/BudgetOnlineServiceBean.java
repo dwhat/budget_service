@@ -2168,6 +2168,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/**
 	 * Method to find all loss of a time period
 	 * @author Moritz
+	 * @author Marco
 	 * @date 07.06.2015
 	 */
 	@Override
@@ -2178,9 +2179,16 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
-			//TODO
-			response.setValue(sum);
-			response.setReturnCode(200);
+				List<Basket> basketList = user.getBaskets();
+				long millisToSubscract = (long) daysOfPeriod*1000*60*60*24;
+				Timestamp wishDate = new Timestamp(System.currentTimeMillis() - millisToSubscract);
+				for (Basket b : basketList){
+					if(b.getPurchaseDate().after(wishDate)){
+						sum = sum + b.getAmount();
+					}
+				}
+				response.setValue(sum);
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException e) {
@@ -2205,6 +2213,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/**
 	 * Method to find all incomes of a time period
 	 * @author Moritz
+	 * @author Marco
+	 * @param daysOfPeriod  Anzahl der Tage, die vom heutigen Datum abgezogen werden sollen
 	 * @date 07.06.2015
 	 */
 	@Override
@@ -2216,8 +2226,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Income> incomeList = user.getIncomes();
-				//TODO
-				
+				long millisToSubscract = (long) daysOfPeriod*1000*60*60*24;
+				Timestamp wishDate = new Timestamp(System.currentTimeMillis() - millisToSubscract);
+				for (Income i : incomeList){
+					if(i.getReceiptDate().after(wishDate)){
+						sum = sum + i.getAmount();
+					}
+				}
 				response.setValue(sum);
 				response.setReturnCode(200);
 			}
