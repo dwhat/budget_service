@@ -80,6 +80,14 @@ public class BudgetOnlineException extends Exception {
 			this.errorMessage = "Basket nicht gefunden.";
 			logger.error("");
 			break;
+		case "ROLLBACK_EXCEPTION":
+			this.errorMessage = "Transaktion aufgrund von Referenzen nicht durchführbar.";
+			logger.error("BudgetOnline | Message: " + errorMessage + " | ExtraInfo: " + additionalMessage);
+			break;
+		case "NO_TRANSACTION_EXCEPTION":
+			this.errorMessage = "Transaktion nicht gefunden, aber benötigt";
+			logger.error("BudgetOnline | Message: " + errorMessage + " | ExtraInfo: " + additionalMessage);
+			break;
 		default:
 			this.errorMessage = additionalMessage;
 			logger.error("BudgetOnline | Fatal Error!");
