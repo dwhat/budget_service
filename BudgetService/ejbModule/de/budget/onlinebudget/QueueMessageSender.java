@@ -3,13 +3,15 @@ package de.budget.onlinebudget;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
 import javax.jms.ConnectionFactory;
-
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
+import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
+
+import de.budget.entities.User;
 
 
 /*Imports for Mailing
@@ -22,12 +24,20 @@ import de.budget.entities.User;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 */
+
+
+
+
 /**
+ * Bean die unsere BudgetQueue befüllt, wenn Emails versendet werden sollen. 
+ * 
+ * @author Moritz
+ * 
  * Session Bean implementation class OutputRequesterBean
  */
 @Stateless
 @LocalBean
-public class OutputRequesterBean {
+public class QueueMessageSender {
 
 	  @Resource(mappedName="java:/JmsXA")
 	  private ConnectionFactory jmsFactory;
@@ -37,6 +47,10 @@ public class OutputRequesterBean {
 	  
 	  
 	  /**
+	   * Funktion überholt nutzten nun MapMessage
+	   * 
+	   * @author Marco
+	   * 
 	   * Sends a Message with the letter text to the output queue,
 	   * assuming that this causes the letter to be processed and printed.
 	   * @param letter
@@ -50,9 +64,56 @@ public class OutputRequesterBean {
 			context.createProducer().send(outputQueue, message);
 		}
 		catch (JMSException e) {
-			// TODO replace with output to logging framework			
+			// TODO evtl noch Logging hier einbauen 			
 			e.printStackTrace();
 		}  
+	  }
+	  
+	  /**
+	   * 
+	   * Objekte in BudgetQueue schreiben
+	   * 
+	   * @author Moritz
+	   * @param user
+	   */
+	  public void sendObjectMessage(User user) {
+		  try (JMSContext context = jmsFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)){
+			ObjectMessage objMessage = context.createObjectMessage();
+			objMessage.setObject(user);
+			
+			context.createProducer().send(outputQueue, objMessage);
+		  }
+		  catch (JMSException e) {
+			// TODO evtl noch Logging hier einbauen 			
+			e.printStackTrace();
+		} 
+		  
+	  }
+	  
+	  
+	  /*
+	   * Aufrufen um Email nachricht in Queue einzustellen.
+	   * 
+	   * @author Moritz
+	   * @date 17.06.15
+	   * 
+	   */
+	  public void sendMapMessage(String emailTO,String subject, String body, String userName) {
+		  try (JMSContext context = jmsFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)){
+			MapMessage mapMessage = context.createMapMessage();
+			mapMessage.setString( "email",   emailTO );
+			mapMessage.setString( "subject", subject );
+			mapMessage.setString( "body",   body );
+			mapMessage.setString( "user",   userName );
+			
+			context.createProducer().send(outputQueue, mapMessage);
+		  }
+		  catch (JMSException e) {
+			e.printStackTrace();
+			//TODO evtl noch Logging hier einbauen 
+		} 
+			  
+		  
 	  }
 	  
 	

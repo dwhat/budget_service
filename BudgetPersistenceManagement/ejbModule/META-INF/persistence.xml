@@ -18,10 +18,10 @@
 	        <property name="hibernate.hbm2ddl.auto" value="update"/>
 	        <!--Die Eigenschaft "hibernate.show_sql" legt fest, ob SQL-Code ausgegeben
 	        	werden soll. Bei Final Deploy unbedingt auf "false" setzen  -->
-	        <property name="hibernate.show_sql" value="true"/>
+	        <property name="hibernate.show_sql" value="false"/>
 	        
 	        <property name="hibernate.connection.release_mode" value="after_transaction" />
-	        <property name="hibernate.format_sql" value="true"/>
+	        <property name="hibernate.format_sql" value="false"/>
 	    </properties>
 	</persistence-unit>
 </persistence>

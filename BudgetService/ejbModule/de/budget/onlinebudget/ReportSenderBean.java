@@ -6,6 +6,10 @@ import javax.annotation.Resource;
 import javax.ejb.AsyncResult;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSContext;
+import javax.jms.Queue;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -25,11 +29,16 @@ import de.budget.entities.User;
 @Remote(ReportSender.class)
 public class ReportSenderBean implements ReportSender {
 	
-	@Resource(name = "java:jboss/mail/BudgetMail")
-	private Session mailSession;
-	
-	//Email Absender vorerst als Konstante 
-	private static final String DEFAULT_SENDER = "robot@budget.de"; 
+	/*
+  @Inject
+  private JMSContext context;
+
+  @Resource(mappedName="java:/JmsXA")
+  private ConnectionFactory jmsFactory;
+  
+  @Resource(mappedName="java:/jms/queue/BudgetOutput")
+  private Queue outputQueue;
+*/
 
 	@Override
 	public Future<Boolean> send(String subject, String body) {

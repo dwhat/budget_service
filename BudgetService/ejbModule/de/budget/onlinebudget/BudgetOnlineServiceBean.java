@@ -77,7 +77,7 @@ import de.budget.entities.User;
 import de.budget.entities.Vendor;
 /**************************************************/
 import de.budget.util.DtoAssembler;
-import de.budget.onlinebudget.OutputRequesterBean;
+import de.budget.onlinebudget.QueueMessageSender;
 
 
 /**
@@ -114,7 +114,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
 	 */
 	@EJB
-	private OutputRequesterBean outputRequester;
+	private QueueMessageSender outputSender;
 	
 	@EJB
 	private Payload payloader;
@@ -273,7 +273,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						response.setSessionId(sessionId);
 						logger.info("User angelegt. Session=" + sessionId);
 						response.setReturnCode(200);
-						outputRequester.printLetter("Sie haben sich erfolgreich registriert! Sie heißen: " + username);
+						//Bei Text leer und sujbect Erfolgreiche Registierung bauen wir im Mail Teil automatisch eine Willkommensnachricht 
+						outputSender.sendMapMessage(email, "Erfolgreiche-Registrierung", null, username);
 					}
 				}
 				else {
