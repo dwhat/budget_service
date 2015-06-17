@@ -36,8 +36,6 @@ public class OutputRequesterBean {
 	  private Queue outputQueue;
 	  
 	  
-	  
-	  
 	  /**
 	   * Sends a Message with the letter text to the output queue,
 	   * assuming that this causes the letter to be processed and printed.

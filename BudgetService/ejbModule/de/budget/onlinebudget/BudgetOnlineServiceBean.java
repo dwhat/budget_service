@@ -124,6 +124,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		BudgetSession session = dao.findSessionById(sessionId);
 		if (session==null) {
 			throw new NoSessionException();
+		
 		}
 		else {
 			return session;
@@ -226,6 +227,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						response.setSessionId(sessionId);
 						logger.info("User angelegt. Session=" + sessionId);
 						response.setReturnCode(200);
+						outputRequester.printLetter("Sie haben sich erfolgreich registriert! Sie heiﬂen: " + username);
 					}
 				}
 				else {
