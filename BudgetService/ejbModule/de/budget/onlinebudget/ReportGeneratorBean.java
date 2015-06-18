@@ -37,16 +37,17 @@ public class ReportGeneratorBean implements ReportGenerator {
 	/**
 	 * EJB zur Abfrage von Datensätzen
 	 * Referenz auf die EJB wird per Dependency Injection gefüllt. 
-	 */
+	 
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
-	
+	*/
 	/**
 	 * EJB zur Beauftragung des Nachrichtenversand
 	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
-	 */
+	
 	@EJB
 	private QueueMessageSender outputSender;
+	 */
 	
 	
 	@Override
@@ -54,19 +55,18 @@ public class ReportGeneratorBean implements ReportGenerator {
 		boolean result = false;
 		String betreff = "Übersichtsreport";
 		String message = "";
-		User user = this.dao.findUserByName(session.getUsername());
+		//User user = this.dao.findUserByName(session.getUsername());
 		
 		//TODO hier userAufrufe für die Anzahl der Items Baskets etc 
 		// alles schön mit html in message packen und weg damit 
 		
 		//if daten holen erfolgreich result = true
 		
-		outputSender.sendMapMessage(user.getEmail(), betreff, message, user.getUserName());	
+		//outputSender.sendMapMessage(user.getEmail(), betreff, message, user.getUserName());	
 		
 	
 		return new AsyncResult<Boolean>(result);
 	}
-
 
 
 }

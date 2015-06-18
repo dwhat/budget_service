@@ -120,9 +120,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	private Payload payloader;
 	
 	
-	@EJB
-	ReportGeneratorBean reportGenerator; 
-	
 	/**
 	 * Private HilfsMethode zum Laden der Session aus der Datenbank
 	 * @author Marco
@@ -3120,6 +3117,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	public ReturnCodeResponse generateReport(int sessionId) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
+		/*
 		try
 		{
 			BudgetSession session = getSession(sessionId);
@@ -3141,8 +3139,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.error("Fehler generateReport:" + e.getMessage());
 			response.setReturnCode(800);
 		}
-		return response;
 		
+		*/
+		return response;
 	}
 
 
