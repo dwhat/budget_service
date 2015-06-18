@@ -47,9 +47,10 @@ public interface BudgetOnlineDAOLocal {
 	public User findUserByName(String userName) throws IllegalArgumentException;
 	public void deleteUser(String username) throws IllegalArgumentException;
 	
-	public int createSession(User userObject);	
+	public int createSession(User userObject);
 	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException;
 	public void closeSession(int sessionId) throws IllegalArgumentException;
+	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException;
 	
 	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber);	
 	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException;
