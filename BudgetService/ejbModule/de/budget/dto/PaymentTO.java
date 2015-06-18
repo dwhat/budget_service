@@ -20,7 +20,7 @@ public class PaymentTO implements Serializable {
 	private boolean active;
 	private long createDate;
 	private long lastChanged;
-	private UserTO user;
+
 	
 	/**
 	 * Default Constructor
@@ -44,14 +44,14 @@ public class PaymentTO implements Serializable {
 	 * @param lastChanged
 	 * @param user
 	 */
-	public PaymentTO(int id, String name, String number, String bic, boolean active, long createDate, long lastChanged, UserTO user) {
+	public PaymentTO(int id, String name, String number, String bic, boolean active, long createDate, long lastChanged) {
 		this.id = id;
 		this.name = name;
 		this.bic = bic; 
 		this.active = active;
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
-		this.user = user;
+
 		
 	}
 
@@ -181,22 +181,5 @@ public class PaymentTO implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 
-	/**
-	 * @date 19.05.2015
-	 * @author Marco
-	 * @return the userTO Object of the User
-	 */
-	public UserTO getUser() {
-		return user;
-	}
-
-	/**
-	 * @date 19.05.2015
-	 * @author Marco
-	 * @param user the user to set
-	 */
-	public void setUser(UserTO user) {
-		this.user = user;
-	}
 	
 }

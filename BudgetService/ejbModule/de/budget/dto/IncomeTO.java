@@ -18,7 +18,6 @@ public class IncomeTO implements Serializable {
 	private String notice;
 	private double amount;
 	private double quantity;
-	private UserTO user;
 	private long receiptDate;
 	private CategoryTO category;
 	
@@ -40,21 +39,16 @@ public class IncomeTO implements Serializable {
 	 * @param quantity
 	 * @param amount
 	 * @param notice
-	 * @param period
 	 * @param createDate
-	 * @param launchDate
-	 * @param finishDate
 	 * @param lastChanged
-	 * @param user
 	 * @param category
 	 */
-	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, UserTO user , CategoryTO category) {
+	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, CategoryTO category) {
 		this.id = id;
 		this.name = name;
 		this.notice = notice;
 		this.amount = amount;
 		this.quantity = quantity;
-		this.user = user;
 		this.receiptDate = receiptDate;
 		this.category = category;
 	}
@@ -127,21 +121,6 @@ public class IncomeTO implements Serializable {
 	 */
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
-	}
-
-
-	/**
-	 * @return the user
-	 */
-	public UserTO getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(UserTO user) {
-		this.user = user;
 	}
 
 	/**

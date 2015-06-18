@@ -6,17 +6,21 @@ package de.budget.test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.Service;
 
 
 //Import jUnit
-
+import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+
+import de.budget.onlinebudget.BudgetOnlineServiceBean;
+
 
 
 /**

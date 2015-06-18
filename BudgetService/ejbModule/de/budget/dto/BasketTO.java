@@ -21,7 +21,6 @@ public class BasketTO implements Serializable{
 	private long createDate;
 	private long purchaseDate;
 	private long lastChanged;
-	private UserTO user;
 	private VendorTO vendor;
 	private PaymentTO payment;
 	private List<ItemTO> items;
@@ -43,12 +42,11 @@ public class BasketTO implements Serializable{
 	 * @param createDate
 	 * @param purchaseDate
 	 * @param lastChanged
-	 * @param user
 	 * @param vendor
 	 * @param payment
 	 * @param items
 	 */
-	public BasketTO(int id, String name, String notice, double amount, long createDate, long purchaseDate, long lastChanged, UserTO user, VendorTO vendor, PaymentTO payment, List<ItemTO> items) {
+	public BasketTO(int id, String name, String notice, double amount, long createDate, long purchaseDate, long lastChanged, VendorTO vendor, PaymentTO payment, List<ItemTO> items) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,7 +55,6 @@ public class BasketTO implements Serializable{
 		this.createDate = createDate;
 		this.purchaseDate =purchaseDate;
 		this.lastChanged = lastChanged;
-		this.user = user;
 		this.vendor = vendor;
 		this.payment = payment;
 		this.items = items;
@@ -159,20 +156,6 @@ public class BasketTO implements Serializable{
 	 */
 	public void setLastChanged(long lastChanged) {
 		this.lastChanged = lastChanged;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public UserTO getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(UserTO user) {
-		this.user = user;
 	}
 
 	/**

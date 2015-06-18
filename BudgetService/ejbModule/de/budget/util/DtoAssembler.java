@@ -65,7 +65,6 @@ public class DtoAssembler {
 		dto.setName(vendor.getName());
 		dto.setCreateDate(vendor.getCreateDate().getTime());
 		dto.setLastChanged(vendor.getLastChanged().getTime());
-		dto.setUser(dtoAssem.makeDto(vendor.getUser()));
 		dto.setLogo(vendor.getLogo());
 		dto.setStreet(vendor.getStreet());
 		dto.setPLZ(vendor.getPLZ());
@@ -108,8 +107,7 @@ public class DtoAssembler {
 		Timestamp createDate = category.getCreateDate();
 		boolean active = category.isActive();
 		boolean income = category.isIncome();
-		Timestamp lastChanged= category.getLastChanged();
-		UserTO user = dtoAssem.makeDto(category.getUser());		
+		Timestamp lastChanged= category.getLastChanged();	
 		CategoryTO dto = new CategoryTO(id, name, notice, active, income,createDate, lastChanged, user);
 		*/
 		CategoryTO dto = new CategoryTO();
@@ -120,7 +118,6 @@ public class DtoAssembler {
 		dto.setActive(category.isActive());
 		dto.setIncome(category.isIncome());
 		dto.setLastChanged(category.getLastChanged().getTime());
-		dto.setUser(dtoAssem.makeDto(category.getUser()));
 		dto.setColour(category.getColour());
 		
 		return dto;
@@ -143,7 +140,6 @@ public class DtoAssembler {
 		dto.setCreateDate(payment.getCreateDate().getTime());
 		dto.setActive(payment.isActive());
 		dto.setLastChanged(payment.getLastChanged().getTime());
-		dto.setUser(dtoAssem.makeDto(payment.getUser()));
 		return dto;
 	}
 	
@@ -163,7 +159,6 @@ public class DtoAssembler {
 		dto.setCreateDate(basket.getCreateDate().getTime());
 		dto.setAmount(basket.getAmount());
 		dto.setLastChanged(basket.getLastChanged().getTime());
-		dto.setUser(dtoAssem.makeDto(basket.getUser()));
 		dto.setPurchaseDate(basket.getPurchaseDate().getTime());
 		dto.setVendor(dtoAssem.makeDto(basket.getVendor()));
 		dto.setPayment(dtoAssem.makeDto(basket.getPayment()));
@@ -218,7 +213,6 @@ public class DtoAssembler {
 		dto.setAmount(income.getAmount());
 		dto.setNotice(income.getNotice());
 		dto.setReceiptDate(income.getReceiptDate().getTime());
-		dto.setUser(dtoAssem.makeDto(income.getUser()));
 		dto.setCategory(dtoAssem.makeDto(income.getCategory()));
 		return dto;
 	}

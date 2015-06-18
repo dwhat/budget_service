@@ -18,7 +18,6 @@ public class CategoryTO implements Serializable {
 	private boolean income; //True, if IncomeCategory; false, if LossesCategory
 	private long createDate;
 	private long lastChanged;
-	private UserTO user;
 	private String colour;
 	
 	/**
@@ -39,10 +38,9 @@ public class CategoryTO implements Serializable {
 	 * @param income
 	 * @param createDate
 	 * @param lastChanged
-	 * @param user
 	 * @param colour    String with colourcode (FF00DD)
 	 */
-	public CategoryTO(int id, String name, String notice, boolean active, boolean income, String colour, long createDate, long lastChanged, UserTO user) {
+	public CategoryTO(int id, String name, String notice, boolean active, boolean income, String colour, long createDate, long lastChanged) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -52,7 +50,6 @@ public class CategoryTO implements Serializable {
 		this.income = income;
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
-		this.user = user;
 	}
 	
 	/**
@@ -141,18 +138,6 @@ public class CategoryTO implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 
-	/**
-	 * @return the user
-	 */
-	public UserTO getUser() {
-		return user;
-	}
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(UserTO user) {
-		this.user = user;
-	}
 
 	/**
 	 * @return the colour

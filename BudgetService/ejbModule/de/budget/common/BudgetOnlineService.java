@@ -388,8 +388,17 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public IncomeListResponse getIncomesByCategory(int sessionId, int categoryId);
-	
 
+	/**
+	 * Method to get the Amount of all income, which are assigned to a special category
+	 * @author Marco
+	 * @date 18.06.2015
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public AmountResponse getIncomeAmountByCategory(int sessionId, int categoryId);
+	
 	/**
 	 * gets the sum of all income of the actual month
 	 * @author Marco
@@ -470,6 +479,15 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public ItemListResponse getItemsByLossCategory(int sessionId, int categoryId);
+	
+	/**
+	 * Method to get the amount of all items, which are assigned to a special category
+	 * @author Marco
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	public AmountResponse getItemsAmountByLossCategory(int sessionId, int categoryId);
 
 	
 	/*#################      XYZ - SECTION     ##############*/

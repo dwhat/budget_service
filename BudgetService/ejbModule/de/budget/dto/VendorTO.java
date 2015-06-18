@@ -1,7 +1,6 @@
 package de.budget.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 /**
  * Class for the DTO-Objects of a vendor
  * @author Marco
@@ -15,7 +14,6 @@ public class VendorTO implements Serializable {
 	private String name;
 	private long createDate;
 	private long lastChanged;
-	private UserTO user;
 	private String logo;
 	private String street;
 	private String city;
@@ -39,15 +37,13 @@ public class VendorTO implements Serializable {
 	 * @param name
 	 * @param createDate
 	 * @param lastChanged
-	 * @param user
 	 * @param logo
 	 */
-	public VendorTO(int id, String name, long createDate, long lastChanged, UserTO user, String logo, String street, String city, int PLZ, int houseNumber) {
+	public VendorTO(int id, String name, long createDate, long lastChanged, String logo, String street, String city, int PLZ, int houseNumber) {
 		this.id = id;
 		this.name = name;
 		this.createDate = createDate;
 		this.lastChanged = lastChanged;
-		this.user = user;
 		this.logo = logo;
 		this.street = street;
 		this.houseNumber = houseNumber;
@@ -121,23 +117,6 @@ public class VendorTO implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @return the user
-	 */
-	public UserTO getUser() {
-		return user;
-	}
-
-	/**
-	 * @author Marco
-	 * @date 19.05.2015
-	 * @param user the user to set
-	 */
-	public void setUser(UserTO user) {
-		this.user = user;
-	}
 
 	/**
 	 * @author Marco
