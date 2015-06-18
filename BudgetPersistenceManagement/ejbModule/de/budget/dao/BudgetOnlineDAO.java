@@ -34,6 +34,8 @@ import org.jboss.logging.Logger;
 
 
 
+
+
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
@@ -120,6 +122,21 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public void closeSession(int sessionId) throws IllegalArgumentException {
 			BudgetSession session = em.find(BudgetSession.class, sessionId);
 			em.remove(session);
+	}
+	
+	/**
+	 * Alle Sessions die älter als 2 Tage und noch existent werden gelöscht
+	 * 
+	 * @author Moritz 
+	 * 
+	 */
+	@Override
+	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException {
+		Query q = em.createNamedQuery("findOldSessions", BudgetSession.class);
+		q.setParameter("date", dayBefore);
+		@SuppressWarnings("unchecked")
+		ArrayList<BudgetSession> list = (ArrayList<BudgetSession>) q.getResultList();
+		return list;
 	}
 
 	/**
@@ -560,4 +577,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException {
 		return em.merge(payment);
 	}
+
+
 }

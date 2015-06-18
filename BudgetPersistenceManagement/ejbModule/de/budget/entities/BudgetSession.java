@@ -5,13 +5,23 @@ import java.sql.Timestamp;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  * BudgetSession for the Sessionhandling
+
  * @author Marco
  * @date 08.05.2015
  * @version Beta 1
  */
+
+@NamedQueries( {
+	@NamedQuery (
+			name = "findOldSessions",
+			query = "select b from BudgetSession b where b.createDate <= :date"
+			)
+})
 @Entity
 public class BudgetSession {
 

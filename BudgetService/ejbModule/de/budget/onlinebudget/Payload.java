@@ -33,7 +33,7 @@ public class Payload {
 	@PostConstruct
 	private void init() {
 		this.payload = 0;
-		logger.info("Server gestartet. Payload = " + payload);
+		logger.info("PAYLOAD| Server gestartet. Payload = " + payload);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Payload {
 	@Lock(LockType.WRITE)
 	public void setPayload(int payload) {
 		this.payload = payload;
-		logger.info("Es sind aktuell " + this.payload + " Benutzer angemeldet");
+		logger.info("PAYLOAD| Es sind aktuell " + this.payload + " Benutzer angemeldet");
 	}
 
 }
