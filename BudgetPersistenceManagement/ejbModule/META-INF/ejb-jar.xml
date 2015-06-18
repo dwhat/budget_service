@@ -25,6 +25,16 @@
         <env-entry-value>25d55ad283aa400af464c76d713c07ad</env-entry-value>
       </env-entry>
       <env-entry>
+        <env-entry-name>de.budget.dao.DataBuilder/username3</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>JunitTestUser</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>de.budget.dao.DataBuilder/password3</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>25d55ad283aa400af464c76d713c07ad</env-entry-value>
+      </env-entry>
+      <env-entry>
         <env-entry-name>de.budget.dao.DataBuilder/email1</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>hallo@gmx.de</env-entry-value>
@@ -33,6 +43,11 @@
         <env-entry-name>de.budget.dao.DataBuilder/email2</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>test@gmx.de</env-entry-value>
+      </env-entry>
+      <env-entry>
+        <env-entry-name>de.budget.dao.DataBuilder/email3</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>unittest@gmx.de</env-entry-value>
       </env-entry>
     </session>
   </enterprise-beans>

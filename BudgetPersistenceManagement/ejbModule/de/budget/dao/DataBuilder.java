@@ -27,7 +27,7 @@ public class DataBuilder {
 	private static final Logger logger = Logger.getLogger(DataBuilder.class);
 	
 	@Resource
-	private String username1, password1, username2, password2, email1, email2;
+	private String username1, username3, password3, email3, password1, username2, password2, email1, email2;
 
 	/**
 	 * Method to write Test Data in Database
@@ -55,6 +55,17 @@ public class DataBuilder {
 		else
 		{
 			logger.info("User2 existiert schon");
+		}
+		
+		User user3 = em.find(User.class, username3);
+		if (user3 == null) {
+			user3 = new User(username3, password3, email3);
+			em.persist(user3);		
+			logger.info("User3 angelegt");
+		}
+		else
+		{
+			logger.info("User3 existiert schon");
 		}
 	}
 	

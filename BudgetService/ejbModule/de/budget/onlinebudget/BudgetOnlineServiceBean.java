@@ -1922,7 +1922,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				dao.deleteCategory(categoryId);
 				response.setReturnCode(200);
-				logger.info("Category erfolgreich gelï¿½scht");
+				logger.info("Category erfolgreich gelöscht");
 			}
 		}
 		catch(NoSessionException e) {
