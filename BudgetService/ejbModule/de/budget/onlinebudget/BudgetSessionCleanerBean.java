@@ -33,7 +33,7 @@ public class BudgetSessionCleanerBean {
 	@EJB
 	private BudgetOnlineDAOLocal dao;
 	
-	@Schedule(hour="00",minute="00")
+	@Schedule(hour="23",minute="59")
 	private void checkOldBudgetSessions() 
 	{
 		try {
