@@ -13,7 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Marco
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CategoryIntegrationTest.class})
+@SuiteClasses({ CategoryIntegrationTest.class, PaymentIntegrationTest.class})
 public class TestAll {
 
 }

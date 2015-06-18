@@ -75,13 +75,24 @@ public class CategoryIntegrationTest {
 	public void cTestGetOneCategory() {
 		CategoryResponse catResp = remoteSystem.getCategory(sessionId, testCatId);
 		assertEquals(200, catResp.getReturnCode());
+		assertEquals(testCatId, catResp.getCategoryTo().getId());
+	}
+	
+	/**
+	 * Testet ob eine Category geupdatet werden kann
+	 */
+	@Test
+	public void dTestUpdateCategory() {
+		CategoryResponse catResp2 = remoteSystem.createOrUpdateCategory(sessionId, testCatId, false, true, "geändert", "test123123", "FFFFFFF");
+		assertEquals(200, catResp2.getReturnCode());
+		assertEquals("geändert", catResp2.getCategoryTo().getName());
 	}
 	
 	/**
 	 * Testet ob eine Kategorie mit einer unbekannten Id nicht gefunden wird. Erwaretet Fehlerfall
 	 */
 	@Test
-	public void dTestGetOneCategoryError() {
+	public void eTestGetOneCategoryError() {
 		CategoryResponse catResp = remoteSystem.getCategory(sessionId, 123456789);
 		assertEquals(404, catResp.getReturnCode());
 	}
@@ -90,7 +101,7 @@ public class CategoryIntegrationTest {
 	 * Testet ob alle Kategorien als Liste zurück gegeben werden können
 	 */
 	@Test
-	public void eTestGetAllCategories() {
+	public void fTestGetAllCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorys(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
 		assertEquals(4, catListResp.getCategoryList().size()); // Es wurden zuvor 4 Kategorien angelegt
@@ -100,7 +111,7 @@ public class CategoryIntegrationTest {
 	 * Testet ob alle Kategorien, die Income == true haben zurück gegeben werden
 	 */
 	@Test
-	public void fTestGetIncomeCategories() {
+	public void gTestGetIncomeCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfIncome(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
 		assertEquals(3, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
@@ -111,7 +122,7 @@ public class CategoryIntegrationTest {
 	 * Testet ob alle Kategorien, die Income == false haben zurück gegeben werden
 	 */
 	@Test
-	public void gTestGetLossCategories() {
+	public void hTestGetLossCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfLoss(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
 		assertEquals(1, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
@@ -122,16 +133,16 @@ public class CategoryIntegrationTest {
 	 * Testet ob eine Kategorie gelöscht werden kann
 	 */
 	@Test
-	public void hTestDeleteCategory() {
+	public void iTestDeleteCategory() {
 		ReturnCodeResponse resp = remoteSystem.deleteCategory(sessionId,  testCatId);
 		assertEquals(200, resp.getReturnCode());
 	}
 	
 	/**
-	 * Testet ob eine Kategorie gelöscht werden kann
+	 * Testet ob eine Kategorie gelöscht werden kann, obwohl falsche Id übergeben wird, erwartet Fehlerfall
 	 */
 	@Test
-	public void iTestDeleteCategoryError() {
+	public void jTestDeleteCategoryError() {
 		ReturnCodeResponse resp = remoteSystem.deleteCategory(sessionId,  123456789);
 		assertNotEquals(200, resp.getReturnCode());
 	}
