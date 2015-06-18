@@ -119,6 +119,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@EJB
 	private Payload payloader;
 	
+	
+	@EJB
+	ReportGeneratorBean reportGenerator; 
+	
 	/**
 	 * Private HilfsMethode zum Laden der Session aus der Datenbank
 	 * @author Marco
@@ -182,7 +186,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getErrorMessage());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("login | " + e.getStackTrace().toString());
 			} 
@@ -192,7 +196,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("login | " + e.getStackTrace().toString());
 			} 
@@ -230,7 +234,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("logout | " + e.getStackTrace().toString());
 			} 
@@ -240,7 +244,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("logout | " + e.getStackTrace().toString());
 			} 
@@ -274,7 +278,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						logger.info("User angelegt. Session=" + sessionId);
 						response.setReturnCode(200);
 						//Bei Text leer und sujbect Erfolgreiche Registierung bauen wir im Mail Teil automatisch eine Willkommensnachricht 
-						outputSender.sendMapMessage(email, "Erfolgreiche-Registrierung", null, username);
+						outputSender.sendMapMessage(email, "Erfolgreiche-Registrierung", "Das ist ein Testtext", username);
 					}
 				}
 				else {
@@ -306,7 +310,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setMessage(e.getErrorMessage());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("setUser | " + e.getStackTrace().toString());
 			} 
@@ -316,7 +320,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("setUser | " + e.getStackTrace().toString());
 			} 
@@ -364,7 +368,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getUserByName | " + e.getStackTrace().toString());
 			} 
@@ -374,7 +378,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getUserByName | " + e.getStackTrace().toString());
 			} 
@@ -384,7 +388,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			userResp.setReturnCode(800);
 		}
 		return userResp;
@@ -425,7 +429,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteUser | " + e.getStackTrace().toString());
 			} 
@@ -435,7 +439,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteUser | " + e.getStackTrace().toString());
 			} 
@@ -445,7 +449,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -492,7 +496,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getLastBaskets | " + e.getStackTrace().toString());
 			} 
@@ -502,7 +506,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getLastBaskets | " + e.getStackTrace().toString());
 			} 
@@ -512,7 +516,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;	
@@ -568,7 +572,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getbasketsByVendor | " + e.getStackTrace().toString());
 			} 
@@ -578,7 +582,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getBasketsByVendor | " + e.getStackTrace().toString());
 			} 
@@ -588,7 +592,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;	
@@ -619,11 +623,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getBasketsOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			throw new NoTransactionException("getBasketsOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			throw new RollbackException("getBasketsOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
@@ -662,7 +666,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getBasketsOfActualMonth | " + e.getStackTrace().toString());
 			} 
@@ -672,7 +676,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getBasketsOfActualMonth | " + e.getStackTrace().toString());
 			} 
@@ -682,7 +686,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -737,7 +741,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getBasketsByPayment | " + e.getStackTrace().toString());
 			} 
@@ -747,7 +751,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getBasketsByPayment | " + e.getStackTrace().toString());
 			} 
@@ -757,7 +761,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;		
@@ -801,7 +805,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getBasket | " + e.getStackTrace().toString());
 			} 
@@ -811,7 +815,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getBasket | " + e.getStackTrace().toString());
 			} 
@@ -821,7 +825,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -864,7 +868,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getBaskets | " + e.getStackTrace().toString());
 			} 
@@ -874,7 +878,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getBaskets | " + e.getStackTrace().toString());
 			} 
@@ -884,7 +888,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -919,7 +923,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteBasket | " + e.getStackTrace().toString());
 			} 
@@ -929,7 +933,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteBasket | " + e.getStackTrace().toString());
 			} 
@@ -939,7 +943,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1025,7 +1029,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("createOrUpdateBasket | " + e.getStackTrace().toString());
 			} 
@@ -1035,7 +1039,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("createOrUpdateBasket | " + e.getStackTrace().toString());
 			} 
@@ -1045,7 +1049,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1093,7 +1097,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getVendor | " + e.getStackTrace().toString());
 			} 
@@ -1103,7 +1107,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getVendor | " + e.getStackTrace().toString());
 			} 
@@ -1113,7 +1117,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1156,7 +1160,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getVendors | " + e.getStackTrace().toString());
 			} 
@@ -1166,7 +1170,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getVendors | " + e.getStackTrace().toString());
 			} 
@@ -1176,7 +1180,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1212,7 +1216,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteVendor | " + e.getStackTrace().toString());
 			} 
@@ -1222,7 +1226,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteVendor | " + e.getStackTrace().toString());
 			} 
@@ -1232,7 +1236,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1295,7 +1299,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("createOrUpdateVendor | " + e.getStackTrace().toString());
 			} 
@@ -1305,7 +1309,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("createOrUpdateVendor | " + e.getStackTrace().toString());
 			} 
@@ -1315,7 +1319,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1363,7 +1367,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getPayment | " + e.getStackTrace().toString());
 			} 
@@ -1373,7 +1377,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getPayment | " + e.getStackTrace().toString());
 			} 
@@ -1383,7 +1387,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1414,11 +1418,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getPayment | " + e.getStackTrace().toString());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			throw new NoTransactionException("getPayment | " + e.getStackTrace().toString());
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			throw new RollbackException("getPayment | " + e.getStackTrace().toString());
 		}
 		catch (Exception e) {
@@ -1463,7 +1467,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getPayments | " + e.getStackTrace().toString());
 			} 
@@ -1473,7 +1477,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getPayments | " + e.getStackTrace().toString());
 			} 
@@ -1483,7 +1487,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1521,7 +1525,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deletePayment | " + e.getStackTrace().toString());
 			} 
@@ -1531,7 +1535,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deletePayment | " + e.getStackTrace().toString());
 			} 
@@ -1541,7 +1545,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;	
@@ -1606,7 +1610,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("createOrUpdatePayment | " + e.getStackTrace().toString());
 			} 
@@ -1616,7 +1620,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("createOrUpdatePayment | " + e.getStackTrace().toString());
 			} 
@@ -1669,7 +1673,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getCategory | " + e.getStackTrace().toString());
 			} 
@@ -1679,7 +1683,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getCategory | " + e.getStackTrace().toString());
 			} 
@@ -1689,7 +1693,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1725,7 +1729,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new NoTransactionException("getCategories | " + e.getStackTrace().toString());
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			throw new RollbackException("getCategories  | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
@@ -1770,7 +1774,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1815,7 +1819,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getCategoryOfIncome | " + e.getStackTrace().toString());
 			} 
@@ -1825,7 +1829,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getCategoriesOfIncome | " + e.getStackTrace().toString());
 			} 
@@ -1835,7 +1839,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1881,7 +1885,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getCategoriesOfLoss | " + e.getStackTrace().toString());
 			} 
@@ -1891,7 +1895,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getcategoriesOfLoss | " + e.getStackTrace().toString());
 			} 
@@ -1901,7 +1905,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1937,7 +1941,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteCategory | " + e.getStackTrace().toString());
 			} 
@@ -1947,7 +1951,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteCategory | " + e.getStackTrace().toString());
 			} 
@@ -1957,7 +1961,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2038,7 +2042,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("createOrUpdateCategory | " + e.getStackTrace().toString());
 			} 
@@ -2048,7 +2052,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("createOrUpdateCategory | " + e.getStackTrace().toString());
 			} 
@@ -2058,7 +2062,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2104,7 +2108,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getIncome | " + e.getStackTrace().toString());
 			} 
@@ -2114,7 +2118,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getIncome | " + e.getStackTrace().toString());
 			} 
@@ -2124,7 +2128,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2167,7 +2171,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getIncomes | " + e.getStackTrace().toString());
 			} 
@@ -2177,7 +2181,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getIncomes | " + e.getStackTrace().toString());
 			} 
@@ -2187,7 +2191,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2241,7 +2245,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getIncomeByCategory | " + e.getStackTrace().toString());
 			} 
@@ -2251,7 +2255,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getIncomesByCategory | " + e.getStackTrace().toString());
 			} 
@@ -2261,7 +2265,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2306,7 +2310,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getLastIncome | " + e.getStackTrace().toString());
 			} 
@@ -2316,7 +2320,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getLastIncome | " + e.getStackTrace().toString());
 			} 
@@ -2326,7 +2330,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2357,11 +2361,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomesOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			throw new NoTransactionException("getIncomesOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			throw new RollbackException("getIncomesOfActualMonth | " + e.getStackTrace().toString());
 		}
 		catch(Exception e) {
@@ -2399,7 +2403,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getIncomesOfActualMonth | " + e.getStackTrace().toString());
 			} 
@@ -2409,7 +2413,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getIncomesOfActualMonth | " + e.getStackTrace().toString());
 			} 
@@ -2419,7 +2423,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2456,7 +2460,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteIncome | " + e.getStackTrace().toString());
 			} 
@@ -2466,7 +2470,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteIncome | " + e.getStackTrace().toString());
 			} 
@@ -2476,7 +2480,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2554,7 +2558,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("createOrUpdateIncome | " + e.getStackTrace().toString());
 			} 
@@ -2564,7 +2568,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("createOrUpdateIncome | " + e.getStackTrace().toString());
 			} 
@@ -2618,7 +2622,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getItemByBasket | " + e.getStackTrace().toString());
 			} 
@@ -2628,7 +2632,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getItemByBasket | " + e.getStackTrace().toString());
 			} 
@@ -2638,7 +2642,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2689,7 +2693,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getItemsByBasket | " + e.getStackTrace().toString());
 			} 
@@ -2699,7 +2703,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getItemsByBasket | " + e.getStackTrace().toString());
 			} 
@@ -2709,7 +2713,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2762,7 +2766,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getItemsByLossCategory | " + e.getStackTrace().toString());
 			} 
@@ -2772,7 +2776,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getItemsBYLossCategory | " + e.getStackTrace().toString());
 			} 
@@ -2782,7 +2786,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info(e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2818,7 +2822,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("deleteItem | " + e.getStackTrace().toString());
 			} 
@@ -2828,7 +2832,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("deleteItem | " + e.getStackTrace().toString());
 			} 
@@ -2917,11 +2921,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateItem | " + e.getStackTrace().toString());
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			throw new NoTransactionException("createOrUpdateItem | " + e.getStackTrace().toString());
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			throw new RollbackException("createOrUpdateItem | " + e.getStackTrace().toString());
 		}
 		catch (Exception e) {
@@ -3020,7 +3024,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getLossByPeriod | " + e.getStackTrace().toString());
 			} 
@@ -3030,7 +3034,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getLossByPeriod | " + e.getStackTrace().toString());
 			} 
@@ -3040,7 +3044,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info("Fehler getLossbyPeriod:" + e.getMessage());
+			logger.error("Fehler getLossbyPeriod:" + e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -3088,7 +3092,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (TransactionRequiredException e) {
-			logger.info("xyz/TranscationException- " + e.getMessage());
+			logger.error("xyz/TranscationException- " + e.getMessage());
 			try {
 				throw new NoTransactionException("getIncomeByPeriod | " + e.getStackTrace().toString());
 			} 
@@ -3098,7 +3102,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (EJBTransactionRolledbackException e) {
-			logger.info("xyz/EJBTransactionException- " + e.getMessage());
+			logger.error("xyz/EJBTransactionException- " + e.getMessage());
 			try {
 				throw new RollbackException("getIncomeByPeriod | " + e.getStackTrace().toString());
 			} 
@@ -3108,17 +3112,37 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.info("Fehler getIncomebyPeriod:" + e.getMessage());
+			logger.error("Fehler getIncomebyPeriod:" + e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
 	}
 	
-	public ReturnCodeResponse generateReport(int sessionId ) {
+	public ReturnCodeResponse generateReport(int sessionId) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
-		
-		
+		try
+		{
+			BudgetSession session = getSession(sessionId);
+			//Nur wenn gültiger User, macht Reportanforderung sinn 
+			if (session != null) {
+				reportGenerator.build(session);
+			}
+			else
+			{
+				response.setReturnCode(404);
+			}
+			
+		}
+		catch(NoSessionException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getErrorMessage());
+		}
+		catch(Exception e) {
+			logger.error("Fehler generateReport:" + e.getMessage());
+			response.setReturnCode(800);
+		}
 		return response;
+		
 	}
 
 

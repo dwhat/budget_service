@@ -7,8 +7,8 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import javax.jms.TextMessage;
+//import javax.jms.ObjectMessage;
+//import javax.jms.TextMessage;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -20,7 +20,7 @@ import org.jboss.logging.Logger;
 
 /**
  * 
- * MessageReciever Class liest die BudgetOUteput Queue und versendet nachrichten die sich darin befinden
+ * MessageReciever Class liest die BudgetQueue und versendet nachrichten die sich darin befinden
  * 
  * @author Moritz
  * @date 17.06.15
@@ -35,14 +35,13 @@ import org.jboss.logging.Logger;
 				  })
 public class QueueMessageReciever implements MessageListener {
 	
-	@Resource(name = "java:jboss/mail/BudgetMail")
-	private Session mailSession;
-	
-	//Email Absender vorerst als Konstante, nur für Verständnis
+	//Email Absender als Konstante,da Mailkonto fix
 	private static final String DEFAULT_SENDER = "robotbudget@gmail.com"; 
 
-
 	private static final Logger logger = Logger.getLogger(QueueMessageReciever.class);
+	
+	@Resource(name = "java:jboss/mail/BudgetMail")
+	private Session mailSession;
 	
 	@Override
 	public void onMessage(Message message) {
@@ -53,40 +52,61 @@ public class QueueMessageReciever implements MessageListener {
 		
 		//Im moment sind wir in der Lage mehrere Messages zu listen
 		try {
-			/* andere Messagetypen erstemal ignorieren 
-			if(message instanceof TextMessage) {
-				TextMessage body = (TextMessage) message;
-				Nachricht = body.getText();
+			if(message != null) {
+				if(message instanceof MapMessage) {
+					MapMessage mapMessage = (MapMessage) message;
+					
+					eMail = mapMessage.getString( "email" );
+					Betreff = mapMessage.getString( "subject" );
+					Nachricht = mapMessage.getString( "body" );
+					UserName = mapMessage.getString( "user" );
+					
+					if(sendMail(eMail,Betreff,Nachricht,UserName)) {
+						logger.info("BudgetMailer| versendete Nachricht an: "+ UserName + "Inhalt:" + Nachricht);
+					}
+					//Der Queue mitteilen das die Nachricht gelesen wurde, um erneute Zustellung zu vermeiden.
+					//message.acknowledge();
+				}
 			}
-			else if(message instanceof ObjectMessage) {
-				//User user = message.getBody(User.class);
-				Object obj = message.getBody(null);
-			}
-			*/
-			if(message instanceof MapMessage) {
-				MapMessage mapMessage = (MapMessage) message;
-				eMail = mapMessage.getString( "email" );
-				Betreff = mapMessage.getString( "subject" );
-				Nachricht = mapMessage.getString( "body" );
-				UserName = mapMessage.getString( "user" );
-			}
-			
-			if(sendMail(eMail,Betreff,Nachricht,UserName)) {
-				logger.info("BudgetMailer| versendete Nachricht an: "+ UserName + "Inhalt:" + Nachricht);
-			}
-			//Der Queue mitteilen das die Nachricht gelesen wurde, um erneute Zustellung zu vermeiden.
-			message.acknowledge();
 		}
 		catch(MessagingException me) {
 			logger.error("BudgetMailer| JMSFehler : " +me.getMessage());
 		}
 		catch(JMSException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			logger.error("BudgetMailer| JMSFehler : "+ e.getErrorCode() + "message:" +e.getMessage());
 		}
 	}
 	
 	
+	/**
+	 * 
+	 * wenn Andere MessageArten gelesen werden sollen aktivieren 
+	 *  andere Messagetypen erstemal ignorieren 
+	if(message instanceof TextMessage) {
+		TextMessage body = (TextMessage) message;
+		Nachricht = body.getText();
+	}
+	else if(message instanceof ObjectMessage) {
+		//User user = message.getBody(User.class);
+		Object obj = message.getBody(null);
+	}
+	*/
+	
+	
+	/**
+	 * EmailVersand 
+	 * 
+	 * @author Moritz
+	 * @date 18.06.2015
+	 * 
+	 * @param emailTO
+	 * @param subject
+	 * @param body
+	 * @param userName
+	 * @return
+	 * @throws MessagingException
+	 */
 	public boolean sendMail(String emailTO,String subject, String body, String userName) throws MessagingException {
 		boolean result = false;
 		String mailTextStart = "Herzlich Willkommen " + userName + ",<br><br>";
@@ -96,12 +116,12 @@ public class QueueMessageReciever implements MessageListener {
 		
 		if(emailTO != null) {
 			//Falls von oben keine Nachricht mitübergeben wurde bauen wir eine
-			if(body.equals(null)) {
-				message = mailTextStart + "Wir hoffen das dir die App gefällt" + mailTextEnd;
+			if(body != null) {
+				message = mailTextStart + body + mailTextEnd;
 			}
 			else
 			{
-				message = mailTextStart + body + mailTextEnd;
+				message = mailTextStart + "danke dass du unsere App nutzt. Viel Spaß damit !" + mailTextEnd;
 			}
 			
 			javax.mail.Message mail = new MimeMessage(mailSession);
@@ -115,7 +135,9 @@ public class QueueMessageReciever implements MessageListener {
 			
 			mail.setSubject("Budget|"+subject);
 		
-			mail.setText(message);
+			//Um HTML zu ermöglichen 
+			mail.setContent(message, "text/html");
+			//mail.setText(message);
 			Transport.send(mail);
 			result = true;
 		}
