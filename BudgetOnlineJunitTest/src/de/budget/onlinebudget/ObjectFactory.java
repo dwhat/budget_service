@@ -35,6 +35,7 @@ public class ObjectFactory {
     private final static QName _GetCategorysOfIncome_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfIncome");
     private final static QName _GetBasketsResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsResponse");
     private final static QName _GetCategorysResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysResponse");
+    private final static QName _CreateOrUpdateBasketList_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateBasketList");
     private final static QName _DeleteUser_QNAME = new QName("http://onlinebudget.budget.de/", "deleteUser");
     private final static QName _GetLossByPeriod_QNAME = new QName("http://onlinebudget.budget.de/", "getLossByPeriod");
     private final static QName _CreateOrUpdateCategory_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateCategory");
@@ -69,6 +70,7 @@ public class ObjectFactory {
     private final static QName _DeleteItem_QNAME = new QName("http://onlinebudget.budget.de/", "deleteItem");
     private final static QName _GetItemByBasket_QNAME = new QName("http://onlinebudget.budget.de/", "getItemByBasket");
     private final static QName _DeleteItemResponse_QNAME = new QName("http://onlinebudget.budget.de/", "deleteItemResponse");
+    private final static QName _CreateOrUpdateBasketListResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdateBasketListResponse");
     private final static QName _GetItemsByLossCategoryResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByLossCategoryResponse");
     private final static QName _GetBasketsByVendorHelper_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsByVendorHelper");
     private final static QName _GetBasketResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketResponse");
@@ -81,8 +83,8 @@ public class ObjectFactory {
     private final static QName _CreateOrUpdatePaymentResponse_QNAME = new QName("http://onlinebudget.budget.de/", "createOrUpdatePaymentResponse");
     private final static QName _GetItemsByBasket_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByBasket");
     private final static QName _GetAmountForVendorsResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getAmountForVendorsResponse");
-    private final static QName _GetCategorysOfLoss_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfLoss");
     private final static QName _GetBasketsByVendorHelperResponse_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsByVendorHelperResponse");
+    private final static QName _GetCategorysOfLoss_QNAME = new QName("http://onlinebudget.budget.de/", "getCategorysOfLoss");
     private final static QName _GetBasketsOfActualMonth_QNAME = new QName("http://onlinebudget.budget.de/", "getBasketsOfActualMonth");
     private final static QName _GetItemsByLossCategory_QNAME = new QName("http://onlinebudget.budget.de/", "getItemsByLossCategory");
     private final static QName _GetIncomesByCategory_QNAME = new QName("http://onlinebudget.budget.de/", "getIncomesByCategory");
@@ -455,6 +457,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CreateOrUpdateBasketList }
+     * 
+     */
+    public CreateOrUpdateBasketList createCreateOrUpdateBasketList() {
+        return new CreateOrUpdateBasketList();
+    }
+
+    /**
      * Create an instance of {@link DeleteUser }
      * 
      */
@@ -719,6 +729,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CreateOrUpdateBasketListResponse }
+     * 
+     */
+    public CreateOrUpdateBasketListResponse createCreateOrUpdateBasketListResponse() {
+        return new CreateOrUpdateBasketListResponse();
+    }
+
+    /**
      * Create an instance of {@link CreateOrUpdatePayment }
      * 
      */
@@ -815,19 +833,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetBasketsByVendorHelperResponse }
-     * 
-     */
-    public GetBasketsByVendorHelperResponse createGetBasketsByVendorHelperResponse() {
-        return new GetBasketsByVendorHelperResponse();
-    }
-
-    /**
      * Create an instance of {@link GetCategorysOfLoss }
      * 
      */
     public GetCategorysOfLoss createGetCategorysOfLoss() {
         return new GetCategorysOfLoss();
+    }
+
+    /**
+     * Create an instance of {@link GetBasketsByVendorHelperResponse }
+     * 
+     */
+    public GetBasketsByVendorHelperResponse createGetBasketsByVendorHelperResponse() {
+        return new GetBasketsByVendorHelperResponse();
     }
 
     /**
@@ -1250,6 +1268,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateOrUpdateBasketList }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateBasketList")
+    public JAXBElement<CreateOrUpdateBasketList> createCreateOrUpdateBasketList(CreateOrUpdateBasketList value) {
+        return new JAXBElement<CreateOrUpdateBasketList>(_CreateOrUpdateBasketList_QNAME, CreateOrUpdateBasketList.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DeleteUser }{@code >}}
      * 
      */
@@ -1556,6 +1583,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateOrUpdateBasketListResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "createOrUpdateBasketListResponse")
+    public JAXBElement<CreateOrUpdateBasketListResponse> createCreateOrUpdateBasketListResponse(CreateOrUpdateBasketListResponse value) {
+        return new JAXBElement<CreateOrUpdateBasketListResponse>(_CreateOrUpdateBasketListResponse_QNAME, CreateOrUpdateBasketListResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetItemsByLossCategoryResponse }{@code >}}
      * 
      */
@@ -1664,21 +1700,21 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfLoss }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfLoss")
-    public JAXBElement<GetCategorysOfLoss> createGetCategorysOfLoss(GetCategorysOfLoss value) {
-        return new JAXBElement<GetCategorysOfLoss>(_GetCategorysOfLoss_QNAME, GetCategorysOfLoss.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetBasketsByVendorHelperResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getBasketsByVendorHelperResponse")
     public JAXBElement<GetBasketsByVendorHelperResponse> createGetBasketsByVendorHelperResponse(GetBasketsByVendorHelperResponse value) {
         return new JAXBElement<GetBasketsByVendorHelperResponse>(_GetBasketsByVendorHelperResponse_QNAME, GetBasketsByVendorHelperResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetCategorysOfLoss }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://onlinebudget.budget.de/", name = "getCategorysOfLoss")
+    public JAXBElement<GetCategorysOfLoss> createGetCategorysOfLoss(GetCategorysOfLoss value) {
+        return new JAXBElement<GetCategorysOfLoss>(_GetCategorysOfLoss_QNAME, GetCategorysOfLoss.class, null, value);
     }
 
     /**

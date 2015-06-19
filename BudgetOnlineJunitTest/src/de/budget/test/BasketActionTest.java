@@ -50,7 +50,7 @@ public class BasketActionTest {
 	}
 	
 	@Test
-	private void aTestCreateBasket() {
+	public void aTestCreateBasket() {
 		BasketResponse baskResp = remoteSystem.createOrUpdateBasket(sessionId, 0, "EinkaufHeute", "Heute", 2.25, dateLong, testPayId, testVenId);
 		assertEquals(200, baskResp.getReturnCode());
 		assertEquals("EinkaufHeute", baskResp.getBasketTo().getName());

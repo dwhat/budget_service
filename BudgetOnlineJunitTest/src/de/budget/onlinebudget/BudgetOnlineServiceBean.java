@@ -242,6 +242,44 @@ public interface BudgetOnlineServiceBean {
 
     /**
      * 
+     * @param arg5
+     * @param arg4
+     * @param arg3
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @param arg6
+     * @param arg7
+     * @param arg8
+     * @return
+     *     returns de.budget.onlinebudget.BasketResponse
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "createOrUpdateBasketList", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.CreateOrUpdateBasketList")
+    @ResponseWrapper(localName = "createOrUpdateBasketListResponse", targetNamespace = "http://onlinebudget.budget.de/", className = "de.budget.onlinebudget.CreateOrUpdateBasketListResponse")
+    public BasketResponse createOrUpdateBasketList(
+        @WebParam(name = "arg0", targetNamespace = "")
+        int arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        int arg1,
+        @WebParam(name = "arg2", targetNamespace = "")
+        String arg2,
+        @WebParam(name = "arg3", targetNamespace = "")
+        String arg3,
+        @WebParam(name = "arg4", targetNamespace = "")
+        double arg4,
+        @WebParam(name = "arg5", targetNamespace = "")
+        long arg5,
+        @WebParam(name = "arg6", targetNamespace = "")
+        int arg6,
+        @WebParam(name = "arg7", targetNamespace = "")
+        int arg7,
+        @WebParam(name = "arg8", targetNamespace = "")
+        List<ItemTO> arg8);
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns de.budget.onlinebudget.AmountResponse
@@ -500,7 +538,6 @@ public interface BudgetOnlineServiceBean {
      * @param arg0
      * @param arg6
      * @param arg7
-     * @param arg8
      * @return
      *     returns de.budget.onlinebudget.BasketResponse
      */
@@ -524,9 +561,7 @@ public interface BudgetOnlineServiceBean {
         @WebParam(name = "arg6", targetNamespace = "")
         int arg6,
         @WebParam(name = "arg7", targetNamespace = "")
-        int arg7,
-        @WebParam(name = "arg8", targetNamespace = "")
-        List<ItemTO> arg8);
+        int arg7);
 
     /**
      * 
@@ -534,8 +569,8 @@ public interface BudgetOnlineServiceBean {
      * @param arg0
      * @return
      *     returns java.util.List<de.budget.onlinebudget.Basket>
-     * @throws Exception_Exception
      * @throws BudgetOnlineException_Exception
+     * @throws Exception_Exception
      */
     @WebMethod
     @WebResult(targetNamespace = "")
