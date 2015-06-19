@@ -7,18 +7,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getLastIncomes complex type.
+ * <p>Java class for getIncomesAmountForCategories complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getLastIncomes">
+ * &lt;complexType name="getIncomesAmountForCategories">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,16 +26,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getLastIncomes", propOrder = {
-    "arg0",
-    "arg1",
-    "arg2"
+@XmlType(name = "getIncomesAmountForCategories", propOrder = {
+    "arg0"
 })
-public class GetLastIncomes {
+public class GetIncomesAmountForCategories {
 
     protected int arg0;
-    protected int arg1;
-    protected int arg2;
 
     /**
      * Gets the value of the arg0 property.
@@ -53,38 +47,6 @@ public class GetLastIncomes {
      */
     public void setArg0(int value) {
         this.arg0 = value;
-    }
-
-    /**
-     * Gets the value of the arg1 property.
-     * 
-     */
-    public int getArg1() {
-        return arg1;
-    }
-
-    /**
-     * Sets the value of the arg1 property.
-     * 
-     */
-    public void setArg1(int value) {
-        this.arg1 = value;
-    }
-
-    /**
-     * Gets the value of the arg2 property.
-     * 
-     */
-    public int getArg2() {
-        return arg2;
-    }
-
-    /**
-     * Sets the value of the arg2 property.
-     * 
-     */
-    public void setArg2(int value) {
-        this.arg2 = value;
     }
 
 }

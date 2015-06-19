@@ -3,7 +3,9 @@ package de.budget.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.budget.onlinebudget.AmountListResponse;
 import de.budget.onlinebudget.AmountResponse;
+import de.budget.onlinebudget.AmountTO;
 import de.budget.onlinebudget.BasketListResponse;
 import de.budget.onlinebudget.BasketResponse;
 import de.budget.onlinebudget.BasketTO;
@@ -55,9 +57,10 @@ public class SimpleOnlineBudgetClient {
  	       	szenarioPayment();
  	       	szenarioIncome();
  	       	*/
+ 	       	szenarioAmount();
  	       //szenarioCategory();
  	       //szenarioVendor();
- 	       szenarioBasket();
+ 	       //szenarioBasket();
  	       //szenarioIncome();
  	       //szenarioLogin();
 		   
@@ -67,6 +70,25 @@ public class SimpleOnlineBudgetClient {
 		   	ex.printStackTrace();
 		}
 	}
+	
+	
+	/**
+	 * 
+	 */
+	private static void szenarioAmount() {
+		UserLoginResponse loginResponse = remoteSystem.login("emma", "25d55ad283aa400af464c76d713c07ad");
+		if (loginResponse != null & loginResponse.getReturnCode()==200) {
+			int sessionId = loginResponse.getSessionId();
+			
+			AmountListResponse resp = remoteSystem.getAmountForVendors(sessionId);
+			System.out.println("AmuntReturnCode: " + resp.getReturnCode());
+			System.out.println("AmuntReturnMessage: " + resp.getMessage());
+			for(AmountTO dto : resp.getAmountList()) {
+				System.out.println("Vendor: " + dto.getName() + "  |  Betrag: " + dto.getValue());
+			}
+		}
+	}
+	
 	
 	/**
 	 * Szenario to test the login and logout function
@@ -221,7 +243,6 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Name = " + baskResp.getBasketTo().getName());
 				   System.out.println("Amount = " + baskResp.getBasketTo().getAmount());
 				   System.out.println("Notiz = " + baskResp.getBasketTo().getNotice());
-				   System.out.println("Owner = " + baskResp.getBasketTo().getUser().getUsername());
 				   for(ItemTO i : baskResp.getBasketTo().getItems()) {
 					   System.out.println("--ItemName: " + i.getName());
 				   }
@@ -334,7 +355,6 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Name = " + incResp.getIncomeTo().getName());
 				   System.out.println("Amount = " + incResp.getIncomeTo().getAmount());
 				   System.out.println("Kategorie = " + incResp.getIncomeTo().getCategory().getName());
-				   System.out.println("Owner = " + incResp.getIncomeTo().getUser().getUsername());
 			   }
 			   else {
 				   System.out.println ("Income ist gleich null");
@@ -438,7 +458,6 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Name = " + payResp.getPaymentTo().getName());
 				   System.out.println("Number = " + payResp.getPaymentTo().getNumber());
 				   System.out.println("BIC = " + payResp.getPaymentTo().getBic());
-				   System.out.println("Owner = " + payResp.getPaymentTo().getUser().getUsername());
 			   }
 			   else {
 				   System.out.println ("Payment ist gleich null");
@@ -535,7 +554,6 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Kategorie Eigenschaften: ");
 				   System.out.println("Name = " + catResp.getCategoryTo().getName());
 				   System.out.println("Notiz = " + catResp.getCategoryTo().getNotice());
-				   System.out.println("Owner = " + catResp.getCategoryTo().getUser().getUsername());
 			   }
 			   else {
 				   System.out.println ("Category ist gleich null");
@@ -628,7 +646,6 @@ public class SimpleOnlineBudgetClient {
 				   System.out.println("Vendor Eigenschaften: ");
 				   System.out.println("Name = " + venResp.getVendorTo().getName());
 				   System.out.println("Logo = " + venResp.getVendorTo().getLogo());
-				   System.out.println("Owner = " + venResp.getVendorTo().getUser().getUsername());
 			   }
 			   else {
 				   System.out.println ("Vendor ist gleich null");

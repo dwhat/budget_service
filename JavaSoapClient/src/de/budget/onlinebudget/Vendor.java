@@ -8,24 +8,25 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for vendorTO complex type.
+ * <p>Java class for vendor complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="vendorTO">
+ * &lt;complexType name="vendor">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="city" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="houseNumber" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="logo" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="PLZ" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="street" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="user" type="{http://onlinebudget.budget.de/}user" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,7 +36,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "vendorTO", propOrder = {
+@XmlType(name = "vendor", propOrder = {
     "city",
     "createDate",
     "houseNumber",
@@ -44,20 +45,22 @@ import javax.xml.bind.annotation.XmlType;
     "logo",
     "name",
     "plz",
-    "street"
+    "street",
+    "user"
 })
-public class VendorTO {
+public class Vendor {
 
     protected String city;
-    protected long createDate;
+    protected Timestamp createDate;
     protected int houseNumber;
     protected int id;
-    protected long lastChanged;
+    protected Timestamp lastChanged;
     protected String logo;
     protected String name;
     @XmlElement(name = "PLZ")
     protected int plz;
     protected String street;
+    protected User user;
 
     /**
      * Gets the value of the city property.
@@ -86,16 +89,24 @@ public class VendorTO {
     /**
      * Gets the value of the createDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
     /**
      * Sets the value of the createDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setCreateDate(long value) {
+    public void setCreateDate(Timestamp value) {
         this.createDate = value;
     }
 
@@ -134,16 +145,24 @@ public class VendorTO {
     /**
      * Gets the value of the lastChanged property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getLastChanged() {
+    public Timestamp getLastChanged() {
         return lastChanged;
     }
 
     /**
      * Sets the value of the lastChanged property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setLastChanged(long value) {
+    public void setLastChanged(Timestamp value) {
         this.lastChanged = value;
     }
 
@@ -233,6 +252,30 @@ public class VendorTO {
      */
     public void setStreet(String value) {
         this.street = value;
+    }
+
+    /**
+     * Gets the value of the user property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link User }
+     *     
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the value of the user property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link User }
+     *     
+     */
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }

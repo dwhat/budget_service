@@ -10,25 +10,26 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for basketTO complex type.
+ * <p>Java class for basket complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="basketTO">
+ * &lt;complexType name="basket">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="items" type="{http://onlinebudget.budget.de/}itemTO" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="items" type="{http://onlinebudget.budget.de/}item" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="payment" type="{http://onlinebudget.budget.de/}paymentTO" minOccurs="0"/>
- *         &lt;element name="purchaseDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="vendor" type="{http://onlinebudget.budget.de/}vendorTO" minOccurs="0"/>
+ *         &lt;element name="payment" type="{http://onlinebudget.budget.de/}payment" minOccurs="0"/>
+ *         &lt;element name="purchaseDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
+ *         &lt;element name="user" type="{http://onlinebudget.budget.de/}user" minOccurs="0"/>
+ *         &lt;element name="vendor" type="{http://onlinebudget.budget.de/}vendor" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,7 +39,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "basketTO", propOrder = {
+@XmlType(name = "basket", propOrder = {
     "amount",
     "createDate",
     "id",
@@ -48,21 +49,23 @@ import javax.xml.bind.annotation.XmlType;
     "notice",
     "payment",
     "purchaseDate",
+    "user",
     "vendor"
 })
-public class BasketTO {
+public class Basket {
 
     protected double amount;
-    protected long createDate;
+    protected Timestamp createDate;
     protected int id;
     @XmlElement(nillable = true)
-    protected List<ItemTO> items;
-    protected long lastChanged;
+    protected List<Item> items;
+    protected Timestamp lastChanged;
     protected String name;
     protected String notice;
-    protected PaymentTO payment;
-    protected long purchaseDate;
-    protected VendorTO vendor;
+    protected Payment payment;
+    protected Timestamp purchaseDate;
+    protected User user;
+    protected Vendor vendor;
 
     /**
      * Gets the value of the amount property.
@@ -83,16 +86,24 @@ public class BasketTO {
     /**
      * Gets the value of the createDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
     /**
      * Sets the value of the createDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setCreateDate(long value) {
+    public void setCreateDate(Timestamp value) {
         this.createDate = value;
     }
 
@@ -130,13 +141,13 @@ public class BasketTO {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ItemTO }
+     * {@link Item }
      * 
      * 
      */
-    public List<ItemTO> getItems() {
+    public List<Item> getItems() {
         if (items == null) {
-            items = new ArrayList<ItemTO>();
+            items = new ArrayList<Item>();
         }
         return this.items;
     }
@@ -144,16 +155,24 @@ public class BasketTO {
     /**
      * Gets the value of the lastChanged property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getLastChanged() {
+    public Timestamp getLastChanged() {
         return lastChanged;
     }
 
     /**
      * Sets the value of the lastChanged property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setLastChanged(long value) {
+    public void setLastChanged(Timestamp value) {
         this.lastChanged = value;
     }
 
@@ -210,10 +229,10 @@ public class BasketTO {
      * 
      * @return
      *     possible object is
-     *     {@link PaymentTO }
+     *     {@link Payment }
      *     
      */
-    public PaymentTO getPayment() {
+    public Payment getPayment() {
         return payment;
     }
 
@@ -222,27 +241,59 @@ public class BasketTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link PaymentTO }
+     *     {@link Payment }
      *     
      */
-    public void setPayment(PaymentTO value) {
+    public void setPayment(Payment value) {
         this.payment = value;
     }
 
     /**
      * Gets the value of the purchaseDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getPurchaseDate() {
+    public Timestamp getPurchaseDate() {
         return purchaseDate;
     }
 
     /**
      * Sets the value of the purchaseDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setPurchaseDate(long value) {
+    public void setPurchaseDate(Timestamp value) {
         this.purchaseDate = value;
+    }
+
+    /**
+     * Gets the value of the user property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link User }
+     *     
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the value of the user property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link User }
+     *     
+     */
+    public void setUser(User value) {
+        this.user = value;
     }
 
     /**
@@ -250,10 +301,10 @@ public class BasketTO {
      * 
      * @return
      *     possible object is
-     *     {@link VendorTO }
+     *     {@link Vendor }
      *     
      */
-    public VendorTO getVendor() {
+    public Vendor getVendor() {
         return vendor;
     }
 
@@ -262,10 +313,10 @@ public class BasketTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link VendorTO }
+     *     {@link Vendor }
      *     
      */
-    public void setVendor(VendorTO value) {
+    public void setVendor(Vendor value) {
         this.vendor = value;
     }
 

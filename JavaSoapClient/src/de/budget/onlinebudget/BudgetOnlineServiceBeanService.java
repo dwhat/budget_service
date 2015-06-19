@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "BudgetOnlineServiceBeanService", targetNamespace = "http://onlinebudget.budget.de/", wsdlLocation = "http://85.214.64.59:8080/budget/BudgetOnlineServiceBean?wsdl")
+@WebServiceClient(name = "BudgetOnlineServiceBeanService", targetNamespace = "http://onlinebudget.budget.de/", wsdlLocation = "http://localhost:8080/budget/BudgetOnlineServiceBean?wsdl")
 public class BudgetOnlineServiceBeanService
     extends Service
 {
@@ -30,7 +30,7 @@ public class BudgetOnlineServiceBeanService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://85.214.64.59:8080/budget/BudgetOnlineServiceBean?wsdl");
+            url = new URL("http://localhost:8080/budget/BudgetOnlineServiceBean?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

@@ -657,12 +657,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @throws Exception
 	 */
 	private double getAmountByVendorHelper(int sessionId, int vendorId) throws BudgetOnlineException, Exception {
-		double sum = 0;
+		double sum = 0.0;
 		try {
 			List<Basket> basketList = getBasketsByVendorHelper(sessionId, vendorId);
 			for(Basket b : basketList) {
 				sum = sum + b.getAmount();
 			}
+			return sum;
 		}
 		catch(NoSessionException | BasketNotFoundException e) {
 			throw e;
@@ -683,7 +684,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch(Exception e) {
 			throw e;
 		}
-		return sum;
 	}
 	
 	/**
@@ -695,12 +695,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	@Override
 	public AmountListResponse getAmountForVendors(int sessionId) {
 		AmountListResponse response = new AmountListResponse();
+		List<AmountTO> amountList= new ArrayList<>();
 		try {
 			List<Vendor> vendorList = getVendorsHelper(sessionId);
 			for(Vendor v : vendorList) {
 				double value = getAmountByVendorHelper(sessionId, v.getId());
-				dtoAssembler.makeDto(v.getName(), value);
+				amountList.add(dtoAssembler.makeDto(v.getName(), value));
 			}
+			response.setReturnCode(200);
+			response.setAmountList(amountList);
 		}
 		catch(BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());

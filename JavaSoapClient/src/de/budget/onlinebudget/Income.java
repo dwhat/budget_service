@@ -1,34 +1,31 @@
 
 package de.budget.onlinebudget;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for basketTO complex type.
+ * <p>Java class for income complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="basketTO">
+ * &lt;complexType name="income">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="createDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="category" type="{http://onlinebudget.budget.de/}category" minOccurs="0"/>
+ *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}date" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="items" type="{http://onlinebudget.budget.de/}itemTO" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="payment" type="{http://onlinebudget.budget.de/}paymentTO" minOccurs="0"/>
- *         &lt;element name="purchaseDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="vendor" type="{http://onlinebudget.budget.de/}vendorTO" minOccurs="0"/>
+ *         &lt;element name="quantity" type="{http://www.w3.org/2001/XMLSchema}double"/>
+ *         &lt;element name="receiptDate" type="{http://onlinebudget.budget.de/}date" minOccurs="0"/>
+ *         &lt;element name="user" type="{http://onlinebudget.budget.de/}user" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -38,31 +35,30 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "basketTO", propOrder = {
+@XmlType(name = "income", propOrder = {
     "amount",
+    "category",
     "createDate",
     "id",
-    "items",
     "lastChanged",
     "name",
     "notice",
-    "payment",
-    "purchaseDate",
-    "vendor"
+    "quantity",
+    "receiptDate",
+    "user"
 })
-public class BasketTO {
+public class Income {
 
     protected double amount;
-    protected long createDate;
+    protected Category category;
+    protected Date createDate;
     protected int id;
-    @XmlElement(nillable = true)
-    protected List<ItemTO> items;
-    protected long lastChanged;
+    protected Timestamp lastChanged;
     protected String name;
     protected String notice;
-    protected PaymentTO payment;
-    protected long purchaseDate;
-    protected VendorTO vendor;
+    protected double quantity;
+    protected Date receiptDate;
+    protected User user;
 
     /**
      * Gets the value of the amount property.
@@ -81,18 +77,50 @@ public class BasketTO {
     }
 
     /**
+     * Gets the value of the category property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Category }
+     *     
+     */
+    public Category getCategory() {
+        return category;
+    }
+
+    /**
+     * Sets the value of the category property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Category }
+     *     
+     */
+    public void setCategory(Category value) {
+        this.category = value;
+    }
+
+    /**
      * Gets the value of the createDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Date }
+     *     
      */
-    public long getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
     /**
      * Sets the value of the createDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Date }
+     *     
      */
-    public void setCreateDate(long value) {
+    public void setCreateDate(Date value) {
         this.createDate = value;
     }
 
@@ -113,47 +141,26 @@ public class BasketTO {
     }
 
     /**
-     * Gets the value of the items property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the items property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getItems().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ItemTO }
-     * 
-     * 
-     */
-    public List<ItemTO> getItems() {
-        if (items == null) {
-            items = new ArrayList<ItemTO>();
-        }
-        return this.items;
-    }
-
-    /**
      * Gets the value of the lastChanged property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getLastChanged() {
+    public Timestamp getLastChanged() {
         return lastChanged;
     }
 
     /**
      * Sets the value of the lastChanged property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setLastChanged(long value) {
+    public void setLastChanged(Timestamp value) {
         this.lastChanged = value;
     }
 
@@ -206,67 +213,67 @@ public class BasketTO {
     }
 
     /**
-     * Gets the value of the payment property.
+     * Gets the value of the quantity property.
+     * 
+     */
+    public double getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * Sets the value of the quantity property.
+     * 
+     */
+    public void setQuantity(double value) {
+        this.quantity = value;
+    }
+
+    /**
+     * Gets the value of the receiptDate property.
      * 
      * @return
      *     possible object is
-     *     {@link PaymentTO }
+     *     {@link Date }
      *     
      */
-    public PaymentTO getPayment() {
-        return payment;
+    public Date getReceiptDate() {
+        return receiptDate;
     }
 
     /**
-     * Sets the value of the payment property.
+     * Sets the value of the receiptDate property.
      * 
      * @param value
      *     allowed object is
-     *     {@link PaymentTO }
+     *     {@link Date }
      *     
      */
-    public void setPayment(PaymentTO value) {
-        this.payment = value;
+    public void setReceiptDate(Date value) {
+        this.receiptDate = value;
     }
 
     /**
-     * Gets the value of the purchaseDate property.
-     * 
-     */
-    public long getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    /**
-     * Sets the value of the purchaseDate property.
-     * 
-     */
-    public void setPurchaseDate(long value) {
-        this.purchaseDate = value;
-    }
-
-    /**
-     * Gets the value of the vendor property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link VendorTO }
+     *     {@link User }
      *     
      */
-    public VendorTO getVendor() {
-        return vendor;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the vendor property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link VendorTO }
+     *     {@link User }
      *     
      */
-    public void setVendor(VendorTO value) {
-        this.vendor = value;
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }
