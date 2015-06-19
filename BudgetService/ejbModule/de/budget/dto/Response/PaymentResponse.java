@@ -5,7 +5,6 @@ import de.budget.dto.PaymentTO;
 /**
  * Class for the Payment response
  * @author Marco
- * @date 20.05.2015
  */
 public class PaymentResponse extends ReturnCodeResponse {
 

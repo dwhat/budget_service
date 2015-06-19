@@ -4,9 +4,6 @@ package de.budget.dto.Response;
  * Response Class to transport only Double Values to Client
  * 
  * @author Moritz
- * @date 07.06.2015
- *
- *
  */
 public class AmountResponse extends ReturnCodeResponse {
 

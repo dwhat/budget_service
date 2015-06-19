@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @date 18.05.2015
- * @author Marco
  * Class for the date transfer of a basket
+ * @author Marco
+ * 
  */
 public class BasketTO implements Serializable{
 

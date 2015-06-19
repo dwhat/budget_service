@@ -25,7 +25,6 @@ import de.budget.entities.Item;
  * 
  * @author Marco
  * @author Moritz
- * @date 15.05.2015 bis 10.06.2015
  * 
  */
 @Local

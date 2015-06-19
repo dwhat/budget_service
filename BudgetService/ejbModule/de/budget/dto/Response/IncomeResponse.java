@@ -3,7 +3,7 @@ package de.budget.dto.Response;
 import de.budget.dto.IncomeTO;
 
 /**
- * @date 28.05.2015
+ * Response for the Income
  * @author Marco
  *
  */

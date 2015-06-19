@@ -30,7 +30,6 @@ import de.budget.entities.Vendor;
  * 
  * DTO's werden aus den vorherigen Entities gebildet. 
  * 
- * @date 19.05.2015
  * <p> Author: Marco </p>
  *
  */

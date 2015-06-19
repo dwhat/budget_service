@@ -4,7 +4,7 @@ package de.budget.dto.Response;
 import de.budget.dto.UserTO;
 
 /**
- * @date 19.05.2015
+ * Response Object für Useranfragen
  * @author Marco
  *
  */

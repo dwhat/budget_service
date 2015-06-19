@@ -6,7 +6,6 @@ import de.budget.dto.CategoryTO;
 /**
  * Class for the Category response
  * @author Marco
- * @date 19.05.2015
  */
 public class CategoryResponse extends ReturnCodeResponse {
 
@@ -14,9 +13,7 @@ public class CategoryResponse extends ReturnCodeResponse {
 		
 	private CategoryTO categoryTo;
 
-	/**
-	* @author Marco
-	*/
+	
 	public CategoryResponse() {
 			
 	}

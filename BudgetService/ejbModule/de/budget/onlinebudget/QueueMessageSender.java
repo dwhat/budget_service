@@ -21,6 +21,7 @@ import org.jboss.logging.Logger;
  * Bean die unsere BudgetQueue befüllt, wenn Emails versendet werden sollen. 
  * 
  * @author Moritz
+ * @author Marco
  * 
  * Session Bean implementation class OutputRequesterBean
  */
@@ -44,7 +45,6 @@ public class QueueMessageSender {
 	   * sendTextMessage
 	   * Funktion überholt nutzten nun MapMessage
 	   * 
-	   * @author Marco
 	   * 
 	   * Sends a Message with the letter text to the output queue,
 	   * assuming that this causes the letter to be processed and printed.
@@ -69,8 +69,6 @@ public class QueueMessageSender {
 	   * sendObjectMessage
 	   * Objekte in BudgetQueue schreiben
 	   * 
-	   * @author Moritz
-	   * @param user
 	   
 	  public void sendObjectMessage(User user) {
 		  try (JMSContext context = jmsFactory.createContext(JMSContext.AUTO_ACKNOWLEDGE)){

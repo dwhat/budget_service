@@ -30,7 +30,6 @@ import de.budget.onlinebudget.VendorTO;
 /**
  * Test Client for the Budget System
  * @author Marco
- * @date 06.06.2015
  */
 public class SimpleOnlineBudgetClient {
 
@@ -194,7 +193,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * Helper method to create an Item
-	 * @param sessionId
 	 * @param itemId
 	 * @param name
 	 * @param quantity
@@ -230,7 +228,6 @@ public class SimpleOnlineBudgetClient {
 	 * @param paymentId
 	 * @param vendorId
 	 * @param items
-	 * @author Marco
 	 */
 	private static void createBasketHelper(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items){
 		System.out.println("Lege Basket an. ");

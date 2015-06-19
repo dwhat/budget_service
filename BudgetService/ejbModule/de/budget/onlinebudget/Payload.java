@@ -15,7 +15,6 @@ import org.jboss.logging.Logger;
 /**
  * Class to check how much user are actually logged in
  * @author Marco
- * @date 09.06.2015
  */
 @Startup
 @Singleton

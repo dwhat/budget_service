@@ -17,9 +17,8 @@ import org.jboss.logging.Logger;
 
 
 /**
- * @date 27.05.2015
- * @author Marco
  * Income Entity Class
+ * @author Marco
  */
 
 @NamedQueries( {

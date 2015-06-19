@@ -17,9 +17,7 @@ public interface ReportGenerator {
 	/**
 	 * Asynchron Report Generator
 	 * 
-	 * @param subject
-	 * @param body
-	 * @return
+	 * @return boolean
 	 */
 	public Future<Boolean> build(BudgetSession session);
 

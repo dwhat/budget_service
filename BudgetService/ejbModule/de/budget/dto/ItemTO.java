@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 
 /**
- * @date 18.05.2015
- * @author Marco
  * Class for the date transfer of an Item
+ * @author Marco
+ * 
  */
 public class ItemTO implements Serializable {
 
@@ -31,6 +31,7 @@ public class ItemTO implements Serializable {
 	}
 	
 	/**
+	 * 
 	 * @param id
 	 * @param name
 	 * @param quantity
@@ -39,8 +40,8 @@ public class ItemTO implements Serializable {
 	 * @param createDate
 	 * @param receiptDate
 	 * @param lastChanged
-	 * @param basket
-	 * @param category
+	 * @param basketId
+	 * @param categoryId
 	 */
 	public ItemTO(int id, String name, double quantity, double price, String notice, long createDate, long receiptDate, long lastChanged, int basketId, int categoryId) {
 		this.id = id;
@@ -161,7 +162,7 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @param basket the basket to set
+	 * @param basketId the basket to set
 	 */
 	public void setBasketId(int basketId) {
 		this.basketId = basketId;
@@ -175,7 +176,7 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @param category the category to set
+	 * @param categoryId the category to set
 	 */
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;

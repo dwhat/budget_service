@@ -5,9 +5,8 @@ import java.util.List;
 import de.budget.dto.VendorTO;
 
 /**
- * @date 19.05.2015
+ * Klasse für eine Liste von VendorTO Objecten als Antwort auf Anfragen
  * @author Marco
- *	Klasse für eine Liste von VendorTO Objecten als Antwort auf Anfragen
  */
 public class VendorListResponse extends ReturnCodeResponse{
 

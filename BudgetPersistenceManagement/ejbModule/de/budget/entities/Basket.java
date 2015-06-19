@@ -21,7 +21,6 @@ import javax.validation.constraints.NotNull;
  * Basket Class
  * Enity for Baskets
  * @author Marco
- * @date 12.05.2015
  */
 @NamedQueries( {
 	@NamedQuery (
@@ -267,7 +266,7 @@ public class Basket implements Serializable {
 	/**
 	 * <p> Author: Moritz </p>
 	 * @param itemId
-	 * @return
+	 * @return item Object
 	 */
 	public Item getItem(int itemId)
 	{
@@ -298,7 +297,7 @@ public class Basket implements Serializable {
 	/**
 	 * Method to add one item to this basket
 	 * <p> Author: Marco </p>
-	 * @param newBasket
+	 * @param newItem
 	 */
 	public void addNewItem(Item newItem) {
 		this.items.add(newItem);

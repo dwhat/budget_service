@@ -5,7 +5,6 @@ import de.budget.dto.BasketTO;
 /**
  * Class for the Basket response
  * @author Marco
- * @date 19.05.2015
  */
 public class BasketResponse extends ReturnCodeResponse {
 
@@ -13,9 +12,7 @@ public class BasketResponse extends ReturnCodeResponse {
 	
 	private BasketTO basketTo;
 
-	/**
-	 * @author Marco
-	 */
+
 	public BasketResponse() {
 		
 	}

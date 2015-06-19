@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * Data Transferobjekts for the transport of users
- * @date 26.05.2015
  * @author Marco
  *
  */

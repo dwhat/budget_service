@@ -8,7 +8,6 @@ package de.budget.Exception;
 /**
  * Exception which will be thrown if a income cound not be found 
  * @author Marco
- * @date 05.06.2015
  */
 public class IncomeNotFoundException extends NotFoundException {
 

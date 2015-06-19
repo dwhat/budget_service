@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 /**
  * Payment Class
  * @author Marco
- * @date 11.05.2015
  */
 @Entity
 public class Payment implements Serializable {

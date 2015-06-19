@@ -7,7 +7,6 @@ package de.budget.Exception;
 /**
  * Exception which will be thrown if the database does a rollback
  * @author Marco
- * @date 17.06.2015
  */
 public class RollbackException extends BudgetOnlineException{
 	

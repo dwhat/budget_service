@@ -3,7 +3,6 @@ package de.budget.Exception;
 
 /**
  * Exception, if an username is already existing
- * @date 18.05.2015
  * @author Marco
  *
  */

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 /**
  * Category Entity Class
  * @author Marco
- * @date 11.05.2015
  */
 @Entity
 public class Category implements Serializable{
@@ -51,7 +50,6 @@ public class Category implements Serializable{
 	/**
 	 * Default Constructor
 	 * <p> Author: Marco </p>
-	 * @date 11.05.2015
 	 */
 	public Category() {
 		super();
@@ -60,7 +58,6 @@ public class Category implements Serializable{
 	/**
 	 * Constructor
 	 * <p> Author: Marco </p>
-	 * @date 11.05.2015
 	 */
 	public Category(User user, boolean income, String name, String notice, String colour) {
 		this.user = user;
@@ -193,7 +190,7 @@ public class Category implements Serializable{
 
 	/**
 	 * <p> Author: Marco </p>
-	 * @param username the username to set
+	 * @param user the username to set
 	 */
 	public void setUser(User user) {
 		this.user = user;

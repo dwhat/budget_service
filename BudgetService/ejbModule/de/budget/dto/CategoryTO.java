@@ -3,9 +3,9 @@ package de.budget.dto;
 import java.io.Serializable;
 
 /**
- * @date 18.05.2015
- * @author Marco
  * Class for the date transfer of a category
+ * @author Marco
+ * 
  */
 public class CategoryTO implements Serializable {
 

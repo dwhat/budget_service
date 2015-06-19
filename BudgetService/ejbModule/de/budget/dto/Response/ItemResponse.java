@@ -6,7 +6,6 @@ import de.budget.dto.ItemTO;
 /**
  * Class for the Category response
  * @author Marco
- * @date 19.05.2015
  */
 public class ItemResponse extends ReturnCodeResponse{
 

@@ -92,7 +92,6 @@ import de.budget.onlinebudget.QueueMessageSender;
  * sortieren und gruppieren der daten für die spätere Darstellung in der App
  * @author Moritz
  * @author Marco
- * @date 19.05.2015 bis 16.06.2015
  */
 @Stateless
 @Remote(BudgetOnlineService.class)
@@ -216,7 +215,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Method to logout. Deletes a session
 	 * 
 	 * <p> Author: Moritz </p>
-	 * @param sessionID
 	 * @return ReturnCodeResponse
 	 */
 	@Override
@@ -696,7 +694,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Methode um die Beträge pro Vendor zurück zugeben
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return AmountListResponse
 	 */
 	@Override
 	public AmountListResponse getAmountForVendors(int sessionId) {
@@ -792,7 +790,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Gets all baskets of the actual month
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return AmountResponse
 	 */
 	@Override
 	public AmountResponse getBasketsOfActualMonth(int sessionId) {
@@ -850,7 +848,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param paymentId
-	 * @return
+	 * @return BasketListResponse
 	 */
 	@Override
 	public BasketListResponse getBasketsByPayment(int sessionId, int paymentId) {
@@ -1973,7 +1971,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Method to get all Categories of a use where income is true
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return CategoryListResponse
 	 */
 	@Override
 	public CategoryListResponse getCategorysOfIncome(int sessionId){
@@ -2127,7 +2125,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Method to get all Categories of a use where income is false
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return CategoryListResponse
 	 */
 	@Override
 	public CategoryListResponse getCategorysOfLoss(int sessionId){
@@ -2409,7 +2407,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Method to get all incomes of a user
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return IncomeListResponse
 	 */
 	@Override
 	public IncomeListResponse getIncomes(int sessionId){
@@ -2528,7 +2526,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return IncomeListResponse
 	 */
 	@Override
 	public IncomeListResponse getIncomesByCategory(int sessionId, int categoryId) {
@@ -2634,7 +2632,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Gets the sum of amounts of the incomes of every single Category
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return AmountListResponse
 	 */
 	@Override
 	public AmountListResponse getIncomesAmountForCategories(int sessionId) {
@@ -2796,7 +2794,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Gets all income of the actual month
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return AmountResponse
 	 */
 	@Override
 	public AmountResponse getIncomesOfActualMonth(int sessionId) {
@@ -3191,7 +3189,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return ItemListResponse
 	 */
 	@Override
 	public ItemListResponse getItemsByLossCategory(int sessionId, int categoryId) {
@@ -3248,7 +3246,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Gets the sum of amounts of the items of every single Category
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return AmountListResponse
 	 */
 	@Override
 	public AmountListResponse getItemsAmountForCategories(int sessionId) {

@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
  * Vendor class
  * Vendor Entity
  * @author Marco
- * @date 11.05.2015
  */
 @Entity
 public class Vendor implements Serializable {

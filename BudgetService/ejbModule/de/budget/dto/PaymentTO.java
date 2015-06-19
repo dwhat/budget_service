@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 
 /**
- * @date 19.05.2015
- * @author Marco
  * Class for the date transfer of a payment
+ * @author Marco
+ * 
  */
 public class PaymentTO implements Serializable {
 
@@ -38,7 +38,6 @@ public class PaymentTO implements Serializable {
 	 * @param active
 	 * @param createDate
 	 * @param lastChanged
-	 * @param user
 	 */
 	public PaymentTO(int id, String name, String number, String bic, boolean active, long createDate, long lastChanged) {
 		this.id = id;

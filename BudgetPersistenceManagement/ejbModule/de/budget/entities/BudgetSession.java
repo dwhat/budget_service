@@ -10,9 +10,7 @@ import javax.persistence.NamedQuery;
 
 /**
  * BudgetSession for the SessionEntities
-
  * @author Marco
- * @date 08.05.2015
  * 
  */
 
@@ -92,7 +90,7 @@ public class BudgetSession {
 
 	/**
 	* Method to set the creationtime
-	* @param creationTime
+	* @param createDate
 	* <p> Author: Marco </p>
 	*/
 	public void setCreateDate(Timestamp createDate) {

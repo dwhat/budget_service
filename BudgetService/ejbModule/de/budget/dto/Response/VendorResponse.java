@@ -6,7 +6,6 @@ import de.budget.dto.VendorTO;
 /**
  * Class for the Vendor response
  * @author Marco
- * @date 19.05.2015
  */
 public class VendorResponse extends ReturnCodeResponse {
 

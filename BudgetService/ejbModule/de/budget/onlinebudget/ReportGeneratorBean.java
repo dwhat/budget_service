@@ -43,13 +43,14 @@ public class ReportGeneratorBean implements ReportGenerator {
 	@EJB(beanName = "BudgetOnlineDAO", beanInterface = de.budget.dao.BudgetOnlineDAOLocal.class)
 	private BudgetOnlineDAOLocal dao;
 	*/
+	
 	/**
 	 * EJB zur Beauftragung des Nachrichtenversand
 	 * Referenz auf die EJB wird per Dependency Injection gefüllt.
-	
-	@EJB
-	private QueueMessageSender outputSender;
 	 */
+	// @ EJB
+	//private QueueMessageSender outputSender;
+	
 	
 	
 	@Override

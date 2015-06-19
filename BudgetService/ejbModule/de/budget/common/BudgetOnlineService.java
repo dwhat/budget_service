@@ -33,7 +33,6 @@ import de.budget.dto.Response.VendorResponse;
 /**
  * Webservice Interface BudgetOnlineService
  * @author Marco
- * @date 08.05.2015 bis 13.06.2015
  * @version 1
  */
 public interface BudgetOnlineService {
@@ -382,7 +381,6 @@ public interface BudgetOnlineService {
 	 * Method to get the Amount of all income, which are assigned to a special category
 	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @param categoryId
 	 * @return AmountListResponse
 	 */
 	public AmountListResponse getIncomesAmountForCategories(int sessionId);

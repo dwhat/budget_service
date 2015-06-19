@@ -17,7 +17,6 @@ import javax.validation.constraints.Size;
 /**
  * User class
  * @author Marco
- * @date 11.05.2015
  */
 @Entity
 public class User implements Serializable {
@@ -40,8 +39,7 @@ public class User implements Serializable {
 	private Timestamp createDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -52,23 +50,17 @@ public class User implements Serializable {
 	
 	/**
 	 * Bidirectional one to many relationship
-	 * @author Marco
-	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private List<Category> categories;
 	
 	/**
 	 * Bidirectional one to many relationship
-	 * @author Marco
-	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private List<Payment> payments;
 	
 	/**
-	 * @author Marco
-	 * @date 28.05.2015
 	 * Bidirectional one to many relationship
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
@@ -76,16 +68,12 @@ public class User implements Serializable {
 	
 	/**
 	 * Bidirectional one to many relationship
-	 * @author Marco
-	 * @date 11.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private List<Vendor> vendors;
 	
 	/**
 	 * Bidirectional one to many relationship
-	 * @author Marco
-	 * @date 12.05.2015
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="user")
 	private List<Basket> baskets;
@@ -94,8 +82,6 @@ public class User implements Serializable {
 	
 	/**
 	* Default Constructor
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public User() {
 		super();
@@ -103,10 +89,8 @@ public class User implements Serializable {
 	
 	/**
 	* Constructor
-	* @author Marco
 	* @param userName
 	* @param password
-	* @date 08.05.2015
 	*/
 	public User(String userName, String password, String email) {
 		this.userName = userName.toLowerCase();
@@ -121,8 +105,6 @@ public class User implements Serializable {
 	
 	/**
 	* Method to get the username
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public String getUserName() {
 		return userName;
@@ -130,8 +112,6 @@ public class User implements Serializable {
 
 	/**
 	* Method to get the password
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public String getPassword() {
 		return password;
@@ -139,8 +119,6 @@ public class User implements Serializable {
 	
 	/**
 	* Method to set the username
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public void setUserName(String userName) {
 		this.userName = userName.toLowerCase();
@@ -148,8 +126,6 @@ public class User implements Serializable {
 
 	/**
 	* Method to set the password
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public void setPassword(String password) {
 		this.password = password;
@@ -157,8 +133,6 @@ public class User implements Serializable {
 
 	/**
 	* Method to get the EmailAddress
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public String getEmail() {
 		return this.email;
@@ -166,8 +140,6 @@ public class User implements Serializable {
 	
 	/**
 	* Method to set the emailAddress
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public void setEmail(String adress) {
 		this.email = adress;
@@ -175,8 +147,6 @@ public class User implements Serializable {
 
 	/**
 	* Method to set the date
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public Timestamp getCreateDate() {
 		return createDate;
@@ -184,15 +154,12 @@ public class User implements Serializable {
 
 	/**
 	* Method to set the date
-	* @author Marco
-	* @date 08.05.2015
 	*/
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;
 	}
 
 	/**
-	 * @author Marco
 	 * @return a Set with all Categories of this User
 	 */
 	public List<Category> getCategories(){
@@ -200,7 +167,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @param categories
 	 */
 	public void setCategories(List<Category> categories) {
@@ -223,7 +189,6 @@ public class User implements Serializable {
 	
 	/**
 	 * Method to add one category to this User
-	 * @author Marco
 	 * @param newCategory
 	 */
 	public void addNewCategory(Category newCategory) {
@@ -231,7 +196,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @return a Set with all Payments of this User
 	 */
 	public List<Payment> getPayments(){
@@ -253,8 +217,7 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
-	 * @param payment
+	 * @param payments
 	 */
 	public void setPayments(List<Payment> payments) {
 		this.payments = payments;
@@ -262,7 +225,6 @@ public class User implements Serializable {
 	
 	/**
 	 * Method to add one Payment to this User
-	 * @author Marco
 	 * @param newPayment
 	 */
 	public void addNewPayment(Payment newPayment) {
@@ -298,8 +260,6 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 28.05.2015
 	 * @param newIncome
 	 */
 	public void addNewIncome(Income newIncome) {
@@ -307,7 +267,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @return a List with all Vendors of this User
 	 */
 	public List<Vendor> getVendors(){
@@ -329,7 +288,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @param vendors
 	 */
 	public void setVendors(List<Vendor> vendors) {
@@ -338,7 +296,6 @@ public class User implements Serializable {
 	
 	/**
 	 * Method to add one Payment to this User
-	 * @author Marco
 	 * @param newVendor
 	 */
 	public void addNewVendor(Vendor newVendor) {
@@ -346,7 +303,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @return a Set with all Baskets of this User
 	 */
 	public List<Basket> getBaskets(){
@@ -355,7 +311,6 @@ public class User implements Serializable {
 	
 	/**
 	 * Method to get an specific BasketObject
-	 * @author Marco
 	 * @param basketId
 	 * @return Basket Object
 	 */
@@ -369,7 +324,6 @@ public class User implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
 	 * @param baskets
 	 */
 	public void setBaskets(List<Basket> baskets) {
@@ -378,7 +332,6 @@ public class User implements Serializable {
 	
 	/**
 	 * Method to add one basket to this User
-	 * @author Marco
 	 * @param newBasket
 	 */
 	public void addNewBasket(Basket newBasket) {
@@ -399,9 +352,7 @@ public class User implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 
-	/**
-	 * @author Marco
-	 */
+
 	@Override
 	public String toString() {
 		return this.userName;

@@ -7,9 +7,6 @@ import java.io.Serializable;
  * Dto Object to transfer a double value, which belongs to a special id
  * 
  * @author Marco
- * @date 19.06.2015
- *
- *
  */
 public class AmountTO implements Serializable {
 

@@ -5,9 +5,9 @@ import java.util.List;
 import de.budget.dto.AmountTO;
 
 /**
- * @date 19.05.2015
- * @author Marco
  * Klasse für eine Liste von AmountWithIdResponses Objecten
+ * @author Marco
+ * 
  */
 public class AmountListResponse extends ReturnCodeResponse{
 

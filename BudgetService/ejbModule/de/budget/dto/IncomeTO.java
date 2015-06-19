@@ -4,9 +4,8 @@ import java.io.Serializable;
 
 
 /**
- * @date 28.05.2015
- * @author Marco
  * Class for the date transfer of an Income
+ * @author Marco
  */
 public class IncomeTO implements Serializable {
 
@@ -35,8 +34,6 @@ public class IncomeTO implements Serializable {
 	 * @param quantity
 	 * @param amount
 	 * @param notice
-	 * @param createDate
-	 * @param lastChanged
 	 * @param category
 	 */
 	public IncomeTO(int id, String name, double quantity, double amount, String notice, long receiptDate, CategoryTO category) {

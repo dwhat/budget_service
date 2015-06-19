@@ -14,7 +14,6 @@ import de.budget.entities.User;
 /**
  * dataBuilder to write testdata in db
  * @author Marco
- * @date 08.05.2015
  */
 @Startup
 @Singleton
