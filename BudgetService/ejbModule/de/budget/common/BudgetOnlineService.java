@@ -7,9 +7,9 @@ import java.util.List;
 
 
 
+
 //ItemTO import, da sie fürs Anlegen eines Baskets benötigt werden
 import de.budget.dto.ItemTO;
-
 import de.budget.dto.Response.AmountListResponse;
 //Response-Imports
 import de.budget.dto.Response.AmountResponse;
@@ -134,6 +134,14 @@ public interface BudgetOnlineService {
 	 * @return
 	 */
 	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId);
+	
+	/**
+	 * Methode um die Beträge pro Vendor zurück zugeben
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public AmountListResponse getAmountForVendors(int sessionId);
 
 	
 	/*#################      PAYMENT - SECTION     ##############*/

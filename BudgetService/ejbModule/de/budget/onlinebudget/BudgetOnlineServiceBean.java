@@ -684,6 +684,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param sessionId
 	 * @return
 	 */
+	@Override
 	public AmountListResponse getAmountForVendors(int sessionId) {
 		AmountListResponse response = new AmountListResponse();
 		try {
