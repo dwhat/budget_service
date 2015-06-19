@@ -10,6 +10,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -22,6 +23,7 @@ import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.persistence.EntityExistsException;
 import javax.persistence.TransactionRequiredException;
+
 
 
 
@@ -543,7 +545,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the vendor, wird sp�ter bef�llt
 				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
-				if(basketList.size() == 0){
+				if(basketsOfUser.size() == 0){
 					throw new BasketNotFoundException("Not Baskets were found for this user");
 				}
 				else {
@@ -557,7 +559,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					return basketList;
 				}
 				else {
-					throw new BasketNotFoundException("Not baskets found for this vendor");
+					basketList.add(new Basket(null, null, null, 0.0 , null, null, null));
+					return basketList;
 				}
 			}
 			else {
