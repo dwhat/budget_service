@@ -2453,7 +2453,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			List<Category> categoryList = getIncomeCategoriesHelper(sessionId);
 			List<AmountTO> amountList = new ArrayList<>();
 			for(Category c : categoryList) {
-				double value = getItemsAmountByLossCategoryHelper(sessionId, c.getId());
+				double value = getIncomeAmountByCategoryHelper(sessionId, c.getId());
 				amountList.add(dtoAssembler.makeDto(c.getName(), value));
 			}
 			response.setReturnCode(200);
