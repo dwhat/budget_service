@@ -20,6 +20,8 @@ import javax.ejb.Local;
 
 
 
+import javax.persistence.EntityExistsException;
+
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
 import de.budget.entities.Category;
@@ -46,60 +48,44 @@ public interface BudgetOnlineDAOLocal {
 	 * @param password
 	 * @param email
 	 * @return new User
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public User createUser(String username, String password, String email);
+	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update a user
-	 * @param user
-	 * @return updated user
-	 * @throws IllegalArgumentException
 	 */
 	public User updateUser(User user) throws IllegalArgumentException;
 	
 	/**
 	 * Method to find a user
-	 * @param userName
-	 * @return user
-	 * @throws IllegalArgumentException
 	 */
 	public User findUserByName(String userName) throws IllegalArgumentException;
 	
 	/**
 	 * method to delete an user
-	 * @param username
-	 * @throws IllegalArgumentException
 	 */
 	public void deleteUser(String username) throws IllegalArgumentException;
 	
 	
 	/**
 	 * Method to create a session
-	 * @param userObject
-	 * @return sessionId
 	 */
-	public int createSession(User userObject);
+	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to find a session
-	 * @param sessionId
-	 * @return Session Object
-	 * @throws IllegalArgumentException
 	 */
 	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException;
 	
 	/**
 	 * Method to delete a session
-	 * @param sessionId
-	 * @throws IllegalArgumentException
 	 */
 	public void closeSession(int sessionId) throws IllegalArgumentException;
 	
 	/**
 	 * Method to get all old sessions
-	 * @param dayBefore
-	 * @return List with all old sessions
-	 * @throws IllegalArgumentException
 	 */
 	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException;
 	
@@ -113,8 +99,10 @@ public interface BudgetOnlineDAOLocal {
 	 * @param PLZ
 	 * @param houseNumber
 	 * @return new Vendor
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber);
+	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update a vendor
@@ -151,8 +139,10 @@ public interface BudgetOnlineDAOLocal {
 	 * @param vendor
 	 * @param items
 	 * @return new basket Object
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items);
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update a basket
@@ -204,8 +194,10 @@ public interface BudgetOnlineDAOLocal {
 	 * @param income
 	 * @param colour
 	 * @return new category
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public Category createCategory(User user, String name, String notice, boolean income, String colour);
+	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update a category
@@ -241,8 +233,10 @@ public interface BudgetOnlineDAOLocal {
 	 * @param basket
 	 * @param category
 	 * @return new item object
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category);
+	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update an item
@@ -278,8 +272,10 @@ public interface BudgetOnlineDAOLocal {
 	 * @param receiptDate
 	 * @param category
 	 * @return new income
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
 	 */
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category);
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
 	 * Method to update an income
@@ -317,14 +313,45 @@ public interface BudgetOnlineDAOLocal {
 	/**
 	 * Method to gets the incomes of the actual 
 	 * @param username
-	 * @return
+	 * @return list with all incomes of the actual month
 	 * @throws IllegalArgumentException
 	 */
 	public List<Income> getIncomeOfActualMonth(String username) throws IllegalArgumentException;
 
-	public Payment createPayment(User user, String name, String number, String bic);
+	
+	/**
+	 * Method to create a payment
+	 * @param user
+	 * @param name
+	 * @param number
+	 * @param bic
+	 * @return new payment object
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
+	 */
+	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException;
+	
+	/**
+	 * Method to update a payment
+	 * @param payment
+	 * @return updated payment object
+	 * @throws IllegalArgumentException
+	 */
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException;
+	
+	/**
+	 * Method to get a payment with id 
+	 * @param paymentId
+	 * @return payment object
+	 * @throws IllegalArgumentException
+	 */
 	public Payment findPaymentById(int paymentId) throws IllegalArgumentException;
+	
+	/**
+	 * Method to delete a payment
+	 * @param paymentId
+	 * @throws IllegalArgumentException
+	 */
 	public void deletePayment(int paymentId) throws IllegalArgumentException;
 
 	

@@ -52,31 +52,10 @@ import de.budget.entities.Item;
 
 /**
  * 
- * AusImplementierung des DAOLocal Interfaces
+ * AusImplementierung des DAOLocal Interfaces für den Datenzugriff
  * 
  * @author Marco
  * @author Moritz
- * 
- * Querys:
- * ebenfalls denkbar wäre 
- * NativeQuery
- * em.executeQuery("Select c FROM Customer c where c.name Like :name", Customer.class);
- * query.setParemter("name", "%meier%";
- * 
- * List<customer> result = query.getResultList();
- * 
- * nicht mit SQL zu verwechseln !!
- * 
- * NamedQuery:
- * 
- * 
- * Update:
- * em.merge(customer); gebe Instanz in DB rein und update somit
- * em.refresh(customer); DB überschreibt meine Instanz 
- * 
- * Remove:
- *
- * em.remove
  *
  */
 @Stateless
@@ -90,9 +69,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 
 	/**
 	 * Finde User by Name 
-	 * @author Moritz
-	 * @param UserName(String)
-	 * @return UserObjekt
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public User findUserByName(String userName)  throws IllegalArgumentException{
@@ -101,9 +78,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 
 	/**
 	 * New SessionInstanz anschließende Rückgabe der ID
-	 * @author Moritz
-	 * @param UserObjekt
-	 * @return SessionID
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException{
@@ -115,8 +90,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 	/**
 	 * Schließen bzw löschen einer Session, 
-	 * @author Moritz
-	 * @param sessionID
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public void closeSession(int sessionId) throws IllegalArgumentException {
@@ -127,7 +101,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	/**
 	 * Alle Sessions die älter als 2 Tage und noch existent werden gelöscht
 	 * 
-	 * @author Moritz 
+	 * <p> Author: Moritz </p> 
 	 * 
 	 */
 	@Override
@@ -141,10 +115,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 
 	/**
 	 * Finde Session by ID und gebe SessionObjekt zurück
-	 * 
-	 * @author Moritz
-	 * @param sessionID
-	 * @return SessionObjekt
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public BudgetSession findSessionById(int sessionId)  throws IllegalArgumentException{
@@ -152,10 +123,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param vendorID
-	 * @return Vendor Object
+	 * Finde Vendor mit id
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Vendor findVendorById(int vendorId)  throws IllegalArgumentException{
@@ -163,24 +132,18 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param basketID
-	 * @return Basket Object
+	 * Method to get a basket with id 
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Basket findBasketById(int basketId)  throws IllegalArgumentException{
 		return em.find(Basket.class,  basketId);
 	}
-	
-	//TODO immer em.close() am ende der Methoden
-	
-	
+
 	
 	/**
 	 * Method to find all basket of the actual month
-	 * @author Marco
-	 * @date 02.06.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public List<Basket> getBasketsOfActualMonth(String username){
@@ -196,11 +159,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 	/**
 	 * Methode zum nachladen von Incomes. Gibt incomes von Posistion start bis end an
-	 * @author Marco
-	 * @param username
-	 * @param start
-	 * @param end
-	 * @return
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public List<Basket> getLastBaskets(String username, int start, int end) {
@@ -214,10 +173,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 		
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param categoryID
-	 * @return Category Object
+	 * Method to find a category with id
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Category findCategoryById(int categoryId)  throws IllegalArgumentException{
@@ -225,10 +182,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param itemID
-	 * @return Item Object
+	 * Method to find an item with id
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Item findItemById(int itemId)  throws IllegalArgumentException{
@@ -236,10 +191,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param incomeId
-	 * @return Income Object
+	 * Method to find an income with id
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Income findIncomeById(int incomeId)  throws IllegalArgumentException{
@@ -247,22 +200,16 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param paymentID
-	 * @return Payment Object
+	 * Method to find a payment with id 
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Payment findPaymentById(int paymentId)  throws IllegalArgumentException{
 		return em.find(Payment.class, paymentId);
 	}
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param username
-	 * @param password
-	 * @param email
-	 * @return created userobject or null if there was a failure
+	 * Method to create a user
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException{
@@ -277,10 +224,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param User Object
-	 * @return Category Object
+	 * Method to create a new category
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException{
@@ -293,11 +238,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 
 	/**
-	 * @author Moritz
-	 * @author Marco
-	 * @date  19.05.2015
-	 * @param VendorObjekt
-	 * @return VendorKopieObjekt
+	 * Method to create a new vendor
+	 * <p> Author: Moritz </p>
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException{
@@ -309,31 +252,21 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param User Object
-	 * @return Payment Object
+	 * Method to create a new payment
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException{
-		logger.info("createPayment Methode aufgerufen");
 		Payment payment = new Payment(user, name, number, bic);
-		logger.info("PaymentObject angelegt");
 		if (payment != null) {
-			logger.info("Payment Object ungleich null");
 			em.persist(payment);
-			logger.info("PaymentObject persistiert");
 		}
 		return payment;
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param User Object
-	 * @param Payment Object
-	 * @param Vendor Object
-	 * @return Basket Object
+	 * Method to create a new basket
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
@@ -348,11 +281,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param Basket Object
-	 * @param Category Object
-	 * @return Item Object
+	 * Method to create a new Item
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException {
@@ -367,9 +297,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * create an income
-	 * @author Marco 
-	 * @date 29.05.2015
+	 * Method to create a new income
+	 * <p> Author: Marco </p> 
 	 */
 	@Override
 	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException , IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException {
@@ -388,11 +317,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 	/**
 	 * Methode zum nachladen von Incomes. Gibt incomes von Posistion start bis end an
-	 * @author Marco
-	 * @param username
-	 * @param start
-	 * @param end
-	 * @return
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public List<Income> getLastIncome(String username, int start, int end) {
@@ -407,8 +332,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
 	/**
 	 * Method to find all income of the actual month
-	 * @author Marco
-	 * @date 02.06.2015
+	 * <p> Author: Marco </p>
 	 */
 	public List<Income> getIncomeOfActualMonth(String username){
 		Timestamp date = new Timestamp(System.currentTimeMillis());
@@ -422,9 +346,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * update an income Object
-	 * @author Marco
-	 * @date 29.05.2015
+	 * Method to update an income object
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public Income updateIncome(Income income) throws IllegalArgumentException{
@@ -434,9 +357,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 	
 	/**
-	 * remove an income Object
-	 * @author Marco
-	 * @date 29.05.2015
+	 * Method to remove an income object
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteIncome(int incomeId) throws IllegalArgumentException{
@@ -445,9 +367,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param username
+	 * Method to delete an user
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteUser(String username) throws IllegalArgumentException{
@@ -456,9 +377,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param vendorId
+	 * Method to delete a vendor
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteVendor(int vendorId) throws IllegalArgumentException{
@@ -467,21 +387,18 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param basketId
+	 * Method to delete an basket
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteBasket(int basketId) throws IllegalArgumentException{
 		Basket basket = em.find(Basket.class,  basketId);
-		//Hier prüfen ob dann auch autoatisch alle Items mitgelöscht werden. 
 		em.remove(basket);
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param categoryId
+	 * Method to delete a category
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteCategory(int categoryId) throws IllegalArgumentException {
@@ -490,9 +407,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param itemId
+	 * Method to delete an item
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deleteItem(int itemId) throws IllegalArgumentException {
@@ -502,9 +418,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 18.05.2015
-	 * @param paymentId
+	 * Method to delete a payment
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public void deletePayment(int paymentId) throws IllegalArgumentException {
@@ -513,10 +428,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param Userobjekt
-	 * @return UserobjektKopie
+	 * Method to update an user
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public User updateUser(User user) throws IllegalArgumentException {
@@ -524,10 +437,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param VendorObjekt
-	 * @return VendorobjektKopie
+	 * Method to update a vendor
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException {
@@ -535,10 +446,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param BasketObjekt
-	 * @return BasketObjektKopie
+	 * Method to update a basket
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public Basket updateBasket(Basket basket) throws IllegalArgumentException {
@@ -546,10 +455,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param CategoryObjekt
-	 * @return CategoryObjektKopie
+	 * Method to update a category
+	 * <p> Author: Moritz </p>e
 	 */
 	@Override
 	public Category updateCategory(Category category) throws IllegalArgumentException {
@@ -557,10 +464,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param ItemObjekt
-	 * @return ItemObjektKopie
+	 * Method to update an item
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public Item updateItem(Item item) throws IllegalArgumentException {
@@ -568,10 +473,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	}
 
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
-	 * @param PaymentObjekt
-	 * @return PaymentObjektKopie
+	 * Method to update a payment
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public Payment updatePayment(Payment payment) throws IllegalArgumentException {
