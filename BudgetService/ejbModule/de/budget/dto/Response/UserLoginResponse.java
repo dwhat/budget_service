@@ -12,7 +12,7 @@ public class UserLoginResponse extends ReturnCodeResponse {
 	private int sessionId;
 	
 	public UserLoginResponse() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public int getSessionId() {

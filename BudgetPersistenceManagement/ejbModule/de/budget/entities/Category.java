@@ -11,7 +11,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 /**
- * Category Class
+ * Category Entity Class
  * @author Marco
  * @date 11.05.2015
  */
@@ -36,8 +36,7 @@ public class Category implements Serializable{
 	private Timestamp createDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -51,7 +50,7 @@ public class Category implements Serializable{
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @date 11.05.2015
 	 */
 	public Category() {
@@ -60,7 +59,7 @@ public class Category implements Serializable{
 	
 	/**
 	 * Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @date 11.05.2015
 	 */
 	public Category(User user, boolean income, String name, String notice, String colour) {
@@ -76,14 +75,14 @@ public class Category implements Serializable{
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -91,7 +90,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the name
 	 */
 	public String getName() {
@@ -99,7 +98,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -107,7 +106,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the active
 	 */
 	public boolean isActive() {
@@ -115,7 +114,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param active the active to set
 	 */
 	public void setActive(boolean active) {
@@ -124,7 +123,7 @@ public class Category implements Serializable{
 
 	/**
 	 * True, if IncomeCategory; false, if LossesCategory
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the income
 	 */
 	public boolean isIncome() {
@@ -133,7 +132,7 @@ public class Category implements Serializable{
 
 	/**
 	 * True, if IncomeCategory; false, if LossesCategory
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param income the income to set
 	 */
 	public void setIncome(boolean income) {
@@ -155,7 +154,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
@@ -163,7 +162,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreateDate(Timestamp creationDate) {
@@ -185,7 +184,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the username
 	 */
 	public User getUser() {
@@ -193,7 +192,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param username the username to set
 	 */
 	public void setUser(User user) {
@@ -201,7 +200,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the notice
 	 */
 	public String getNotice() {
@@ -209,7 +208,7 @@ public class Category implements Serializable{
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param notice the notice to set
 	 */
 	public void setNotice(String notice) {
@@ -217,7 +216,7 @@ public class Category implements Serializable{
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public String toString() {

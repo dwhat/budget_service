@@ -8,18 +8,6 @@ import javax.ejb.Local;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 import javax.persistence.EntityExistsException;
 
 import de.budget.entities.Basket;
@@ -33,7 +21,8 @@ import de.budget.entities.Item;
 
 
 /**
- * Interface for Data access object
+ * Interface for Data access object, welches für den Datenbankzugriff über JPA verantwortlich ist
+ * 
  * @author Marco
  * @author Moritz
  * @date 15.05.2015 bis 10.06.2015
@@ -55,37 +44,57 @@ public interface BudgetOnlineDAOLocal {
 	
 	/**
 	 * Method to update a user
+	 * @param user
+	 * @return updated User object
+	 * @throws IllegalArgumentException
 	 */
 	public User updateUser(User user) throws IllegalArgumentException;
 	
 	/**
 	 * Method to find a user
+	 * @param userName
+	 * @return User object
+	 * @throws IllegalArgumentException
 	 */
 	public User findUserByName(String userName) throws IllegalArgumentException;
 	
 	/**
-	 * method to delete an user
+	 * Method to delete an user
+	 * @param username
+	 * @throws IllegalArgumentException
 	 */
 	public void deleteUser(String username) throws IllegalArgumentException;
 	
 	
 	/**
-	 * Method to create a session
+	 * Method to create a new session
+	 * @param userObject
+	 * @return sessionId
+	 * @throws EntityExistsException
+	 * @throws IllegalArgumentException
 	 */
 	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException;
 	
 	/**
-	 * Method to find a session
+	 * Method to find a session with the id
+	 * @param sessionId
+	 * @return Session Object
+	 * @throws IllegalArgumentException
 	 */
 	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException;
 	
 	/**
 	 * Method to delete a session
+	 * @param sessionId
+	 * @throws IllegalArgumentException
 	 */
 	public void closeSession(int sessionId) throws IllegalArgumentException;
 	
 	/**
-	 * Method to get all old sessions
+	 * Method to gets all old sessions
+	 * @param dayBefore
+	 * @return List with all old sessions
+	 * @throws IllegalArgumentException
 	 */
 	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException;
 	

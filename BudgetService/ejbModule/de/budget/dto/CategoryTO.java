@@ -22,15 +22,12 @@ public class CategoryTO implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
 	 */
 	public CategoryTO() {
 		
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param notice

@@ -24,8 +24,6 @@ public class PaymentTO implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
-	 * @date 19.05.2015
 	 */
 	public PaymentTO() {
 		
@@ -33,8 +31,6 @@ public class PaymentTO implements Serializable {
 	
 	/**
 	 * Constructor for class PaymentTO
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param number
@@ -56,8 +52,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the id
 	 */
 	public int getId() {
@@ -65,8 +59,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -74,8 +66,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the name
 	 */
 	public String getName() {
@@ -83,8 +73,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -92,8 +80,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the number
 	 */
 	public String getNumber() {
@@ -101,8 +87,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param number the number to set
 	 */
 	public void setNumber(String number) {
@@ -110,8 +94,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the bic
 	 */
 	public String getBic() {
@@ -119,8 +101,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param bic the bic to set
 	 */
 	public void setBic(String bic) {
@@ -128,8 +108,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the active
 	 */
 	public boolean isActive() {
@@ -137,8 +115,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param active the active to set
 	 */
 	public void setActive(boolean active) {
@@ -146,8 +122,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the createDate
 	 */
 	public long getCreateDate() {
@@ -155,8 +129,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param createDate the createDate to set
 	 */
 	public void setCreateDate(long createDate) {
@@ -164,8 +136,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @return the lastChanged
 	 */
 	public long getLastChanged() {
@@ -173,8 +143,6 @@ public class PaymentTO implements Serializable {
 	}
 
 	/**
-	 * @date 19.05.2015
-	 * @author Marco
 	 * @param lastChanged the lastChanged to set
 	 */
 	public void setLastChanged(long lastChanged) {

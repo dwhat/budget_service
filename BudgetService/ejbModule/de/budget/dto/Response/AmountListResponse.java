@@ -17,8 +17,6 @@ public class AmountListResponse extends ReturnCodeResponse{
 		
 	/**
 	 * DefaultConstructor
-	 * @author Marco
-	 * @date 19.06.2015
 	 */
 	public AmountListResponse() {
 

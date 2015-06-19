@@ -15,7 +15,6 @@ import de.budget.entities.User;
  * dataBuilder to write testdata in db
  * @author Marco
  * @date 08.05.2015
- * @version Beta 1
  */
 @Startup
 @Singleton
@@ -39,7 +38,6 @@ public class DataBuilder {
 		if (user1 == null) {
 			user1 = new User(username1, password1, email1);
 			em.persist(user1);
-			logger.info("User1 angelegt");
 		}
 		else
 		{
@@ -50,7 +48,6 @@ public class DataBuilder {
 		if (user2 == null) {
 			user2 = new User(username2, password2, email2);
 			em.persist(user2);		
-			logger.info("User2 angelegt");
 		}
 		else
 		{
@@ -61,7 +58,6 @@ public class DataBuilder {
 		if (user3 == null) {
 			user3 = new User(username3, password3, email3);
 			em.persist(user3);		
-			logger.info("User3 angelegt");
 		}
 		else
 		{

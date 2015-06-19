@@ -15,8 +15,6 @@ public class VendorResponse extends ReturnCodeResponse {
 	private VendorTO vendorTo;
 
 	/**
-	* @author Marco
-	* @date 19.05.2015
 	* Default Constructor
 	*/
 	public VendorResponse() {

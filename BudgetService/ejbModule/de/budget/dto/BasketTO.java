@@ -27,15 +27,12 @@ public class BasketTO implements Serializable{
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
 	 */
 	public BasketTO() {
 		
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param notice
 	 * @param amount

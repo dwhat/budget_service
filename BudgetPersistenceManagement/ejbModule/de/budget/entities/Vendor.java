@@ -18,8 +18,9 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Vendor class
+ * Vendor Entity
  * @author Marco
- * 11.05.2015
+ * @date 11.05.2015
  */
 @Entity
 public class Vendor implements Serializable {
@@ -35,8 +36,7 @@ public class Vendor implements Serializable {
 	private Timestamp createDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz</p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -64,14 +64,14 @@ public class Vendor implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 */
 	public Vendor() {
 		super();
 	}
 	/**
 	 * Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param user
 	 */
 	public Vendor (User user, String name, String logo, String street, String city, int PLZ, int houseNumber){
@@ -88,28 +88,28 @@ public class Vendor implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the id
 	 */
 	public int getId() {
 		return this.id;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -126,14 +126,14 @@ public class Vendor implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
 		return createDate;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreateDate(Timestamp creationDate) {
@@ -152,14 +152,14 @@ public class Vendor implements Serializable {
 		this.lastChanged = lastChanged;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the user
 	 */
 	public User getUser() {
 		return user;
 	}
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param user the user to set
 	 */
 	public void setUser(User user) {

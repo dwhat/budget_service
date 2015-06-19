@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Item Class
+ * Item Entity
  * @author Marco
  * 12.05.2015
  */
@@ -37,8 +38,7 @@ public class Item implements Serializable {
 	private Timestamp receiptDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -57,7 +57,7 @@ public class Item implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 */
 	public Item() {
 		super();
@@ -65,7 +65,7 @@ public class Item implements Serializable {
 	
 	/**
 	 * Constructor
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param basket 
 	 * @param category 
 	 */
@@ -99,7 +99,7 @@ public class Item implements Serializable {
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the name
 	 */
 	public String getName() {
@@ -107,7 +107,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -115,7 +115,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the quantity
 	 */
 	public double getQuantity() {
@@ -123,7 +123,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param quantity the quantity to set
 	 */
 	public void setQuantity(double quantity) {
@@ -131,7 +131,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the price
 	 */
 	public double getPrice() {
@@ -139,7 +139,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param price the price to set
 	 */
 	public void setPrice(double price) {
@@ -147,7 +147,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the notice
 	 */
 	public String getNotice() {
@@ -155,7 +155,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param notice the notice to set
 	 */
 	public void setNotice(String notice) {
@@ -163,7 +163,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
@@ -171,7 +171,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreateDate(Timestamp creationDate) {
@@ -180,7 +180,7 @@ public class Item implements Serializable {
 	
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the basket
 	 */
 	public Basket getBasket() {
@@ -188,7 +188,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param basket the basket to set
 	 */
 	public void setBasket(Basket basket) {
@@ -196,7 +196,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the category
 	 */
 	public Category getCategory() {
@@ -204,7 +204,7 @@ public class Item implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param category the category to set
 	 */
 	public void setCategory(Category category) {

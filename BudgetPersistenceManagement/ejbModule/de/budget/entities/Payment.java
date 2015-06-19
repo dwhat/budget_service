@@ -36,8 +36,7 @@ public class Payment implements Serializable {
 	private Timestamp createDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -54,8 +53,7 @@ public class Payment implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	public Payment() {
 		super();
@@ -63,8 +61,7 @@ public class Payment implements Serializable {
 	
 	/**
 	 * Constructor
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	public Payment(User user, String name, String number, String bic) {
 		this.user = user;
@@ -78,96 +75,84 @@ public class Payment implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the number
 	 */
 	public String getNumber() {
 		return number;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param number the number to set
 	 */
 	public void setNumber(String number) {
 		this.number = number;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the bic
 	 */
 	public String getBic() {
 		return bic;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param bic the bic to set
 	 */
 	public void setBic(String bic) {
 		this.bic = bic;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the active
 	 */
 	public boolean isActive() {
 		return active;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param active the active to set
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
 		return createDate;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreationDate(Timestamp creationDate) {
 		this.createDate = creationDate;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the user
 	 */
 	public User getUser() {
 		return user;
 	}
 	/**
-	 * @author Marco
-	 * @date 11.05.2015
+	 * <p> Author: Marco </p>
 	 * @param user the user to set
 	 */
 	public void setUser(User user) {

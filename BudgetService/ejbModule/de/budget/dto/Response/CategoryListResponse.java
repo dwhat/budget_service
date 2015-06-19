@@ -17,8 +17,6 @@ public class CategoryListResponse extends ReturnCodeResponse{
 		
 	/**
 	 * DefaultConstructor
-	 * @author Marco
-	 * @date 19.05.2015
 	 */
 	public CategoryListResponse() {
 

@@ -22,8 +22,6 @@ public class VendorTO implements Serializable {
 
 	/**
 	 * Deafault Constructor
-	 * @author Marco
-	 * @date 19.05.2015
 	 */
 	public VendorTO() {
 		
@@ -31,8 +29,6 @@ public class VendorTO implements Serializable {
 	
 	/**
 	 * Constructor
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param createDate
@@ -52,8 +48,6 @@ public class VendorTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the id
 	 */
 	public int getId() {
@@ -61,8 +55,6 @@ public class VendorTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -70,8 +62,6 @@ public class VendorTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the name
 	 */
 	public String getName() {
@@ -79,8 +69,6 @@ public class VendorTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -119,8 +107,6 @@ public class VendorTO implements Serializable {
 
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the logo
 	 */
 	public String getLogo() {
@@ -128,8 +114,6 @@ public class VendorTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param logo the logo to set
 	 */
 	public void setLogo(String logo) {

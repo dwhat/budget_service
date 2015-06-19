@@ -17,7 +17,6 @@ public interface ReportGenerator {
 	/**
 	 * Asynchron Report Generator
 	 * 
-	 * @author Marco
 	 * @param subject
 	 * @param body
 	 * @return

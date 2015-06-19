@@ -52,7 +52,7 @@ import de.budget.entities.Item;
 
 /**
  * 
- * AusImplementierung des DAOLocal Interfaces für den Datenzugriff
+ * AusImplementierung des DAOLocal Interfaces für den Datenzugriff über JPA
  * 
  * @author Marco
  * @author Moritz

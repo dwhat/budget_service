@@ -9,11 +9,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- * BudgetSession for the Sessionhandling
+ * BudgetSession for the SessionEntities
 
  * @author Marco
  * @date 08.05.2015
- * @version Beta 1
+ * 
  */
 
 @NamedQueries( {
@@ -32,9 +32,8 @@ public class BudgetSession {
 	
 	/**
 	* Constructor
-	* @author Marco
+	* <p> Author: Marco </p>
 	* @param user
-	* @date 08.05.2015
 	*/
 	public BudgetSession(User user) {
 		this.username = user.getUserName();
@@ -43,8 +42,7 @@ public class BudgetSession {
 	
 	/**
 	* Default Constructor
-	* @author Marco
-	* @date 08.05.2015
+	* <p> Author: Marco </p>
 	*/
 	public BudgetSession() {
 		this.createDate = new Timestamp(System.currentTimeMillis());
@@ -52,8 +50,7 @@ public class BudgetSession {
 
 	/**
 	* Method to get the Session Id
-	* @author Marco
-	* @date 08.05.2015
+	* <p> Author: Marco </p>
 	*/
 	public int getId() {
 		return id;
@@ -61,9 +58,8 @@ public class BudgetSession {
 
 	/**
 	* Method to set the SessionId
-	* @author Marco
+	* <p> Author: Marco </p>
 	* @param id
-	* @date 08.05.2015
 	*/
 	public void setId(int id) {
 		this.id = id;
@@ -71,8 +67,7 @@ public class BudgetSession {
 
 	/**
 	* Method to get the username
-	* @author Marco
-	* @date 08.05.2015
+	* <p> Author: Marco </p>
 	*/
 	public String getUsername() {
 		return this.username;
@@ -80,9 +75,8 @@ public class BudgetSession {
 
 	/**
 	* Method to set the username
-	* @author Marco
+	* <p> Author: Marco </p>
 	* @param username
-	* @date 08.05.2015
 	*/
 	public void setUsername(String username) {
 		this.username = username;
@@ -90,8 +84,7 @@ public class BudgetSession {
 
 	/**
 	* Method to get the creationtime
-	* @author Marco
-	* @date 08.05.2015
+	* <p> Author: Marco </p>
 	*/
 	public Timestamp getCreateDate() {
 		return createDate;
@@ -100,8 +93,7 @@ public class BudgetSession {
 	/**
 	* Method to set the creationtime
 	* @param creationTime
-	* @author Marco
-	* @date 08.05.2015
+	* <p> Author: Marco </p>
 	*/
 	public void setCreateDate(Timestamp createDate) {
 		this.createDate = createDate;

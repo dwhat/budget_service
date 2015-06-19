@@ -5,6 +5,7 @@ import java.util.List;
 
 
 /**
+ * Data Transferobjekts for the transport of users
  * @date 26.05.2015
  * @author Marco
  *
@@ -27,16 +28,12 @@ public class UserTO implements Serializable {
 
 	/**
 	 * Default Constructor
-	 * @date 26.05.2015
-	 * @author Marco
 	 */
 	public UserTO() {
 		
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 26.05.2015
 	 * @param username
 	 * @param password
 	 * @param email

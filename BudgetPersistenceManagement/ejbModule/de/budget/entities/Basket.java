@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Basket Class
+ * Enity for Baskets
  * @author Marco
  * @date 12.05.2015
  */
@@ -51,8 +52,7 @@ public class Basket implements Serializable {
 	private Timestamp createDate;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -78,8 +78,7 @@ public class Basket implements Serializable {
 
 	/**
 	 * Bidirectional one to many relationship
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="basket")
 	private List<Item> items;
@@ -87,16 +86,14 @@ public class Basket implements Serializable {
 	
 	/**
 	 * Default Constructor
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	 public Basket() {
 		 super();
 	 }
 	 
 	 /**
-	  * @author Marco
-	  * @date 12.05.2015
+	  * <p> Author: Marco </p>
 	  * @param user
 	  * @param payment
 	  * @param vendor
@@ -116,8 +113,7 @@ public class Basket implements Serializable {
 	 }
 	 
 	 /**
-	  * @author Marco
-	  * @date 12.05.2015
+	  * <p> Author: Marco </p>
 	  * @param user
 	  * @param payment
 	  * @param vendor
@@ -139,8 +135,7 @@ public class Basket implements Serializable {
 	 }
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the notice
 	 */
 	public String getNotice() {
@@ -148,8 +143,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @param notice the notice to set
 	 */
 	public void setNotice(String notice) {
@@ -158,14 +152,14 @@ public class Basket implements Serializable {
 
 	/**
 	 * @return the name
-	 * @author Marco 
+	 * <p> Author: Marco </p> 
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -174,8 +168,7 @@ public class Basket implements Serializable {
 
 	/**
 	 * method to sum the amount and returns this value
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the amount
 	 */
 	public double getAmount() {
@@ -184,8 +177,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>5
 	 * @param amount the amount to set
 	 */
 	public void setAmount(double amount) {
@@ -193,8 +185,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the creationDate
 	 */
 	public Timestamp getCreateDate() {
@@ -202,8 +193,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @param creationDate the creationDate to set
 	 */
 	public void setCreateDate(Timestamp creationDate) {
@@ -211,8 +201,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @return the purchaseDate
 	 */
 	public Timestamp getPurchaseDate() {
@@ -220,8 +209,7 @@ public class Basket implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 12.05.2015
+	 * <p> Author: Marco </p>
 	 * @param purchaseDate the purchaseDate to set
 	 */
 	public void setPurchaseDate(Timestamp purchaseDate) {
@@ -229,7 +217,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the user of the basket
 	 */
 	public User getUser() {
@@ -237,7 +225,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the payment of the basket
 	 */
 	public Payment getPayment() {
@@ -245,7 +233,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return the vendor of the basket
 	 */
 	public Vendor getVendor() {
@@ -253,7 +241,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param vendor
 	 */
 	public void setVendor(Vendor vendor) {
@@ -261,7 +249,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param payment
 	 */
 	public void setPayment(Payment payment) {
@@ -269,7 +257,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param user
 	 */
 	public void setUser(User user) {
@@ -277,7 +265,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Moritz
+	 * <p> Author: Moritz </p>
 	 * @param itemId
 	 * @return
 	 */
@@ -292,7 +280,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @return a set with all Items of a basket
 	 */
 	public List<Item> getItems(){
@@ -300,7 +288,7 @@ public class Basket implements Serializable {
 	}
 	
 	/**
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param items
 	 */
 	public void setItems(List<Item> items) {
@@ -309,7 +297,7 @@ public class Basket implements Serializable {
 	
 	/**
 	 * Method to add one item to this basket
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param newBasket
 	 */
 	public void addNewItem(Item newItem) {
@@ -318,8 +306,7 @@ public class Basket implements Serializable {
 	
 	/**
 	 * Sums the prices of the items of this basket and sets the sum into the amount Variable
-	 * @author Marco
-	 * @date 17.05.2015
+	 * <p> Author: Marco </p>
 	 * @return amount of the basket
 	 */
 	private double sumAmount() {
@@ -335,8 +322,7 @@ public class Basket implements Serializable {
 	
 	/**
 	 * Gives the quantity of items of the basket
-	 * @author Marco
-	 * @date 17.05.2015
+	 * <p> Author: Marco </p>
 	 * @return quantity of Items
 	 */
 	public int countItems() {

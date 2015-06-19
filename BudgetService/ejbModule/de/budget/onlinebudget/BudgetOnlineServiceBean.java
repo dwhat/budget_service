@@ -88,6 +88,8 @@ import de.budget.onlinebudget.QueueMessageSender;
 
 /**
  * Stateless-Beanimplementierung von BudgetOnlineService 
+ * Beinhaltet alle Methoden zum erzeugen, finden, ändern und löschen von allen Entities, sowie weiter Funktionen zum
+ * sortieren und gruppieren der daten für die spätere Darstellung in der App
  * @author Moritz
  * @author Marco
  * @date 19.05.2015 bis 16.06.2015

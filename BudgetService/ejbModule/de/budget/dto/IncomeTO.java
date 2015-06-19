@@ -24,16 +24,12 @@ public class IncomeTO implements Serializable {
 	
 	/**
 	 * Deafault Constructor
-	 * @author Marco
-	 * @date 28.05.2015
 	 */
 	public IncomeTO() {
 		
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param quantity

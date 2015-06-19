@@ -25,16 +25,12 @@ public class ItemTO implements Serializable {
 
 	/**
 	 * Deafault Constructor
-	 * @author Marco
-	 * @date 19.05.2015
 	 */
 	public ItemTO() {
 		
 	}
 	
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id
 	 * @param name
 	 * @param quantity
@@ -60,8 +56,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the id
 	 */
 	public int getId() {
@@ -69,8 +63,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param id the id to set
 	 */
 	public void setId(int id) {
@@ -78,8 +70,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the name
 	 */
 	public String getName() {
@@ -87,8 +77,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param name the name to set
 	 */
 	public void setName(String name) {
@@ -96,8 +84,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the quantity
 	 */
 	public double getQuantity() {
@@ -105,8 +91,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param quantity the quantity to set
 	 */
 	public void setQuantity(double quantity) {
@@ -114,8 +98,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the price
 	 */
 	public double getPrice() {
@@ -123,8 +105,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param price the price to set
 	 */
 	public void setPrice(double price) {
@@ -132,8 +112,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the notice
 	 */
 	public String getNotice() {
@@ -141,8 +119,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param notice the notice to set
 	 */
 	public void setNotice(String notice) {
@@ -150,8 +126,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the createDate
 	 */
 	public long getCreateDate() {
@@ -159,8 +133,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param createDate the createDate to set
 	 */
 	public void setCreateDate(long createDate) {
@@ -168,8 +140,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the lastChanged
 	 */
 	public long getLastChanged() {
@@ -177,8 +147,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param lastChanged the lastChanged to set
 	 */
 	public void setLastChanged(long lastChanged) {
@@ -186,8 +154,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the basket
 	 */
 	public int getBasketId() {
@@ -195,8 +161,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param basket the basket to set
 	 */
 	public void setBasketId(int basketId) {
@@ -204,8 +168,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @return the category
 	 */
 	public int getCategoryId() {
@@ -213,8 +175,6 @@ public class ItemTO implements Serializable {
 	}
 
 	/**
-	 * @author Marco
-	 * @date 19.05.2015
 	 * @param category the category to set
 	 */
 	public void setCategoryId(int categoryId) {

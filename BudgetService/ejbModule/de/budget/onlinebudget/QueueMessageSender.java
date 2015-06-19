@@ -91,8 +91,6 @@ public class QueueMessageSender {
 	   * MapMessage für StandardMailversand.
 	   * Aufrufen um Email nachricht in Queue einzustellen.
 	   * 
-	   * @author Moritz
-	   * @date 17.06.15
 	   * 
 	   */
 	  public void sendMapMessage(String emailTO,String subject, String body, String userName) {

@@ -27,8 +27,6 @@ public class Payload {
 	
 	/**
 	 * Method to set the payload to 0 after the server start
-	 * @author Marco
-	 * @date 09.06.2015
 	 */
 	@PostConstruct
 	private void init() {

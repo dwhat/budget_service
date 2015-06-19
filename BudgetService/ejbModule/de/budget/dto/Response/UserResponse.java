@@ -3,6 +3,11 @@ package de.budget.dto.Response;
 
 import de.budget.dto.UserTO;
 
+/**
+ * @date 19.05.2015
+ * @author Marco
+ *
+ */
 public class UserResponse extends ReturnCodeResponse {
 
 
@@ -11,8 +16,6 @@ public class UserResponse extends ReturnCodeResponse {
 	private UserTO userTo;
 	
 	/**
-	 * @author MArco
-	 * @date 18.05.2015
 	 * Default Constructor
 	 */
 	public UserResponse() {

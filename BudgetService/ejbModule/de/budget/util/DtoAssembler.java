@@ -25,12 +25,13 @@ import de.budget.entities.User;
 import de.budget.entities.Vendor;
 
 /**
- * Klasse zum Erstellen von DTOs, die zum Datentransfer benötigt werden
+ * Klasse zum Erstellen von DTOs, die zum Datentransfer benötigt werden, da keine Objekte mit Referenzen über
+ * Soap transportiert werden können.
  * 
- * DTO's werden von den vorherigen Entities gebildet. 
+ * DTO's werden aus den vorherigen Entities gebildet. 
  * 
  * @date 19.05.2015
- * @author Marco
+ * <p> Author: Marco </p>
  *
  */
 @Stateless
@@ -38,13 +39,13 @@ public class DtoAssembler {
 	
 	/**
 	 * für interne methodenaufrufe, da this verboten ist in EJB, da man dadurch die Aufgabe des Containers übernimmt
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 */
 	private DtoAssembler dtoAssem;
 	
 	/**
 	 * The SessionContext of this EJB
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 */
 	@Resource
 	private SessionContext ctx;
@@ -52,8 +53,7 @@ public class DtoAssembler {
 	/**
 	 * Methode, die beim der Erzeugung der Bean aufgerufen wird
 	 * Initialisiert den DtoAssembler für den "verbotenen This Aufruf"
-	 * @author Marco
-	 * @date 08.06.2015
+	 * <p> Author: Marco </p>
 	 */
 	@PostConstruct
 	public void init() {
@@ -87,7 +87,6 @@ public class DtoAssembler {
 		long createDate = user.getCreateDate().getTime();
 		long lastChanged = user.getLastChanged().getTime();
 		/*
-		 * TODO
 		dto.setBasketList(dtoAssem.makeBasketListDto(user.getBaskets()));
 		dto.setVendorList(dtoAssem.makeVendorListDto(user.getVendors()));
 		dto.setCategoryList(dtoAssem.makeCategoryListDto(user.getCategories()));

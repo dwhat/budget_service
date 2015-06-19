@@ -19,7 +19,7 @@ import org.jboss.logging.Logger;
 /**
  * @date 27.05.2015
  * @author Marco
- * Income Class
+ * Income Entity Class
  */
 
 @NamedQueries( {
@@ -61,8 +61,7 @@ public class Income implements Serializable {
 	private Category category;
 	
 	/**
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
 	 * Optimistischer Locking Ansatz
 	 * Benutzer können nun parallel Daten einsehen, aber nicht parallel ändern
 	 * Im Zweifall -> Exception (Datenintegriät und Datensicherheit Vorteil)
@@ -74,7 +73,7 @@ public class Income implements Serializable {
 	private static final Logger logger = Logger.getLogger(Income.class);
 	
 	/**
-	 *@author Marco
+	 *<p> Author: Marco </p>
 	 *Default Constructor
 	 */
 	public Income() {
@@ -181,10 +180,6 @@ public class Income implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	/**
-	 * @return the launchDate
-	 */
 
 	/**
 	 * @return the createDate

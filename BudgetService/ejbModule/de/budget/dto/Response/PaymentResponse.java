@@ -14,7 +14,6 @@ public class PaymentResponse extends ReturnCodeResponse {
 	private PaymentTO paymentTo;
 	
 	/**
-	 * @author Marco
 	 * Default Constructor
 	 */
 	public PaymentResponse() {
