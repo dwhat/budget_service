@@ -3693,6 +3693,4 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		*/
 		return response;
 	}
-
-
 }
