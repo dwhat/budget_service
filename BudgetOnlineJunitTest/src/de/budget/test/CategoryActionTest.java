@@ -116,7 +116,7 @@ public class CategoryActionTest {
 	public void gTestGetIncomeCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfIncome(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
-		assertEquals(3, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
+		assertEquals(2, catListResp.getCategoryList().size()); // Es wurden zuvor 2 income Kategorien angelegt
 		assertTrue(catListResp.getCategoryList().get(1).isIncome());
 	}
 	
@@ -127,7 +127,7 @@ public class CategoryActionTest {
 	public void hTestGetLossCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfLoss(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
-		assertEquals(1, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
+		assertEquals(2, catListResp.getCategoryList().size()); // Es wurden zuvor 2 loss Kategorien angelegt
 		assertFalse(catListResp.getCategoryList().get(0).isIncome());
 	}
 	

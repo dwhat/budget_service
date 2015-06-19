@@ -27,7 +27,7 @@ public class PaymentActionTest {
 
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
-	private int testPayId;
+	private static int testPayId;
 	
 	/**
 	 * Baut einmalig Server Verbindung auf
@@ -51,13 +51,13 @@ public class PaymentActionTest {
 		
 		PaymentResponse resp1 = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB123", "DE1234567", "BIC123234", true);
 		assertEquals(200, resp1.getReturnCode());
-		assertEquals("VB", resp1.getPaymentTo().getName());
+		assertEquals("VB123", resp1.getPaymentTo().getName());
 		assertEquals(true, resp1.getPaymentTo().isActive());
 		testPayId = resp1.getPaymentTo().getId();
 		
 		PaymentResponse resp2 = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB123", "DE1234567", "BIC123234", false);
 		assertEquals(200, resp2.getReturnCode());
-		assertEquals("VB", resp2.getPaymentTo().getName());
+		assertEquals("VB123", resp2.getPaymentTo().getName());
 		assertEquals(true, resp2.getPaymentTo().isActive());
 		testPayId = resp2.getPaymentTo().getId();
 		assertTrue(resp2.getPaymentTo().isActive()); //Da neue Payments immer als aktive angelegt werden
@@ -67,7 +67,7 @@ public class PaymentActionTest {
 	 * Testet ob eine Payment mit einer bestimmten Id gefunden werden kann
 	 */
 	@Test
-	public void cTestGetOnePayment() {
+	public void bTestGetOnePayment() {
 		PaymentResponse payResp = remoteSystem.getPayment(sessionId, testPayId);
 		assertEquals(200, payResp.getReturnCode());
 		assertEquals(testPayId, payResp.getPaymentTo().getId());
@@ -77,7 +77,7 @@ public class PaymentActionTest {
 	 * Testet ob ein Payment geupdatet werden kann
 	 */
 	@Test
-	public void dTestUpdatePayment() {
+	public void cTestUpdatePayment() {
 		PaymentResponse resp = remoteSystem.createOrUpdatePayment(sessionId, testPayId, "geändert", "DE123456789", "BIC123", true);
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("geändert", resp.getPaymentTo().getName());
