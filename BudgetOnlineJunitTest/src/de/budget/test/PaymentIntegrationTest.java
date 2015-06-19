@@ -118,6 +118,8 @@ public class PaymentIntegrationTest {
 	public void fTestDeletePayment() {
 		ReturnCodeResponse resp = remoteSystem.deletePayment(sessionId,  testPayId);
 		assertEquals(200, resp.getReturnCode());
+		PaymentResponse payResp = remoteSystem.getPayment(sessionId, testPayId);
+		assertEquals(404, payResp.getReturnCode());
 	}
 	
 	/**

@@ -136,6 +136,8 @@ public class CategoryIntegrationTest {
 	public void iTestDeleteCategory() {
 		ReturnCodeResponse resp = remoteSystem.deleteCategory(sessionId,  testCatId);
 		assertEquals(200, resp.getReturnCode());
+		CategoryResponse catResp = remoteSystem.getCategory(sessionId, testCatId);
+		assertEquals(404, catResp.getReturnCode());
 	}
 	
 	/**
