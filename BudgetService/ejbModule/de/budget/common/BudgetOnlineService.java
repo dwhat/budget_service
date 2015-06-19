@@ -277,7 +277,7 @@ public interface BudgetOnlineService {
 	 * @param items   List with itemTO Objects to add to the basket
 	 * @return BasketResponse
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
+	//public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
 	
 	/**
 	 * Method to create a basket
