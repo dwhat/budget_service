@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 
+import de.budget.dto.AmountTO;
 import de.budget.dto.BasketTO;
 import de.budget.dto.CategoryTO;
 import de.budget.dto.IncomeTO;
@@ -70,6 +71,11 @@ public class DtoAssembler {
 		dto.setPLZ(vendor.getPLZ());
 		dto.setHouseNumber(vendor.getHouseNumber());
 		dto.setCity(vendor.getCity());
+		return dto;
+	}
+	
+	public AmountTO makeDto(String name , double value) {
+		AmountTO dto = new AmountTO(name, value);
 		return dto;
 	}
 	

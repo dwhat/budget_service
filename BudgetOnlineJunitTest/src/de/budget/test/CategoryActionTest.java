@@ -23,7 +23,7 @@ import de.budget.onlinebudget.ReturnCodeResponse;
  * The tests must have a special order to run
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class CategoryIntegrationTest {
+public class CategoryActionTest {
 
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;

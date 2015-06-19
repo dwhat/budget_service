@@ -6,9 +6,11 @@ package de.budget.common;
 import java.util.List;
 
 
+
 //ItemTO import, da sie fürs Anlegen eines Baskets benötigt werden
 import de.budget.dto.ItemTO;
 
+import de.budget.dto.Response.AmountListResponse;
 //Response-Imports
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
@@ -397,7 +399,7 @@ public interface BudgetOnlineService {
 	 * @param categoryId
 	 * @return
 	 */
-	public AmountResponse getIncomeAmountByCategory(int sessionId, int categoryId);
+	public AmountListResponse getIncomesAmountForCategories(int sessionId);
 	
 	/**
 	 * gets the sum of all income of the actual month
@@ -481,13 +483,12 @@ public interface BudgetOnlineService {
 	public ItemListResponse getItemsByLossCategory(int sessionId, int categoryId);
 	
 	/**
-	 * Method to get the amount of all items, which are assigned to a special category
+	 * Method to get the amount of all items
 	 * @author Marco
 	 * @param sessionId
-	 * @param categoryId
 	 * @return
 	 */
-	public AmountResponse getItemsAmountByLossCategory(int sessionId, int categoryId);
+	public AmountListResponse getItemsAmountForCategories(int sessionId);
 
 	
 	/*#################      XYZ - SECTION     ##############*/

@@ -20,12 +20,12 @@ import de.budget.onlinebudget.ReturnCodeResponse;
 
 
 /**
- * Test Klasse zum Testen von Payments
+ * Test Klasse zum Testen von Incomes
  * @author Marco
  * The tests must have a special order to run
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class IncomeIntegrationTest {
+public class IncomeActionTest {
 
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;

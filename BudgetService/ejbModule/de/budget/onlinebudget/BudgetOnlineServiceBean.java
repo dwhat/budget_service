@@ -9,6 +9,7 @@ import java.util.List;
 
 
 
+
 //Logger-Import
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -26,6 +27,7 @@ import javax.persistence.TransactionRequiredException;
 
 
 
+
 //Interface-Import
 import de.budget.common.BudgetOnlineService;
 
@@ -33,6 +35,7 @@ import de.budget.common.BudgetOnlineService;
 import de.budget.dao.BudgetOnlineDAOLocal;
 //Response-Import @author Moritz
 
+import de.budget.dto.AmountTO;
 import de.budget.dto.ItemTO;
 import de.budget.dto.Response.AmountResponse;
 import de.budget.dto.Response.BasketListResponse;
@@ -50,6 +53,7 @@ import de.budget.dto.Response.UserLoginResponse;
 import de.budget.dto.Response.UserResponse;
 import de.budget.dto.Response.VendorListResponse;
 import de.budget.dto.Response.VendorResponse;
+import de.budget.dto.Response.AmountListResponse;
 
 //Exception-Import
 import de.budget.Exception.BudgetOnlineException;
@@ -1842,17 +1846,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		return response;
 	}
 	
-	
 	/**
-	 * Method to get all Categories of a use where income is false
+	 * Helper Method to get all loss categories of a user
 	 * @author Marco
-	 * @date 09.06.2015
 	 * @param sessionId
 	 * @return
 	 */
-	@Override
-	public CategoryListResponse getCategorysOfLoss(int sessionId){
-		CategoryListResponse response = new CategoryListResponse();
+	private List<Category> getLossCategoriesHelper(int sessionId) throws BudgetOnlineException, Exception{
 		try {
 			List<Category> categoryList = getCategoriesHelper(sessionId);
 			ArrayList<Category> lossCategories = new ArrayList<>();
@@ -1865,11 +1865,102 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				throw new CategoryNotFoundException("No LossCategory found for this user");
 			}
 			else {
+				return lossCategories;
+			}
+		}
+		catch(NoSessionException | CategoryNotFoundException e) {
+			throw e;
+		}
+		catch(BudgetOnlineException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategoriesOfLoss | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			throw new NoTransactionException("getCategoriesOfLoss | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getcategoriesOfLoss | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Helper Method to get all loss categories of a user
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	private List<Category> getIncomeCategoriesHelper(int sessionId) throws BudgetOnlineException, Exception{
+		try {
+			List<Category> categoryList = getCategoriesHelper(sessionId);
+			ArrayList<Category> incomeCategories = new ArrayList<>();
+			for(Category c : categoryList) {
+				if(c.isIncome()) {
+					incomeCategories.add(c);
+				}
+			}
+			if(incomeCategories.size()==0){
+				throw new CategoryNotFoundException("No IncomeCategory found for this user");
+			}
+			else {
+				return incomeCategories;
+			}
+		}
+		catch(NoSessionException | CategoryNotFoundException e) {
+			throw e;
+		}
+		catch(BudgetOnlineException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategoriesOfIncome | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			throw new NoTransactionException("getCategoriesOfIncome | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getcategoriesOfIncome| " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
+	 * Method to get all Categories of a use where income is false
+	 * @author Marco
+	 * @date 09.06.2015
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public CategoryListResponse getCategorysOfLoss(int sessionId){
+		CategoryListResponse response = new CategoryListResponse();
+		try {
+			List<Category> lossCategories = getLossCategoriesHelper(sessionId);
+			if(lossCategories.size()==0){
+				throw new CategoryNotFoundException("No LossCategory found for this user");
+			}
+			else {
 				response.setCategoryList(dtoAssembler.makeCategoryListDto(lossCategories));	
 				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException | CategoryNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getErrorMessage());
+		}
+		catch(BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getErrorMessage());
 		}
@@ -2310,23 +2401,67 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * Method to get the Amount of all income, which are assigned to a special category
+	 * Helper Method to get the Amount of all income, which are assigned to a special category
 	 * @author Marco
 	 * @date 18.06.2015
 	 * @param sessionId
 	 * @param categoryId
 	 * @return
 	 */
-	public AmountResponse getIncomeAmountByCategory(int sessionId, int categoryId){
-		AmountResponse response = new AmountResponse();
+	private double getIncomeAmountByCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException, Exception {
+		double sum = 0;
 		try {
-			double sum = 0;
 			List<Income> incomeList = getIncomesByCategoryHelper(sessionId, categoryId);
 			for(Income i : incomeList) {
-				sum = sum + i.getAmount();
+				sum = sum + (i.getAmount()*i.getQuantity());
 			}
-			response.setValue(sum);
+		}
+		catch(NoSessionException | ItemNotFoundException e) {
+			throw e;
+		}
+		catch(BudgetOnlineException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			throw new NoTransactionException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+		return sum;
+	}
+	
+	/**
+	 * Gets the sum of amounts of the incomes of every single Category
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	@Override
+	public AmountListResponse getIncomesAmountForCategories(int sessionId) {
+		AmountListResponse response = new AmountListResponse();
+		try {
+			List<Category> categoryList = getIncomeCategoriesHelper(sessionId);
+			List<AmountTO> amountList = new ArrayList<>();
+			for(Category c : categoryList) {
+				double value = getItemsAmountByLossCategoryHelper(sessionId, c.getId());
+				amountList.add(dtoAssembler.makeDto(c.getName(), value));
+			}
 			response.setReturnCode(200);
+			response.setAmountList(amountList);
+		}
+		catch(NoSessionException | ItemNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getErrorMessage());
 		}
 		catch(BudgetOnlineException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -2334,7 +2469,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		catch(IllegalArgumentException e) {
 			try {
-				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomeByPeriod | " + e.getStackTrace().toString());
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByLossCategory | " + e.getStackTrace().toString());
 			} catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
 				response.setMessage(be.getErrorMessage());
@@ -2343,7 +2478,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (TransactionRequiredException e) {
 			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
 			try {
-				throw new NoTransactionException("getIncomeAmountByCategory | " + e.getStackTrace().toString());
+				throw new NoTransactionException("getItemsAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
@@ -2353,7 +2488,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (EJBTransactionRolledbackException e) {
 			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
 			try {
-				throw new RollbackException("getIncomeAmountByCategory | " + e.getStackTrace().toString());
+				throw new RollbackException("getItemsAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
@@ -2361,7 +2496,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.error("Fehler getIncomeAmountByCategory:" + e.getMessage());
+			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2929,22 +3064,23 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
-	 * Method to get the amount of all items, which are assigned to a special category
+	 * Gets the sum of amounts of the items of every single Category
 	 * @author Marco
 	 * @param sessionId
-	 * @param categoryId
 	 * @return
 	 */
-	public AmountResponse getItemsAmountByLossCategory(int sessionId, int categoryId) {
-		AmountResponse response = new AmountResponse();
-		double sum = 0;
+	@Override
+	public AmountListResponse getItemsAmountForCategories(int sessionId) {
+		AmountListResponse response = new AmountListResponse();
 		try {
-			List<Item> itemList = getItemsByLossCategoryHelper(sessionId, categoryId);
-			for(Item i : itemList) {
-				sum = sum + i.getPrice();
+			List<Category> categoryList = getLossCategoriesHelper(sessionId);
+			List<AmountTO> amountList = new ArrayList<>();
+			for(Category c : categoryList) {
+				double value = getItemsAmountByLossCategoryHelper(sessionId, c.getId());
+				amountList.add(dtoAssembler.makeDto(c.getName(), value));
 			}
-			response.setValue(sum);
 			response.setReturnCode(200);
+			response.setAmountList(amountList);
 		}
 		catch(NoSessionException | ItemNotFoundException e) {
 			response.setReturnCode(e.getErrorCode());
@@ -2965,7 +3101,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (TransactionRequiredException e) {
 			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
 			try {
-				throw new NoTransactionException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+				throw new NoTransactionException("getItemsAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
@@ -2975,7 +3111,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (EJBTransactionRolledbackException e) {
 			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
 			try {
-				throw new RollbackException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+				throw new RollbackException("getItemsAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
@@ -2987,6 +3123,45 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(800);
 		}
 		return response;
+	}
+	
+	/**
+	 * Method to get the amount of all items, which are assigned to a special category
+	 * @author Marco
+	 * @param sessionId
+	 * @param categoryId
+	 * @return
+	 */
+	private double getItemsAmountByLossCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException {
+		double sum = 0;
+		try {
+			List<Item> itemList = getItemsByLossCategoryHelper(sessionId, categoryId);
+			for(Item i : itemList) {
+				sum = sum + (i.getPrice()* i.getQuantity());
+			}
+		}
+		catch(NoSessionException | ItemNotFoundException e) {
+			throw e;
+		}
+		catch(BudgetOnlineException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			throw new NoTransactionException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getItemsAmountByLossCategory | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+		return sum;
 	}
 	
 	/**
