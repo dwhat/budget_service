@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 //ItemTO import, da sie fürs Anlegen eines Baskets benötigt werden
 import de.budget.dto.ItemTO;
 import de.budget.dto.Response.AmountListResponse;
@@ -277,6 +278,21 @@ public interface BudgetOnlineService {
 	 * @return BasketResponse
 	 */
 	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items);
+	
+	/**
+	 * Method to create a basket
+	 * <p> Author: Marco </p>
+	 * @param sessionId
+	 * @param basketId
+	 * @param name
+	 * @param notice
+	 * @param amount
+	 * @param purchaseDate
+	 * @param paymentId
+	 * @param vendorId
+	 * @return BasketResponse
+	 */
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId);
 	
 	/**
 	 * Method to delete a basket

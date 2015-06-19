@@ -180,7 +180,7 @@ public class User implements Serializable {
 	 */
 	public Category getCategory(int categoryId) {
 		for (Category c : this.categories) {
-			if (c.getId()== categoryId) {
+			if (c.getId() == categoryId) {
 				return c;
 			}
 		}
