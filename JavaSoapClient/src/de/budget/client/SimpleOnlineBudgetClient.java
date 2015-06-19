@@ -261,7 +261,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * szenario to test a login and to create, update, get and delete an income
-	 * @author Marco
 	 */
 	private static void szenarioIncome() {
 		   System.out.println("============================================================");
@@ -339,8 +338,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * HelferMethode zum anlegen von Incomes
-	 * @author Marco
-	 * @date 08.06.2015
 	 */
 	private static void createIncomeHelper (int sessionId, int incomeId, String name,
 			double quantity, double amount, String notice,  long receiptDate, int categoryId)  {
@@ -370,8 +367,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * szenario to test a login an to create, update, get and delete a payments
-	 * @author Marco
-	 * @date 09.06.2015
 	 */ 
 	private static void szenarioPayment() {
 		System.out.println("============================================================");
@@ -444,8 +439,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * HelferMethode zum anlegen von Payments
-	 * @author Marco
-	 * @date 08.06.2015
 	 */
 	private static void createPaymentHelper (int sessionId, int payId, String name, String number, String bic, boolean active) {
 		System.out.println("Lege Paymente an. ");
@@ -471,7 +464,6 @@ public class SimpleOnlineBudgetClient {
  }
 	/**
 	 * szenario to test a login an to create, update, get and delete a category
-	 * @author Marco
 	 */
 	private static void szenarioCategory() {
 		   System.out.println("============================================================");
@@ -541,8 +533,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * HelferMethode zum anlegen von Kategorien
-	 * @author Marco
-	 * @date 08.06.2015
 	 */
 	private static void createCategoryHelper (int sessionId, int catId, boolean income, boolean active, String name, String notice, String colour) {
 		System.out.println("Lege Kategorie an. ");
@@ -568,7 +558,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * szenario to test a login an to create, update, get and delete a vendor
-	 * @author Marco
 	 */
 	private static void szenarioVendor() {
 		   System.out.println("============================================================");
@@ -633,8 +622,6 @@ public class SimpleOnlineBudgetClient {
 	
 	/**
 	 * HelferMethode zum anlegen von Kategorien
-	 * @author Marco
-	 * @date 08.06.2015
 	 */
 	private static void createVendorHelper (int sessionId, int vendorId, String name, String logo, String street, String city, int PLZ, int houseNumber) {
 		System.out.println("Lege Vendor an. ");

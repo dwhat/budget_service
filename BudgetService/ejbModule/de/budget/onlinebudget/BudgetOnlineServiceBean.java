@@ -561,8 +561,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					return basketList;
 				}
 				else {
-					basketList.add(new Basket(null, null, null, 0.0 , null, null, null));
-					return basketList;
+					return null;
 				}
 			}
 			else {
@@ -662,10 +661,15 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		double sum = 0.0;
 		try {
 			List<Basket> basketList = getBasketsByVendorHelper(sessionId, vendorId);
-			for(Basket b : basketList) {
-				sum = sum + b.getAmount();
+			if(basketList != null) {
+				for(Basket b : basketList) {
+					sum = sum + b.getAmount();
+				}
+				return sum;
 			}
-			return sum;
+			else {
+				return 0.0;
+			}
 		}
 		catch(NoSessionException | BasketNotFoundException e) {
 			throw e;
@@ -2487,7 +2491,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 						}
 					}
 				}
-				return incomeListOfCategory;
+				if(incomeListOfCategory.size()>0){
+					return incomeListOfCategory;
+				}
+				else {
+					return null;
+				}
 			}
 			else{
 				throw new NoSessionException();
@@ -2585,11 +2594,17 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @return double value of the sum of all items with the category
 	 */
 	private double getIncomeAmountByCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException, Exception {
-		double sum = 0;
+		double sum = 0.0;
 		try {
 			List<Income> incomeList = getIncomesByCategoryHelper(sessionId, categoryId);
-			for(Income i : incomeList) {
-				sum = sum + (i.getAmount()*i.getQuantity());
+			if(incomeList != null) {
+				for(Income i : incomeList) {
+					sum = sum + (i.getAmount()*i.getQuantity());
+				}
+				return sum;
+			}
+			else {
+				return 0.0;
 			}
 		}
 		catch(NoSessionException | ItemNotFoundException e) {
@@ -2613,7 +2628,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.error(e.getMessage());
 			throw e;
 		}
-		return sum;
 	}
 	
 	/**
@@ -3145,7 +3159,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					}
 				}
 				if(itemList.size()==0){
-					throw new ItemNotFoundException("No items found for this category");
+					return null;
 				}
 				else {
 					return itemList;
@@ -3156,9 +3170,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(NoSessionException e) {
-			throw e;
-		}
-		catch(BudgetOnlineException e) {
 			throw e;
 		}
 		catch(IllegalArgumentException e) {
@@ -3306,8 +3317,14 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		double sum = 0;
 		try {
 			List<Item> itemList = getItemsByLossCategoryHelper(sessionId, categoryId);
-			for(Item i : itemList) {
-				sum = sum + (i.getPrice()* i.getQuantity());
+			if(itemList != null) {
+				for(Item i : itemList) {
+					sum = sum + (i.getPrice()* i.getQuantity());
+				}
+				return sum;
+			}
+			else {
+				return 0.0;
 			}
 		}
 		catch(NoSessionException | ItemNotFoundException e) {
@@ -3331,7 +3348,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.error(e.getMessage());
 			throw e;
 		}
-		return sum;
 	}
 	
 	/**

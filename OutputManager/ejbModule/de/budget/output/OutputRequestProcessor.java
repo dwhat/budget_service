@@ -31,7 +31,8 @@ import org.jboss.logging.Logger;
 public class OutputRequestProcessor implements MessageListener {
 
 	private static final Logger logger = Logger.getLogger(OutputRequestProcessor.class);
-	//TODO
+
+	
 	@Override
 	public void onMessage(Message message) {
        try {
