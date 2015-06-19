@@ -43,7 +43,7 @@ public class PaymentActionTest {
 	 * Testet ob ein Payment angelegt werden kann. Erwartet den OK-Code 200 und den Namen der zuvor angelegten Payment
 	 */
 	@Test
-	public void aTestCreateCategory() {
+	public void aTestCreatePayment() {
 		PaymentResponse resp = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB", "DE123456789", "BIC123", true);
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("VB", resp.getPaymentTo().getName());
@@ -61,15 +61,6 @@ public class PaymentActionTest {
 		assertEquals(true, resp2.getPaymentTo().isActive());
 		testPayId = resp2.getPaymentTo().getId();
 		assertTrue(resp2.getPaymentTo().isActive()); //Da neue Payments immer als aktive angelegt werden
-	}
-	
-	/**
-	 * Testet ob eine Payment angelegt werden kann, obwohl schon eine Payment mit gleichem Namen existiert. Erwartet Fehlerfall
-	 */
-	@Test
-	public void bTestCreateCategoryError() {
-		//PaymentResponse resp = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB", "DE123456789", "BIC123", true);
-		//assertEquals(200, resp.getReturnCode());
 	}
 	
 	/**
