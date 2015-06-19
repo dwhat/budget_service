@@ -66,7 +66,7 @@ public class VendorActionTest {
 	public void bTestCreateVendorError() {
 		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertNotEquals(200, resp.getReturnCode());
-		assertEquals(, resp.getReturnCode());
+		assertEquals(400, resp.getReturnCode());
 	}
 	
 	/**

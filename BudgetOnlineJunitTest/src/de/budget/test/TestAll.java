@@ -14,7 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ CategoryActionTest.class, PaymentActionTest.class, 
-	IncomeActionTest.class, UserActionTest.class, VendorActionTest.class})
+	IncomeActionTest.class, UserActionTest.class, VendorActionTest.class,
+	ItemActionTest.class, BasketActionTest.class})
 public class TestAll {
 
 }

@@ -67,7 +67,7 @@ public class CategoryActionTest {
 	public void bTestCreateCategoryError() {
 		CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "UnitTestCategory", "test", "FFFFFFF");
 		assertNotEquals(200, catResp.getReturnCode());
-		assertEquals(404, catResp.getReturnCode());
+		assertEquals(400, catResp.getReturnCode());
 	}
 	
 	/**

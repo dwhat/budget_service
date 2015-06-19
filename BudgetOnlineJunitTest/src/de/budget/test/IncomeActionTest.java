@@ -17,6 +17,7 @@ import de.budget.onlinebudget.CategoryResponse;
 import de.budget.onlinebudget.IncomeListResponse;
 import de.budget.onlinebudget.IncomeResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
+import de.budget.onlinebudget.AmountListResponse;
 
 
 /**
@@ -135,5 +136,16 @@ public class IncomeActionTest {
 	public void hTestDeleteIncomeError() {
 		ReturnCodeResponse resp = remoteSystem.deleteIncome(sessionId,  123456789);
 		assertEquals(404, resp.getReturnCode());
+	}
+	
+	/**
+	 * Testet 
+	 */
+	@Test
+	public void iTestIncomesAmountForCategories() {
+		AmountListResponse resp = remoteSystem.getIncomesAmountForCategories(sessionId);
+		assertEquals(200, resp.getReturnCode());
+		assertEquals(18.0, resp.getAmountList().get(0).getValue());
+		assertEquals("UnitTestCategory", resp.getAmountList().get(0).getName());
 	}
 }

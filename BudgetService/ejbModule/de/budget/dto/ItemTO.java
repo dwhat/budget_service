@@ -31,7 +31,6 @@ public class ItemTO implements Serializable {
 	}
 	
 	/**
-	 * 
 	 * @param id
 	 * @param name
 	 * @param quantity

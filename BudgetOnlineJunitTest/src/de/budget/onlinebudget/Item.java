@@ -7,22 +7,25 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for incomeTO complex type.
+ * <p>Java class for item complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="incomeTO">
+ * &lt;complexType name="item">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="category" type="{http://onlinebudget.budget.de/}categoryTO" minOccurs="0"/>
+ *         &lt;element name="basket" type="{http://onlinebudget.budget.de/}basket" minOccurs="0"/>
+ *         &lt;element name="category" type="{http://onlinebudget.budget.de/}category" minOccurs="0"/>
+ *         &lt;element name="createDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="lastChanged" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="price" type="{http://www.w3.org/2001/XMLSchema}double"/>
  *         &lt;element name="quantity" type="{http://www.w3.org/2001/XMLSchema}double"/>
- *         &lt;element name="receiptDate" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="receiptDate" type="{http://onlinebudget.budget.de/}timestamp" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -32,39 +35,53 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "incomeTO", propOrder = {
-    "amount",
+@XmlType(name = "item", propOrder = {
+    "basket",
     "category",
+    "createDate",
     "id",
+    "lastChanged",
     "name",
     "notice",
+    "price",
     "quantity",
     "receiptDate"
 })
-public class IncomeTO {
+public class Item {
 
-    protected double amount;
-    protected CategoryTO category;
+    protected Basket basket;
+    protected Category category;
+    protected Timestamp createDate;
     protected int id;
+    protected Timestamp lastChanged;
     protected String name;
     protected String notice;
+    protected double price;
     protected double quantity;
-    protected long receiptDate;
+    protected Timestamp receiptDate;
 
     /**
-     * Gets the value of the amount property.
+     * Gets the value of the basket property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Basket }
+     *     
      */
-    public double getAmount() {
-        return amount;
+    public Basket getBasket() {
+        return basket;
     }
 
     /**
-     * Sets the value of the amount property.
+     * Sets the value of the basket property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Basket }
+     *     
      */
-    public void setAmount(double value) {
-        this.amount = value;
+    public void setBasket(Basket value) {
+        this.basket = value;
     }
 
     /**
@@ -72,10 +89,10 @@ public class IncomeTO {
      * 
      * @return
      *     possible object is
-     *     {@link CategoryTO }
+     *     {@link Category }
      *     
      */
-    public CategoryTO getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -84,11 +101,35 @@ public class IncomeTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link CategoryTO }
+     *     {@link Category }
      *     
      */
-    public void setCategory(CategoryTO value) {
+    public void setCategory(Category value) {
         this.category = value;
+    }
+
+    /**
+     * Gets the value of the createDate property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
+     */
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * Sets the value of the createDate property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
+     */
+    public void setCreateDate(Timestamp value) {
+        this.createDate = value;
     }
 
     /**
@@ -105,6 +146,30 @@ public class IncomeTO {
      */
     public void setId(int value) {
         this.id = value;
+    }
+
+    /**
+     * Gets the value of the lastChanged property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
+     */
+    public Timestamp getLastChanged() {
+        return lastChanged;
+    }
+
+    /**
+     * Sets the value of the lastChanged property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
+     */
+    public void setLastChanged(Timestamp value) {
+        this.lastChanged = value;
     }
 
     /**
@@ -156,6 +221,22 @@ public class IncomeTO {
     }
 
     /**
+     * Gets the value of the price property.
+     * 
+     */
+    public double getPrice() {
+        return price;
+    }
+
+    /**
+     * Sets the value of the price property.
+     * 
+     */
+    public void setPrice(double value) {
+        this.price = value;
+    }
+
+    /**
      * Gets the value of the quantity property.
      * 
      */
@@ -174,16 +255,24 @@ public class IncomeTO {
     /**
      * Gets the value of the receiptDate property.
      * 
+     * @return
+     *     possible object is
+     *     {@link Timestamp }
+     *     
      */
-    public long getReceiptDate() {
+    public Timestamp getReceiptDate() {
         return receiptDate;
     }
 
     /**
      * Sets the value of the receiptDate property.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link Timestamp }
+     *     
      */
-    public void setReceiptDate(long value) {
+    public void setReceiptDate(Timestamp value) {
         this.receiptDate = value;
     }
 

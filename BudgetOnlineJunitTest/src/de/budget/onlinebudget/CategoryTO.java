@@ -24,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="lastChanged" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="notice" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="user" type="{http://onlinebudget.budget.de/}userTO" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -42,8 +41,7 @@ import javax.xml.bind.annotation.XmlType;
     "income",
     "lastChanged",
     "name",
-    "notice",
-    "user"
+    "notice"
 })
 public class CategoryTO {
 
@@ -55,7 +53,6 @@ public class CategoryTO {
     protected long lastChanged;
     protected String name;
     protected String notice;
-    protected UserTO user;
 
     /**
      * Gets the value of the active property.
@@ -207,30 +204,6 @@ public class CategoryTO {
      */
     public void setNotice(String value) {
         this.notice = value;
-    }
-
-    /**
-     * Gets the value of the user property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link UserTO }
-     *     
-     */
-    public UserTO getUser() {
-        return user;
-    }
-
-    /**
-     * Sets the value of the user property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link UserTO }
-     *     
-     */
-    public void setUser(UserTO value) {
-        this.user = value;
     }
 
 }

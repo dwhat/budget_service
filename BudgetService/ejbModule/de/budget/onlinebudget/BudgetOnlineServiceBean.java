@@ -1199,6 +1199,108 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		return response;
 	}
+	
+	/**
+	 * Method to create or update a basket
+	 * <p> Author: Marco </p>
+	 */
+	@Override
+	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId) {
+		BasketResponse response = new BasketResponse();
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				Basket basket = user.getBasket(basketId);
+				Payment payment = user.getPayment(paymentId);
+				Vendor vendor = user.getVendor(vendorId);
+
+				if(basket == null) {
+					basket = dao.createBasket(user, name, notice, amount, new Timestamp(purchaseDate), payment, vendor);
+				}
+				else {
+					basket.setName(name);
+					basket.setNotice(notice);
+					basket.setAmount(amount);
+					basket.setPurchaseDate(new Timestamp(purchaseDate));
+					basket.setPayment(payment);
+					basket.setVendor(vendor);
+				
+					basket = dao.updateBasket(basket);
+				}
+				//wandle empfangene ItemTOs in ItemObjekte
+				/*
+				for(ItemTO iTo : items) {
+					String itemName = iTo.getName();	
+					double itemQuantity = iTo.getQuantity();	
+					double itemPrice = iTo.getPrice();	
+					String itemNotice = iTo.getNotice();		
+					Timestamp itemReceiptDate = new Timestamp(iTo.getReceiptDate());	
+					int itemCategoryId = iTo.getCategoryId();
+					Category itemCategory = user.getCategory(itemCategoryId);
+					Item item = new Item(itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, basket, itemCategory);
+					//itemList.add(item);
+					//basket.addNewItem(item);
+				}
+				*/
+				if (basket != null) {
+					//basket.setItems(itemList);
+					//basket = dao.updateBasket(basket);
+					response.setBasketTo(dtoAssembler.makeDto(basket));
+					response.setReturnCode(200);
+				}
+				else {
+					throw new BasketNotFoundException("Basket to update not found");
+				}
+				
+			}
+		}
+		catch(NoSessionException | BasketNotFoundException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getErrorMessage());
+		}
+		catch(EntityExistsException e) {
+			try {
+				throw new BudgetOnlineException(600, "ENTITY_EXISTS_EXCEPTION", "createOrUpdateBasket | ID:" + sessionId  + " basketId:" + basketId + " paymentId:" +paymentId + " vendorId:" + vendorId + "|");
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "createOrUpdateBasket | ID:" + sessionId  + " basketId:" + basketId + " paymentId:" +paymentId + " vendorId:" + vendorId + "|");
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			try {
+				throw new NoTransactionException("createOrUpdateBasket | ID:" + sessionId  + " basketId:" + basketId + " paymentId:" +paymentId + " vendorId:" + vendorId + "|");
+			} 
+			catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			try {
+				throw new RollbackException("createOrUpdateBasket | ID:" + sessionId  + " basketId:" + basketId + " paymentId:" +paymentId + " vendorId:" + vendorId + "|");
+			} 
+			catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			response.setReturnCode(800);
+		}
+		return response;
+	}
 
 
 	/*#################      VENDOR - SECTION     ##############*/
@@ -2900,6 +3002,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
+		return response;
 	}
 	/**
 	 * Method to create or update an income
