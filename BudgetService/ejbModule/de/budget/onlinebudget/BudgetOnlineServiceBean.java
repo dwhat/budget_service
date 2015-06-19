@@ -88,7 +88,7 @@ import de.budget.onlinebudget.QueueMessageSender;
  * Stateless-Beanimplementierung von BudgetOnlineService 
  * @author Moritz
  * @author Marco
- *
+ * @date 19.05.2015 bis 16.06.2015
  */
 @Stateless
 @Remote(BudgetOnlineService.class)
@@ -125,10 +125,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	
 	/**
-	 * Private HilfsMethode zum Laden der Session aus der Datenbank
-	 * @author Marco
+	 * private HilfsMethode zum Laden der Session aus der Datenbank
+	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return BudgetSession Object
+	 * @return BudgetSessionObject with a sessionId and a return code
 	 * @throws NoSessionException
 	 */
 	private BudgetSession getSession(int sessionId) throws NoSessionException {
@@ -147,12 +147,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/**
 	 * Session anhand username und password erstellen und in ResponseObject zurückliefern
 	 * 
-	 * @author Moritz
-	 * @author Marco
-	 * @param Username 
+	 * <p> Author: Moritz </p>
+	 * <p> Author: Marco </p>
+	 * @param username
 	 * @param password
 	 * @return UserLoginResponse
-	 * 
 	 */
 	@Override
 	public UserLoginResponse login(String username, String password) {
@@ -212,8 +211,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	/**
 	 * Method to logout. Deletes a session
 	 * 
-	 * @author Moritz
-	 * @date 19.05.2015
+	 * <p> Author: Moritz </p>
+	 * @param sessionID
+	 * @return ReturnCodeResponse
 	 */
 	@Override
 	public ReturnCodeResponse logout(int sessionId)  {
@@ -260,9 +260,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to register a new user
-	 * @author Marco
-	 * @date 18.05.2015
+	 * <p> Author: Marco </p>
 	 * Method to register a new user
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @return UserLoginResponse
 	 */
 	@Override
 	public UserLoginResponse setUser(String username, String password, String email) {
@@ -336,9 +339,11 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to find an user by name
-	 * @author Moritz
-	 * @author Marco
-	 * @date 30.05.2015
+	 * <p> Author: Moritz </p>
+	 * <p> Author: Marco </p>
+	 * @param sessionId
+	 * @param userName
+	 * @return UserResponse
 	 */
 	@Override
 	public UserResponse getUserByName(int sessionId, String userName) {
@@ -398,8 +403,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to delete the own user
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
+	 * @param sessionId
+	 * @param username
+	 * @return ReturnCodeResponse
 	 */
 	@Override
 	public ReturnCodeResponse deleteUser(int sessionId, String username) {
@@ -460,8 +467,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to get the last baskets of a user
-	 * @author Marco
-	 * @date 28.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param startPosition  startPosition of the incomes sorted by date
 	 * @param endPosition  endPosition of the incomes sorted by date
@@ -525,8 +531,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Helper Method to get all baskets of a specific vendor
-	 * @author Marco
-	 * @date 29.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param vendorId
 	 * @return a list with all baskets of a vendor
@@ -581,8 +586,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all baskets of a specific vendor
-	 * @author Marco
-	 * @date 29.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param vendorId
 	 * @return a list with all baskets of a vendor
@@ -642,9 +646,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method to sum the amount of all baskets, which are assigned to a special vendor
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param vendorId
-	 * @return
+	 * @return double value with sum of all amounts
 	 * @throws BudgetOnlineException
 	 * @throws Exception
 	 */
@@ -680,7 +685,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Methode um die Beträge pro Vendor zurück zugeben
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -736,9 +741,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all incomes of the actual month
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return List with all Baskets of the month
 	 */
 	private List<Basket> getBasketsOfActualMonthHelper(int sessionId) throws NoSessionException, IllegalArgumentException, Exception{
 		try {
@@ -773,7 +778,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gets all baskets of the actual month
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -830,8 +835,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Gets all baskets of a specific payment
-	 * @author Marco
-	 * @date 29.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param paymentId
 	 * @return
@@ -905,8 +909,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get a Basket with the SessionId and the basketId
-	 * @author Marco
-	 * @date 18.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param basketId
 	 * @return BasketResponse Object
@@ -969,8 +972,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gives a Response Object with all Baskets in a list
-	 * @author Marco
-	 * @date 19.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return BasketListResponse Object
 	 */
@@ -1032,8 +1034,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to delete a basket
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ReturnCodeResponse deleteBasket(int sessionId, int basketId) {
@@ -1088,8 +1089,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to create or update a basket
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
@@ -1197,8 +1197,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get a Vendor with the SessionId and the vendorId
-	 * @author Marco
-	 * @date 18.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param vendorId
 	 * @return VendorResponse Object
@@ -1261,8 +1260,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method, to Gives a Response Object with all Vendors in a list
-	 * @author Marco
-	 * @date 19.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return VendorListResponse Object
 	 */
@@ -1305,8 +1303,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gives a Response Object with all Vendors in a list
-	 * @author Marco
-	 * @date 19.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return VendorListResponse Object
 	 */
@@ -1365,8 +1362,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to delete a vendor
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ReturnCodeResponse deleteVendor(int sessionId, int vendorId) {
@@ -1420,8 +1416,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to create oder update a vendor
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public VendorResponse createOrUpdateVendor(int sessionId, int vendorId, String name, String logo, String street, String city, int PLZ, int houseNumber) {
@@ -1518,8 +1513,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get a payment with the SessionId and the paymentId
-	 * @author Moritz
-	 * @date 30.05.2015
+	 * <p> Author: Moritz </p>
 	 * @param sessionId
 	 * @param paymentId
 	 * @return PaymentResponse Object
@@ -1582,8 +1576,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper method, to find a payment and 
-	 * @author Marco
-	 * @date 01.06.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param paymentId
 	 * @return a Payment Object
@@ -1619,8 +1612,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gives a Response Object with all Payments in a list
-	 * @author Marco
-	 * @date 19.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return CategoryListResponse Object
 	 */
@@ -1683,7 +1675,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to delete a payment
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param paymentId
 	 * @return ReturnCodeResponse Object
@@ -1740,8 +1732,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to create or update a payment
-	 * @author Marco
-	 * @author Moritz
+	 * <p> Author: Marco </p>
+	 * <p> Author: Moritz </p>
 	 * @param sessionId
 	 * @param paymentId alte Id zum finden des Update Datensatzes nï¿½tig, bei Neuanlage negativen Wert benutzen
 	 * @param name
@@ -1827,8 +1819,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to get a category of the user
-	 * @author Moritz
-	 * @date 30.05.2015
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public CategoryResponse getCategory(int sessionId, int categoryId) {
@@ -1888,7 +1879,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to find all categories of a user
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return List with all Categories
 	 * @throws NoSessionException
@@ -1926,8 +1917,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gives a Response Object with all Categories in a list
-	 * @author Marco
-	 * @date 19.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return CategoryListResponse Object
 	 */
@@ -1969,8 +1959,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all Categories of a use where income is true
-	 * @author Marco
-	 * @date 09.06.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -2034,9 +2023,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method to get all loss categories of a user
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return list with all losscategories of the user
 	 */
 	private List<Category> getLossCategoriesHelper(int sessionId) throws BudgetOnlineException, Exception{
 		try {
@@ -2079,9 +2068,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method to get all loss categories of a user
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return List with all categories of this user
 	 */
 	private List<Category> getIncomeCategoriesHelper(int sessionId) throws BudgetOnlineException, Exception{
 		try {
@@ -2124,8 +2113,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all Categories of a use where income is false
-	 * @author Marco
-	 * @date 09.06.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -2188,8 +2176,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to delete a category
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ReturnCodeResponse deleteCategory(int sessionId, int categoryId) {
@@ -2245,8 +2232,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to create oder update a category
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public CategoryResponse createOrUpdateCategory(int sessionId, int categoryId, boolean income, boolean active,
@@ -2346,8 +2332,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to get a special income
-	 * @author Moritz
-	 * @date 30.05.2015
+	 * <p> Author: Moritz </p>
 	 */
 	@Override
 	public IncomeResponse getIncome(int sessionId, int incomeId) {
@@ -2410,8 +2395,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all incomes of a user
-	 * @author Marco
-	 * @date 09.06.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -2473,10 +2457,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method to find incomes with a special category
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return List with all Incomes, which are assigned to the category
 	 */
 	private List<Income> getIncomesByCategoryHelper(int sessionId, int categoryId)throws BudgetOnlineException {
 		try {
@@ -2524,8 +2508,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gets all Incomes of a specific category for incomes
-	 * @author Marco
-	 * @date 29.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
 	 * @return
@@ -2588,11 +2571,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper Method to get the Amount of all income, which are assigned to a special category
-	 * @author Marco
-	 * @date 18.06.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return double value of the sum of all items with the category
 	 */
 	private double getIncomeAmountByCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException, Exception {
 		double sum = 0;
@@ -2628,7 +2610,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gets the sum of amounts of the incomes of every single Category
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -2691,8 +2673,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to get the last Incomes of a user 
-	 * @author Marco
-	 * @date 28.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param startPosition  startPosition of the incomes sorted by date
 	 * @param endPosition  endPosition of the incomes sorted by date
@@ -2755,9 +2736,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get all incomes of the actual month
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
-	 * @return
+	 * @return List with all Incomes of the actual month
 	 */
 	private List<Income> getIncomesOfActualMonthHelper(int sessionId) throws NoSessionException, BudgetOnlineException, Exception{
 		try {
@@ -2791,7 +2772,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	/**
 	 * Gets all income of the actual month
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -2850,8 +2831,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to delete an income
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ReturnCodeResponse deleteIncome(int sessionId, int incomeId) {
@@ -2905,8 +2885,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to create or update an income
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public IncomeResponse createOrUpdateIncome(int sessionId, int incomeId, String name,
@@ -3002,8 +2981,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to get a special item of a special basket
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ItemResponse getItemByBasket(int sessionId, int itemId, int basketId) {
@@ -3068,8 +3046,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to gett all items of a basket
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ItemListResponse getItemsByBasket(int sessionId, int basketId) {
@@ -3138,10 +3115,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Helper Method to find all incomes, which are assigned with a special category
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return List with all items which are assigned to the category
 	 * @throws BudgetOnlineException
 	 */
 	private List<Item> getItemsByLossCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException{
@@ -3192,8 +3169,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	/**
 	 * Gets all Items of a specific category for losses
-	 * @author Marco
-	 * @date 29.05.2015
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
 	 * @return
@@ -3251,7 +3227,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Gets the sum of amounts of the items of every single Category
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @return
 	 */
@@ -3313,10 +3289,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to get the amount of all items, which are assigned to a special category
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param categoryId
-	 * @return
+	 * @return double value with the sum of all items which are assigned to the category
 	 */
 	private double getItemsAmountByLossCategoryHelper(int sessionId, int categoryId) throws BudgetOnlineException {
 		double sum = 0;
@@ -3352,8 +3328,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to delete an item
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ReturnCodeResponse deleteItem(int sessionId, int itemId) {
@@ -3407,7 +3382,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Helper method to create or update an item
-	 * @author Marco
+	 * <p> Author: Marco </p>
 	 * @param sessionId
 	 * @param itemId
 	 * @param name
@@ -3417,8 +3392,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * @param receiptDate
 	 * @param basketId
 	 * @param categoryId
-	 * @return ItemObjekt
-	 * @throws Exception 
+	 * @return ItemObject
+	 * @throws Exception
 	 */
 	private Item createOrUpdateItemHelper(int sessionId, int itemId, String name, double quantity,
 			double price, String notice, Timestamp receiptDate, int basketId, int categoryId) throws Exception {
@@ -3492,8 +3467,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	
 	/**
 	 * Method to create or update an item
-	 * @author Marco
-	 * @date 26.05.2015
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public ItemResponse createOrUpdateItem(int sessionId, int itemId, String name, double quantity,
@@ -3544,9 +3518,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to find all loss of a time period
-	 * @author Moritz
-	 * @author Marco
-	 * @date 07.06.2015
+	 * <p> Author: Moritz </p>
+	 * <p> Author: Marco </p>
 	 */
 	@Override
 	public AmountResponse getLossByPeriod(int sessionId, int daysOfPeriod) {
@@ -3610,10 +3583,9 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 
 	/**
 	 * Method to find all incomes of a time period
-	 * @author Moritz
-	 * @author Marco
+	 * <p> Author: Moritz </p>
+	 * <p> Author: Marco </p>
 	 * @param daysOfPeriod  Anzahl der Tage, die vom heutigen Datum abgezogen werden sollen
-	 * @date 07.06.2015
 	 */
 	@Override
 	public AmountResponse getIncomeByPeriod(int sessionId, int daysOfPeriod) {
