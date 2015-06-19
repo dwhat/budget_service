@@ -524,23 +524,20 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 
 	/**
-	 * Method to get all baskets of a specific vendor
+	 * Helper Method to get all baskets of a specific vendor
 	 * @author Marco
 	 * @date 29.05.2015
 	 * @param sessionId
 	 * @param vendorId
 	 * @return a list with all baskets of a vendor
 	 */
-	@Override
-	public BasketListResponse getBasketsByVendor(int sessionId, int vendorId){
-		BasketListResponse response = new BasketListResponse();
+	public List<Basket> getBasketsByVendorHelper(int sessionId, int vendorId) throws BudgetOnlineException, Exception {
 		try {
 			BudgetSession session = getSession(sessionId);
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				List<Basket> basketList = new ArrayList<>(); //List with all baskets of the vendor, wird spï¿½ter befï¿½llt
 				List<Basket> basketsOfUser = user.getBaskets(); //List with all baskets of the user
-				
 				if(basketList.size() == 0){
 					throw new BasketNotFoundException("Not Baskets were found for this user");
 				}
@@ -552,12 +549,56 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					}
 				}
 				if(basketList.size() > 0) {
-					response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
-					response.setReturnCode(200);
+					return basketList;
 				}
 				else {
 					throw new BasketNotFoundException("Not baskets found for this vendor");
 				}
+			}
+			else {
+				throw new NoSessionException();
+			}
+		}
+		catch(NoSessionException | BasketNotFoundException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getCategories | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			throw new NoTransactionException("getCategories | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getCategories  | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			throw e;
+		}
+	}
+	
+
+	
+	/**
+	 * Method to get all baskets of a specific vendor
+	 * @author Marco
+	 * @date 29.05.2015
+	 * @param sessionId
+	 * @param vendorId
+	 * @return a list with all baskets of a vendor
+	 */
+	@Override
+	public BasketListResponse getBasketsByVendor(int sessionId, int vendorId){
+		BasketListResponse response = new BasketListResponse();
+		try {
+			List<Basket> basketList = getBasketsByVendorHelper(sessionId, vendorId); //List with all baskets of the vedor
+				
+			if(basketList.size() > 0) {
+				response.setBasketList(dtoAssembler.makeBasketListDto(basketList));
+				response.setReturnCode(200);
+			}
+			else {
+				throw new BasketNotFoundException("Not baskets found for this vendor");
 			}
 		}
 		catch(NoSessionException | BasketNotFoundException e) {
@@ -597,6 +638,99 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			response.setReturnCode(800);
 		}
 		return response;	
+	}
+	
+	/**
+	 * Helper Method to sum the amount of all baskets, which are assigned to a special vendor
+	 * @param sessionId
+	 * @param vendorId
+	 * @return
+	 * @throws BudgetOnlineException
+	 * @throws Exception
+	 */
+	private double getAmountByVendorHelper(int sessionId, int vendorId) throws BudgetOnlineException, Exception {
+		double sum = 0;
+		try {
+			List<Basket> basketList = getBasketsByVendorHelper(sessionId, vendorId);
+			for(Basket b : basketList) {
+				sum = sum + b.getAmount();
+			}
+		}
+		catch(NoSessionException | BasketNotFoundException e) {
+			throw e;
+		}
+		catch(BudgetOnlineException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getAmountByVendor | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			throw new NoTransactionException("getgetAmountByVendor | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getgetAmountByVendor  | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			throw e;
+		}
+		return sum;
+	}
+	
+	/**
+	 * Methode um die Beträge pro Vendor zurück zugeben
+	 * @author Marco
+	 * @param sessionId
+	 * @return
+	 */
+	public AmountListResponse getAmountForVendors(int sessionId) {
+		AmountListResponse response = new AmountListResponse();
+		try {
+			List<Vendor> vendorList = getVendorsHelper(sessionId);
+			for(Vendor v : vendorList) {
+				double value = getAmountByVendorHelper(sessionId, v.getId());
+				dtoAssembler.makeDto(v.getName(), value);
+			}
+		}
+		catch(BudgetOnlineException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getErrorMessage());
+		}
+		catch(IllegalArgumentException e) {
+			try {
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getAmountForVendors| " + e.getStackTrace().toString());
+			} catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			try {
+				throw new NoTransactionException("getAmountForVendors | " + e.getStackTrace().toString());
+			} 
+			catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			try {
+				throw new RollbackException("getAmountForVendors | " + e.getStackTrace().toString());
+			} 
+			catch(BudgetOnlineException be) {
+				response.setReturnCode(be.getErrorCode());
+				response.setMessage(be.getErrorMessage());
+			}
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			response.setReturnCode(800);
+		}
+		
+		return response;
 	}
 	
 	/**
@@ -1125,6 +1259,50 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	}
 	
 	/**
+	 * Helper Method, to Gives a Response Object with all Vendors in a list
+	 * @author Marco
+	 * @date 19.05.2015
+	 * @param sessionId
+	 * @return VendorListResponse Object
+	 */
+	private List<Vendor> getVendorsHelper(int sessionId) throws BudgetOnlineException, Exception {
+		try {
+			BudgetSession session = getSession(sessionId);
+			if (session != null) {
+				User user = this.dao.findUserByName(session.getUsername());
+				List<Vendor> vendorList = user.getVendors();
+				if(vendorList.size() == 0) {
+					throw new VendorNotFoundException("Not vendors found of this user");
+				}
+				else {
+					return vendorList;
+				}
+			}
+			else {
+				throw new NoSessionException();
+			}
+		}
+		catch(NoSessionException | VendorNotFoundException e) {
+			throw e;
+		}
+		catch(IllegalArgumentException e) {
+			throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getVendors | " + e.getStackTrace().toString());
+		}
+		catch (TransactionRequiredException e) {
+			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
+			throw new NoTransactionException("getVendors | " + e.getStackTrace().toString());
+		}
+		catch (EJBTransactionRolledbackException e) {
+			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
+			throw new RollbackException("getVendors | " + e.getStackTrace().toString());
+		}
+		catch(Exception e) {
+			logger.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	/**
 	 * Gives a Response Object with all Vendors in a list
 	 * @author Marco
 	 * @date 19.05.2015
@@ -1135,17 +1313,13 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	public VendorListResponse getVendors(int sessionId) {
 		VendorListResponse response = new VendorListResponse();
 		try {
-			BudgetSession session = getSession(sessionId);
-			if (session != null) {
-				User user = this.dao.findUserByName(session.getUsername());
-				List<Vendor> vendorList = user.getVendors();
-				if(vendorList.size() == 0) {
-					throw new VendorNotFoundException("Not vendors found of this user");
-				}
-				else {
-					response.setVendorList(dtoAssembler.makeVendorListDto(vendorList));	
-					response.setReturnCode(200);
-				}
+			List<Vendor> vendorList = getVendorsHelper(sessionId);
+			if(vendorList.size() == 0) {
+				throw new VendorNotFoundException("Not vendors found of this user");
+			}
+			else {
+				response.setVendorList(dtoAssembler.makeVendorListDto(vendorList));	
+				response.setReturnCode(200);
 			}
 		}
 		catch(NoSessionException | VendorNotFoundException e) {
@@ -2469,7 +2643,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		}
 		catch(IllegalArgumentException e) {
 			try {
-				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getItemsByLossCategory | " + e.getStackTrace().toString());
+				throw new BudgetOnlineException(500, "ILLEGAL_ARGUMENT_EXCEPTION", "getIncomesByCategory | " + e.getStackTrace().toString());
 			} catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
 				response.setMessage(be.getErrorMessage());
@@ -2478,7 +2652,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (TransactionRequiredException e) {
 			logger.error("BudgetOnline | TranscationException- " + e.getMessage());
 			try {
-				throw new NoTransactionException("getItemsAmountForCategories | " + e.getStackTrace().toString());
+				throw new NoTransactionException("getIncomeAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
@@ -2488,7 +2662,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		catch (EJBTransactionRolledbackException e) {
 			logger.error("BudgetOnline | EJBTransactionException- " + e.getMessage());
 			try {
-				throw new RollbackException("getItemsAmountForCategories | " + e.getStackTrace().toString());
+				throw new RollbackException("getIncomesAmountForCategories | " + e.getStackTrace().toString());
 			} 
 			catch(BudgetOnlineException be) {
 				response.setReturnCode(be.getErrorCode());
