@@ -24,7 +24,7 @@ import de.budget.onlinebudget.UserLoginResponse;
 public class UserActionTest {
 	
 	private static BudgetOnlineServiceBean remoteSystem;
-	private int sessionId;
+	private static int sessionId;
 
 	
 	/**
@@ -52,7 +52,7 @@ public class UserActionTest {
 	@Test
 	public void bTestLogout() {
 		ReturnCodeResponse resp = remoteSystem.logout(sessionId);
-		assertEquals(resp.getReturnCode(), 200);
+		assertEquals(200, resp.getReturnCode());
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class UserActionTest {
 	 */
 	@Test
 	public void dTestRegisterUserErrorPassword() {
-		UserLoginResponse resp = remoteSystem.setUser("xyzUserTestJunit", "123", "test@junitTest.de");
+		UserLoginResponse resp = remoteSystem.setUser("xyzUserTestJunit123456789", "123", "test@junitTest.de");
 		assertEquals(500, resp.getReturnCode());
 	}
 	

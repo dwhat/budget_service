@@ -145,6 +145,21 @@ public interface BudgetOnlineDAOLocal {
 	 * @param purchaseDate
 	 * @param payment
 	 * @param vendor
+	 * @return new basket Object
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
+	 */
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException;
+	
+	/**
+	 * Method to create a basket
+	 * @param user
+	 * @param name
+	 * @param notice
+	 * @param amount
+	 * @param purchaseDate
+	 * @param payment
+	 * @param vendor
 	 * @param items
 	 * @return new basket Object
 	 * @throws IllegalArgumentException

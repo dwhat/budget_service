@@ -121,7 +121,7 @@ public class SimpleOnlineBudgetClient {
 			   int katId = catListRespLoss.getCategoryList().get(0).getId();
 			   System.out.println("Kategorie mit Id "+ katId + " gefunden");
 			   long dateLong = System.currentTimeMillis();
-			   ArrayList<ItemTO> itemToList = new ArrayList<>();
+			   List<ItemTO> itemToList = new ArrayList<ItemTO>();
 			   //itemId, name, quantity,price, notice, long receiptDate, int basketId, int categoryId
 			   itemToList.add(createItemTO(0, "Shampoo", 2.00, 2.99, "Für die Haare", dateLong, 0, katId));
 			   itemToList.add(createItemTO(0, "Shampoo", 3.00, 2.99, "Für die Haare", dateLong, 0, katId));

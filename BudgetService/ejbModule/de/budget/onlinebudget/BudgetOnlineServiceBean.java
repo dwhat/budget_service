@@ -1139,7 +1139,6 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					Item item = new Item(itemName, itemQuantity, itemPrice, itemNotice, itemReceiptDate, basket, itemCategory);
 					//itemList.add(item);
 					//basket.addNewItem(item);
-					//TODO
 				}
 
 				if (basket != null) {
@@ -2271,6 +2270,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					else {
 						response.setReturnCode(400);
 						response.setMessage("Category already Exists with this name");
+						return response;
 					}
 				}
 				else {
@@ -2900,9 +2900,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			logger.error(e.getMessage());
 			response.setReturnCode(800);
 		}
-		return response;
 	}
-	
 	/**
 	 * Method to create or update an income
 	 * <p> Author: Marco </p>
@@ -2913,11 +2911,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 		
 		
 		IncomeResponse response = new IncomeResponse();
-		logger.info("CreateOrUpdateIncome aufger---------------------------------------------");
 		try {
-			// Hole SessionObjekt
 			BudgetSession session = getSession(sessionId);
-			//Hole User Objekt
 			if(session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				
@@ -2926,10 +2921,8 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Income income = user.getIncome(incomeId);
 				
 				Date recDate = new Date(receiptDate);
-				logger.info(sessionId + " " + incomeId +" " + name +" " + quantity +" " + amount +" " + notice +" " + recDate +" " + categoryId);
 				
 				if(income == null) {
-					logger.info("Income gleich null -----------------------------");
 					income = dao.createIncome(user, name, notice, quantity, amount, recDate, category);
 				}
 				else {

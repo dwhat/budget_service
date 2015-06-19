@@ -27,7 +27,7 @@ public class CategoryActionTest {
 
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
-	private int testCatId;
+	private static int testCatId;
 	
 	/**
 	 * Baut einmalig Server Verbindung auf
@@ -47,16 +47,17 @@ public class CategoryActionTest {
 		CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "UnitTestCategory", "test", "FFFFFFF");
 		assertEquals(200, catResp.getReturnCode());
 		assertEquals("UnitTestCategory", catResp.getCategoryTo().getName());
-		
+		testCatId = catResp.getCategoryTo().getId();
 		CategoryResponse catResp1 = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "UnitTestCategoryTest1", "test123", "FFFFFFF");
 		assertEquals(200, catResp1.getReturnCode());
-		assertEquals("UnitTestCategory", catResp1.getCategoryTo().getName());
+		assertEquals("UnitTestCategoryTest1", catResp1.getCategoryTo().getName());
 		testCatId = catResp1.getCategoryTo().getId();
 		CategoryResponse catResp2 = remoteSystem.createOrUpdateCategory(sessionId, 0, false, true, "UnitTestCategoryTest2", "test123123", "FFFFFFF");
 		assertEquals(200, catResp2.getReturnCode());
 		CategoryResponse catResp3 = remoteSystem.createOrUpdateCategory(sessionId, 0, true, false, "UnitTestCategoryTest3", "test1234", "FFFFFFF");
 		assertEquals(200, catResp3.getReturnCode());
 		assertTrue(catResp.getCategoryTo().isActive()); //Da neue Kategorien immer als aktive angelegt werden
+		
 	}
 	
 	/**
@@ -66,6 +67,7 @@ public class CategoryActionTest {
 	public void bTestCreateCategoryError() {
 		CategoryResponse catResp = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "UnitTestCategory", "test", "FFFFFFF");
 		assertNotEquals(200, catResp.getReturnCode());
+		assertEquals(404, catResp.getReturnCode());
 	}
 	
 	/**
@@ -114,7 +116,7 @@ public class CategoryActionTest {
 	public void gTestGetIncomeCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfIncome(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
-		assertEquals(3, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
+		assertEquals(2, catListResp.getCategoryList().size()); // Es wurden zuvor 2 income Kategorien angelegt
 		assertTrue(catListResp.getCategoryList().get(1).isIncome());
 	}
 	
@@ -125,7 +127,7 @@ public class CategoryActionTest {
 	public void hTestGetLossCategories() {
 		CategoryListResponse catListResp = remoteSystem.getCategorysOfLoss(sessionId);
 		assertEquals(200, catListResp.getReturnCode());
-		assertEquals(1, catListResp.getCategoryList().size()); // Es wurden zuvor 3 income Kategorien angelegt
+		assertEquals(2, catListResp.getCategoryList().size()); // Es wurden zuvor 2 loss Kategorien angelegt
 		assertFalse(catListResp.getCategoryList().get(0).isIncome());
 	}
 	

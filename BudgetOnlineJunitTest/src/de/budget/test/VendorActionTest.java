@@ -46,16 +46,16 @@ public class VendorActionTest {
 	public void aTestCreateVendor() {
 		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp.getReturnCode());
-		assertEquals("VB", resp.getVendorTo().getName());
+		assertEquals("Rewe", resp.getVendorTo().getName());
 		
 		VendorResponse resp1 = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe1", "BILD1", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp1.getReturnCode());
-		assertEquals("VB", resp1.getVendorTo().getName());
+		assertEquals("Rewe1", resp1.getVendorTo().getName());
 		testVenId = resp1.getVendorTo().getId();
 		
 		VendorResponse resp2 = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe2", "BILD2", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp2.getReturnCode());
-		assertEquals("VB", resp2.getVendorTo().getName());
+		assertEquals("Rewe2", resp2.getVendorTo().getName());
 		testVenId = resp2.getVendorTo().getId();
 	}
 	
@@ -66,6 +66,7 @@ public class VendorActionTest {
 	public void bTestCreateVendorError() {
 		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertNotEquals(200, resp.getReturnCode());
+		assertEquals(, resp.getReturnCode());
 	}
 	
 	/**

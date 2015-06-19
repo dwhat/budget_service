@@ -36,6 +36,7 @@ import org.jboss.logging.Logger;
 
 
 
+
 //Interface Import
 import de.budget.dao.BudgetOnlineDAOLocal;
 import de.budget.entities.Basket;
@@ -272,6 +273,32 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
 		if(user != null && payment != null && vendor != null) {
 			Basket basket = new Basket(user, name, notice, amount, purchaseDate, payment, vendor, items);
+			if (basket != null){
+				em.persist(basket);
+				return basket;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Method to create a basket
+	 * @param user
+	 * @param name
+	 * @param notice
+	 * @param amount
+	 * @param purchaseDate
+	 * @param payment
+	 * @param vendor
+	 * @param items
+	 * @return new basket Object
+	 * @throws IllegalArgumentException
+	 * @throws EntityExistsException
+	 */
+	@Override
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException {
+		if(user != null && payment != null && vendor != null) {
+			Basket basket = new Basket(user, name, notice, amount, purchaseDate, payment, vendor);
 			if (basket != null){
 				em.persist(basket);
 				return basket;
