@@ -1434,7 +1434,18 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				Vendor vendor = user.getVendor(vendorId);
 			
 				if(vendor == null) {
-					vendor = dao.createVendor(user, name, logo, street, city, PLZ, houseNumber);
+					ArrayList<String> nameList = new ArrayList<>();
+					for (Vendor v : user.getVendors()) {
+						nameList.add(v.getName());
+					}
+					if(!nameList.contains(name)) {
+						vendor = dao.createVendor(user, name, logo, street, city, PLZ, houseNumber);
+					}
+					else {
+						response.setReturnCode(400);
+						response.setMessage("Vendor already Exists with this name");
+					}
+					
 				}
 				else {
 					vendor.setName(name);
