@@ -1101,7 +1101,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 	 * Method to create or update a basket
 	 * <p> Author: Marco </p>
 	 */
-	public BasketResponse createOrUpdateBasket(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
+	public BasketResponse createOrUpdateBasketList(int sessionId, int basketId, String name, String notice, double amount, long purchaseDate, int paymentId, int vendorId, List<ItemTO> items) {
 		BasketResponse response = new BasketResponse();
 		try {
 			BudgetSession session = getSession(sessionId);
