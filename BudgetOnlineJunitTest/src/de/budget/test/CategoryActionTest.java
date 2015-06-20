@@ -5,10 +5,13 @@ package de.budget.test;
 
 
 import static org.junit.Assert.*;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
 
 
 import de.budget.onlinebudget.CategoryListResponse;
@@ -28,6 +31,9 @@ public class CategoryActionTest {
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
 	private static int testCatId;
+	private static int testCatId1;
+	private static int testCatId2;
+	private static int testCatId3;
 	
 	/**
 	 * Baut einmalig Server Verbindung auf
@@ -51,12 +57,14 @@ public class CategoryActionTest {
 		CategoryResponse catResp1 = remoteSystem.createOrUpdateCategory(sessionId, 0, true, true, "UnitTestCategoryTest1", "test123", "FFFFFFF");
 		assertEquals(200, catResp1.getReturnCode());
 		assertEquals("UnitTestCategoryTest1", catResp1.getCategoryTo().getName());
-		testCatId = catResp1.getCategoryTo().getId();
+		testCatId1 = catResp1.getCategoryTo().getId();
 		CategoryResponse catResp2 = remoteSystem.createOrUpdateCategory(sessionId, 0, false, true, "UnitTestCategoryTest2", "test123123", "FFFFFFF");
 		assertEquals(200, catResp2.getReturnCode());
+		testCatId2 = catResp2.getCategoryTo().getId();
 		CategoryResponse catResp3 = remoteSystem.createOrUpdateCategory(sessionId, 0, true, false, "UnitTestCategoryTest3", "test1234", "FFFFFFF");
 		assertEquals(200, catResp3.getReturnCode());
-		assertTrue(catResp.getCategoryTo().isActive()); //Da neue Kategorien immer als aktive angelegt werden
+		assertTrue(catResp3.getCategoryTo().isActive()); //Da neue Kategorien immer als aktive angelegt werden
+		testCatId3 = catResp3.getCategoryTo().getId();
 		
 	}
 	
@@ -149,5 +157,17 @@ public class CategoryActionTest {
 	public void jTestDeleteCategoryError() {
 		ReturnCodeResponse resp = remoteSystem.deleteCategory(sessionId,  123456789);
 		assertNotEquals(200, resp.getReturnCode());
+	}
+	
+	/**
+	 * Löscht alle zum Test erstellten Daten
+	 */
+	//@AfterClass
+	public static void endTestCase() {
+		remoteSystem.deleteCategory(sessionId,  testCatId1);
+		remoteSystem.deleteCategory(sessionId,  testCatId2);
+		remoteSystem.deleteCategory(sessionId,  testCatId3);
+		remoteSystem.deleteCategory(sessionId,  testCatId);
+		remoteSystem.logout(sessionId);
 	}
 }

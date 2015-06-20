@@ -5,6 +5,7 @@ package de.budget.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -108,6 +109,17 @@ public class UserActionTest {
 	public void hTestLoginWithWrongUsername() {
 		UserLoginResponse resp = remoteSystem.login("xyzblablabla", "123456789123456789");
 		assertEquals(20, resp.getReturnCode());
+	}
+	
+	/**
+	 * Löscht alle zum Test erstellten Daten
+	 */
+	@AfterClass
+	public static void endTestCase() {
+		UserLoginResponse resp = remoteSystem.login("xyzUserTestJunit", "25d55ad283aa400af464c76d713c07ad");
+		sessionId = resp.getSessionId();
+		remoteSystem.deleteUser(sessionId,  "xyzUserTestJunit");
+
 	}
 	
 

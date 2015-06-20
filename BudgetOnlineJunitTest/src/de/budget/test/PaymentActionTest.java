@@ -6,6 +6,7 @@ package de.budget.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -28,6 +29,8 @@ public class PaymentActionTest {
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
 	private static int testPayId;
+	private static int testPayId1;
+	private static int testPayId2;
 	
 	/**
 	 * Baut einmalig Server Verbindung auf
@@ -48,18 +51,19 @@ public class PaymentActionTest {
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("VB", resp.getPaymentTo().getName());
 		assertEquals(true, resp.getPaymentTo().isActive());
+		testPayId = resp.getPaymentTo().getId();
 		
 		PaymentResponse resp1 = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB123", "DE1234567", "BIC123234", true);
 		assertEquals(200, resp1.getReturnCode());
 		assertEquals("VB123", resp1.getPaymentTo().getName());
 		assertEquals(true, resp1.getPaymentTo().isActive());
-		testPayId = resp1.getPaymentTo().getId();
+		testPayId1 = resp1.getPaymentTo().getId();
 		
 		PaymentResponse resp2 = remoteSystem.createOrUpdatePayment(sessionId, 0, "VB123", "DE1234567", "BIC123234", false);
 		assertEquals(200, resp2.getReturnCode());
 		assertEquals("VB123", resp2.getPaymentTo().getName());
 		assertEquals(true, resp2.getPaymentTo().isActive());
-		testPayId = resp2.getPaymentTo().getId();
+		testPayId2 = resp2.getPaymentTo().getId();
 		assertTrue(resp2.getPaymentTo().isActive()); //Da neue Payments immer als aktive angelegt werden
 	}
 	
@@ -120,5 +124,16 @@ public class PaymentActionTest {
 	public void gTestDeletePaymentError() {
 		ReturnCodeResponse resp = remoteSystem.deletePayment(sessionId,  123456789);
 		assertNotEquals(200, resp.getReturnCode());
+	}
+	
+	/**
+	 * Löscht alle zum Test erstellten Daten
+	 */
+	@AfterClass
+	public static void endTestCase() {
+		remoteSystem.deletePayment(sessionId,  testPayId);
+		remoteSystem.deletePayment(sessionId,  testPayId1);
+		remoteSystem.deletePayment(sessionId,  testPayId2);
+		remoteSystem.logout(sessionId);
 	}
 }

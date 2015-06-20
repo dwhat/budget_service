@@ -1549,6 +1549,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 					else {
 						response.setReturnCode(400);
 						response.setMessage("Vendor already Exists with this name");
+						return response;
 					}
 					
 				}

@@ -6,6 +6,7 @@ package de.budget.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -27,7 +28,9 @@ public class VendorActionTest {
 
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
-	private int testVenId;
+	private static int testVenId;
+	private static int testVenId1;
+	private static int testVenId2;
 	
 	/**
 	 * Baut einmalig Server Verbindung auf
@@ -47,16 +50,17 @@ public class VendorActionTest {
 		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("Rewe", resp.getVendorTo().getName());
+		testVenId = resp.getVendorTo().getId();
 		
 		VendorResponse resp1 = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe1", "BILD1", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp1.getReturnCode());
 		assertEquals("Rewe1", resp1.getVendorTo().getName());
-		testVenId = resp1.getVendorTo().getId();
+		testVenId1 = resp1.getVendorTo().getId();
 		
 		VendorResponse resp2 = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe2", "BILD2", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp2.getReturnCode());
 		assertEquals("Rewe2", resp2.getVendorTo().getName());
-		testVenId = resp2.getVendorTo().getId();
+		testVenId2 = resp2.getVendorTo().getId();
 	}
 	
 	/**
@@ -66,7 +70,7 @@ public class VendorActionTest {
 	public void bTestCreateVendorError() {
 		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "Rewe", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertNotEquals(200, resp.getReturnCode());
-		assertEquals(400, resp.getReturnCode());
+		assertEquals(404, resp.getReturnCode());
 	}
 	
 	/**
@@ -84,7 +88,7 @@ public class VendorActionTest {
 	 */
 	@Test
 	public void dTestUpdateVendor() {
-		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, 0, "ge‰ndert", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
+		VendorResponse resp = remoteSystem.createOrUpdateVendor(sessionId, testVenId, "ge‰ndert", "BILD", "Straﬂe1", "Stadt1", 48691, 22);
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("ge‰ndert", resp.getVendorTo().getName());
 	}
@@ -126,6 +130,17 @@ public class VendorActionTest {
 	public void gTestDeleteVendorError() {
 		ReturnCodeResponse resp = remoteSystem.deleteVendor(sessionId,  123456789);
 		assertNotEquals(200, resp.getReturnCode());
+	}
+	
+	/**
+	 * Lˆscht alle zum Test erstellten Daten
+	 */
+	@AfterClass
+	public static void endTestCase() {
+		remoteSystem.deleteVendor(sessionId,  testVenId);
+		remoteSystem.deleteVendor(sessionId,  testVenId1);
+		remoteSystem.deleteVendor(sessionId,  testVenId2);
+		remoteSystem.logout(sessionId);
 	}
 }
 	

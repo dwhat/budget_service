@@ -6,6 +6,7 @@ package de.budget.test;
 
 import static org.junit.Assert.*;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -31,7 +32,10 @@ public class IncomeActionTest {
 	private static BudgetOnlineServiceBean remoteSystem;
 	private static int sessionId;
 	private static int testCatId;
-	private int testIncId; 
+	private static int testIncId; 
+	private static int testIncId1; 
+	private static int testIncId2; 
+	private static int testIncId3; 
 	private long dateLong = System.currentTimeMillis();
 	
 	/**
@@ -56,16 +60,19 @@ public class IncomeActionTest {
 	public void aTestCreateIncome() {
 		IncomeResponse incResp = remoteSystem.createOrUpdateIncome(sessionId, 0, "testEinnahme", 2.00, 3.00 ,"Notiz", dateLong, testCatId);
 		assertEquals(200, incResp.getReturnCode());
-		assertEquals("testEinname", incResp.getIncomeTo().getName());
+		assertEquals("testEinnahme", incResp.getIncomeTo().getName());
+		testIncId1 = incResp.getIncomeTo().getId();
 		IncomeResponse incResp1 = remoteSystem.createOrUpdateIncome(sessionId, 0, "testEinnahme1", 2.00, 3.00 ,"Notiz1", dateLong, testCatId);
 		assertEquals(200, incResp1.getReturnCode());
-		assertEquals("testEinname1", incResp1.getIncomeTo().getName());
+		assertEquals("testEinnahme1", incResp1.getIncomeTo().getName());
+		testIncId2 = incResp1.getIncomeTo().getId();
 		IncomeResponse incResp2 = remoteSystem.createOrUpdateIncome(sessionId, 0, "testEinnahme2", 2.00, 3.00 ,"Notiz2", dateLong, testCatId);
 		assertEquals(200, incResp2.getReturnCode());
-		assertEquals("testEinname2", incResp2.getIncomeTo().getName());
+		assertEquals("testEinnahme2", incResp2.getIncomeTo().getName());
+		testIncId3 = incResp2.getIncomeTo().getId();
 		IncomeResponse incResp3 = remoteSystem.createOrUpdateIncome(sessionId, 0, "testEinnahme3", 2.00, 3.00 ,"Notiz3", dateLong, testCatId);
 		assertEquals(200, incResp3.getReturnCode());
-		assertEquals("testEinname3", incResp3.getIncomeTo().getName());
+		assertEquals("testEinnahme3", incResp3.getIncomeTo().getName());
 		testIncId = incResp3.getIncomeTo().getId();
 	}
 	
@@ -86,7 +93,7 @@ public class IncomeActionTest {
 		IncomeResponse incResp = remoteSystem.getIncome(sessionId, testIncId);
 		assertEquals(200, incResp.getReturnCode());
 		assertEquals(testIncId, incResp.getIncomeTo().getId());
-		assertEquals("testEinname3", incResp.getIncomeTo().getName());
+		assertEquals("testEinnahme3", incResp.getIncomeTo().getName());
 	}
 	
 	/**
@@ -104,7 +111,7 @@ public class IncomeActionTest {
 	 */
 	@Test
 	public void eTestGetOneIncomeError() {
-		IncomeResponse incResp = remoteSystem.getIncome(sessionId, testIncId);
+		IncomeResponse incResp = remoteSystem.getIncome(sessionId, 12345678);
 		assertEquals(404, incResp.getReturnCode());
 	}
 	
@@ -135,17 +142,30 @@ public class IncomeActionTest {
 	@Test
 	public void hTestDeleteIncomeError() {
 		ReturnCodeResponse resp = remoteSystem.deleteIncome(sessionId,  123456789);
-		assertEquals(404, resp.getReturnCode());
+		assertEquals(407, resp.getReturnCode());
 	}
 	
 	/**
-	 * Testet 
+	 * Testet die Berechnung des Betrag pro Category
 	 */
 	@Test
 	public void iTestIncomesAmountForCategories() {
 		AmountListResponse resp = remoteSystem.getIncomesAmountForCategories(sessionId);
 		assertEquals(200, resp.getReturnCode());
-		assertEquals(18.0, resp.getAmountList().get(0).getValue());
+		assertEquals(18.0, resp.getAmountList().get(0).getValue(), 0.1);
 		assertEquals("UnitTestCategory", resp.getAmountList().get(0).getName());
+	}
+	
+	/**
+	 * Löscht alle zum Test erstellten Daten
+	 */
+	@AfterClass
+	public static void endTestCase() {
+		remoteSystem.deleteIncome(sessionId,  testIncId);
+		remoteSystem.deleteIncome(sessionId,  testIncId1);
+		remoteSystem.deleteIncome(sessionId,  testIncId2);
+		remoteSystem.deleteIncome(sessionId,  testIncId3);
+		remoteSystem.deleteCategory(sessionId,  testCatId);
+		remoteSystem.logout(sessionId);
 	}
 }
