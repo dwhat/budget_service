@@ -162,12 +162,11 @@ public class CategoryActionTest {
 	/**
 	 * Löscht alle zum Test erstellten Daten
 	 */
-	//@AfterClass
+	@AfterClass
 	public static void endTestCase() {
 		remoteSystem.deleteCategory(sessionId,  testCatId1);
 		remoteSystem.deleteCategory(sessionId,  testCatId2);
 		remoteSystem.deleteCategory(sessionId,  testCatId3);
-		remoteSystem.deleteCategory(sessionId,  testCatId);
 		remoteSystem.logout(sessionId);
 	}
 }

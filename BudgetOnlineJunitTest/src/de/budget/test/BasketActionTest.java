@@ -15,7 +15,6 @@ import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
 import de.budget.onlinebudget.CategoryResponse;
 import de.budget.onlinebudget.ItemResponse;
-import de.budget.onlinebudget.PaymentListResponse;
 import de.budget.onlinebudget.PaymentResponse;
 import de.budget.onlinebudget.ReturnCodeResponse;
 import de.budget.onlinebudget.VendorResponse;
@@ -37,6 +36,7 @@ public class BasketActionTest {
 	private static int baskId2;
 	private static int baskId3;
 	private static int baskId4;
+	private static int baskId5;
 	private long dateLong = System.currentTimeMillis();
 	
 	/**
@@ -79,6 +79,7 @@ public class BasketActionTest {
 		baskId4 = baskResp3.getBasketTo().getId();
 		BasketResponse baskResp4 = remoteSystem.createOrUpdateBasket(sessionId, 0, "EinkaufHeute4", "Heute", 2.25, dateLong, testPayId, testVenId);
 		assertEquals(200, baskResp4.getReturnCode());
+		baskId5 = baskResp4.getBasketTo().getId();
 	}
 	
 	/**
@@ -144,7 +145,7 @@ public class BasketActionTest {
 	 */
 	@Test
 	public void fTestUpdateBasket() {
-		BasketResponse resp = remoteSystem.createOrUpdateBasket(sessionId, 0, "Geändert", "Gestern", 2.30, dateLong, testPayId, testVenId);
+		BasketResponse resp = remoteSystem.createOrUpdateBasket(sessionId, baskId1, "Geändert", "Gestern", 2.30, dateLong, testPayId, testVenId);
 		assertEquals(200, resp.getReturnCode());
 		assertEquals("Geändert", resp.getBasketTo().getName());
 		assertEquals("Gestern", resp.getBasketTo().getNotice());
@@ -179,9 +180,10 @@ public class BasketActionTest {
 		remoteSystem.deleteBasket(sessionId,  baskId2);
 		remoteSystem.deleteBasket(sessionId,  baskId3);
 		remoteSystem.deleteBasket(sessionId,  baskId4);
-		remoteSystem.deletePayment(sessionId,  testPayId);
+		remoteSystem.deleteBasket(sessionId,  baskId5);
 		remoteSystem.deleteCategory(sessionId,  testCatId);
 		remoteSystem.deleteVendor(sessionId,  testVenId);
+		remoteSystem.deletePayment(sessionId, testPayId);
 		remoteSystem.logout(sessionId);
 	}
 	

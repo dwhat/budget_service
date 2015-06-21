@@ -12,6 +12,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import de.budget.onlinebudget.AmountResponse;
 import de.budget.onlinebudget.BudgetOnlineServiceBean;
 import de.budget.onlinebudget.BudgetOnlineServiceBeanService;
 import de.budget.onlinebudget.CategoryResponse;
@@ -154,6 +155,16 @@ public class IncomeActionTest {
 		assertEquals(200, resp.getReturnCode());
 		assertEquals(18.0, resp.getAmountList().get(0).getValue(), 0.1);
 		assertEquals("UnitTestCategory", resp.getAmountList().get(0).getName());
+	}
+	
+	/**
+	 * Testet die Berechnung des Betrag der Einahmen diesen Monats
+	 */
+	@Test
+	public void jTestIncomesAmountActualMonth() {
+		AmountResponse resp = remoteSystem.getIncomesOfActualMonth(sessionId);
+		assertEquals(200, resp.getReturnCode());
+		assertTrue(0.0 < resp.getValue());
 	}
 	
 	/**
