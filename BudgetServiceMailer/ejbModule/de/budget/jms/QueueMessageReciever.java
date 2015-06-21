@@ -20,10 +20,9 @@ import org.jboss.logging.Logger;
 
 /**
  * 
- * MessageReciever Class liest die BudgetQueue und versendet nachrichten die sich darin befinden
+ * MessageReciever Class liest die BudgetQueue und versendet Nachrichten die sich darin befinden
  * 
  * @author Moritz
- * @date 17.06.15
  * 
  */
 
@@ -97,14 +96,13 @@ public class QueueMessageReciever implements MessageListener {
 	/**
 	 * EmailVersand 
 	 * 
-	 * @author Moritz
-	 * @date 18.06.2015
+	 *  <p> Author: Moritz </p>
 	 * 
 	 * @param emailTO
 	 * @param subject
 	 * @param body
 	 * @param userName
-	 * @return
+	 * @return boolean
 	 * @throws MessagingException
 	 */
 	public boolean sendMail(String emailTO,String subject, String body, String userName) throws MessagingException {
