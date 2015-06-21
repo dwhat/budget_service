@@ -208,6 +208,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				response.setMessage(be.getErrorMessage());
 			}
 		}
+		catch(Exception e) {
+			logger.error("BudgetOnline |User| Exception-" + e.getMessage());
+			response.setReturnCode(800);
+		}
 		return response;
 	}
 
@@ -255,6 +259,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				response.setReturnCode(be.getErrorCode());
 				response.setMessage(be.getErrorMessage());
 			}
+		}
+		catch(Exception e) {
+			logger.error("BudgetOnline |User| Exception-" + e.getMessage());
+			response.setReturnCode(800);
 		}
 		return response;	
 	}
@@ -334,6 +342,10 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				response.setReturnCode(be.getErrorCode());
 				response.setMessage(be.getErrorMessage());
 			}
+		}
+		catch(Exception e) {
+			logger.error("BudgetOnline |User| Exception-" + e.getMessage());
+			response.setReturnCode(800);
 		}
 		return response;
 	}

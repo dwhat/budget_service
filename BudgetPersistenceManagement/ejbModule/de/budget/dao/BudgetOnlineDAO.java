@@ -73,7 +73,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public User findUserByName(String userName)  throws IllegalArgumentException{
+	public User findUserByName(String userName)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(User.class, userName);
 	}
 
@@ -82,7 +82,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException{
+	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		BudgetSession session = new BudgetSession(userObject);
 		em.persist(session);
 		return session.getId();
@@ -94,7 +94,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public void closeSession(int sessionId) throws IllegalArgumentException {
+	public void closeSession(int sessionId) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 			BudgetSession session = em.find(BudgetSession.class, sessionId);
 			em.remove(session);
 	}
@@ -106,7 +106,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * 
 	 */
 	@Override
-	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException {
+	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		Query q = em.createNamedQuery("findOldSessions", BudgetSession.class);
 		q.setParameter("date", dayBefore);
 		@SuppressWarnings("unchecked")
@@ -119,7 +119,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public BudgetSession findSessionById(int sessionId)  throws IllegalArgumentException{
+	public BudgetSession findSessionById(int sessionId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(BudgetSession.class, sessionId);
 	}
 
@@ -128,7 +128,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Vendor findVendorById(int vendorId)  throws IllegalArgumentException{
+	public Vendor findVendorById(int vendorId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Vendor.class, vendorId);
 	}
 
@@ -137,7 +137,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Basket findBasketById(int basketId)  throws IllegalArgumentException{
+	public Basket findBasketById(int basketId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Basket.class,  basketId);
 	}
 
@@ -147,7 +147,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public List<Basket> getBasketsOfActualMonth(String username){
+	public List<Basket> getBasketsOfActualMonth(String username)throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Timestamp date = new Timestamp(System.currentTimeMillis());
 		Timestamp firstOfMonth = new Timestamp(date.getYear(), date.getMonth(), 1, 0, 0, 0, 0); //erster des Monats
 		Query q = em.createNamedQuery("findBasketsOfMonth", Basket.class);
@@ -163,7 +163,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public List<Basket> getLastBaskets(String username, int start, int end) {
+	public List<Basket> getLastBaskets(String username, int start, int end) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Query q = em.createNamedQuery("findLastBaskets", Basket.class);
 		q.setParameter("username", username);
 		q.setFirstResult(start);
@@ -178,7 +178,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Category findCategoryById(int categoryId)  throws IllegalArgumentException{
+	public Category findCategoryById(int categoryId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Category.class, categoryId);
 	}
 
@@ -187,7 +187,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Item findItemById(int itemId)  throws IllegalArgumentException{
+	public Item findItemById(int itemId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Item.class, itemId);
 	}
 	
@@ -196,7 +196,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Income findIncomeById(int incomeId)  throws IllegalArgumentException{
+	public Income findIncomeById(int incomeId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Income.class, incomeId);
 	}
 
@@ -205,7 +205,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Payment findPaymentById(int paymentId)  throws IllegalArgumentException{
+	public Payment findPaymentById(int paymentId)  throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.find(Payment.class, paymentId);
 	}
 	/**
@@ -213,7 +213,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException{
+	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		if(findUserByName(username) == null) {
 			User user = new User(username, password, email);
 			em.persist(user);
@@ -229,7 +229,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException{
+	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Category category = new Category(user, income, name, notice, colour);
 		if (category != null) {
 			em.persist(category);
@@ -244,7 +244,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException{
+	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Vendor vendor = new Vendor(user, name, logo, street, city, PLZ, houseNumber);
 		if(vendor != null) {
 			em.persist(vendor);;
@@ -257,7 +257,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException{
+	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Payment payment = new Payment(user, name, number, bic);
 		if (payment != null) {
 			em.persist(payment);
@@ -270,7 +270,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException{
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException {
 		if(user != null && payment != null && vendor != null) {
 			Basket basket = new Basket(user, name, notice, amount, purchaseDate, payment, vendor, items);
 			if (basket != null){
@@ -296,7 +296,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @throws EntityExistsException
 	 */
 	@Override
-	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException {
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException {
 		if(user != null && payment != null && vendor != null) {
 			Basket basket = new Basket(user, name, notice, amount, purchaseDate, payment, vendor);
 			if (basket != null){
@@ -312,7 +312,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException {
+	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		if(basket != null && category != null) {
 			Item item = new Item(name, quantity, price, notice, receiptDate, basket, category);
 			if (item != null) {
@@ -347,7 +347,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public List<Income> getLastIncome(String username, int start, int end) {
+	public List<Income> getLastIncome(String username, int start, int end) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Query q = em.createNamedQuery("findLastIncomes", Income.class);
 		q.setParameter("username", username);
 		q.setFirstResult(start);
@@ -361,7 +361,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * Method to find all income of the actual month
 	 * <p> Author: Marco </p>
 	 */
-	public List<Income> getIncomeOfActualMonth(String username){
+	public List<Income> getIncomeOfActualMonth(String username) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Timestamp date = new Timestamp(System.currentTimeMillis());
 		Timestamp firstOfMonth = new Timestamp(date.getYear(), date.getMonth(), 1, 0, 0, 0, 0); //erster des Monats
 		Query q = em.createNamedQuery("findIncomeOfMonth", Income.class);
@@ -377,7 +377,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public Income updateIncome(Income income) throws IllegalArgumentException{
+	public Income updateIncome(Income income) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		em.merge(income);
 		return income;
 		
@@ -388,7 +388,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteIncome(int incomeId) throws IllegalArgumentException{
+	public void deleteIncome(int incomeId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Income income = em.find(Income.class, incomeId);
 		em.remove(income);
 	}
@@ -398,7 +398,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteUser(String username) throws IllegalArgumentException{
+	public void deleteUser(String username) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		User user = em.find(User.class, username);
 		em.remove(user);
 	}
@@ -408,7 +408,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteVendor(int vendorId) throws IllegalArgumentException{
+	public void deleteVendor(int vendorId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Vendor vendor = em.find(Vendor.class, vendorId);
 		em.remove(vendor);	
 	}
@@ -418,7 +418,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteBasket(int basketId) throws IllegalArgumentException{
+	public void deleteBasket(int basketId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
 		Basket basket = em.find(Basket.class,  basketId);
 		em.remove(basket);
 	}
@@ -428,7 +428,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteCategory(int categoryId) throws IllegalArgumentException {
+	public void deleteCategory(int categoryId) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		Category category = em.find(Category.class,  categoryId);
 		em.remove(category);
 	}
@@ -438,7 +438,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deleteItem(int itemId) throws IllegalArgumentException {
+	public void deleteItem(int itemId) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		Item item = em.find(Item.class, itemId);
 		em.remove(item);
 		
@@ -449,7 +449,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Marco </p>
 	 */
 	@Override
-	public void deletePayment(int paymentId) throws IllegalArgumentException {
+	public void deletePayment(int paymentId) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		Payment payment = em.find(Payment.class, paymentId);
 		em.remove(payment);
 	}
@@ -459,7 +459,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public User updateUser(User user) throws IllegalArgumentException {
+	public User updateUser(User user) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(user);
 	}
 
@@ -468,7 +468,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException {
+	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(vendor);
 	}
 
@@ -477,7 +477,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public Basket updateBasket(Basket basket) throws IllegalArgumentException {
+	public Basket updateBasket(Basket basket) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(basket);
 	}
 
@@ -486,7 +486,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>e
 	 */
 	@Override
-	public Category updateCategory(Category category) throws IllegalArgumentException {
+	public Category updateCategory(Category category) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(category);
 	}
 
@@ -495,7 +495,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public Item updateItem(Item item) throws IllegalArgumentException {
+	public Item updateItem(Item item) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(item);
 	}
 
@@ -504,7 +504,7 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * <p> Author: Moritz </p>
 	 */
 	@Override
-	public Payment updatePayment(Payment payment) throws IllegalArgumentException {
+	public Payment updatePayment(Payment payment) throws IllegalArgumentException , EJBTransactionRolledbackException, TransactionRequiredException{
 		return em.merge(payment);
 	}
 

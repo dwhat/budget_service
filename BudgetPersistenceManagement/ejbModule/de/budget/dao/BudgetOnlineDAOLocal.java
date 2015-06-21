@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Local;
 
 
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.TransactionRequiredException;
 
 import de.budget.entities.Basket;
 import de.budget.entities.BudgetSession;
@@ -39,7 +41,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException;
+	public User createUser(String username, String password, String email) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update a user
@@ -47,7 +49,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated User object
 	 * @throws IllegalArgumentException
 	 */
-	public User updateUser(User user) throws IllegalArgumentException;
+	public User updateUser(User user) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find a user
@@ -55,14 +57,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return User object
 	 * @throws IllegalArgumentException
 	 */
-	public User findUserByName(String userName) throws IllegalArgumentException;
+	public User findUserByName(String userName) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to delete an user
 	 * @param username
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteUser(String username) throws IllegalArgumentException;
+	public void deleteUser(String username) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	
 	/**
@@ -72,7 +74,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws EntityExistsException
 	 * @throws IllegalArgumentException
 	 */
-	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException;
+	public int createSession(User userObject) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find a session with the id
@@ -80,14 +82,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return Session Object
 	 * @throws IllegalArgumentException
 	 */
-	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException;
+	public BudgetSession findSessionById(int sessionId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to delete a session
 	 * @param sessionId
 	 * @throws IllegalArgumentException
 	 */
-	public void closeSession(int sessionId) throws IllegalArgumentException;
+	public void closeSession(int sessionId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to gets all old sessions
@@ -95,7 +97,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return List with all old sessions
 	 * @throws IllegalArgumentException
 	 */
-	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException;
+	public List<BudgetSession> getOldSessions(Timestamp dayBefore) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to create a vendor
@@ -110,7 +112,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException;
+	public Vendor createVendor(User user, String name, String logo, String street, String city, int PLZ, int houseNumber) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update a vendor
@@ -118,7 +120,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated vendor
 	 * @throws IllegalArgumentException
 	 */
-	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException;
+	public Vendor updateVendor(Vendor vendor) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find a vendor with the id
@@ -126,14 +128,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return vendor object
 	 * @throws IllegalArgumentException
 	 */
-	public Vendor findVendorById(int vendorId) throws IllegalArgumentException;
+	public Vendor findVendorById(int vendorId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * method to deletes a vendor
 	 * @param vendorId
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteVendor(int vendorId) throws IllegalArgumentException;
+	public void deleteVendor(int vendorId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	
 	/**
@@ -149,7 +151,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException;
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to create a basket
@@ -165,7 +167,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException;
+	public Basket createBasket(User user, String name, String notice, double amount, Timestamp purchaseDate,Payment payment, Vendor vendor, List<Item> items) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update a basket
@@ -173,7 +175,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated basket
 	 * @throws IllegalArgumentException
 	 */
-	public Basket updateBasket(Basket basket) throws IllegalArgumentException;
+	public Basket updateBasket(Basket basket) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find a basket with the is
@@ -181,14 +183,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return basket Object
 	 * @throws IllegalArgumentException
 	 */
-	public Basket findBasketById(int basketId) throws IllegalArgumentException;
+	public Basket findBasketById(int basketId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to deletes a basket
 	 * @param basketId
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteBasket(int basketId) throws IllegalArgumentException;
+	public void deleteBasket(int basketId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to get the last x baskets
@@ -198,7 +200,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return List with the last baskets
 	 * @throws IllegalArgumentException
 	 */
-	public List<Basket> getLastBaskets(String username, int start, int end) throws IllegalArgumentException;
+	public List<Basket> getLastBaskets(String username, int start, int end) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to get all baskets of the actual month
@@ -206,7 +208,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return list with all baskets of the actual Month
 	 * @throws IllegalArgumentException
 	 */
-	public List<Basket> getBasketsOfActualMonth(String username) throws IllegalArgumentException;
+	public List<Basket> getBasketsOfActualMonth(String username) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	
 	/**
@@ -220,7 +222,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException;
+	public Category createCategory(User user, String name, String notice, boolean income, String colour) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update a category
@@ -228,7 +230,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated category
 	 * @throws IllegalArgumentException
 	 */
-	public Category updateCategory(Category category) throws IllegalArgumentException;
+	public Category updateCategory(Category category) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find a category with the id
@@ -236,14 +238,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return category Object
 	 * @throws IllegalArgumentException
 	 */
-	public Category findCategoryById(int categoryId) throws IllegalArgumentException;
+	public Category findCategoryById(int categoryId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to deletes a category
 	 * @param categoryId
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteCategory(int categoryId) throws IllegalArgumentException;
+	public void deleteCategory(int categoryId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	
 	/**
@@ -259,7 +261,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException;
+	public Item createItem(String name, double quantity, double price, String notice, Timestamp receiptDate, Basket basket, Category category) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update an item
@@ -267,7 +269,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated item
 	 * @throws IllegalArgumentException
 	 */
-	public Item updateItem(Item item) throws IllegalArgumentException;
+	public Item updateItem(Item item) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find an item with the id
@@ -275,14 +277,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return item object
 	 * @throws IllegalArgumentException
 	 */
-	public Item findItemById(int itemId) throws IllegalArgumentException;
+	public Item findItemById(int itemId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to deletes an item
 	 * @param itemId
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteItem(int itemId) throws IllegalArgumentException;
+	public void deleteItem(int itemId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	
 	/**
@@ -298,7 +300,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException, IllegalArgumentException;
+	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update an income
@@ -306,7 +308,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated income object
 	 * @throws IllegalArgumentException
 	 */
-	public Income updateIncome(Income income) throws IllegalArgumentException;
+	public Income updateIncome(Income income) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to find an income with the id
@@ -314,14 +316,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return income object
 	 * @throws IllegalArgumentException
 	 */
-	public Income findIncomeById(int incomeId) throws IllegalArgumentException;
+	public Income findIncomeById(int incomeId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to delete an income
 	 * @param income
 	 * @throws IllegalArgumentException
 	 */
-	public void deleteIncome(int income) throws IllegalArgumentException;
+	public void deleteIncome(int income) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to gets the last X incomes
@@ -331,7 +333,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return List with the last incomes
 	 * @throws IllegalArgumentException
 	 */
-	public List<Income> getLastIncome(String username, int start, int end) throws IllegalArgumentException;
+	public List<Income> getLastIncome(String username, int start, int end) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to gets the incomes of the actual 
@@ -339,7 +341,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return list with all incomes of the actual month
 	 * @throws IllegalArgumentException
 	 */
-	public List<Income> getIncomeOfActualMonth(String username) throws IllegalArgumentException;
+	public List<Income> getIncomeOfActualMonth(String username) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 
 	
 	/**
@@ -352,7 +354,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException
 	 */
-	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException;
+	public Payment createPayment(User user, String name, String number, String bic) throws EntityExistsException, IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to update a payment
@@ -360,7 +362,7 @@ public interface BudgetOnlineDAOLocal {
 	 * @return updated payment object
 	 * @throws IllegalArgumentException
 	 */
-	public Payment updatePayment(Payment payment) throws IllegalArgumentException;
+	public Payment updatePayment(Payment payment) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to get a payment with id 
@@ -368,14 +370,14 @@ public interface BudgetOnlineDAOLocal {
 	 * @return payment object
 	 * @throws IllegalArgumentException
 	 */
-	public Payment findPaymentById(int paymentId) throws IllegalArgumentException;
+	public Payment findPaymentById(int paymentId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 	
 	/**
 	 * Method to delete a payment
 	 * @param paymentId
 	 * @throws IllegalArgumentException
 	 */
-	public void deletePayment(int paymentId) throws IllegalArgumentException;
+	public void deletePayment(int paymentId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException;
 
 	
 }
