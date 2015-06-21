@@ -471,7 +471,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1102,7 +1102,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1205,7 +1205,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1307,7 +1307,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1530,7 +1530,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " + e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1624,7 +1624,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -1847,7 +1847,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;	
@@ -1932,7 +1932,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			response.setReturnCode(800);
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2345,7 +2345,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -2446,7 +2446,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch(Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -3011,7 +3011,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -3097,10 +3097,12 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				throw new RollbackException("createOrUpdateIncome | ID:" + sessionId + " incomeId:" +incomeId + " categoryId:" + categoryId + "|");
 			} 
 			catch(BudgetOnlineException be) {
+				logger.error("BudgetOnline | Exception-Fatal - " +be.getMessage());
 				response.setReturnCode(be.getErrorCode());
 				response.setMessage(be.getErrorMessage());
 			}
 		}
+		
 		return response;	
 	}
 	
@@ -3504,7 +3506,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
-			logger.info(e.getMessage());
+			logger.info("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setReturnCode(800);
 		}
 		return response;
@@ -3591,6 +3593,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			throw new RollbackException("createOrUpdateItem | ID:" + sessionId + " itemId:" +itemId + " basketId:" + basketId + " categoryId:" + categoryId + "|");
 		}
 		catch (Exception e) {
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			throw e;
 		}	
 	}
@@ -3636,6 +3639,7 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			}
 		}
 		catch (Exception e) {
+			logger.error("BudgetOnline | Exception-Fatal - " +e.getMessage());
 			response.setMessage(e.getMessage());
 			response.setReturnCode(800);
 		}		

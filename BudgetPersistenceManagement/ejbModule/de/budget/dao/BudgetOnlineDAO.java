@@ -409,8 +409,10 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 */
 	@Override
 	public void deleteVendor(int vendorId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
+		logger.info("xyz-deleteVendorBeginn");
 		Vendor vendor = em.find(Vendor.class, vendorId);
 		em.remove(vendor);	
+		logger.info("xyz-deleteVendorEnd");
 	}
 
 	/**
