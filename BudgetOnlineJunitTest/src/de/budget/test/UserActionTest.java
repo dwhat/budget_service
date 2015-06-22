@@ -90,7 +90,7 @@ public class UserActionTest {
 	@Test
 	public void fTestLogout() {
 		ReturnCodeResponse resp = remoteSystem.logout(sessionId);
-		assertEquals(resp.getReturnCode(), 200);
+		assertEquals(200, resp.getReturnCode());
 	}
 	
 	/**

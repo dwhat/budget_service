@@ -290,7 +290,6 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 * @param purchaseDate
 	 * @param payment
 	 * @param vendor
-	 * @param items
 	 * @return new basket Object
 	 * @throws IllegalArgumentException
 	 * @throws EntityExistsException

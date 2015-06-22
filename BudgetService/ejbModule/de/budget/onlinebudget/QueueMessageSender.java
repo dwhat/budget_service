@@ -23,7 +23,7 @@ import org.jboss.logging.Logger;
  * @author Moritz
  * @author Marco
  * 
- * Session Bean implementation class OutputRequesterBean
+ * Session Bean Implementierung class OutputRequesterBean
  */
 @Stateless
 @LocalBean
@@ -85,7 +85,7 @@ public class QueueMessageSender {
 	  }
 	  */
 	  
-	  /*
+	  /**
 	   * MapMessage für StandardMailversand.
 	   * Aufrufen um Email nachricht in Queue einzustellen.
 	   * 
