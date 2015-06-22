@@ -1549,37 +1549,37 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 			if (session != null) {
 				User user = this.dao.findUserByName(session.getUsername());
 				Vendor vendor = user.getVendor(vendorId);
-			
-				if(vendor == null) {
-					ArrayList<String> nameList = new ArrayList<>();
-					for (Vendor v : user.getVendors()) {
-						nameList.add(v.getName());
-					}
-					if(!nameList.contains(name)) {
+				
+				ArrayList<String> nameList = new ArrayList<>();
+				for (Vendor v : user.getVendors()) {
+					nameList.add(v.getName());
+				}
+				
+				if(!nameList.contains(name)) {
+					if(vendor == null) {
 						vendor = dao.createVendor(user, name, logo, street, city, PLZ, houseNumber);
 					}
 					else {
-						response.setReturnCode(400);
-						response.setMessage("Vendor already Exists with this name");
-						return response;
+						vendor.setName(name);
+						vendor.setLogo(logo);
+						vendor.setStreet(street);
+						vendor.setPLZ(PLZ);
+						vendor.setCity(city);
+						vendor.setHouseNumber(houseNumber);
+						vendor = dao.updateVendor(vendor);
 					}
-					
+					if(vendor != null) {
+						response.setVendorTo(dtoAssembler.makeDto(vendor));
+						response.setReturnCode(200);
+					}
+					else {
+						throw new VendorNotFoundException("Vendor to update not found");
+					}
 				}
 				else {
-					vendor.setName(name);
-					vendor.setLogo(logo);
-					vendor.setStreet(street);
-					vendor.setPLZ(PLZ);
-					vendor.setCity(city);
-					vendor.setHouseNumber(houseNumber);
-					vendor = dao.updateVendor(vendor);
-				}
-				if(vendor != null) {
-					response.setVendorTo(dtoAssembler.makeDto(vendor));
-					response.setReturnCode(200);
-				}
-				else {
-					throw new VendorNotFoundException("Vendor to update not found");
+					response.setReturnCode(400);
+					response.setMessage("Vendor already Exists with this name");
+					return response;
 				}
 			}
 		}
@@ -2372,36 +2372,35 @@ public class BudgetOnlineServiceBean implements BudgetOnlineService {
 				//Lege Payment Objekt an
 				Category category = user.getCategory(categoryId);
 				
-				
-				if(category == null) {
-					ArrayList<String> nameList = new ArrayList<>();
-					for (Category c : user.getCategories()) {
-						nameList.add(c.getName());
-					}
-					if(!nameList.contains(name)) {
+				ArrayList<String> nameList = new ArrayList<>();
+				for (Category c : user.getCategories()) {
+					nameList.add(c.getName());
+				}
+				if(!nameList.contains(name)) {
+					if(category == null) {
 						category = dao.createCategory(user, name, notice, income, colour);
 					}
+					else {	
+						category.setName(name);
+						category.setNotice(notice);
+						category.setActive(active);
+						category.setIncome(income);
+						category.setColour(colour);
+						category = dao.updateCategory(category);
+					}
+					// Response befüllen
+					if(category != null) {
+						response.setCategoryTo(dtoAssembler.makeDto(category));
+						response.setReturnCode(200);
+					}
 					else {
-						response.setReturnCode(400);
-						response.setMessage("Category already Exists with this name");
-						return response;
+						throw new CategoryNotFoundException("CategoryId: " + categoryId);
 					}
 				}
 				else {
-					category.setName(name);
-					category.setNotice(notice);
-					category.setActive(active);
-					category.setIncome(income);
-					category.setColour(colour);
-					category = dao.updateCategory(category);
-				}
-				// Response befüllen
-				if(category != null) {
-					response.setCategoryTo(dtoAssembler.makeDto(category));
-					response.setReturnCode(200);
-				}
-				else {
-					throw new CategoryNotFoundException("CategoryId: " + categoryId);
+					response.setReturnCode(400);
+					response.setMessage("Category already Exists with this name");
+					return response;
 				}
 			}
 		}
