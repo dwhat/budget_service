@@ -34,8 +34,8 @@ public class QueueMessageSender {
 	  @Inject
 	  private JMSContext context;
 
-	  @Resource(mappedName="java:/JmsXA")
-	  private ConnectionFactory jmsFactory;
+	  //@Resource(mappedName="java:/JmsXA")
+	  //private ConnectionFactory jmsFactory;
 	  
 	  @Resource(mappedName="java:/jms/queue/BudgetOutput")
 	  private Queue outputQueue;
