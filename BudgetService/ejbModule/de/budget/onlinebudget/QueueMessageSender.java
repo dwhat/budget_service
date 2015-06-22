@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
+//import javax.jms.ConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -59,7 +59,7 @@ public class QueueMessageSender {
 			context.createProducer().send(outputQueue, message);
 		}
 		catch (JMSException e) {
-			// TODO evtl noch Logging hier einbauen 			
+			//  evtl noch Logging hier einbauen 			
 			e.printStackTrace();
 		}  
 	  }
@@ -78,7 +78,7 @@ public class QueueMessageSender {
 			context.createProducer().send(outputQueue, objMessage);
 		  }
 		  catch (JMSException e) {
-			// TODO evtl noch Logging hier einbauen 			
+			//  evtl noch Logging hier einbauen 			
 			e.printStackTrace();
 		} 
 		  

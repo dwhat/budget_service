@@ -21,7 +21,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 
-import org.jboss.logging.Logger;
+//import org.jboss.logging.Logger;
 
 
 
@@ -62,7 +62,8 @@ import de.budget.entities.Item;
 @Stateless
 public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	
-	private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
+	// Für Testzwecke logger
+	//private static final Logger logger = Logger.getLogger(BudgetOnlineDAO.class);
 	
 	
 	@PersistenceContext
@@ -329,12 +330,9 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	@Override
 	public Income createIncome(User user, String name, String notice, double quantity, double amount, Date receiptDate, Category category) throws EntityExistsException , IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException {
 		if(user != null && category != null) {
-			logger.info("xyz-createIncomeBeginnDAO");
 			Income income = new Income(name, notice, quantity, amount, receiptDate, category, user);
-			logger.info("xyz-");
 			if (income != null) {
 				em.persist(income);
-				logger.info("xyz-nach Persist");
 				return income;
 			}
 		}
@@ -408,10 +406,8 @@ public class BudgetOnlineDAO implements BudgetOnlineDAOLocal {
 	 */
 	@Override
 	public void deleteVendor(int vendorId) throws IllegalArgumentException, EJBTransactionRolledbackException, TransactionRequiredException{
-		logger.info("xyz-deleteVendorBeginn");
 		Vendor vendor = em.find(Vendor.class, vendorId);
 		em.remove(vendor);	
-		logger.info("xyz-deleteVendorEnd");
 	}
 
 	/**
